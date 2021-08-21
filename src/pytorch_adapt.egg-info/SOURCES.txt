@@ -1,0 +1,7 @@
+README.md
+setup.py
+src/pytorch_adapt/__init__.py
+src/pytorch_adapt.egg-info/PKG-INFO
+src/pytorch_adapt.egg-info/SOURCES.txt
+src/pytorch_adapt.egg-info/dependency_links.txt
+src/pytorch_adapt.egg-info/top_level.txt
