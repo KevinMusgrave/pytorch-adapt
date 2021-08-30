@@ -1,0 +1,2 @@
+class ResumeCheckError(Exception):
+    pass
