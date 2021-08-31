@@ -60,6 +60,6 @@ class TestAdaptiveFeatureNorm(unittest.TestCase):
             l1_norm = torch.norm(emb, p=1)
             l2_norm = torch.norm(emb, p=2)
             self.assertTrue(
-                torch.isclose(torch.norm(regular_out, p=1), l1_norm, rtol=5e-2)
+                torch.isclose(torch.norm(regular_out, p=1), l1_norm, rtol=1e-1)
             )
-            self.assertTrue(torch.isclose(torch.norm(l2_out, p=2), l2_norm, rtol=5e-2))
+            self.assertTrue(torch.isclose(torch.norm(l2_out, p=2), l2_norm, rtol=1e-1))
