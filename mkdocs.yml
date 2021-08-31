@@ -1,0 +1,28 @@
+site_name: PyTorch Adapt
+nav:
+    - Home: index.md
+    - Adapters: adapters.md
+    - Containers: containers.md
+    - Datasets: datasets.md
+    - Frameworks: frameworks.md
+    - Hooks: hooks.md
+    - Layers: layers.md
+    - Meta Validators: meta_validators.md
+    - Models: models.md
+    - Utils: utils.md
+    - Validators: validators.md
+    - Weighters: weighters.md
+theme:
+  name: 'material'
+  palette:
+    primary: 'green'
+    accent: 'green'
+  logo: imgs/TinyLogo.png
+  favicon: imgs/Favicon.png
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true
+  - attr_list
+repo_name: 'KevinMusgrave/pytorch-adapt'
+repo_url: 'https://github.com/KevinMusgrave/pytorch-adapt'
