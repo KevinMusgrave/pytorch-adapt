@@ -6,7 +6,7 @@ from .base_dataset import BaseDataset
 
 class DomainNet(BaseDataset):
     def __init__(self, root, domain, train, transform, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(domain=domain, **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")
         name = "train" if train else "test"
@@ -22,7 +22,7 @@ class DomainNet(BaseDataset):
 
 class DomainNet126Full(BaseDataset):
     def __init__(self, root, domain, transform, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(domain=domain, **kwargs)
         filenames = [
             f"labeled_source_images_{domain}",
             f"labeled_target_images_{domain}_1",
@@ -48,7 +48,7 @@ class DomainNet126Full(BaseDataset):
 
 class DomainNet126(BaseDataset):
     def __init__(self, root, domain, train, transform, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(domain=domain, **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")
         name = "train" if train else "test"

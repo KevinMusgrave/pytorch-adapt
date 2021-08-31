@@ -8,7 +8,7 @@ class AdaBN(BaseAdapter):
     hook_cls = AdaBNHook
 
     def inference_default(self, x, domain):
-        domain = check_domain(self, domain)
+        domain = check_domain(self, domain, keep_len=True)
         features = self.models["G"](x, domain)
         logits = self.models["C"](features, domain)
         return features, logits

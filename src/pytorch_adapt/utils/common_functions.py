@@ -421,13 +421,13 @@ def to_set(x):
     return set(x)
 
 
-def check_domain(cls, domain):
+def check_domain(cls, domain, keep_len=False):
     if domain is not None:
         if len(torch.unique(domain)) > 1:
             raise ValueError(
                 f"{c_f.cls_name(cls)} inference only supports one domain per batch"
             )
-        if not len_one_tensor(domain):
+        if not keep_len and not len_one_tensor(domain):
             domain = domain[0]
     return domain
 

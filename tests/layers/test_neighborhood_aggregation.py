@@ -30,8 +30,10 @@ class TestNeighborhoodAggregation(unittest.TestCase):
         num_classes = 123
         k = 5
 
+        if TEST_DEVICE.type == "cuda":
+            na_device = torch.device("cuda:0")
         na = NeighborhoodAggregation(dataset_size, feature_dim, num_classes, k=k).to(
-            TEST_DEVICE
+            na_device
         )
         weighter = ConfidenceWeights()
 

@@ -57,7 +57,7 @@ class NeighborhoodAggregation(torch.nn.Module):
             self.index = faiss.index_cpu_to_all_gpus(self.index)
         else:
             res = faiss.StandardGpuResources()
-            self.index = index_cpu_to_all_gpus(res, device.index, self.index)
+            self.index = faiss.index_cpu_to_gpu(res, device.index, self.index)
         return super().to(device)
 
     def extra_repr(self):
