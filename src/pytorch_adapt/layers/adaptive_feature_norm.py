@@ -24,8 +24,10 @@ class L2PreservedDropout(torch.nn.Module):
     def __init__(self, p=0.5, inplace=False):
         super().__init__()
         self.dropout = torch.nn.Dropout(p=p, inplace=inplace)
-        self.scale = math.sqrt(1 - self.p)
+        self.scale = math.sqrt(1 - p)
 
     def forward(self, x):
         x = self.dropout(x)
-        return x * self.scale
+        if self.training:
+            return x * self.scale
+        return x

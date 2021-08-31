@@ -1,7 +1,7 @@
 from .abs_loss import AbsLoss
 from .adabn_model import AdaBNModel
 from .adaptive_batch_norm import AdaptiveBatchNorm2d, PopulationBatchNorm2d
-from .adaptive_feature_norm import AdaptiveFeatureNorm
+from .adaptive_feature_norm import AdaptiveFeatureNorm, L2PreservedDropout
 from .batch_spectral_loss import BatchSpectralLoss, batch_spectral_loss
 from .bnm_loss import BNMLoss
 from .concat_softmax import ConcatSoftmax
