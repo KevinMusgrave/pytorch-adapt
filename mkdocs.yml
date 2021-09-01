@@ -5,7 +5,10 @@ nav:
     - Containers: containers.md
     - Datasets: datasets.md
     - Frameworks: frameworks.md
-    - Hooks: hooks.md
+    - Hooks:
+      - Overview: hooks/index.md
+      - Base: hooks/base.md
+      - Utils: hooks/utils.md
     - Layers: layers.md
     - Meta Validators: meta_validators.md
     - Models: models.md
@@ -24,5 +27,7 @@ markdown_extensions:
   - toc:
       permalink: true
   - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
 repo_name: 'KevinMusgrave/pytorch-adapt'
 repo_url: 'https://github.com/KevinMusgrave/pytorch-adapt'
