@@ -360,6 +360,18 @@
   
 
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -624,7 +636,7 @@
       </tr>
       <tr>
         <td><code>key_map</code></td>
-        <td><code>Union[NoneType, Dict[str, str]]</code></td>
+        <td><code>Dict[str, str]</code></td>
         <td><p>a mapping from <code>input_key</code> to <code>new_key</code>.
 For example, if key_map = {"A": "B"}, and the input dict to <code>__call__</code> is {"A": 5},
 then the input will be converted to {"B": 5} before being consumed. Before exiting <code>__call__</code>,
@@ -672,7 +684,7 @@ In other words, {"B": 5} will be converted back to {"A": 5}.</p></td>
     <span class="n">loss_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="n">out_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="n">out_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="n">key_map</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">key_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
@@ -724,14 +736,37 @@ In other words, {"B": 5} will be converted back to {"A": 5}.</p></td>
 
       <p>This must be implemented by the child class</p>
 
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[str]</code></td>
+      <td><p>The names of the losses that will be added to the context.</p></td>
+    </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\base.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>78
-79
-80
-81</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">_loss_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This must be implemented by the child class&quot;&quot;&quot;</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>83
+84
+85
+86
+87
+88
+89
+90</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">_loss_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This must be implemented by the child class</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The names of the losses that will be added to the context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div>
 </td></tr></table>
@@ -759,14 +794,37 @@ In other words, {"B": 5} will be converted back to {"A": 5}.</p></td>
 
       <p>This must be implemented by the child class</p>
 
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[str]</code></td>
+      <td><p>The names of the outputs that will be added to the context.</p></td>
+    </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\base.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>89
-90
-91
-92</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">_out_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This must be implemented by the child class&quot;&quot;&quot;</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 98
+ 99
+100
+101
+102
+103
+104
+105</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">_out_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This must be implemented by the child class</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The names of the outputs that will be added to the context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div>
 </td></tr></table>
@@ -816,6 +874,22 @@ In other words, {"B": 5} will be converted back to {"A": 5}.</p></td>
       </tr>
   </tbody>
 </table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[Tuple[Dict[str, Any], Dict[str, Any]], bool]</code></td>
+      <td><p>Either a tuple of (losses, outputs) that will be merged with the input context,
+or a boolean</p></td>
+    </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\base.py</code></summary>
           <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>68
@@ -826,13 +900,23 @@ In other words, {"B": 5} will be converted back to {"A": 5}.</p></td>
 73
 74
 75
-76</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">losses</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+76
+77
+78
+79
+80
+81</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">call</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">losses</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="nb">bool</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This must be implemented by the child class</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        losses: previously computed losses</span>
 <span class="sd">        inputs: holds everything else: tensors, models etc.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Either a tuple of (losses, outputs) that will be merged with the input context,</span>
+<span class="sd">        or a boolean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div>
@@ -946,6 +1030,21 @@ which should be defined in the child's <code>__init__</code> function.</p>
           </div>
         </a>
       
+      
+        
+        <a href="../utils/" class="md-footer__link md-footer__link--next" aria-label="Next: Utils" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Utils
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
