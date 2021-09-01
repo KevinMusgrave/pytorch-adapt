@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Union
+from typing import Any, Dict, List, Tuple, Union
 
 import numpy as np
 import torch
@@ -16,7 +16,7 @@ class BaseHook(ABC):
         loss_suffix: str = "",
         out_prefix: str = "",
         out_suffix: str = "",
-        key_map: Union[None, Dict[str, str]] = None,
+        key_map: Dict[str, str] = None,
     ):
         """
         Arguments:
@@ -66,18 +66,27 @@ class BaseHook(ABC):
             raise
 
     @abstractmethod
-    def call(self, losses: Dict[str, Any], inputs: Dict[str, Any]):
+    def call(
+        self, losses: Dict[str, Any], inputs: Dict[str, Any]
+    ) -> Union[Tuple[Dict[str, Any], Dict[str, Any]], bool]:
         """
         This must be implemented by the child class
         Arguments:
             losses: previously computed losses
             inputs: holds everything else: tensors, models etc.
+        Returns:
+            Either a tuple of (losses, outputs) that will be merged with the input context,
+            or a boolean
         """
         pass
 
     @abstractmethod
-    def _loss_keys(self):
-        """This must be implemented by the child class"""
+    def _loss_keys(self) -> List[str]:
+        """
+        This must be implemented by the child class
+        Returns:
+            The names of the losses that will be added to the context.
+        """
         pass
 
     @property
@@ -87,8 +96,12 @@ class BaseHook(ABC):
         )
 
     @abstractmethod
-    def _out_keys(self):
-        """This must be implemented by the child class"""
+    def _out_keys(self) -> List[str]:
+        """
+        This must be implemented by the child class
+        Returns:
+            The names of the outputs that will be added to the context.
+        """
         pass
 
     @property
