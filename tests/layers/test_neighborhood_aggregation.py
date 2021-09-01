@@ -45,39 +45,40 @@ class TestNeighborhoodAggregation(unittest.TestCase):
         dataset_size = 100000
         feature_dim = 2048
         num_classes = 123
-        k = 5
+        for k in [5, 11, 29]:
+            na = NeighborhoodAggregation(
+                dataset_size, feature_dim, num_classes, k=k
+            ).to(TEST_DEVICE)
+            weighter = ConfidenceWeights()
 
-        na = NeighborhoodAggregation(dataset_size, feature_dim, num_classes, k=k).to(
-            TEST_DEVICE
-        )
-        weighter = ConfidenceWeights()
+            batch_size = 64
 
-        batch_size = 64
+            for i in range(10):
+                features = torch.randn(batch_size, feature_dim, device=TEST_DEVICE)
+                logits = torch.randn(batch_size, num_classes, device=TEST_DEVICE)
+                idx = torch.randint(0, dataset_size, size=(64,))
 
-        for i in range(10):
-            features = torch.randn(batch_size, feature_dim, device=TEST_DEVICE)
-            logits = torch.randn(batch_size, num_classes, device=TEST_DEVICE)
-            idx = torch.randint(0, dataset_size, size=(64,))
+                curr_feat_memory = na.feat_memory.clone()
+                curr_pred_memory = na.pred_memory.clone()
 
-            curr_feat_memory = na.feat_memory.clone()
-            curr_pred_memory = na.pred_memory.clone()
+                pseudo_labels, neighbor_logits = na(
+                    features, logits, update=True, idx=idx
+                )
+                weights = weighter(neighbor_logits)
 
-            pseudo_labels, neighbor_logits = na(features, logits, update=True, idx=idx)
-            weights = weighter(neighbor_logits)
+                self.assertTrue(not torch.allclose(curr_feat_memory, na.feat_memory))
+                self.assertTrue(not torch.allclose(curr_pred_memory, na.pred_memory))
 
-            self.assertTrue(not torch.allclose(curr_feat_memory, na.feat_memory))
-            self.assertTrue(not torch.allclose(curr_pred_memory, na.pred_memory))
+                correct_weights, correct_pseudo_labels = get_correct_pseudo_labels(
+                    features, curr_feat_memory, curr_pred_memory, idx, k
+                )
 
-            correct_weights, correct_pseudo_labels = get_correct_pseudo_labels(
-                features, curr_feat_memory, curr_pred_memory, idx, k
-            )
+                self.assertTrue(torch.equal(pseudo_labels, correct_pseudo_labels))
+                self.assertTrue(torch.allclose(weights, correct_weights))
 
-            self.assertTrue(torch.equal(pseudo_labels, correct_pseudo_labels))
-            self.assertTrue(torch.allclose(weights, correct_weights))
+                curr_feat_memory, curr_pred_memory = get_correct_memory_update(
+                    features, logits, curr_feat_memory, curr_pred_memory, idx
+                )
 
-            curr_feat_memory, curr_pred_memory = get_correct_memory_update(
-                features, logits, curr_feat_memory, curr_pred_memory, idx
-            )
-
-            self.assertTrue(torch.allclose(curr_feat_memory, na.feat_memory))
-            self.assertTrue(torch.allclose(curr_pred_memory, na.pred_memory))
+                self.assertTrue(torch.allclose(curr_feat_memory, na.feat_memory))
+                self.assertTrue(torch.allclose(curr_pred_memory, na.pred_memory))
