@@ -24,7 +24,7 @@ dtypes_from_environ = os.environ.get("TEST_DTYPES", "float16,float32,float64").s
 )
 device_from_environ = os.environ.get("TEST_DEVICE", "cuda")
 TEST_FOLDER = os.environ.get("TEST_FOLDER", "zzz_pytorch_adapt_test_folder")
-DATASET_FOLDER = os.environ.get("DATASET_FOLDER", "test_folder")
+DATASET_FOLDER = os.environ.get("DATASET_FOLDER", "zzz_pytorch_adapt_test_folder")
 RUN_DATASET_TESTS = os.environ.get("RUN_DATASET_TESTS", False)
 
 TEST_DTYPES = [getattr(torch, x) for x in dtypes_from_environ]

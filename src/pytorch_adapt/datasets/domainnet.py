@@ -2,6 +2,7 @@ import os
 from collections import OrderedDict
 
 from .base_dataset import BaseDataset
+from .utils import check_img_paths
 
 
 class DomainNet(BaseDataset):
@@ -16,6 +17,7 @@ class DomainNet(BaseDataset):
         with open(labels_file) as f:
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
+        check_img_paths(img_dir, self.img_paths, domain)
         self.labels = [int(x[1]) for x in content]
         self.transform = transform
 
@@ -42,6 +44,7 @@ class DomainNet126Full(BaseDataset):
                     content[path] = label
 
         self.img_paths = [os.path.join(img_dir, x) for x in content.keys()]
+        check_img_paths(img_dir, self.img_paths, domain)
         self.labels = [int(x) for x in content.values()]
         self.transform = transform
 
@@ -58,5 +61,6 @@ class DomainNet126(BaseDataset):
         with open(labels_file) as f:
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
+        check_img_paths(img_dir, self.img_paths, domain)
         self.labels = [int(x[1]) for x in content]
         self.transform = transform

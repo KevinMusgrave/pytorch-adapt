@@ -4,6 +4,7 @@ import torch
 from torchvision import datasets as torch_datasets
 
 from .base_dataset import BaseDataset
+from .utils import check_img_paths
 
 
 class Office31Full(BaseDataset):
@@ -33,5 +34,6 @@ class Office31(BaseDataset):
         with open(labels_file) as f:
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
+        check_img_paths(img_dir, self.img_paths, domain)
         self.labels = [int(x[1]) for x in content]
         self.transform = transform
