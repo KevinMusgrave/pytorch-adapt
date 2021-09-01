@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Any, Dict, Union
 
 import numpy as np
 import torch
@@ -7,14 +8,28 @@ from ..utils import common_functions as c_f
 
 
 class BaseHook(ABC):
+    """All hooks extend ```BaseHook```"""
+
     def __init__(
         self,
-        loss_prefix="",
-        loss_suffix="",
-        out_prefix="",
-        out_suffix="",
-        key_map=None,
+        loss_prefix: str = "",
+        loss_suffix: str = "",
+        out_prefix: str = "",
+        out_suffix: str = "",
+        key_map: Union[None, Dict[str, str]] = None,
     ):
+        """
+        Arguments:
+            loss_prefix: prepended to all new loss keys
+            loss_suffix: appended to all new loss keys
+            out_prefix: prepended to all new output keys
+            out_suffix: appended to all new output keys
+            key_map: a mapping from ```input_key``` to ```new_key```.
+                For example, if key_map = {"A": "B"}, and the input dict to ```__call__``` is {"A": 5},
+                then the input will be converted to {"B": 5} before being consumed. Before exiting ```__call__```,
+                the mapping is undone so the input context is preserved.
+                In other words, {"B": 5} will be converted back to {"A": 5}.
+        """
         if any(
             not isinstance(x, str)
             for x in [loss_prefix, loss_suffix, out_prefix, out_suffix]
@@ -51,11 +66,18 @@ class BaseHook(ABC):
             raise
 
     @abstractmethod
-    def call(self, losses, inputs):
+    def call(self, losses: Dict[str, Any], inputs: Dict[str, Any]):
+        """
+        This must be implemented by the child class
+        Arguments:
+            losses: previously computed losses
+            inputs: holds everything else: tensors, models etc.
+        """
         pass
 
     @abstractmethod
     def _loss_keys(self):
+        """This must be implemented by the child class"""
         pass
 
     @property
@@ -66,6 +88,7 @@ class BaseHook(ABC):
 
     @abstractmethod
     def _out_keys(self):
+        """This must be implemented by the child class"""
         pass
 
     @property
@@ -139,19 +162,29 @@ def check_keys_are_present(cls, x, y, x_name, y_name):
 
 
 class BaseConditionHook(BaseHook):
+    """The base class for hooks that return a boolean"""
+
     def _loss_keys(self):
+        """"""
         return []
 
     def _out_keys(self):
+        """"""
         return []
 
 
 class BaseWrapperHook(BaseHook):
+    """A simple wrapper for calling ```self.hook```,
+    which should be defined in the child's ```__init__``` function."""
+
     def call(self, *args, **kwargs):
+        """"""
         return self.hook(*args, **kwargs)
 
     def _loss_keys(self):
+        """"""
         return self.hook.loss_keys
 
     def _out_keys(self):
+        """"""
         return self.hook.out_keys

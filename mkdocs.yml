@@ -1,20 +1,4 @@
 site_name: PyTorch Adapt
-nav:
-    - Home: index.md
-    - Adapters: adapters.md
-    - Containers: containers.md
-    - Datasets: datasets.md
-    - Frameworks: frameworks.md
-    - Hooks:
-      - Overview: hooks/index.md
-      - Base: hooks/base.md
-      - Utils: hooks/utils.md
-    - Layers: layers.md
-    - Meta Validators: meta_validators.md
-    - Models: models.md
-    - Utils: utils.md
-    - Validators: validators.md
-    - Weighters: weighters.md
 theme:
   name: 'material'
   palette:
@@ -22,12 +6,38 @@ theme:
     accent: 'green'
   logo: imgs/TinyLogo.png
   favicon: imgs/Favicon.png
+
+
+plugins:
+- search
+- section-index
+- literate-nav:
+    nav_file: SUMMARY.md
+- mkdocstrings:
+    default_handler: python
+    handlers:
+      python:
+        selection:
+          filters: []
+        rendering:
+          show_root_heading: true
+          show_source: true
+          heading_level: 3
+        setup_commands:
+          - import sys
+          - sys.path.append("src")
+      watch:
+      - src/pytorch_adapt
+      selection:
+        new_path_syntax: yes
+
 markdown_extensions:
-  - codehilite
-  - toc:
-      permalink: true
-  - attr_list
-  - pymdownx.highlight
-  - pymdownx.superfences
+- toc:
+    permalink: True
+
+
+extra_css:
+- css/style.css
+
 repo_name: 'KevinMusgrave/pytorch-adapt'
 repo_url: 'https://github.com/KevinMusgrave/pytorch-adapt'
