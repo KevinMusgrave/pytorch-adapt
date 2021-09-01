@@ -5,7 +5,7 @@ from .base_dataset import BaseDataset
 
 class MNISTM(BaseDataset):
     def __init__(self, root, train, transform, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(domain="MNISTM", **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")
         name = "train" if train else "test"

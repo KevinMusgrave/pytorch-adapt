@@ -23,6 +23,7 @@ def check(cls, layer, x, batch_size, out_size, should_be_equal):
 
 class TestStochasticLinear(unittest.TestCase):
     def test_stochastic_linear(self):
+        torch.manual_seed(249)
         for dtype in TEST_DTYPES:
             batch_size = 32
             in_size = 128

@@ -1,8 +1,9 @@
 import unittest
 
+import numpy as np
 import torch
 
-from pytorch_adapt.layers import AdaptiveFeatureNorm
+from pytorch_adapt.layers import AdaptiveFeatureNorm, L2PreservedDropout
 
 from .. import TEST_DEVICE, TEST_DTYPES
 
@@ -38,3 +39,27 @@ class TestAdaptiveFeatureNorm(unittest.TestCase):
             grad2 = x.grad.clone()
 
             self.assertTrue(torch.allclose(grad1, grad2))
+
+    def test_l2_preserved_dropout(self):
+        for p in np.linspace(0.1, 0.9, 9):
+            regular = torch.nn.Dropout(p=p)
+            l2_preserved = L2PreservedDropout(p=p)
+            emb = torch.randn(32, 128)
+            regular.eval()
+            l2_preserved.eval()
+            self.assertTrue(torch.equal(regular(emb), l2_preserved(emb)))
+            self.assertTrue(torch.equal(emb, l2_preserved(emb)))
+
+            regular.train()
+            l2_preserved.train()
+            regular_out = regular(emb)
+            l2_out = l2_preserved(emb)
+            self.assertTrue(not torch.equal(regular_out, l2_out))
+            self.assertTrue(not torch.equal(emb, l2_out))
+
+            l1_norm = torch.norm(emb, p=1)
+            l2_norm = torch.norm(emb, p=2)
+            self.assertTrue(
+                torch.isclose(torch.norm(regular_out, p=1), l1_norm, rtol=1e-1)
+            )
+            self.assertTrue(torch.isclose(torch.norm(l2_out, p=2), l2_norm, rtol=1e-1))

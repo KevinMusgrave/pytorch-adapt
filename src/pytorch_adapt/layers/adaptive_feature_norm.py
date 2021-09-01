@@ -1,3 +1,5 @@
+import math
+
 import torch
 
 from ..utils import common_functions as c_f
@@ -16,3 +18,16 @@ class AdaptiveFeatureNorm(torch.nn.Module):
 
     def extra_repr(self):
         return c_f.extra_repr(self, ["step_size"])
+
+
+class L2PreservedDropout(torch.nn.Module):
+    def __init__(self, p=0.5, inplace=False):
+        super().__init__()
+        self.dropout = torch.nn.Dropout(p=p, inplace=inplace)
+        self.scale = math.sqrt(1 - p)
+
+    def forward(self, x):
+        x = self.dropout(x)
+        if self.training:
+            return x * self.scale
+        return x

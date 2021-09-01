@@ -8,8 +8,10 @@ class Classifier(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(in_size, h),
             nn.ReLU(),
+            nn.Dropout(),
             nn.Linear(h, h // 2),
             nn.ReLU(),
+            nn.Dropout(),
             nn.Linear(h // 2, num_classes),
         )
 

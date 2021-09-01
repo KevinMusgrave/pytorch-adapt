@@ -6,8 +6,9 @@ from torchvision import datasets as torch_datasets
 from .base_dataset import BaseDataset
 
 
-class Office31Full(torch.utils.data.Dataset):
+class Office31Full(BaseDataset):
     def __init__(self, root, domain, transform):
+        super().__init__(domain=domain)
         self.transform = transform
         self.dataset = torch_datasets.ImageFolder(
             os.path.join(root, "office31", domain, "images"), transform=self.transform
@@ -22,7 +23,7 @@ class Office31Full(torch.utils.data.Dataset):
 
 class Office31(BaseDataset):
     def __init__(self, root, domain, train, transform, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(domain=domain, **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")
         name = "train" if train else "test"

@@ -1,8 +1,6 @@
-import faiss
 import torch
 import torch.nn.functional as F
 from pytorch_metric_learning.utils import common_functions as pml_cf
-from pytorch_metric_learning.utils.stat_utils import get_knn
 
 from ..utils import common_functions as c_f
 
@@ -19,7 +17,6 @@ class NeighborhoodAggregation(torch.nn.Module):
         )
         self.k = k
         self.T = T
-        self.index = faiss.IndexFlatL2(feature_dim)
 
     def forward(self, features, logits=None, update=False, idx=None):
         # move to device if necessary
@@ -27,20 +24,17 @@ class NeighborhoodAggregation(torch.nn.Module):
         self.pred_memory = pml_cf.to_device(self.pred_memory, features)
         with torch.no_grad():
             features = F.normalize(features)
-            pseudo_labels, mean_logits = self.get_pseudo_labels(features)
+            pseudo_labels, mean_logits = self.get_pseudo_labels(features, idx)
             if update:
                 self.update_memory(features, logits, idx)
         return pseudo_labels, mean_logits
 
-    def get_pseudo_labels(self, normalized_features):
-        self.index.reset()
-        indices, _ = get_knn(
-            self.feat_memory,
-            normalized_features,
-            self.k,
-            embeddings_come_from_same_source=True,
-            index=self.index,
-        )
+    def get_pseudo_labels(self, normalized_features, idx):
+        dis = torch.mm(normalized_features, self.feat_memory.t())
+        # set self-comparisons to min similarity
+        for di in range(dis.size(0)):
+            dis[di, idx[di]] = torch.min(dis)
+        _, indices = torch.topk(dis, k=self.k, dim=1)
         logits = torch.mean(self.pred_memory[indices], dim=1)
         pseudo_labels = torch.argmax(logits, dim=1)
         return pseudo_labels, logits
@@ -51,14 +45,6 @@ class NeighborhoodAggregation(torch.nn.Module):
         logits = (logits ** p) / torch.sum(logits ** p, dim=1, keepdims=True)
         self.feat_memory[idx] = normalized_features
         self.pred_memory[idx] = logits
-
-    def to(self, device):
-        if device.index is None:
-            self.index = faiss.index_cpu_to_all_gpus(self.index)
-        else:
-            res = faiss.StandardGpuResources()
-            self.index = index_cpu_to_all_gpus(res, device.index, self.index)
-        return super().to(device)
 
     def extra_repr(self):
         return c_f.extra_repr(self, ["k", "T"])

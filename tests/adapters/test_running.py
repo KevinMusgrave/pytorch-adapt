@@ -133,8 +133,6 @@ class TestRunning(unittest.TestCase):
         run_adapter(self, TEST_FOLDER, adapter, log_files)
 
     def test_aligner(self):
-        models = get_gcd()
-        del models["D"]
         log_files = common_log_files()
         log_files.update(
             {
@@ -152,6 +150,8 @@ class TestRunning(unittest.TestCase):
             }
         )
         for loss_fn in [MMDLoss(), CORALLoss()]:
+            models = get_gcd()
+            del models["D"]
             adapter = Aligner(models=models, hook_kwargs={"loss_fn": loss_fn})
             self.assertTrue(isinstance(adapter.hook, AlignerPlusCHook))
             run_adapter(self, TEST_FOLDER, adapter, log_files)
