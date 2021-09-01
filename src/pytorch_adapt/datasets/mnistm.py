@@ -1,6 +1,7 @@
 import os
 
 from .base_dataset import BaseDataset
+from .utils import check_length
 
 
 class MNISTM(BaseDataset):
@@ -15,5 +16,6 @@ class MNISTM(BaseDataset):
         with open(labels_file) as f:
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
+        check_length(self, {"train": 59001, "test": 9001}[name])
         self.labels = [int(x[1]) for x in content]
         self.transform = transform

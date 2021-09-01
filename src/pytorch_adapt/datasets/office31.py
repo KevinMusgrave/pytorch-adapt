@@ -4,7 +4,7 @@ import torch
 from torchvision import datasets as torch_datasets
 
 from .base_dataset import BaseDataset
-from .utils import check_img_paths
+from .utils import check_img_paths, check_length
 
 
 class Office31Full(BaseDataset):
@@ -14,6 +14,7 @@ class Office31Full(BaseDataset):
         self.dataset = torch_datasets.ImageFolder(
             os.path.join(root, "office31", domain, "images"), transform=self.transform
         )
+        check_length(self, {"amazon": 2817, "dslr": 498, "webcam": 795}[domain])
 
     def __len__(self):
         return len(self.dataset)
@@ -35,5 +36,13 @@ class Office31(BaseDataset):
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
         check_img_paths(img_dir, self.img_paths, domain)
+        check_length(
+            self,
+            {
+                "amazon": {"train": 2253, "test": 564}[name],
+                "dslr": {"train": 398, "test": 100}[name],
+                "webcam": {"train": 636, "test": 159}[name],
+            }[domain],
+        )
         self.labels = [int(x[1]) for x in content]
         self.transform = transform
