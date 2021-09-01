@@ -23,21 +23,23 @@ def loop_through_dataset(dataset):
         pass
 
 
+def no_duplicates_and_correct_number_of_classes(cls, d, num_classes, dataset_folder):
+    cls.assertTrue(len(set(d.img_paths)) == len(d.img_paths))
+    cls.assertTrue(len(set(d.labels)) == num_classes)
+    assert_classnames_match_labels(cls, d, dataset_folder)
+
+
 def check_full(cls, num_classes, domains, full_class, dataset_folder):
     transform = simple_transform()
     for domain in domains:
         d = full_class(dataset_folder, domain, transform)
-        cls.assertTrue(len(set(d.img_paths)) == len(d.img_paths))
-        cls.assertTrue(len(set(d.labels)) == num_classes)
-        assert_classnames_match_labels(cls, d, dataset_folder)
+        no_duplicates_and_correct_number_of_classes(cls, d, num_classes, dataset_folder)
         loop_through_dataset(d)
 
 
 def check_train_test_disjoint(cls, num_classes, train, test, dataset_folder):
     for d in [train, test]:
-        cls.assertTrue(len(set(d.img_paths)) == len(d.img_paths))
-        cls.assertTrue(len(set(d.labels)) == num_classes)
-        assert_classnames_match_labels(cls, d, dataset_folder)
+        no_duplicates_and_correct_number_of_classes(cls, d, num_classes, dataset_folder)
 
     cls.assertTrue(set(train.img_paths).isdisjoint(set(test.img_paths)))
     return torch.utils.data.ConcatDataset([train, test])

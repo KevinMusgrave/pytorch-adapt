@@ -2,7 +2,7 @@ import os
 from collections import OrderedDict
 
 from .base_dataset import BaseDataset
-from .utils import check_img_paths
+from .utils import check_img_paths, check_length
 
 
 class DomainNet(BaseDataset):
@@ -18,6 +18,17 @@ class DomainNet(BaseDataset):
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
         check_img_paths(img_dir, self.img_paths, domain)
+        check_length(
+            self,
+            {
+                "clipart": {"train": 33525, "test": 14604}[name],
+                "infograph": {"train": 36023, "test": 15582}[name],
+                "painting": {"train": 50416, "test": 21850}[name],
+                "quickdraw": {"train": 120750, "test": 51750}[name],
+                "real": {"train": 120906, "test": 52041}[name],
+                "sketch": {"train": 48212, "test": 20916}[name],
+            }[domain],
+        )
         self.labels = [int(x[1]) for x in content]
         self.transform = transform
 
@@ -62,5 +73,14 @@ class DomainNet126(BaseDataset):
             content = [line.rstrip().split(" ") for line in f]
         self.img_paths = [os.path.join(img_dir, x[0]) for x in content]
         check_img_paths(img_dir, self.img_paths, domain)
+        check_length(
+            self,
+            {
+                "clipart": {"train": 14962, "test": 3741}[name],
+                "painting": {"train": 25201, "test": 6301}[name],
+                "real": {"train": 56286, "test": 14072}[name],
+                "sketch": {"train": 19665, "test": 4917}[name],
+            }[domain],
+        )
         self.labels = [int(x[1]) for x in content]
         self.transform = transform
