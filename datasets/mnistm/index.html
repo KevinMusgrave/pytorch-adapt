@@ -9,19 +9,19 @@
       
       
       
-      <link rel="icon" href="../imgs/Favicon.png">
+      <link rel="icon" href="../../imgs/Favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.10">
     
     
       
-        <title>Datasets - PyTorch Adapt</title>
+        <title>MNISTM - PyTorch Adapt</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.1fe995fd.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1fe995fd.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
       
     
@@ -36,9 +36,9 @@
     
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="../../css/style.css">
     
     
       
@@ -59,7 +59,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#datasets" class="md-skip">
+        <a href="#pytorch_adapt.datasets.mnistm" class="md-skip">
           Skip to content
         </a>
       
@@ -80,9 +80,9 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="PyTorch Adapt" class="md-header__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
+    <a href="../.." title="PyTorch Adapt" class="md-header__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
       
-  <img src="../imgs/TinyLogo.png" alt="logo">
+  <img src="../../imgs/TinyLogo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Datasets
+              MNISTM
             
           </span>
         </div>
@@ -194,9 +194,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="PyTorch Adapt" class="md-nav__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
+    <a href="../.." title="PyTorch Adapt" class="md-nav__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
       
-  <img src="../imgs/TinyLogo.png" alt="logo">
+  <img src="../../imgs/TinyLogo.png" alt="logo">
 
     </a>
     PyTorch Adapt
@@ -225,7 +225,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Overview
       </a>
     </li>
@@ -250,7 +250,7 @@
       <label class="md-nav__link" for="__nav_2">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="./" class="md-nav__link md-nav__link--active"
+          <a href="../" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Datasets
@@ -260,7 +260,7 @@
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="./" class="md-nav__link md-nav__link--active"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Datasets
@@ -273,7 +273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="domainnet/" class="md-nav__link">
+      <a href="../domainnet/" class="md-nav__link">
         DomainNet
       </a>
     </li>
@@ -283,11 +283,78 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="mnistm/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            MNISTM
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         MNISTM
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.mnistm" class="md-nav__link">
+    mnistm
+  </a>
+  
+    <nav class="md-nav" aria-label="mnistm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="md-nav__link">
+    MNISTM
+  </a>
+  
+    <nav class="md-nav" aria-label="MNISTM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.mnistm.MNISTM.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -297,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="office31/" class="md-nav__link">
+      <a href="../office31/" class="md-nav__link">
         Office31
       </a>
     </li>
@@ -309,7 +376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="wrappers/" class="md-nav__link">
+      <a href="../wrappers/" class="md-nav__link">
         Wrappers
       </a>
     </li>
@@ -338,7 +405,7 @@
       <label class="md-nav__link" for="__nav_3">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../hooks/" class="md-nav__link"
+          <a href="../../hooks/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Hooks
@@ -348,7 +415,7 @@
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../hooks/" class="md-nav__link"
+            <a href="../../hooks/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Hooks
@@ -361,7 +428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hooks/base/" class="md-nav__link">
+      <a href="../../hooks/base/" class="md-nav__link">
         Base
       </a>
     </li>
@@ -373,7 +440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hooks/utils/" class="md-nav__link">
+      <a href="../../hooks/utils/" class="md-nav__link">
         Utils
       </a>
     </li>
@@ -394,7 +461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../weighters/" class="md-nav__link">
+      <a href="../../weighters/" class="md-nav__link">
         Weighters
       </a>
     </li>
@@ -417,8 +484,47 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.mnistm" class="md-nav__link">
+    mnistm
+  </a>
+  
+    <nav class="md-nav" aria-label="mnistm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="md-nav__link">
+    MNISTM
+  </a>
+  
+    <nav class="md-nav" aria-label="MNISTM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.mnistm.MNISTM.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -430,12 +536,182 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/datasets/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/datasets/mnistm.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="datasets">Datasets<a class="headerlink" href="#datasets" title="Permanent link">&para;</a></h1>
+                  <h1>MNISTM</h1>
+                
+                <div class="doc doc-object doc-module">
+
+
+
+<h3 id="pytorch_adapt.datasets.mnistm" class="doc doc-heading">
+        <code>pytorch_adapt.datasets.mnistm</code>
+
+
+
+<a href="#pytorch_adapt.datasets.mnistm" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.datasets.mnistm.MNISTM" class="doc doc-heading">
+        <code>MNISTM</code>
+
+
+
+<a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>The dataset used in "Domain-Adversarial Training of Neural Networks".
+It consists of colored MNIST digits.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.datasets.mnistm.MNISTM.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.datasets.mnistm.MNISTM.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>root</code></td>
+        <td><code>str</code></td>
+        <td><p>The dataset must be located at <code>&lt;root&gt;/mnist_m</code></p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>train</code></td>
+        <td><code>bool</code></td>
+        <td><p>Whether or not to use the training set.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>transform</code></td>
+        <td><code></code></td>
+        <td><p>The image transform applied to each sample.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\mnistm.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        root: The dataset must be located at ```&lt;root&gt;/mnist_m```</span>
+<span class="sd">        train: Whether or not to use the training set.</span>
+<span class="sd">        transform: The image transform applied to each sample.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;MNISTM&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;train should be True or False&quot;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="s2">&quot;test&quot;</span>
+    <span class="n">labels_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;mnist_m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;mnist_m_</span><span class="si">{name}</span><span class="s2">_labels.txt&quot;</span><span class="p">)</span>
+    <span class="n">img_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;mnist_m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;mnist_m_</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">labels_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]</span>
+    <span class="n">check_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="mi">59001</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="mi">9001</span><span class="p">}[</span><span class="n">name</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
                 
               
               
@@ -455,7 +731,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+        <a href="../domainnet/" class="md-footer__link md-footer__link--prev" aria-label="Previous: DomainNet" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -464,20 +740,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Overview
+              DomainNet
             </div>
           </div>
         </a>
       
       
         
-        <a href="domainnet/" class="md-footer__link md-footer__link--next" aria-label="Next: DomainNet" rel="next">
+        <a href="../office31/" class="md-footer__link md-footer__link--next" aria-label="Next: Office31" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              DomainNet
+              Office31
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -506,10 +782,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.ddd52ceb.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ddd52ceb.min.js"></script>
       
     
   </body>

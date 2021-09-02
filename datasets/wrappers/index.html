@@ -271,6 +271,42 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../domainnet/" class="md-nav__link">
+        DomainNet
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mnistm/" class="md-nav__link">
+        MNISTM
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../office31/" class="md-nav__link">
+        Office31
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -365,6 +401,46 @@
   <a href="#pytorch_adapt.datasets.concat_dataset.ConcatDataset" class="md-nav__link">
     ConcatDataset
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset" class="md-nav__link">
+    pseudo_labeled_dataset
+  </a>
+  
+    <nav class="md-nav" aria-label="pseudo_labeled_dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset" class="md-nav__link">
+    PseudoLabeledDataset
+  </a>
+  
+    <nav class="md-nav" aria-label="PseudoLabeledDataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__getitem__" class="md-nav__link">
+    __getitem__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -628,6 +704,46 @@
   <a href="#pytorch_adapt.datasets.concat_dataset.ConcatDataset" class="md-nav__link">
     ConcatDataset
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset" class="md-nav__link">
+    pseudo_labeled_dataset
+  </a>
+  
+    <nav class="md-nav" aria-label="pseudo_labeled_dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset" class="md-nav__link">
+    PseudoLabeledDataset
+  </a>
+  
+    <nav class="md-nav" aria-label="PseudoLabeledDataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__getitem__" class="md-nav__link">
+    __getitem__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1068,6 +1184,247 @@ except with a nice <code>__repr__</code> function.</p>
 
 
 
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h3 id="pytorch_adapt.datasets.pseudo_labeled_dataset" class="doc doc-heading">
+        <code>pytorch_adapt.datasets.pseudo_labeled_dataset</code>
+
+
+
+<a href="#pytorch_adapt.datasets.pseudo_labeled_dataset" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset" class="doc doc-heading">
+        <code>PseudoLabeledDataset</code>
+
+
+
+<a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This wrapper returns a dictionary,
+but it expects the wrapped dataset to return a tuple of (data, label).
+The label returned by the wrapped dataset is discarded,
+and the pseudo label is returned instead.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__getitem__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__getitem__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code></code></td>
+      <td><p>A dictionary with
+"src_imgs" (the data),
+"src_domain" (the integer representing the domain),
+"src_labels" (the pseudo label),
+"src_sample_idx" (idx)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\pseudo_labeled_dataset.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary with</span>
+<span class="sd">        &quot;src_imgs&quot; (the data),</span>
+<span class="sd">        &quot;src_domain&quot; (the integer representing the domain),</span>
+<span class="sd">        &quot;src_labels&quot; (the pseudo label),</span>
+<span class="sd">        &quot;src_sample_idx&quot; (idx)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;src_imgs&quot;</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span>
+        <span class="s2">&quot;src_domain&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
+        <span class="s2">&quot;src_labels&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pseudo_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+        <span class="s2">&quot;src_sample_idx&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">pseudo_labels</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.datasets.pseudo_labeled_dataset.PseudoLabeledDataset.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>dataset</code></td>
+        <td><code>Dataset</code></td>
+        <td><p>The dataset to wrap</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pseudo_labels</code></td>
+        <td><code>List[int]</code></td>
+        <td><p>The class labels that will be used
+instead of the labels contained in self.dataset</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>domain</code></td>
+        <td><code>int</code></td>
+        <td><p>An integer representing the domain.</p></td>
+        <td><code>0</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\pseudo_labeled_dataset.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">pseudo_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        dataset: The dataset to wrap</span>
+<span class="sd">        pseudo_labels: The class labels that will be used</span>
+<span class="sd">            instead of the labels contained in self.dataset</span>
+<span class="sd">        domain: An integer representing the domain.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pseudo_labels</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;len(dataset) must equal len(pseudo_labels)&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pseudo_labels</span> <span class="o">=</span> <span class="n">pseudo_labels</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -1543,7 +1900,7 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Datasets" rel="prev">
+        <a href="../office31/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Office31" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1552,7 +1909,7 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Datasets
+              Office31
             </div>
           </div>
         </a>
