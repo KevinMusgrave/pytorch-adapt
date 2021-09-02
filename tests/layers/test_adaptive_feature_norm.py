@@ -8,7 +8,7 @@ from pytorch_adapt.layers import AdaptiveFeatureNorm, L2PreservedDropout
 from .. import TEST_DEVICE, TEST_DTYPES
 
 
-# https://github.com/thuml/Batch-Spectral-Penalization/blob/master/train.py
+# https://github.com/jihanyang/AFN/blob/master/vanilla/Office31/SAFN/code/train.py
 def original_implementation(x):
     radius = x.norm(p=2, dim=1).detach()
     assert radius.requires_grad == False

@@ -8,5 +8,6 @@
 - [Hooks](hooks/index.md)
     - [Base](hooks/base.md)
     - [Utils](hooks/utils.md)
+- [Layers](layers/index.md)
 - [Meta Validators](meta_validators/index.md)
 - [Weighters](weighters/index.md)
