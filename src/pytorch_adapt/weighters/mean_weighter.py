@@ -10,5 +10,9 @@ def mean_weighter(kwargs):
 
 
 class MeanWeighter(BaseWeighter):
+    """
+    Weights the losses and then returns the **mean** of the weighted losses.
+    """
+
     def __init__(self, **kwargs):
         super().__init__(reduction=mean, **kwargs)

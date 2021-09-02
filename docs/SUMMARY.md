@@ -2,3 +2,4 @@
 - [Hooks](hooks/index.md)
     - [Base](hooks/base.md)
     - [Utils](hooks/utils.md)
+- [Weighters](weighters/index.md)
