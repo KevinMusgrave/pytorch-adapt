@@ -1,18 +1,43 @@
+from typing import Any, Dict
+
 import numpy as np
 import torch
 
 from ..utils import common_functions as c_f
+from .source_dataset import SourceDataset
+from .target_dataset import TargetDataset
 
 
 class CombinedSourceAndTargetDataset(torch.utils.data.Dataset):
-    def __init__(self, source_dataset, target_dataset):
+    """
+    Wraps a source dataset and a target dataset.
+    """
+
+    def __init__(self, source_dataset: SourceDataset, target_dataset: TargetDataset):
+        """
+        Arguments:
+            source_dataset:
+            target_dataset:
+        """
+
         self.source_dataset = source_dataset
         self.target_dataset = target_dataset
 
     def __len__(self):
+        """
+        Returns:
+            The length of the target dataset.
+        """
         return len(self.target_dataset)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx) -> Dict[str, Any]:
+        """
+        Arguments:
+            idx: The index of the target dataset. The source index is picked randomly.
+        Returns:
+            A dictionary containing both source and target data.
+            The source keys start with "src", and the target keys start with "target".
+        """
         target_data = self.target_dataset[idx]
         src_data = self.source_dataset[self.get_random_src_idx(idx)]
         return {**src_data, **target_data}
