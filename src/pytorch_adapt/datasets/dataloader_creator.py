@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
 import torch
-from torch.utils.data import Dataloader
+from torch.utils.data import DataLoader
 
 from ..utils import common_functions as c_f
 
@@ -27,9 +27,9 @@ class DataloaderCreator:
         """
         Arguments:
             train_kwargs: The keyword arguments that will be
-                passed to every Dataloader constructor for train-time datasets.
+                passed to every DataLoader constructor for train-time datasets.
             val_kwargs: The keyword arguments that will be
-                passed to every Dataloader constructor for validation-time datasets.
+                passed to every DataLoader constructor for validation-time datasets.
             train_names: A list of the dataset names that are used during training.
             val_names: A list of the dataset names that are used during validation.
             all_train: If True, then all input datasets are assumed to be for training,
@@ -73,10 +73,10 @@ class DataloaderCreator:
         self.all_train = all_train
         self.all_val = all_val
 
-    def __call__(self, **kwargs) -> Dict[str, Dataloader]:
+    def __call__(self, **kwargs) -> Dict[str, DataLoader]:
         """
         Arguments:
-            keyword arguments mapping from dataset names to datasets.
+            **kwargs: keyword arguments mapping from dataset names to datasets.
         Returns:
             a dictionary mapping from dataset names to dataloaders.
         """
