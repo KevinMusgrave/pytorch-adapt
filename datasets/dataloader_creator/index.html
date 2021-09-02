@@ -347,6 +347,39 @@
     dataloader_creator
   </a>
   
+    <nav class="md-nav" aria-label="dataloader_creator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator" class="md-nav__link">
+    DataloaderCreator
+  </a>
+  
+    <nav class="md-nav" aria-label="DataloaderCreator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__call__" class="md-nav__link">
+    __call__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -482,6 +515,39 @@
     dataloader_creator
   </a>
   
+    <nav class="md-nav" aria-label="dataloader_creator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator" class="md-nav__link">
+    DataloaderCreator
+  </a>
+  
+    <nav class="md-nav" aria-label="DataloaderCreator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__call__" class="md-nav__link">
+    __call__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -525,6 +591,364 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.datasets.dataloader_creator.DataloaderCreator" class="doc doc-heading">
+        <code>DataloaderCreator</code>
+
+
+
+<a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>This is a factory class for creating dataloaders.
+The <code>__call__</code> function takes in keyword arguments which are datasets,
+and outputs a dictionary of dataloaders (one dataloader for each input dataset).</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__call__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__call__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code></code></td>
+        <td><p>keyword arguments mapping from dataset names to datasets.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, torch.utils.data.dataloader.DataLoader]</code></td>
+      <td><p>a dictionary mapping from dataset names to dataloaders.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\dataloader_creator.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        **kwargs: keyword arguments mapping from dataset names to datasets.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        a dictionary mapping from dataset names to dataloaders.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_train</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_kwargs</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_val</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_kwargs</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_names</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_kwargs</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_names</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_kwargs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Dataset split name must be in </span><span class="si">{self.train_names}</span><span class="s2"> or </span><span class="si">{self.val_names}</span><span class="s2">, or one of self.all_train or self.all_val must be true&quot;</span>
+            <span class="p">)</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="n">dataloader_kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">train_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">all_train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">all_val</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>train_kwargs</code></td>
+        <td><code>Dict[str, Any]</code></td>
+        <td><p>The keyword arguments that will be
+passed to every DataLoader constructor for train-time datasets.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>val_kwargs</code></td>
+        <td><code>Dict[str, Any]</code></td>
+        <td><p>The keyword arguments that will be
+passed to every DataLoader constructor for validation-time datasets.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>train_names</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>A list of the dataset names that are used during training.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>val_names</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>A list of the dataset names that are used during validation.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>all_train</code></td>
+        <td><code>bool</code></td>
+        <td><p>If True, then all input datasets are assumed to be for training,
+regardless of their names.</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>all_val</code></td>
+        <td><code>bool</code></td>
+        <td><p>If True, then all input datasets are assumed to be for validation,
+regardless of their names.</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>batch_size</code></td>
+        <td><code>int</code></td>
+        <td><p>The default <code>batch_size</code> used in train_kwargs
+(if not provided) and val_kwargs (if not provided)</p></td>
+        <td><code>32</code></td>
+      </tr>
+      <tr>
+        <td><code>num_workers</code></td>
+        <td><code>int</code></td>
+        <td><p>The default <code>num_workers</code> used in train_kwargs
+(if not provided) and val_kwargs (if not provided)</p></td>
+        <td><code>0</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\dataloader_creator.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">train_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">val_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">train_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">val_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">all_train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">all_val</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        train_kwargs: The keyword arguments that will be</span>
+<span class="sd">            passed to every DataLoader constructor for train-time datasets.</span>
+<span class="sd">        val_kwargs: The keyword arguments that will be</span>
+<span class="sd">            passed to every DataLoader constructor for validation-time datasets.</span>
+<span class="sd">        train_names: A list of the dataset names that are used during training.</span>
+<span class="sd">        val_names: A list of the dataset names that are used during validation.</span>
+<span class="sd">        all_train: If True, then all input datasets are assumed to be for training,</span>
+<span class="sd">            regardless of their names.</span>
+<span class="sd">        all_val: If True, then all input datasets are assumed to be for validation,</span>
+<span class="sd">            regardless of their names.</span>
+<span class="sd">        batch_size: The default ```batch_size``` used in train_kwargs</span>
+<span class="sd">            (if not provided) and val_kwargs (if not provided)</span>
+<span class="sd">        num_workers: The default ```num_workers``` used in train_kwargs</span>
+<span class="sd">            (if not provided) and val_kwargs (if not provided)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">train_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">train_kwargs</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">batch_size</span><span class="p">,</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="n">num_workers</span><span class="p">,</span>
+            <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;drop_last&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">val_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">val_kwargs</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">batch_size</span><span class="p">,</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="n">num_workers</span><span class="p">,</span>
+            <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;drop_last&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">train_names</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">train_names</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">val_names</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">val_names</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;src_train&quot;</span><span class="p">,</span> <span class="s2">&quot;target_train&quot;</span><span class="p">,</span> <span class="s2">&quot;src_val&quot;</span><span class="p">,</span> <span class="s2">&quot;target_val&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_names</span><span class="p">)</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_names</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;train_names </span><span class="si">{self.train_names}</span><span class="s2"> must be disjoint from val_names </span><span class="si">{self.val_names}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">all_train</span> <span class="ow">and</span> <span class="n">all_val</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all_train and all_val cannot both be True&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">all_train</span> <span class="o">=</span> <span class="n">all_train</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">all_val</span> <span class="o">=</span> <span class="n">all_val</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
