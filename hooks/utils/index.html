@@ -23,10 +23,6 @@
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
-          
-          
-          <meta name="theme-color" content="#4cae4f">
-        
       
     
     
@@ -55,13 +51,17 @@
   
     
     
+      
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="green">
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
   
     
     <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -104,6 +104,28 @@
         </div>
       </div>
     </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
     
     
     
@@ -305,6 +327,46 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ApplyFnHook" class="md-nav__link">
+    ApplyFnHook
+  </a>
+  
+    <nav class="md-nav" aria-label="ApplyFnHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ApplyFnHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.AssertHook" class="md-nav__link">
+    AssertHook
+  </a>
+  
+    <nav class="md-nav" aria-label="AssertHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.AssertHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.ChainHook" class="md-nav__link">
     ChainHook
   </a>
@@ -339,6 +401,26 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.MultiplierHook" class="md-nav__link">
+    MultiplierHook
+  </a>
+  
+    <nav class="md-nav" aria-label="MultiplierHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.MultiplierHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.NotHook" class="md-nav__link">
     NotHook
   </a>
@@ -348,6 +430,26 @@
         
           <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.NotHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.OnlyNewOutputsHook" class="md-nav__link">
+    OnlyNewOutputsHook
+  </a>
+  
+    <nav class="md-nav" aria-label="OnlyNewOutputsHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.OnlyNewOutputsHook.__init__" class="md-nav__link">
     __init__()
   </a>
   
@@ -379,9 +481,49 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.RepeatHook" class="md-nav__link">
+    RepeatHook
+  </a>
+  
+    <nav class="md-nav" aria-label="RepeatHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.RepeatHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.TrueHook" class="md-nav__link">
     TrueHook
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook" class="md-nav__link">
+    ZeroLossHook
+  </a>
+  
+    <nav class="md-nav" aria-label="ZeroLossHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -436,6 +578,46 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ApplyFnHook" class="md-nav__link">
+    ApplyFnHook
+  </a>
+  
+    <nav class="md-nav" aria-label="ApplyFnHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ApplyFnHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.AssertHook" class="md-nav__link">
+    AssertHook
+  </a>
+  
+    <nav class="md-nav" aria-label="AssertHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.AssertHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.ChainHook" class="md-nav__link">
     ChainHook
   </a>
@@ -470,6 +652,26 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.MultiplierHook" class="md-nav__link">
+    MultiplierHook
+  </a>
+  
+    <nav class="md-nav" aria-label="MultiplierHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.MultiplierHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.NotHook" class="md-nav__link">
     NotHook
   </a>
@@ -479,6 +681,26 @@
         
           <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.NotHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.OnlyNewOutputsHook" class="md-nav__link">
+    OnlyNewOutputsHook
+  </a>
+  
+    <nav class="md-nav" aria-label="OnlyNewOutputsHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.OnlyNewOutputsHook.__init__" class="md-nav__link">
     __init__()
   </a>
   
@@ -510,9 +732,49 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.RepeatHook" class="md-nav__link">
+    RepeatHook
+  </a>
+  
+    <nav class="md-nav" aria-label="RepeatHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.RepeatHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.hooks.utils.TrueHook" class="md-nav__link">
     TrueHook
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook" class="md-nav__link">
+    ZeroLossHook
+  </a>
+  
+    <nav class="md-nav" aria-label="ZeroLossHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -564,6 +826,249 @@
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.hooks.utils.ApplyFnHook" class="doc doc-heading">
+        <code>ApplyFnHook</code>
+
+
+
+<a href="#pytorch_adapt.hooks.utils.ApplyFnHook" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Applies a function to specific values of the context.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.hooks.utils.ApplyFnHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">apply_to</span><span class="p">,</span> <span class="n">is_loss</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.hooks.utils.ApplyFnHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>fn</code></td>
+        <td><code>Callable</code></td>
+        <td><p>The function that will be applied to the inputs.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>apply_to</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>fn will be applied to <code>inputs[k]</code> for k in apply_to</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>is_loss</code></td>
+        <td><code>bool</code></td>
+        <td><p>If False, then the returned loss dictionary will be empty.
+Otherwise, the returned output dictionary will be empty.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">apply_to</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">is_loss</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        fn: The function that will be applied to the inputs.</span>
+<span class="sd">        apply_to: fn will be applied to ```inputs[k]``` for k in apply_to</span>
+<span class="sd">        is_loss: If False, then the returned loss dictionary will be empty.</span>
+<span class="sd">            Otherwise, the returned output dictionary will be empty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">apply_to</span> <span class="o">=</span> <span class="n">apply_to</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_loss</span> <span class="o">=</span> <span class="n">is_loss</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.hooks.utils.AssertHook" class="doc doc-heading">
+        <code>AssertHook</code>
+
+
+
+<a href="#pytorch_adapt.hooks.utils.AssertHook" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Asserts that the output keys of a hook match a specified regex string</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.hooks.utils.AssertHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">allowed</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.hooks.utils.AssertHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>hook</code></td>
+        <td><code>BaseHook</code></td>
+        <td><p>The wrapped hook</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>allowed</code></td>
+        <td><code>str</code></td>
+        <td><p>The output dictionary of <code>hook</code>
+must have keys that match the <code>allowed</code> regex.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="n">allowed</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        hook: The wrapped hook</span>
+<span class="sd">        allowed: The output dictionary of ```hook```</span>
+<span class="sd">            must have keys that match the ```allowed``` regex.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">hook</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">allowed</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;allowed must be a str&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">allowed</span> <span class="o">=</span> <span class="n">allowed</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
@@ -656,18 +1161,7 @@ will be allowed to overwrite keys in the context.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>62
 63
 64
 65
@@ -689,7 +1183,18 @@ will be allowed to overwrite keys in the context.</p></td>
 81
 82
 83
-84</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">hooks</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span>
     <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseConditionHook</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -830,6 +1335,114 @@ will be allowed to overwrite keys in the context.</p></td>
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.hooks.utils.MultiplierHook" class="doc doc-heading">
+        <code>MultiplierHook</code>
+
+
+
+<a href="#pytorch_adapt.hooks.utils.MultiplierHook" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Multiplies every loss by a scalar</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.hooks.utils.MultiplierHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.hooks.utils.MultiplierHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>hook</code></td>
+        <td><code>BaseHook</code></td>
+        <td><p>The losses of this hook will be multiplied by <code>m</code></p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>m</code></td>
+        <td><code>float</code></td>
+        <td><p>The scalar</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>341
+342
+343
+344
+345
+346
+347
+348
+349</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        hook: The losses of this hook will be multiplied by ```m```</span>
+<span class="sd">        m: The scalar</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">hook</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -896,13 +1509,13 @@ will be allowed to overwrite keys in the context.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>256
-257
-258
-259
-260
-261
-262</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseConditionHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>287
+288
+289
+290
+291
+292
+293</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseConditionHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        hook: The condition hook that will be negated.</span>
@@ -927,6 +1540,106 @@ will be allowed to overwrite keys in the context.</p></td>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.hooks.utils.OnlyNewOutputsHook" class="doc doc-heading">
+        <code>OnlyNewOutputsHook</code>
+
+
+
+<a href="#pytorch_adapt.hooks.utils.OnlyNewOutputsHook" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns only outputs that are not present in the input context.
+You should use this if you want to change the value of
+a key passed to self.hook, but not propagate that change
+to the outside.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.hooks.utils.OnlyNewOutputsHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.hooks.utils.OnlyNewOutputsHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>hook</code></td>
+        <td><code>BaseHook</code></td>
+        <td><p>The hook inside which changes to the context will be allowed.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>213
+214
+215
+216
+217
+218
+219</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        hook: The hook inside which changes to the context will be allowed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">hook</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
@@ -998,15 +1711,15 @@ with each hook receiving the same initial context.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>160
-161
-162
-163
-164
-165
-166
-167
-168</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">hooks</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>171
+172
+173
+174
+175
+176
+177
+178
+179</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">hooks</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        hooks: a sequence of hooks that will be called sequentially,</span>
@@ -1036,6 +1749,135 @@ with each hook receiving the same initial context.</p></td>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.hooks.utils.RepeatHook" class="doc doc-heading">
+        <code>RepeatHook</code>
+
+
+
+<a href="#pytorch_adapt.hooks.utils.RepeatHook" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Executes the wrapped hook <code>n</code> times.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.hooks.utils.RepeatHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">keep_only_last</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.hooks.utils.RepeatHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>hook</code></td>
+        <td><code>BaseHook</code></td>
+        <td><p>The hook that will be executed <code>n</code> times</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>n</code></td>
+        <td><code>int</code></td>
+        <td><p>The number of times the hook will be executed.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>keep_only_last</code></td>
+        <td><code>bool</code></td>
+        <td><p>If <code>False</code>, the (losses, outputs) from each execution
+will be accumulated, and the keys will have the iteration number appended.
+If <code>True</code>, then only the (losses, outputs) of the final execution will
+be kept.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">keep_only_last</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        hook: The hook that will be executed ```n``` times</span>
+<span class="sd">        n: The number of times the hook will be executed.</span>
+<span class="sd">        keep_only_last: If ```False```, the (losses, outputs) from each execution</span>
+<span class="sd">            will be accumulated, and the keys will have the iteration number appended.</span>
+<span class="sd">            If ```True```, then only the (losses, outputs) of the final execution will</span>
+<span class="sd">            be kept.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">hook</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">keep_only_last</span> <span class="o">=</span> <span class="n">keep_only_last</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
@@ -1076,6 +1918,121 @@ with each hook receiving the same initial context.</p></td>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.hooks.utils.ZeroLossHook" class="doc doc-heading">
+        <code>ZeroLossHook</code>
+
+
+
+<a href="#pytorch_adapt.hooks.utils.ZeroLossHook" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns only 0 losses and <code>None</code> outputs.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_names</span><span class="p">,</span> <span class="n">out_names</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>loss_names</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>The keys of the loss dictionary
+which will have <code>tensor(0.)</code> as its values.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>out_names</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>The keys of the output dictionary
+which will have <code>None</code> as its values.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">out_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        loss_names: The keys of the loss dictionary</span>
+<span class="sd">            which will have ```tensor(0.)``` as its values.</span>
+<span class="sd">        out_names: The keys of the output dictionary</span>
+<span class="sd">            which will have ```None``` as its values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">loss_names</span> <span class="o">=</span> <span class="n">loss_names</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">out_names</span> <span class="o">=</span> <span class="n">out_names</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
