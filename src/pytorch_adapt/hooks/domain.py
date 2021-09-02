@@ -114,3 +114,6 @@ class DomainLossHook(BaseWrapperHook):
                 raise ValueError(
                     f"domains = {self.domains} but d_hook.out_keys = {d_hook.out_keys}"
                 )
+
+    def extra_repr(self):
+        return c_f.extra_repr(self, ["reverse_labels"])

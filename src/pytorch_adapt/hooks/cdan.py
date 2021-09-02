@@ -15,7 +15,9 @@ def cdan_key_map(fc_hook):
 
 
 class CDANDomainHook(BaseWrapperHook):
-    def __init__(self, loss_prefix, detach_features, softmax=True, **kwargs):
+    def __init__(
+        self, loss_prefix, detach_features, reverse_labels, softmax=True, **kwargs
+    ):
         super().__init__(**kwargs)
         f_hook = FeaturesAndLogitsHook()
         fc_hook = CombinedFeaturesHook()
@@ -26,6 +28,7 @@ class CDANDomainHook(BaseWrapperHook):
         d_hook = DomainLossHook(
             loss_prefix=loss_prefix,
             detach_features=detach_features,
+            reverse_labels=reverse_labels,
             key_map=key_map,
         )
         self.hook = ChainHook(f_hook, fc_hook, d_hook)
@@ -33,12 +36,16 @@ class CDANDomainHook(BaseWrapperHook):
 
 class CDANDomainHookD(CDANDomainHook):
     def __init__(self, **kwargs):
-        super().__init__(loss_prefix="d_", detach_features=True, **kwargs)
+        super().__init__(
+            loss_prefix="d_", detach_features=True, reverse_labels=False, **kwargs
+        )
 
 
 class CDANDomainHookG(CDANDomainHook):
     def __init__(self, **kwargs):
-        super().__init__(loss_prefix="g_", detach_features=False, **kwargs)
+        super().__init__(
+            loss_prefix="g_", detach_features=False, reverse_labels=True, **kwargs
+        )
 
 
 class CDANHook(GANHook):

@@ -51,15 +51,13 @@ def get_correct_domain_losses(
     combined_features = feature_combiner(features, use_logits)
     loss_fn = torch.nn.BCEWithLogitsLoss(reduction="none")
     d_logits = D(combined_features)
-    correct_src_loss = loss_fn(d_logits[:bs], src_domain)
-    correct_target_loss = loss_fn(d_logits[bs:], target_domain)
     d_losses = {
-        "d_src_domain_loss": correct_src_loss,
-        "d_target_domain_loss": correct_target_loss,
+        "d_src_domain_loss": loss_fn(d_logits[:bs], src_domain),
+        "d_target_domain_loss": loss_fn(d_logits[bs:], target_domain),
     }
     g_losses = {
-        "g_src_domain_loss": correct_src_loss,
-        "g_target_domain_loss": correct_target_loss,
+        "g_src_domain_loss": loss_fn(d_logits[:bs], target_domain),
+        "g_target_domain_loss": loss_fn(d_logits[bs:], src_domain),
     }
     return features, c_logits, combined_features, d_logits, d_losses, g_losses
 
@@ -351,5 +349,5 @@ class TestCDAN(unittest.TestCase):
 
             for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
                 self.assertTrue(
-                    c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-3)
+                    c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-2)
                 )
