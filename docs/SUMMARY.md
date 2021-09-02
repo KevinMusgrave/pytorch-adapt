@@ -3,6 +3,7 @@
     - [DomainNet](datasets/domainnet.md)
     - [MNISTM](datasets/mnistm.md)
     - [Office31](datasets/office31.md)
+    - [DataloaderCreator](datasets/dataloader_creator.md)
     - [Wrappers](datasets/wrappers.md)
 - [Hooks](hooks/index.md)
     - [Base](hooks/base.md)
