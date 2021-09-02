@@ -627,6 +627,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../meta_validators/" class="md-nav__link">
+        Meta Validators
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../weighters/" class="md-nav__link">
         Weighters
       </a>
@@ -1260,7 +1275,7 @@ except with a nice <code>__repr__</code> function.</p>
     <div class="doc doc-contents ">
 
       <p>This wrapper returns a dictionary,
-but it expects the wrapped dataset to return a tuple of (data, label).
+but it expects the wrapped dataset to return a tuple of <code>(data, label)</code>.
 The label returned by the wrapped dataset is discarded,
 and the pseudo label is returned instead.</p>
 
@@ -1303,12 +1318,21 @@ and the pseudo label is returned instead.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code></code></td>
-      <td><p>A dictionary with
-"src_imgs" (the data),
-"src_domain" (the integer representing the domain),
-"src_labels" (the pseudo label),
-"src_sample_idx" (idx)</p></td>
+      <td><code>A dictionary with keys</code></td>
+      <td><ul>
+<li>
+<p>"src_imgs" (the data)</p>
+</li>
+<li>
+<p>"src_domain" (the integer representing the domain)</p>
+</li>
+<li>
+<p>"src_labels" (the pseudo label)</p>
+</li>
+<li>
+<p>"src_sample_idx" (idx)</p>
+</li>
+</ul></td>
     </tr>
   </tbody>
 </table>
@@ -1330,14 +1354,22 @@ and the pseudo label is returned instead.</p>
 47
 48
 49
-50</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+50
+51
+52
+53
+54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A dictionary with</span>
-<span class="sd">        &quot;src_imgs&quot; (the data),</span>
-<span class="sd">        &quot;src_domain&quot; (the integer representing the domain),</span>
-<span class="sd">        &quot;src_labels&quot; (the pseudo label),</span>
-<span class="sd">        &quot;src_sample_idx&quot; (idx)</span>
+<span class="sd">        A dictionary with keys:</span>
+
+<span class="sd">        - &quot;src_imgs&quot; (the data)</span>
+
+<span class="sd">        - &quot;src_domain&quot; (the integer representing the domain)</span>
+
+<span class="sd">        - &quot;src_labels&quot; (the pseudo label)</span>
+
+<span class="sd">        - &quot;src_sample_idx&quot; (idx)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
@@ -1501,7 +1533,7 @@ instead of the labels contained in self.dataset</p></td>
     <div class="doc doc-contents ">
 
       <p>This wrapper returns a dictionary,
-but it expects the wrapped dataset to return a tuple of (data, label).</p>
+but it expects the wrapped dataset to return a tuple of <code>(data, label)</code>.</p>
 
 
 
@@ -1543,11 +1575,21 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
   <tbody>
     <tr>
       <td><code>Dict[str, Any]</code></td>
-      <td><p>A dictionary with
-"src_imgs" (the data),
-"src_domain" (the integer representing the domain),
-"src_labels" (the class label),
-"src_sample_idx" (idx)</p></td>
+      <td><p>A dictionary with keys:</p>
+<ul>
+<li>
+<p>"src_imgs" (the data)</p>
+</li>
+<li>
+<p>"src_domain" (the integer representing the domain)</p>
+</li>
+<li>
+<p>"src_labels" (the class label)</p>
+</li>
+<li>
+<p>"src_sample_idx" (idx)</p>
+</li>
+</ul></td>
     </tr>
   </tbody>
 </table>
@@ -1569,14 +1611,22 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
 36
 37
 38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+39
+40
+41
+42
+43</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A dictionary with</span>
-<span class="sd">        &quot;src_imgs&quot; (the data),</span>
-<span class="sd">        &quot;src_domain&quot; (the integer representing the domain),</span>
-<span class="sd">        &quot;src_labels&quot; (the class label),</span>
-<span class="sd">        &quot;src_sample_idx&quot; (idx)</span>
+<span class="sd">        A dictionary with keys:</span>
+
+<span class="sd">        - &quot;src_imgs&quot; (the data)</span>
+
+<span class="sd">        - &quot;src_domain&quot; (the integer representing the domain)</span>
+
+<span class="sd">        - &quot;src_labels&quot; (the class label)</span>
+
+<span class="sd">        - &quot;src_sample_idx&quot; (idx)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">img</span><span class="p">,</span> <span class="n">src_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
@@ -1720,7 +1770,7 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
     <div class="doc doc-contents ">
 
       <p>This wrapper returns a dictionary,
-but it expects the wrapped dataset to return a tuple of (data, label).</p>
+but it expects the wrapped dataset to return a tuple of <code>(data, label)</code>.</p>
 
 
 
@@ -1762,10 +1812,18 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
   <tbody>
     <tr>
       <td><code>Dict[str, Any]</code></td>
-      <td><p>A dictionary with
-"target_imgs" (the data),
-"target_domain" (the integer representing the domain),
-"target_sample_idx" (idx)</p></td>
+      <td><p>A dictionary with keys:</p>
+<ul>
+<li>
+<p>"target_imgs" (the data)</p>
+</li>
+<li>
+<p>"target_domain" (the integer representing the domain)</p>
+</li>
+<li>
+<p>"target_sample_idx" (idx)</p>
+</li>
+</ul></td>
     </tr>
   </tbody>
 </table>
@@ -1785,13 +1843,19 @@ but it expects the wrapped dataset to return a tuple of (data, label).</p>
 34
 35
 36
-37</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+37
+38
+39
+40</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A dictionary with</span>
-<span class="sd">        &quot;target_imgs&quot; (the data),</span>
-<span class="sd">        &quot;target_domain&quot; (the integer representing the domain),</span>
-<span class="sd">        &quot;target_sample_idx&quot; (idx)</span>
+<span class="sd">        A dictionary with keys:</span>
+
+<span class="sd">        - &quot;target_imgs&quot; (the data)</span>
+
+<span class="sd">        - &quot;target_domain&quot; (the integer representing the domain)</span>
+
+<span class="sd">        - &quot;target_sample_idx&quot; (idx)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
