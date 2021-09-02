@@ -15,12 +15,12 @@ from .utils import Net, assertRequiresGrad
 def get_data(dataset_size, feature_dim, num_classes, batch_size):
     target_imgs_features = torch.randn(batch_size, feature_dim)
     target_imgs_features_logits = torch.randn(batch_size, num_classes)
-    sample_idx = torch.randint(0, dataset_size, size=(batch_size,))
+    target_sample_idx = torch.randint(0, dataset_size, size=(batch_size,))
 
     return {
         "target_imgs_features": target_imgs_features,
         "target_imgs_features_logits": target_imgs_features_logits,
-        "sample_idx": sample_idx,
+        "target_sample_idx": target_sample_idx,
     }
 
 
@@ -51,7 +51,7 @@ class TestATDOC(unittest.TestCase):
                 data["target_imgs_features"],
                 data["target_imgs_features_logits"],
                 update=True,
-                idx=data["sample_idx"],
+                idx=data["target_sample_idx"],
             )
             loss = F.cross_entropy(
                 data["target_imgs_features_logits"], pseudo_labels, reduction="none"

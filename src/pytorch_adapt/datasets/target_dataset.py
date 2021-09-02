@@ -9,4 +9,8 @@ class TargetDataset(DomainDataset):
 
     def __getitem__(self, idx):
         img, _ = self.dataset[idx]
-        return {"target_imgs": img, "target_domain": self.domain, "sample_idx": idx}
+        return {
+            "target_imgs": img,
+            "target_domain": self.domain,
+            "target_sample_idx": idx,
+        }

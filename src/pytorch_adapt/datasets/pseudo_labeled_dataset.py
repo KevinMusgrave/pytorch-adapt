@@ -19,5 +19,5 @@ class PseudoLabeledDataset(DomainDataset):
             "src_imgs": img,
             "src_domain": self.domain,
             "src_labels": self.pseudo_labels[idx],
-            "sample_idx": idx,
+            "src_sample_idx": idx,
         }

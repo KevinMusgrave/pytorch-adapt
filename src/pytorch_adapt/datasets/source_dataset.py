@@ -13,5 +13,5 @@ class SourceDataset(DomainDataset):
             "src_imgs": img,
             "src_domain": self.domain,
             "src_labels": src_labels,
-            "sample_idx": idx,
+            "src_sample_idx": idx,
         }

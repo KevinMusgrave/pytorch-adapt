@@ -27,7 +27,7 @@ class ATDOCHook(BaseHook):
             c_f.filter(self.hook.out_keys, "", ["_features$", "_logits$"]),
         )
         pseudo_labels, neighbor_logits = self.labeler(
-            features, logits, update=True, idx=inputs["sample_idx"]
+            features, logits, update=True, idx=inputs["target_sample_idx"]
         )
         loss = self.loss_fn(logits, pseudo_labels)
         weights = self.weighter(neighbor_logits)
