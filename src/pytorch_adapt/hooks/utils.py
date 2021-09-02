@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Callable, List, Union
 
 from ..utils import common_functions as c_f
 from .base import BaseConditionHook, BaseHook, BaseWrapperHook
@@ -21,7 +21,18 @@ class EmptyHook(BaseHook):
 
 
 class ZeroLossHook(BaseHook):
-    def __init__(self, loss_names, out_names, **kwargs):
+    """
+    Returns only 0 losses and ```None``` outputs.
+    """
+
+    def __init__(self, loss_names: List[str], out_names: List[str], **kwargs):
+        """
+        Arguments:
+            loss_names: The keys of the loss dictionary
+                which will have ```tensor(0.)``` as its values.
+            out_names: The keys of the output dictionary
+                which will have ```None``` as its values.
+        """
         super().__init__(**kwargs)
         self.loss_names = loss_names
         self.out_names = out_names
@@ -191,12 +202,19 @@ class ParallelHook(BaseHook):
         return c_f.join_lists([h.out_keys for h in self.hooks])
 
 
-# Returns only outputs that are not present in kwargs
-# You should use this if you want to change the value of
-# a key passed to self.hook, but not propagate that change
-# to the outside
 class OnlyNewOutputsHook(BaseWrapperHook):
-    def __init__(self, hook, **kwargs):
+    """
+    Returns only outputs that are not present in the input context.
+    You should use this if you want to change the value of
+    a key passed to self.hook, but not propagate that change
+    to the outside.
+    """
+
+    def __init__(self, hook: BaseHook, **kwargs):
+        """
+        Arguments:
+            hook: The hook inside which changes to the context will be allowed.
+        """
         super().__init__(**kwargs)
         self.hook = hook
 
@@ -208,7 +226,20 @@ class OnlyNewOutputsHook(BaseWrapperHook):
 
 
 class ApplyFnHook(BaseHook):
-    def __init__(self, fn, apply_to, is_loss=False, **kwargs):
+    """
+    Applies a function to specific values of the context.
+    """
+
+    def __init__(
+        self, fn: Callable, apply_to: List[str], is_loss: bool = False, **kwargs
+    ):
+        """
+        Arguments:
+            fn: The function that will be applied to the inputs.
+            apply_to: fn will be applied to ```inputs[k]``` for k in apply_to
+            is_loss: If False, then the returned loss dictionary will be empty.
+                Otherwise, the returned output dictionary will be empty.
+        """
         super().__init__(**kwargs)
         self.fn = fn
         self.apply_to = apply_to
@@ -267,7 +298,17 @@ class NotHook(BaseConditionHook):
 
 
 class AssertHook(BaseWrapperHook):
-    def __init__(self, hook, allowed, **kwargs):
+    """
+    Asserts that the output keys of a hook match a specified regex string
+    """
+
+    def __init__(self, hook: BaseHook, allowed: str, **kwargs):
+        """
+        Arguments:
+            hook: The wrapped hook
+            allowed: The output dictionary of ```hook```
+                must have keys that match the ```allowed``` regex.
+        """
         super().__init__(**kwargs)
         self.hook = hook
         if not isinstance(allowed, str):
@@ -293,7 +334,16 @@ class AssertHook(BaseWrapperHook):
 
 
 class MultiplierHook(BaseWrapperHook):
-    def __init__(self, hook, m, **kwargs):
+    """
+    Multiplies every loss by a scalar
+    """
+
+    def __init__(self, hook: BaseHook, m: float, **kwargs):
+        """
+        Arguments:
+            hook: The losses of this hook will be multiplied by ```m```
+            m: The scalar
+        """
         super().__init__(**kwargs)
         self.hook = hook
         self.m = m
@@ -309,7 +359,20 @@ class MultiplierHook(BaseWrapperHook):
 
 
 class RepeatHook(BaseHook):
-    def __init__(self, hook, n, keep_only_last=False, **kwargs):
+    """
+    Executes the wrapped hook ```n``` times.
+    """
+
+    def __init__(self, hook: BaseHook, n: int, keep_only_last: bool = False, **kwargs):
+        """
+        Arguments:
+            hook: The hook that will be executed ```n``` times
+            n: The number of times the hook will be executed.
+            keep_only_last: If ```False```, the (losses, outputs) from each execution
+                will be accumulated, and the keys will have the iteration number appended.
+                If ```True```, then only the (losses, outputs) of the final execution will
+                be kept.
+        """
         super().__init__(**kwargs)
         self.hook = hook
         self.n = n
