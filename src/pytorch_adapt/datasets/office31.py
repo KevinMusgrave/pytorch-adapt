@@ -8,7 +8,19 @@ from .utils import check_img_paths, check_length
 
 
 class Office31Full(BaseDataset):
-    def __init__(self, root, domain, transform):
+    """
+    A small dataset consisting of 31 classes in 3 domains:
+    amazon, dslr, webcam.
+    """
+
+    def __init__(self, root: str, domain: str, transform):
+        """
+        Arguments:
+            root: The dataset must be located at ```<root>/office31```
+            domain: One of the 3 domains
+            transform: The image transform applied to each sample.
+        """
+
         super().__init__(domain=domain)
         self.transform = transform
         self.dataset = torch_datasets.ImageFolder(
@@ -24,7 +36,19 @@ class Office31Full(BaseDataset):
 
 
 class Office31(BaseDataset):
-    def __init__(self, root, domain, train, transform, **kwargs):
+    """
+    A custom train/test split of Office31Full.
+    """
+
+    def __init__(self, root: str, domain: str, train: bool, transform, **kwargs):
+        """
+        Arguments:
+            root: The dataset must be located at ```<root>/office31```
+            domain: One of the 3 domains
+            train: Whether or not to use the training set.
+            transform: The image transform applied to each sample.
+        """
+
         super().__init__(domain=domain, **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")

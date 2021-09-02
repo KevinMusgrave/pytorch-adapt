@@ -6,7 +6,20 @@ from .utils import check_img_paths, check_length
 
 
 class DomainNet(BaseDataset):
-    def __init__(self, root, domain, train, transform, **kwargs):
+    """
+    A large dataset used in "Moment Matching for Multi-Source Domain Adaptation".
+    It consists of 345 classes in 6 domains:
+    clipart, infograph, painting, quickdraw, real, sketch
+    """
+
+    def __init__(self, root: str, domain: str, train: bool, transform, **kwargs):
+        """
+        Arguments:
+            root: The dataset must be located at ```<root>/domainnet```
+            domain: One of the 6 domains
+            train: Whether or not to use the training set.
+            transform: The image transform applied to each sample.
+        """
         super().__init__(domain=domain, **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")
@@ -34,7 +47,18 @@ class DomainNet(BaseDataset):
 
 
 class DomainNet126Full(BaseDataset):
-    def __init__(self, root, domain, transform, **kwargs):
+    """
+    A subset of DomainNet consisting of 126 classes and 4 domains:
+    clipart, painting, real, sketch
+    """
+
+    def __init__(self, root: str, domain: str, transform, **kwargs):
+        """
+        Arguments:
+            root: The dataset must be located at ```<root>/domainnet```
+            domain: One of the 4 domains
+            transform: The image transform applied to each sample.
+        """
         super().__init__(domain=domain, **kwargs)
         filenames = [
             f"labeled_source_images_{domain}",
@@ -61,7 +85,18 @@ class DomainNet126Full(BaseDataset):
 
 
 class DomainNet126(BaseDataset):
-    def __init__(self, root, domain, train, transform, **kwargs):
+    """
+    A custom train/test split of DomainNet126Full.
+    """
+
+    def __init__(self, root: str, domain: str, train: bool, transform, **kwargs):
+        """
+        Arguments:
+            root: The dataset must be located at ```<root>/domainnet```
+            domain: One of the 4 domains
+            train: Whether or not to use the training set.
+            transform: The image transform applied to each sample.
+        """
         super().__init__(domain=domain, **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")

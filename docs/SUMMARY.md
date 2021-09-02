@@ -1,5 +1,8 @@
 - [Overview](index.md)
 - [Datasets](datasets/index.md)
+    - [DomainNet](datasets/domainnet.md)
+    - [MNISTM](datasets/mnistm.md)
+    - [Office31](datasets/office31.md)
     - [Wrappers](datasets/wrappers.md)
 - [Hooks](hooks/index.md)
     - [Base](hooks/base.md)
