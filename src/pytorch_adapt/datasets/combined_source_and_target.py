@@ -39,13 +39,11 @@ class CombinedSourceAndTargetDataset(torch.utils.data.Dataset):
             The source keys start with "src", and the target keys start with "target".
         """
         target_data = self.target_dataset[idx]
-        src_data = self.source_dataset[self.get_random_src_idx(idx)]
+        src_data = self.source_dataset[self.get_random_src_idx()]
         return {**src_data, **target_data}
 
-    def get_random_src_idx(self, idx):
-        src_len = len(self.source_dataset)
-        random_offset = np.random.choice(src_len)
-        return (idx + random_offset) % src_len
+    def get_random_src_idx(self):
+        return np.random.choice(len(self.source_dataset))
 
     def __repr__(self):
         return c_f.nice_repr(
