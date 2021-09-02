@@ -1,10 +1,11 @@
 import torch
+from torch.utils.data import Dataset
 
 from ..utils import common_functions as c_f
 
 
-class DomainDataset(torch.utils.data.Dataset):
-    def __init__(self, dataset, domain):
+class DomainDataset(Dataset):
+    def __init__(self, dataset: Dataset, domain: int):
         self.dataset = dataset
         self.domain = domain
 
