@@ -121,6 +121,7 @@ class BaseHook(ABC):
     def children_repr(self):
         all_hooks = c_f.attrs_of_type(self, BaseHook)
         all_modules = c_f.attrs_of_type(self, torch.nn.Module)
+        c_f.assert_dicts_are_disjoint(all_hooks, all_modules)
         return {**all_hooks, **all_modules}
 
     def str_for_error_msg(self, x=None, n=None):

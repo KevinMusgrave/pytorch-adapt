@@ -113,8 +113,8 @@ class ChainHook(BaseHook):
         return losses, outputs
 
     def check_overlap(self, x, y, names):
-        overlap = x.keys() & y.keys()
-        if len(overlap) > 0:
+        is_overlap, overlap = c_f.dicts_are_overlapping(x, y, return_overlap=True)
+        if is_overlap:
             raise KeyError(
                 f"overwrite is false, but {names[0]} and {names[1]} have overlapping keys: {overlap}"
             )
@@ -222,6 +222,7 @@ class OnlyNewOutputsHook(BaseWrapperHook):
         """"""
         losses, outputs = self.hook(losses, inputs)
         outputs = {k: outputs[k] for k in (outputs.keys() - inputs.keys())}
+        c_f.assert_dicts_are_disjoint(inputs, outputs)
         return losses, outputs
 
 

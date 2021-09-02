@@ -16,6 +16,7 @@ class OptimizerHook(BaseHook):
 
     def call(self, losses, inputs):
         losses, outputs = self.hook(losses, inputs)
+        c_f.assert_dicts_are_disjoint(inputs, outputs)
         losses, new_outputs = self.reducer(losses, {**inputs, **outputs})
         outputs.update(new_outputs)
         loss, self.loss_components = self.weighter(losses)

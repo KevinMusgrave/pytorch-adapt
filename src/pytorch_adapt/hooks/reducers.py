@@ -22,6 +22,7 @@ class BaseReducer(BaseHook, ABC):
         apply_to = self.get_keys_to_apply_to(losses)
         losses, outputs = self.call_reducer(losses, inputs, apply_to)
         if self.default_reducer:
+            c_f.assert_dicts_are_disjoint(inputs, outputs)
             losses, new_outputs = self.default_reducer(losses, {**inputs, **outputs})
             outputs.update(new_outputs)
         if losses.keys() != set(self.curr_loss_keys):

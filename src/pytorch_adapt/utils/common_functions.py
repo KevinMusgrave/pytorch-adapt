@@ -475,3 +475,18 @@ def nice_repr(cls, extra_repr, children):
 
     main_str += ")"
     return main_str
+
+
+def dicts_are_overlapping(x, y, return_overlap=False):
+    overlap = x.keys() & y.keys()
+    is_overlap = len(overlap) > 0
+    if return_overlap:
+        return is_overlap, overlap
+    return is_overlap
+
+
+def assert_dicts_are_disjoint(*x):
+    for a, b in itertools.combinations(x, 2):
+        is_overlap, overlap = dicts_are_overlapping(a, b, True)
+        if is_overlap:
+            raise KeyError(f"dicts have overlapping keys {overlap}")

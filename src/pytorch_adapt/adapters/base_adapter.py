@@ -43,6 +43,7 @@ class BaseAdapter(ABC):
 
     def training_step(self, batch, device, framework):
         batch = c_f.batch_to_device(batch, device)
+        c_f.assert_dicts_are_disjoint(self.models, self.misc, batch)
         losses, _ = self.hook({}, {**self.models, **self.misc, **batch})
         return losses
 

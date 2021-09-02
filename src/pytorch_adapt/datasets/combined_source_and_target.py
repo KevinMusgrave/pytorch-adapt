@@ -40,6 +40,7 @@ class CombinedSourceAndTargetDataset(torch.utils.data.Dataset):
         """
         target_data = self.target_dataset[idx]
         src_data = self.source_dataset[self.get_random_src_idx()]
+        c_f.assert_dicts_are_disjoint(src_data, target_data)
         return {**src_data, **target_data}
 
     def get_random_src_idx(self):
