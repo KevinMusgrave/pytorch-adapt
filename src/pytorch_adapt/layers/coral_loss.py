@@ -10,7 +10,18 @@ def covariance(x):
 
 
 class CORALLoss(torch.nn.Module):
-    def forward(self, x, y):
+    """
+    Implementation of [Deep CORAL:
+    Correlation Alignment for
+    Deep Domain Adaptation](https://arxiv.org/abs/1607.01719)
+    """
+
+    def forward(self, x: torch.Tensor, y: torch.Tensor):
+        """
+        Arguments:
+            x: features from one domain
+            y: features from the other domain
+        """
         embedding_size = x.shape[1]
         cx = covariance(x)
         cy = covariance(y)

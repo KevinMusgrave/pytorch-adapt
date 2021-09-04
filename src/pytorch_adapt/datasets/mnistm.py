@@ -5,7 +5,18 @@ from .utils import check_length
 
 
 class MNISTM(BaseDataset):
-    def __init__(self, root, train, transform, **kwargs):
+    """
+    The dataset used in "Domain-Adversarial Training of Neural Networks".
+    It consists of colored MNIST digits.
+    """
+
+    def __init__(self, root: str, train: bool, transform, **kwargs):
+        """
+        Arguments:
+            root: The dataset must be located at ```<root>/mnist_m```
+            train: Whether or not to use the training set.
+            transform: The image transform applied to each sample.
+        """
         super().__init__(domain="MNISTM", **kwargs)
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")

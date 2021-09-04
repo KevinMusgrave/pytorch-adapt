@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import torch
 
 from ..datasets import (
@@ -25,6 +27,18 @@ def get_pseudo_labeled_dataset(adapter, datasets, dataset_name, dataloader_creat
 
 
 class ReverseValidator:
+    """
+    Reverse validation consists of three steps.
+
+    1. Train a model on the labeled source and unlabeled target
+
+    2. Use the trained model to create pseudolabels for the target dataset.
+
+    3. Train a new model on the labeled target and "unlabeled" source.
+
+    The final score is the accuracy of the model from step 3.
+    """
+
     def __init__(self):
         self.pseudo_train = None
         self.pseudo_val = None
@@ -36,7 +50,19 @@ class ReverseValidator:
         forward_kwargs,
         reverse_kwargs,
         pl_dataloader_creator=None,
-    ):
+    ) -> Tuple[float, int]:
+        """
+        Arguments:
+            forward_adapter: the framework-wrapped adapter for step 1.
+            reverse_adapter: the framework-wrapped adapter for step 3.
+            forward_kwargs: a dict of keyword arguments to be passed to forward_adapter.run()
+            reverse_kwargs: a dict of keyword arguments to be passed to reverse_adapter.run()
+            pl_dataloader_creator: An optional DataloaderCreator
+                for obtaining pseudolabels in step 2.
+        Returns:
+            the best score and best epoch of the reverse model
+        """
+
         if "datasets" in reverse_kwargs:
             raise KeyError(
                 "'datasets' should not be in reverse_kwargs because the reverse datasets will be pseudo labeled."
