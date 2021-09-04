@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 from ..adapters import Finetuner
 from ..containers import Models, Optimizers
-from ..datasets import SourceDataset
+from ..datasets import DataloaderCreator, SourceDataset
 from ..frameworks import Ignite
 from ..models import Discriminator
 from ..utils import common_functions as c_f
@@ -17,15 +17,22 @@ from .base_validator import BaseValidator
 
 
 class DeepEmbeddedValidator(BaseValidator):
-    def __init__(self, layer="features", **kwargs):
+    def __init__(self, layer="features", num_workers=0, batch_size=32, **kwargs):
         super().__init__(**kwargs)
         self.layer = layer
+        self.num_workers = num_workers
+        self.batch_size = batch_size
+        self.D_accuracy = None
 
     def compute_score(self, src_train, src_val, target_train):
         init_logging_level = c_f.LOGGER.level
         c_f.LOGGER.setLevel(logging.WARNING)
-        weights = get_weights(
-            src_train[self.layer], src_val[self.layer], target_train[self.layer]
+        weights, self.D_accuracy = get_weights(
+            src_train[self.layer],
+            src_val[self.layer],
+            target_train[self.layer],
+            self.num_workers,
+            self.batch_size,
         )
         error_per_sample = F.cross_entropy(
             src_val["logits"], src_val["labels"], reduction="none"
@@ -37,6 +44,11 @@ class DeepEmbeddedValidator(BaseValidator):
     @property
     def maximize(self):
         return False
+
+    def extra_repr(self):
+        x = super().extra_repr()
+        x += f"\n{c_f.extra_repr(self, ['D_accuracy'])}"
+        return x
 
 
 #########################################################################
@@ -66,7 +78,9 @@ def get_dev_risk(weight, error):
     return np.mean(weighted_error) + eta * np.mean(weight) - eta
 
 
-def get_weights(source_feature, validation_feature, target_feature):
+def get_weights(
+    source_feature, validation_feature, target_feature, num_workers, batch_size
+):
     """
     :param source_feature: shape [N_tr, d], features from training set
     :param validation_feature: shape [N_v, d], features from validation set
@@ -117,6 +131,9 @@ def get_weights(source_feature, validation_feature, target_feature):
         datasets = {"train": train_set, "src_val": val_set}
         acc, _ = trainer.run(
             datasets,
+            dataloader_creator=DataloaderCreator(
+                num_workers=num_workers, batch_size=batch_size
+            ),
             max_epochs=epochs,
             validator=AccuracyValidator(),
             validation_interval=epochs,
@@ -124,13 +141,17 @@ def get_weights(source_feature, validation_feature, target_feature):
         val_acc.append(acc)
         trainers.append(trainer)
 
-    index = val_acc.index(max(val_acc))
+    D_accuracy = max(val_acc)
+    index = val_acc.index(D_accuracy)
 
     validation_set = SourceDataset(
         pml_cf.EmbeddingDataset(validation_feature, np.ones(len(validation_feature)))
     )
     trainer = trainers[index]
-    dataloader = torch.utils.data.DataLoader(validation_set)
+    dataloader = torch.utils.data.DataLoader(
+        validation_set, num_workers=num_workers, batch_size=batch_size
+    )
     domain_out = trainer.get_all_outputs(dataloader, "val")
     domain_out = domain_out["val"]["preds"]
-    return (domain_out[:, :1] / domain_out[:, 1:]) * (float(N_s) / N_t)
+    weights = (domain_out[:, :1] / domain_out[:, 1:]) * (float(N_s) / N_t)
+    return weights, D_accuracy
