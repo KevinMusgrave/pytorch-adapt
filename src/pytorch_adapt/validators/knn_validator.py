@@ -27,11 +27,7 @@ class KNNValidator(BaseValidator):
             features = F.normalize(features, dim=1)
         labels = torch.cat([src_train["domain"], target_train["domain"]], dim=0)
         accuracies = self.acc_fn.get_accuracy(features, features, labels, labels, True)
-        return accuracies[self.metric]
-
-    @property
-    def maximize(self):
-        return False
+        return -accuracies[self.metric]
 
 
 class ClusterValidator(KNNValidator):

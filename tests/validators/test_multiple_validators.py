@@ -41,7 +41,7 @@ class TestMultipleValidators(unittest.TestCase):
 
             actual_weights = weights
             if actual_weights is None:
-                actual_weights = [1, -1]
+                actual_weights = [1, 1]
             self.assertTrue(
                 validator.latest_score
                 == (

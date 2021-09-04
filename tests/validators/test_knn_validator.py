@@ -31,13 +31,13 @@ class TestKNNValidator(unittest.TestCase):
                 )
                 if epoch == 1:
                     self.assertTrue(
-                        score < (0.51 if validator is knn_validator else 0.001)
+                        score > (-0.51 if validator is knn_validator else -0.001)
                     )
                 else:
-                    self.assertTrue(score == 1)
+                    self.assertTrue(score == -1)
 
         self.assertTrue(knn_validator.best_epoch == 1)
-        self.assertTrue(knn_validator.best_score < 0.51)
+        self.assertTrue(knn_validator.best_score > -0.51)
 
         self.assertTrue(cluster_validator.best_epoch == 1)
-        self.assertTrue(cluster_validator.best_score < 0.001)
+        self.assertTrue(cluster_validator.best_score > -0.001)

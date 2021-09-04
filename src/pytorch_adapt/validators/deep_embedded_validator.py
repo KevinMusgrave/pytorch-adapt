@@ -39,11 +39,7 @@ class DeepEmbeddedValidator(BaseValidator):
         )
         output = get_dev_risk(weights, error_per_sample[:, None])
         c_f.LOGGER.setLevel(init_logging_level)
-        return output
-
-    @property
-    def maximize(self):
-        return False
+        return -output
 
     def extra_repr(self):
         x = super().extra_repr()
