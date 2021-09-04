@@ -62,7 +62,7 @@ def get_dev_risk(weight, error):
     weighted_error = weight * error
     cov = np.cov(np.concatenate((weighted_error, weight), axis=1), rowvar=False)[0][1]
     var_w = np.var(weight, ddof=1)
-    eta = -cov / var_w
+    eta = -cov / (var_w + 1e-6)
     return np.mean(weighted_error) + eta * np.mean(weight) - eta
 
 

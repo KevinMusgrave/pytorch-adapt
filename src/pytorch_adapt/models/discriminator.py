@@ -8,9 +8,9 @@ class Discriminator(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(in_size, h),
             nn.ReLU(),
-            nn.Linear(h, h // 2),
+            nn.Linear(h, h),
             nn.ReLU(),
-            nn.Linear(h // 2, out_size),
+            nn.Linear(h, out_size),
         )
         self.out_size = out_size
 

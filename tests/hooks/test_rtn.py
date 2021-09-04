@@ -38,7 +38,7 @@ class TestRTN(unittest.TestCase):
         outputs2 = h2({}, {**locals(), **outputs1})[1]
 
         self.assertTrue(G.count == C.count == 2)
-        self.assertTrue(residual_model.residual.count == 1)
+        self.assertTrue(residual_model.layer.count == 1)
         assertRequiresGrad(self, outputs1)
         assertRequiresGrad(self, outputs2)
 
@@ -72,7 +72,7 @@ class TestRTN(unittest.TestCase):
         losses, outputs = h({}, locals())
 
         self.assertTrue(G.count == C.count == 2)
-        self.assertTrue(residual_model.residual.count == 1)
+        self.assertTrue(residual_model.layer.count == 1)
         assertRequiresGrad(self, outputs)
 
         self.assertTrue(
