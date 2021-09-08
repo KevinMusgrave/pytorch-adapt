@@ -44,5 +44,11 @@ def get_silhouette_score(feats, labels):
 
 
 class SilhouetteScore(torch.nn.Module):
-    def forward(self, features, labels):
+    """
+    A PyTorch implementation of the
+    [silhouette score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html)
+    """
+
+    def forward(self, features: torch.Tensor, labels: torch.Tensor) -> float:
+        """ """
         return get_silhouette_score(features, labels)

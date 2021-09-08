@@ -19,3 +19,7 @@
 ::: pytorch_adapt.layers.model_with_bridge
 ::: pytorch_adapt.layers.multiple_models
 ::: pytorch_adapt.layers.neighborhood_aggregation
+::: pytorch_adapt.layers.plus_residual
+::: pytorch_adapt.layers.randomized_dot_product
+::: pytorch_adapt.layers.silhouette_score
+::: pytorch_adapt.layers.sliced_wasserstein

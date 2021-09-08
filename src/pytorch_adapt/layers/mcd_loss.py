@@ -31,7 +31,7 @@ class MCDLoss(torch.nn.Module):
             x: a batch of class logits
             y: the other batch of class logits
         Returns:
-            The discrepancy between the two batch of class logits.
+            The discrepancy between the two batches of class logits.
         """
         return mcd_loss(x, y, self.dist_fn)
 

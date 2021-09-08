@@ -23,7 +23,7 @@ class CombinedSourceAndTargetDataset(torch.utils.data.Dataset):
         self.source_dataset = source_dataset
         self.target_dataset = target_dataset
 
-    def __len__(self):
+    def __len__(self) -> int:
         """
         Returns:
             The length of the target dataset.
