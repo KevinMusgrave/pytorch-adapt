@@ -6,3 +6,10 @@
 ::: pytorch_adapt.layers.confidence_weights
 ::: pytorch_adapt.layers.coral_loss
 ::: pytorch_adapt.layers.diversity_loss
+::: pytorch_adapt.layers.do_nothing_optimizer
+::: pytorch_adapt.layers.entropy_loss
+::: pytorch_adapt.layers.entropy_weights
+::: pytorch_adapt.layers.gradient_reversal
+    selection:
+      members:
+        - GradientReversal
