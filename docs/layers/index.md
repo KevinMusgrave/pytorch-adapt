@@ -23,3 +23,5 @@
 ::: pytorch_adapt.layers.randomized_dot_product
 ::: pytorch_adapt.layers.silhouette_score
 ::: pytorch_adapt.layers.sliced_wasserstein
+::: pytorch_adapt.layers.stochastic_linear
+::: pytorch_adapt.layers.sufficient_accuracy
