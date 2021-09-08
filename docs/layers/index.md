@@ -16,3 +16,6 @@
 ::: pytorch_adapt.layers.mcc_loss
 ::: pytorch_adapt.layers.mcd_loss
 ::: pytorch_adapt.layers.mmd_loss
+::: pytorch_adapt.layers.model_with_bridge
+::: pytorch_adapt.layers.multiple_models
+::: pytorch_adapt.layers.neighborhood_aggregation

@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import torch
 import torch.nn.functional as F
 from pytorch_metric_learning.utils import common_functions as pml_cf
@@ -7,7 +9,31 @@ from ..utils import common_functions as c_f
 
 # reference https://github.com/tim-learn/ATDOC/blob/main/demo_uda.py
 class NeighborhoodAggregation(torch.nn.Module):
-    def __init__(self, dataset_size, feature_dim, num_classes, k=5, T=0.5):
+    """
+    Implementation of the pseudo labeling step in
+    [Domain Adaptation with Auxiliary Target Domain-Oriented Classifier](https://arxiv.org/abs/2007.04171).
+    """
+
+    def __init__(
+        self,
+        dataset_size: int,
+        feature_dim: int,
+        num_classes: int,
+        k: int = 5,
+        T: float = 0.5,
+    ):
+        """
+        Arguments:
+            dataset_size: The number of samples in the target dataset.
+            feature_dim: The feature dimensionality, i.e at each iteration
+                the features should be size ```(N, D)``` where N is batch size and
+                D is ```feature_dim```.
+            num_classes: The number of class labels in the target dataset.
+            k: The number of nearest neighbors used to determine each
+                sample's pseudolabel
+            T: The softmax temperature used when storing predictions in memory.
+        """
+
         super().__init__()
         self.register_buffer(
             "feat_memory", F.normalize(torch.rand(dataset_size, feature_dim))
@@ -18,7 +44,23 @@ class NeighborhoodAggregation(torch.nn.Module):
         self.k = k
         self.T = T
 
-    def forward(self, features, logits=None, update=False, idx=None):
+    def forward(
+        self,
+        features: torch.Tensor,
+        logits: torch.Tensor = None,
+        update: bool = False,
+        idx: torch.Tensor = None,
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Arguments:
+            features: The features to compute pseudolabels for.
+            logits: The logits from which predictions will be computed and
+                stored in memory. Required if ```update = True```
+            update: If True, the current batch of predictions is
+                added to the memory bank.
+            idx: A tensor containing the dataset indices that
+                produced each row of ```features```.
+        """
         # move to device if necessary
         self.feat_memory = pml_cf.to_device(self.feat_memory, features)
         self.pred_memory = pml_cf.to_device(self.pred_memory, features)
@@ -47,4 +89,5 @@ class NeighborhoodAggregation(torch.nn.Module):
         self.pred_memory[idx] = logits
 
     def extra_repr(self):
+        """"""
         return c_f.extra_repr(self, ["k", "T"])
