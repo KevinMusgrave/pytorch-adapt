@@ -19,6 +19,7 @@ class ConfidenceWeights(torch.nn.Module):
         Arguments:
             normalizer: A callable for normalizing
                 (e.g. min-max normalization) the weights.
+                If ```None```, then no normalization is used.
         """
 
         super().__init__()

@@ -34,6 +34,7 @@ class EntropyWeights(torch.nn.Module):
                 already have softmax applied to them.
             normalizer: A callable for normalizing
                 (e.g. min-max normalization) the weights.
+                If ```None```, then sum normalization is used.
         """
         super().__init__()
         self.after_softmax = after_softmax

@@ -1,3 +1,5 @@
+from typing import Callable
+
 import torch
 import torch.nn.functional as F
 
@@ -9,11 +11,28 @@ def mcd_loss(out1, out2, dist_fn):
 
 
 class MCDLoss(torch.nn.Module):
-    def __init__(self, dist_fn=None):
+    """
+    Implementation of the loss function used in
+    [Maximum Classifier Discrepancy for Unsupervised Domain Adaptation](https://arxiv.org/abs/1712.02560).
+    """
+
+    def __init__(self, dist_fn: Callable[[torch.Tensor], torch.Tensor] = None):
+        """
+        Arguments:
+            dist_fn: Computes the mean distance between two softmaxed tensors.
+                If ```None```, then ```torch.nn.L1Loss``` is used.
+        """
         super().__init__()
         self.dist_fn = c_f.default(dist_fn, torch.nn.L1Loss, {})
 
-    def forward(self, x, y):
+    def forward(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        """
+        Arguments:
+            x: a batch of class logits
+            y: the other batch of class logits
+        Returns:
+            The discrepancy between the two batch of class logits.
+        """
         return mcd_loss(x, y, self.dist_fn)
 
 

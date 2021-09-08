@@ -1,3 +1,5 @@
+from typing import Callable
+
 import torch
 
 from ..utils import common_functions as c_f
@@ -8,7 +10,24 @@ from .normalizers import SumNormalizer
 
 # reference https://github.com/thuml/Versatile-Domain-Adaptation
 class MCCLoss(torch.nn.Module):
-    def __init__(self, T=1, entropy_weighter=None):
+    """
+    Implementation of
+    [Minimum Class Confusion for Versatile Domain Adaptation](https://arxiv.org/abs/1912.03699).
+    """
+
+    def __init__(
+        self,
+        T: float = 1,
+        entropy_weighter: Callable[[torch.Tensor], torch.Tensor] = None,
+    ):
+        """
+        Arguments:
+            T: softmax temperature applied to the input target logits
+            entropy_weighter: a function that returns a weight for each
+                sample. The weights are used in the process of computing
+                the class confusion tensor as described in the paper.
+                If ```None```, then ```layers.EntropyWeights``` is used.
+        """
         super().__init__()
         self.T = T
         self.entropy_weighter = c_f.default(
@@ -18,7 +37,11 @@ class MCCLoss(torch.nn.Module):
             ),
         )
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Arguments:
+            x: target logits
+        """
         Y = torch.nn.functional.softmax(x / self.T, dim=1)
         H_weights = self.entropy_weighter(Y.detach())
         C = torch.linalg.multi_dot([Y.t(), torch.diag(H_weights), Y])
@@ -26,4 +49,5 @@ class MCCLoss(torch.nn.Module):
         return (torch.sum(C) - torch.trace(C)) / C.shape[0]
 
     def extra_repr(self):
+        """"""
         return c_f.extra_repr(self, ["T"])

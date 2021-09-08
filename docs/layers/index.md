@@ -13,3 +13,6 @@
     selection:
       members:
         - GradientReversal
+::: pytorch_adapt.layers.mcc_loss
+::: pytorch_adapt.layers.mcd_loss
+::: pytorch_adapt.layers.mmd_loss
