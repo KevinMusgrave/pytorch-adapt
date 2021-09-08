@@ -51,4 +51,5 @@ class GeneralMCDLoss(torch.nn.Module):
         self.p = p
 
     def forward(self, *x):
+        """"""
         return general_mcd_loss(*x, p=self.p)

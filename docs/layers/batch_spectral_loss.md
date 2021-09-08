@@ -1,0 +1,1 @@
+::: pytorch_adapt.layers.batch_spectral_loss
