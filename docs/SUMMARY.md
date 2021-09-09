@@ -11,6 +11,11 @@
     - [TargetDataset](datasets/target_dataset.md)
 - [Hooks](hooks/index.md)
     - [ADDAHook](hooks/adda.md)
+    - Aligners
+        - [AlignerHook](hooks/aligners/aligner_hook.md)
+        - [AlignerPlusCHook](hooks/aligners/aligner_plus_c_hook.md)
+        - [FeaturesLogitsAlignerHook](hooks/aligners/features_logits_aligner_hook.md)
+        - [JointAlignerHook](hooks/aligners/joint_aligner_hook.md)
     - Base
         - [BaseConditionHook](hooks/base/base_condition_hook.md)
         - [BaseHook](hooks/base/base_hook.md)
