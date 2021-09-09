@@ -794,8 +794,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../gan/" class="md-nav__link">
-        GANHook
+      <a href="../dann/" class="md-nav__link">
+        DANNHook
       </a>
     </li>
   
@@ -814,11 +814,78 @@
       <label class="md-nav__link" for="__nav_6_7">
         <span class="md-nav__icon md-icon"></span>
         
+          Domain
+        
+      </label>
+      <nav class="md-nav" aria-label="Domain" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_7">
+          <span class="md-nav__icon md-icon"></span>
+          
+            Domain
+          
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/domain_loss_hook/" class="md-nav__link">
+        DomainLossHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/features_for_domain_loss_hook/" class="md-nav__link">
+        FeaturesForDomainLossHook
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gan/" class="md-nav__link">
+        GANHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_9" type="checkbox" id="__nav_6_9" >
+      
+      <label class="md-nav__link" for="__nav_6_9">
+        <span class="md-nav__icon md-icon"></span>
+        
           Features
         
       </label>
       <nav class="md-nav" aria-label="Features" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_7">
+        <label class="md-nav__title" for="__nav_6_9">
           <span class="md-nav__icon md-icon"></span>
           
             Features
@@ -960,16 +1027,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_9" type="checkbox" id="__nav_6_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_11" type="checkbox" id="__nav_6_11" >
       
-      <label class="md-nav__link" for="__nav_6_9">
+      <label class="md-nav__link" for="__nav_6_11">
         <span class="md-nav__icon md-icon"></span>
         
           Reducers
         
       </label>
       <nav class="md-nav" aria-label="Reducers" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_9">
+        <label class="md-nav__title" for="__nav_6_11">
           <span class="md-nav__icon md-icon"></span>
           
             Reducers
@@ -1027,16 +1094,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_10" type="checkbox" id="__nav_6_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_12" type="checkbox" id="__nav_6_12" >
       
-      <label class="md-nav__link" for="__nav_6_10">
+      <label class="md-nav__link" for="__nav_6_12">
         <span class="md-nav__icon md-icon"></span>
         
           Utils
         
       </label>
       <nav class="md-nav" aria-label="Utils" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_10">
+        <label class="md-nav__title" for="__nav_6_12">
           <span class="md-nav__icon md-icon"></span>
           
             Utils
@@ -1850,7 +1917,8 @@
     <div class="doc doc-contents ">
 
       <p>Implementation of
-<a href="https://arxiv.org/abs/1702.05464">Adversarial Discriminative Domain Adaptation</a></p>
+<a href="https://arxiv.org/abs/1702.05464">Adversarial Discriminative Domain Adaptation</a>.</p>
+<p>Extends <a href="../gan/#pytorch_adapt.hooks.gan.GANHook"><code>GANHook</code></a>.</p>
 
 
 
@@ -1903,9 +1971,7 @@ if the discriminator's accuracy is greater than <code>threshold</code>.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\adda.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>14
-15
-16
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>16
 17
 18
 19
@@ -1928,7 +1994,9 @@ if the discriminator's accuracy is greater than <code>threshold</code>.</p></td>
 36
 37
 38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        threshold: In each training iteration, the generator is only updated</span>

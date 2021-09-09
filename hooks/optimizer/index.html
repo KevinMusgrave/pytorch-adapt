@@ -727,8 +727,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../gan/" class="md-nav__link">
-        GANHook
+      <a href="../dann/" class="md-nav__link">
+        DANNHook
       </a>
     </li>
   
@@ -747,11 +747,78 @@
       <label class="md-nav__link" for="__nav_6_7">
         <span class="md-nav__icon md-icon"></span>
         
+          Domain
+        
+      </label>
+      <nav class="md-nav" aria-label="Domain" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_7">
+          <span class="md-nav__icon md-icon"></span>
+          
+            Domain
+          
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/domain_loss_hook/" class="md-nav__link">
+        DomainLossHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/features_for_domain_loss_hook/" class="md-nav__link">
+        FeaturesForDomainLossHook
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gan/" class="md-nav__link">
+        GANHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_9" type="checkbox" id="__nav_6_9" >
+      
+      <label class="md-nav__link" for="__nav_6_9">
+        <span class="md-nav__icon md-icon"></span>
+        
           Features
         
       </label>
       <nav class="md-nav" aria-label="Features" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_7">
+        <label class="md-nav__title" for="__nav_6_9">
           <span class="md-nav__icon md-icon"></span>
           
             Features
@@ -980,16 +1047,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_9" type="checkbox" id="__nav_6_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_11" type="checkbox" id="__nav_6_11" >
       
-      <label class="md-nav__link" for="__nav_6_9">
+      <label class="md-nav__link" for="__nav_6_11">
         <span class="md-nav__icon md-icon"></span>
         
           Reducers
         
       </label>
       <nav class="md-nav" aria-label="Reducers" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_9">
+        <label class="md-nav__title" for="__nav_6_11">
           <span class="md-nav__icon md-icon"></span>
           
             Reducers
@@ -1047,16 +1114,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_10" type="checkbox" id="__nav_6_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_12" type="checkbox" id="__nav_6_12" >
       
-      <label class="md-nav__link" for="__nav_6_10">
+      <label class="md-nav__link" for="__nav_6_12">
         <span class="md-nav__icon md-icon"></span>
         
           Utils
         
       </label>
       <nav class="md-nav" aria-label="Utils" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_10">
+        <label class="md-nav__title" for="__nav_6_12">
           <span class="md-nav__icon md-icon"></span>
           
             Utils
@@ -1945,7 +2012,8 @@
       <tr>
         <td><code>optimizers</code></td>
         <td><code>List[torch.optim.optimizer.Optimizer]</code></td>
-        <td><p>a list of optimizers that will be stepped</p></td>
+        <td><p>a list of optimizers that will be used
+to update model weights</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
@@ -1994,7 +2062,8 @@ If <code>None</code>, then it defaults to
 41
 42
 43
-44</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span>
     <span class="n">optimizers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">],</span>
@@ -2005,7 +2074,8 @@ If <code>None</code>, then it defaults to
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        hook: the hook that computes the losses</span>
-<span class="sd">        optimizers: a list of optimizers that will be stepped</span>
+<span class="sd">        optimizers: a list of optimizers that will be used</span>
+<span class="sd">            to update model weights</span>
 <span class="sd">        weighter: weights the returned losses and outputs a</span>
 <span class="sd">            single value on which ```.backward()``` is called.</span>
 <span class="sd">            If ```None```, then it defaults to</span>
@@ -2113,15 +2183,15 @@ will be packaged into nested dictionaries.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\optimizer.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>76
-77
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>77
 78
 79
 80
 81
 82
 83
-84</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">OptimizerHook</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+84
+85</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">OptimizerHook</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        optimizers: A dictionary of optimizer hooks.</span>

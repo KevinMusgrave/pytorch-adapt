@@ -9,19 +9,19 @@
       
       
       
-      <link rel="icon" href="../../../imgs/Favicon.png">
+      <link rel="icon" href="../../imgs/Favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.10">
     
     
       
-        <title>ZeroLossHook - PyTorch Adapt</title>
+        <title>DANNHook - PyTorch Adapt</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.1fe995fd.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1fe995fd.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
       
     
@@ -36,9 +36,9 @@
     
     
     
-      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../../css/style.css">
+      <link rel="stylesheet" href="../../css/style.css">
     
     
       
@@ -59,7 +59,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
   
     
-    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.hooks.utils" class="md-skip">
+        <a href="#pytorch_adapt.hooks.dann" class="md-skip">
           Skip to content
         </a>
       
@@ -80,9 +80,9 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="PyTorch Adapt" class="md-header__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
+    <a href="../.." title="PyTorch Adapt" class="md-header__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
       
-  <img src="../../../imgs/TinyLogo.png" alt="logo">
+  <img src="../../imgs/TinyLogo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ZeroLossHook
+              DANNHook
             
           </span>
         </div>
@@ -194,9 +194,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="PyTorch Adapt" class="md-nav__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
+    <a href="../.." title="PyTorch Adapt" class="md-nav__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
       
-  <img src="../../../imgs/TinyLogo.png" alt="logo">
+  <img src="../../imgs/TinyLogo.png" alt="logo">
 
     </a>
     PyTorch Adapt
@@ -225,7 +225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Overview
       </a>
     </li>
@@ -240,7 +240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/" class="md-nav__link">
+      <a href="../../adapters/" class="md-nav__link">
         Adapters
       </a>
     </li>
@@ -255,7 +255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/" class="md-nav__link">
+      <a href="../../containers/" class="md-nav__link">
         Containers
       </a>
     </li>
@@ -278,7 +278,7 @@
       <label class="md-nav__link" for="__nav_4">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../datasets/" class="md-nav__link"
+          <a href="../../datasets/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Datasets
@@ -288,7 +288,7 @@
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../datasets/" class="md-nav__link"
+            <a href="../../datasets/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Datasets
@@ -301,7 +301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/combined_source_and_target/" class="md-nav__link">
+      <a href="../../datasets/combined_source_and_target/" class="md-nav__link">
         CombinedSourceAndTarget
       </a>
     </li>
@@ -313,7 +313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/concat_dataset/" class="md-nav__link">
+      <a href="../../datasets/concat_dataset/" class="md-nav__link">
         ConcatDataset
       </a>
     </li>
@@ -325,7 +325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/dataloader_creator/" class="md-nav__link">
+      <a href="../../datasets/dataloader_creator/" class="md-nav__link">
         DataloaderCreator
       </a>
     </li>
@@ -337,7 +337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/domainnet/" class="md-nav__link">
+      <a href="../../datasets/domainnet/" class="md-nav__link">
         DomainNet
       </a>
     </li>
@@ -349,7 +349,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/mnistm/" class="md-nav__link">
+      <a href="../../datasets/mnistm/" class="md-nav__link">
         MNISTM
       </a>
     </li>
@@ -361,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/office31/" class="md-nav__link">
+      <a href="../../datasets/office31/" class="md-nav__link">
         Office31
       </a>
     </li>
@@ -373,7 +373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/pseudo_labeled_dataset/" class="md-nav__link">
+      <a href="../../datasets/pseudo_labeled_dataset/" class="md-nav__link">
         PseudoLabeledDataset
       </a>
     </li>
@@ -385,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/source_dataset/" class="md-nav__link">
+      <a href="../../datasets/source_dataset/" class="md-nav__link">
         SourceDataset
       </a>
     </li>
@@ -397,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/target_dataset/" class="md-nav__link">
+      <a href="../../datasets/target_dataset/" class="md-nav__link">
         TargetDataset
       </a>
     </li>
@@ -418,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frameworks/" class="md-nav__link">
+      <a href="../../frameworks/" class="md-nav__link">
         Frameworks
       </a>
     </li>
@@ -443,7 +443,7 @@
       <label class="md-nav__link" for="__nav_6">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../" class="md-nav__link"
+          <a href="../" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Hooks
@@ -453,7 +453,7 @@
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Hooks
@@ -466,7 +466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adda/" class="md-nav__link">
+      <a href="../adda/" class="md-nav__link">
         ADDAHook
       </a>
     </li>
@@ -503,7 +503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../aligners/aligner_hook/" class="md-nav__link">
+      <a href="../aligners/aligner_hook/" class="md-nav__link">
         AlignerHook
       </a>
     </li>
@@ -515,7 +515,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../aligners/aligner_plus_c_hook/" class="md-nav__link">
+      <a href="../aligners/aligner_plus_c_hook/" class="md-nav__link">
         AlignerPlusCHook
       </a>
     </li>
@@ -527,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../aligners/features_logits_aligner_hook/" class="md-nav__link">
+      <a href="../aligners/features_logits_aligner_hook/" class="md-nav__link">
         FeaturesLogitsAlignerHook
       </a>
     </li>
@@ -539,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../aligners/joint_aligner_hook/" class="md-nav__link">
+      <a href="../aligners/joint_aligner_hook/" class="md-nav__link">
         JointAlignerHook
       </a>
     </li>
@@ -582,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/base_condition_hook/" class="md-nav__link">
+      <a href="../base/base_condition_hook/" class="md-nav__link">
         BaseConditionHook
       </a>
     </li>
@@ -594,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/base_hook/" class="md-nav__link">
+      <a href="../base/base_hook/" class="md-nav__link">
         BaseHook
       </a>
     </li>
@@ -606,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/base_wrapper_hook/" class="md-nav__link">
+      <a href="../base/base_wrapper_hook/" class="md-nav__link">
         BaseWrapperHook
       </a>
     </li>
@@ -624,7 +624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cdan/" class="md-nav__link">
+      <a href="../cdan/" class="md-nav__link">
         CDANHook
       </a>
     </li>
@@ -661,7 +661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/classifier_hook/" class="md-nav__link">
+      <a href="../classification/classifier_hook/" class="md-nav__link">
         ClassifierHook
       </a>
     </li>
@@ -673,7 +673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/closs_hook/" class="md-nav__link">
+      <a href="../classification/closs_hook/" class="md-nav__link">
         CLossHook
       </a>
     </li>
@@ -685,7 +685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/finetuner_hook/" class="md-nav__link">
+      <a href="../classification/finetuner_hook/" class="md-nav__link">
         FinetunerHook
       </a>
     </li>
@@ -697,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/softmax_hook/" class="md-nav__link">
+      <a href="../classification/softmax_hook/" class="md-nav__link">
         SoftmaxHook
       </a>
     </li>
@@ -709,7 +709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/softmax_locally_hook/" class="md-nav__link">
+      <a href="../classification/softmax_locally_hook/" class="md-nav__link">
         SoftmaxLocallyHook
       </a>
     </li>
@@ -725,11 +725,78 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../dann/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            DANNHook
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         DANNHook
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.dann" class="md-nav__link">
+    dann
+  </a>
+  
+    <nav class="md-nav" aria-label="dann">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.dann.DANNHook" class="md-nav__link">
+    DANNHook
+  </a>
+  
+    <nav class="md-nav" aria-label="DANNHook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.dann.DANNHook.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -764,7 +831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../domain/domain_loss_hook/" class="md-nav__link">
+      <a href="../domain/domain_loss_hook/" class="md-nav__link">
         DomainLossHook
       </a>
     </li>
@@ -776,7 +843,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../domain/features_for_domain_loss_hook/" class="md-nav__link">
+      <a href="../domain/features_for_domain_loss_hook/" class="md-nav__link">
         FeaturesForDomainLossHook
       </a>
     </li>
@@ -794,7 +861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gan/" class="md-nav__link">
+      <a href="../gan/" class="md-nav__link">
         GANHook
       </a>
     </li>
@@ -831,7 +898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/base_features_hook/" class="md-nav__link">
+      <a href="../features/base_features_hook/" class="md-nav__link">
         BaseFeaturesHook
       </a>
     </li>
@@ -843,7 +910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/combined_features_hook/" class="md-nav__link">
+      <a href="../features/combined_features_hook/" class="md-nav__link">
         CombinedFeaturesHook
       </a>
     </li>
@@ -855,7 +922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/dlogits_hook/" class="md-nav__link">
+      <a href="../features/dlogits_hook/" class="md-nav__link">
         DLogitsHook
       </a>
     </li>
@@ -867,7 +934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_and_logits_hook/" class="md-nav__link">
+      <a href="../features/features_and_logits_hook/" class="md-nav__link">
         FeaturesAndLogitsHook
       </a>
     </li>
@@ -879,7 +946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_chain_hook/" class="md-nav__link">
+      <a href="../features/features_chain_hook/" class="md-nav__link">
         FeaturesChainHook
       </a>
     </li>
@@ -891,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_hook/" class="md-nav__link">
+      <a href="../features/features_hook/" class="md-nav__link">
         FeaturesHook
       </a>
     </li>
@@ -903,7 +970,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_with_grad_and_detached_hook/" class="md-nav__link">
+      <a href="../features/features_with_grad_and_detached_hook/" class="md-nav__link">
         FeaturesWithGradAndDetachedHook
       </a>
     </li>
@@ -915,7 +982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/frozen_model_hook/" class="md-nav__link">
+      <a href="../features/frozen_model_hook/" class="md-nav__link">
         FrozenModelHook
       </a>
     </li>
@@ -927,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/logits_hook/" class="md-nav__link">
+      <a href="../features/logits_hook/" class="md-nav__link">
         LogitsHook
       </a>
     </li>
@@ -945,7 +1012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../optimizer/" class="md-nav__link">
+      <a href="../optimizer/" class="md-nav__link">
         OptimizerHook
       </a>
     </li>
@@ -982,7 +1049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/base_reducer/" class="md-nav__link">
+      <a href="../reducers/base_reducer/" class="md-nav__link">
         BaseReducer
       </a>
     </li>
@@ -994,7 +1061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/entropy_reducer/" class="md-nav__link">
+      <a href="../reducers/entropy_reducer/" class="md-nav__link">
         EntropyReducer
       </a>
     </li>
@@ -1006,7 +1073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/mean_reducer/" class="md-nav__link">
+      <a href="../reducers/mean_reducer/" class="md-nav__link">
         MeanReducer
       </a>
     </li>
@@ -1022,14 +1089,12 @@
             
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_12" type="checkbox" id="__nav_6_12" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_12" type="checkbox" id="__nav_6_12" >
       
       <label class="md-nav__link" for="__nav_6_12">
         <span class="md-nav__icon md-icon"></span>
@@ -1051,7 +1116,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../apply_fn_hook/" class="md-nav__link">
+      <a href="../utils/apply_fn_hook/" class="md-nav__link">
         ApplyFnHook
       </a>
     </li>
@@ -1063,7 +1128,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../assert_hook/" class="md-nav__link">
+      <a href="../utils/assert_hook/" class="md-nav__link">
         AssertHook
       </a>
     </li>
@@ -1075,7 +1140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chain_hook/" class="md-nav__link">
+      <a href="../utils/chain_hook/" class="md-nav__link">
         ChainHook
       </a>
     </li>
@@ -1087,7 +1152,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../empty_hook/" class="md-nav__link">
+      <a href="../utils/empty_hook/" class="md-nav__link">
         EmptyHook
       </a>
     </li>
@@ -1099,7 +1164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../false_hook/" class="md-nav__link">
+      <a href="../utils/false_hook/" class="md-nav__link">
         FalseHook
       </a>
     </li>
@@ -1111,7 +1176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multiplier_hook/" class="md-nav__link">
+      <a href="../utils/multiplier_hook/" class="md-nav__link">
         MultiplierHook
       </a>
     </li>
@@ -1123,7 +1188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../not_hook/" class="md-nav__link">
+      <a href="../utils/not_hook/" class="md-nav__link">
         NotHook
       </a>
     </li>
@@ -1135,7 +1200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../only_new_outputs_hook/" class="md-nav__link">
+      <a href="../utils/only_new_outputs_hook/" class="md-nav__link">
         OnlyNewOutputsHook
       </a>
     </li>
@@ -1147,7 +1212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../parallel_hook/" class="md-nav__link">
+      <a href="../utils/parallel_hook/" class="md-nav__link">
         ParallelHook
       </a>
     </li>
@@ -1159,7 +1224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../repeat_hook/" class="md-nav__link">
+      <a href="../utils/repeat_hook/" class="md-nav__link">
         RepeatHook
       </a>
     </li>
@@ -1171,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../true_hook/" class="md-nav__link">
+      <a href="../utils/true_hook/" class="md-nav__link">
         TrueHook
       </a>
     </li>
@@ -1181,78 +1246,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-nav__icon md-icon"></span>
-          
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
-            ZeroLossHook
-          </a>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../utils/zero_loss_hook/" class="md-nav__link">
         ZeroLossHook
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils" class="md-nav__link">
-    utils
-  </a>
-  
-    <nav class="md-nav" aria-label="utils">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook" class="md-nav__link">
-    ZeroLossHook
-  </a>
-  
-    <nav class="md-nav" aria-label="ZeroLossHook">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1285,7 +1283,7 @@
       <label class="md-nav__link" for="__nav_7">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../layers/" class="md-nav__link"
+          <a href="../../layers/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Layers
@@ -1295,7 +1293,7 @@
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../layers/" class="md-nav__link"
+            <a href="../../layers/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Layers
@@ -1308,7 +1306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/abs_loss/" class="md-nav__link">
+      <a href="../../layers/abs_loss/" class="md-nav__link">
         AbsLoss
       </a>
     </li>
@@ -1320,7 +1318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/adaptive_feature_norm/" class="md-nav__link">
+      <a href="../../layers/adaptive_feature_norm/" class="md-nav__link">
         AdaptiveFeatureNorm
       </a>
     </li>
@@ -1332,7 +1330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/batch_spectral_loss/" class="md-nav__link">
+      <a href="../../layers/batch_spectral_loss/" class="md-nav__link">
         BatchSpectralLoss
       </a>
     </li>
@@ -1344,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/bnm_loss/" class="md-nav__link">
+      <a href="../../layers/bnm_loss/" class="md-nav__link">
         BNMLoss
       </a>
     </li>
@@ -1356,7 +1354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/concat_softmax/" class="md-nav__link">
+      <a href="../../layers/concat_softmax/" class="md-nav__link">
         ConcatSoftmax
       </a>
     </li>
@@ -1368,7 +1366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/confidence_weights/" class="md-nav__link">
+      <a href="../../layers/confidence_weights/" class="md-nav__link">
         ConfidenceWeights
       </a>
     </li>
@@ -1380,7 +1378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/coral_loss/" class="md-nav__link">
+      <a href="../../layers/coral_loss/" class="md-nav__link">
         CORALLoss
       </a>
     </li>
@@ -1392,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/diversity_loss/" class="md-nav__link">
+      <a href="../../layers/diversity_loss/" class="md-nav__link">
         DiversityLoss
       </a>
     </li>
@@ -1404,7 +1402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/do_nothing_optimizer/" class="md-nav__link">
+      <a href="../../layers/do_nothing_optimizer/" class="md-nav__link">
         DoNothingOptimizer
       </a>
     </li>
@@ -1416,7 +1414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/entropy_loss/" class="md-nav__link">
+      <a href="../../layers/entropy_loss/" class="md-nav__link">
         EntropyLoss
       </a>
     </li>
@@ -1428,7 +1426,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/entropy_weights/" class="md-nav__link">
+      <a href="../../layers/entropy_weights/" class="md-nav__link">
         EntropyWeights
       </a>
     </li>
@@ -1440,7 +1438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/gradient_reversal/" class="md-nav__link">
+      <a href="../../layers/gradient_reversal/" class="md-nav__link">
         GradientReversal
       </a>
     </li>
@@ -1452,7 +1450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/mcc_loss/" class="md-nav__link">
+      <a href="../../layers/mcc_loss/" class="md-nav__link">
         MCCLoss
       </a>
     </li>
@@ -1464,7 +1462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/mcd_loss/" class="md-nav__link">
+      <a href="../../layers/mcd_loss/" class="md-nav__link">
         MCDLoss
       </a>
     </li>
@@ -1476,7 +1474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/mmd_loss/" class="md-nav__link">
+      <a href="../../layers/mmd_loss/" class="md-nav__link">
         MMDLoss
       </a>
     </li>
@@ -1488,7 +1486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/model_with_bridge/" class="md-nav__link">
+      <a href="../../layers/model_with_bridge/" class="md-nav__link">
         ModelWithBridge
       </a>
     </li>
@@ -1500,7 +1498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/multiple_models/" class="md-nav__link">
+      <a href="../../layers/multiple_models/" class="md-nav__link">
         MultipleModels
       </a>
     </li>
@@ -1512,7 +1510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/neighborhood_aggregation/" class="md-nav__link">
+      <a href="../../layers/neighborhood_aggregation/" class="md-nav__link">
         NeighborhoodAggregation
       </a>
     </li>
@@ -1524,7 +1522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/plus_residual/" class="md-nav__link">
+      <a href="../../layers/plus_residual/" class="md-nav__link">
         PlusResidual
       </a>
     </li>
@@ -1536,7 +1534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/randomized_dot_product/" class="md-nav__link">
+      <a href="../../layers/randomized_dot_product/" class="md-nav__link">
         RandomizedDotProduct
       </a>
     </li>
@@ -1548,7 +1546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/silhouette_score/" class="md-nav__link">
+      <a href="../../layers/silhouette_score/" class="md-nav__link">
         SilhouetteScore
       </a>
     </li>
@@ -1560,7 +1558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/sliced_wasserstein/" class="md-nav__link">
+      <a href="../../layers/sliced_wasserstein/" class="md-nav__link">
         SlicedWasserstein
       </a>
     </li>
@@ -1572,7 +1570,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/stochastic_linear/" class="md-nav__link">
+      <a href="../../layers/stochastic_linear/" class="md-nav__link">
         StochasticLinear
       </a>
     </li>
@@ -1584,7 +1582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/sufficient_accuracy/" class="md-nav__link">
+      <a href="../../layers/sufficient_accuracy/" class="md-nav__link">
         SufficientAccuracy
       </a>
     </li>
@@ -1596,7 +1594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/uniform_distribution_loss/" class="md-nav__link">
+      <a href="../../layers/uniform_distribution_loss/" class="md-nav__link">
         UniformDistributionLoss
       </a>
     </li>
@@ -1608,7 +1606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/vat_loss/" class="md-nav__link">
+      <a href="../../layers/vat_loss/" class="md-nav__link">
         VATLoss
       </a>
     </li>
@@ -1637,7 +1635,7 @@
       <label class="md-nav__link" for="__nav_8">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../meta_validators/" class="md-nav__link"
+          <a href="../../meta_validators/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Meta Validators
@@ -1647,7 +1645,7 @@
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../meta_validators/" class="md-nav__link"
+            <a href="../../meta_validators/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Meta Validators
@@ -1660,7 +1658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../meta_validators/forward_only_validator/" class="md-nav__link">
+      <a href="../../meta_validators/forward_only_validator/" class="md-nav__link">
         ForwardOnlyValidator
       </a>
     </li>
@@ -1672,7 +1670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../meta_validators/reverse_validator/" class="md-nav__link">
+      <a href="../../meta_validators/reverse_validator/" class="md-nav__link">
         ReverseValidator
       </a>
     </li>
@@ -1693,7 +1691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../models/" class="md-nav__link">
+      <a href="../../models/" class="md-nav__link">
         Models
       </a>
     </li>
@@ -1708,7 +1706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../utils/" class="md-nav__link">
+      <a href="../../utils/" class="md-nav__link">
         Utils
       </a>
     </li>
@@ -1723,7 +1721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/" class="md-nav__link">
+      <a href="../../validators/" class="md-nav__link">
         Validators
       </a>
     </li>
@@ -1746,7 +1744,7 @@
       <label class="md-nav__link" for="__nav_12">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../weighters/" class="md-nav__link"
+          <a href="../../weighters/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Weighters
@@ -1756,7 +1754,7 @@
         <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../weighters/" class="md-nav__link"
+            <a href="../../weighters/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Weighters
@@ -1769,7 +1767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../weighters/base_weighter/" class="md-nav__link">
+      <a href="../../weighters/base_weighter/" class="md-nav__link">
         BaseWeighter
       </a>
     </li>
@@ -1781,7 +1779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../weighters/mean_weighter/" class="md-nav__link">
+      <a href="../../weighters/mean_weighter/" class="md-nav__link">
         MeanWeighter
       </a>
     </li>
@@ -1793,7 +1791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../weighters/sum_weighter/" class="md-nav__link">
+      <a href="../../weighters/sum_weighter/" class="md-nav__link">
         SumWeighter
       </a>
     </li>
@@ -1830,23 +1828,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils" class="md-nav__link">
-    utils
+  <a href="#pytorch_adapt.hooks.dann" class="md-nav__link">
+    dann
   </a>
   
-    <nav class="md-nav" aria-label="utils">
+    <nav class="md-nav" aria-label="dann">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook" class="md-nav__link">
-    ZeroLossHook
+  <a href="#pytorch_adapt.hooks.dann.DANNHook" class="md-nav__link">
+    DANNHook
   </a>
   
-    <nav class="md-nav" aria-label="ZeroLossHook">
+    <nav class="md-nav" aria-label="DANNHook">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="md-nav__link">
+  <a href="#pytorch_adapt.hooks.dann.DANNHook.__init__" class="md-nav__link">
     __init__()
   </a>
   
@@ -1874,23 +1872,23 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/hooks/utils/zero_loss_hook.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/hooks/dann.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>ZeroLossHook</h1>
+                  <h1>DANNHook</h1>
                 
                 <div class="doc doc-object doc-module">
 
 
 
-<h3 id="pytorch_adapt.hooks.utils" class="doc doc-heading">
-        <code>pytorch_adapt.hooks.utils</code>
+<h3 id="pytorch_adapt.hooks.dann" class="doc doc-heading">
+        <code>pytorch_adapt.hooks.dann</code>
 
 
 
-<a href="#pytorch_adapt.hooks.utils" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#pytorch_adapt.hooks.dann" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1909,16 +1907,18 @@
 
 
 
-<h4 id="pytorch_adapt.hooks.utils.ZeroLossHook" class="doc doc-heading">
-        <code>ZeroLossHook</code>
+<h4 id="pytorch_adapt.hooks.dann.DANNHook" class="doc doc-heading">
+        <code>DANNHook</code>
 
 
 
-<a href="#pytorch_adapt.hooks.utils.ZeroLossHook" class="headerlink" title="Permanent link">&para;</a></h4>
+<a href="#pytorch_adapt.hooks.dann.DANNHook" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
-      <p>Returns only 0 losses and <code>None</code> outputs.</p>
+      <p>Implementation of
+<a href="https://arxiv.org/abs/1505.07818">Domain-Adversarial Training of Neural Networks</a>.</p>
+<p>This includes the model optimization step.</p>
 
 
 
@@ -1937,14 +1937,14 @@
 
 
 
-<h5 id="pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_names</span><span class="p">,</span> <span class="n">out_names</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h5 id="pytorch_adapt.hooks.dann.DANNHook.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">domain_loss_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook_allowed</span><span class="o">=</span><span class="s1">&#39;_dlogits$&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
   </span>
 
-<a href="#pytorch_adapt.hooks.utils.ZeroLossHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+<a href="#pytorch_adapt.hooks.dann.DANNHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
 
     <div class="doc doc-contents ">
 
@@ -1961,44 +1961,301 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>loss_names</code></td>
-        <td><code>List[str]</code></td>
-        <td><p>The keys of the loss dictionary
-which will have <code>tensor(0.)</code> as its values.</p></td>
+        <td><code>opts</code></td>
+        <td><code></code></td>
+        <td><p>List of optimizers for updating the models.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
-        <td><code>out_names</code></td>
-        <td><code>List[str]</code></td>
-        <td><p>The keys of the output dictionary
-which will have <code>None</code> as its values.</p></td>
-        <td><em>required</em></td>
+        <td><code>weighter</code></td>
+        <td><code></code></td>
+        <td><p>Weights the losses before backpropagation.
+If <code>None</code> then it defaults to
+<a href="../../weighters/mean_weighter/#pytorch_adapt.weighters.mean_weighter.MeanWeighter"><code>MeanWeighter</code></a></p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>reducer</code></td>
+        <td><code></code></td>
+        <td><p>Reduces loss tensors.
+If <code>None</code> then it defaults to
+<a href="../reducers/mean_reducer/#pytorch_adapt.hooks.reducers.MeanReducer"><code>MeanReducer</code></a></p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>pre</code></td>
+        <td><code></code></td>
+        <td><p>List of hooks that will be executed at the very
+beginning of each iteration.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>pre_d</code></td>
+        <td><code></code></td>
+        <td><p>List of hooks that will be executed after
+gradient reversal, but before the domain loss.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>post_d</code></td>
+        <td><code></code></td>
+        <td><p>List of hooks that will be executed after
+gradient reversal, and after the domain loss.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>pre_g</code></td>
+        <td><code></code></td>
+        <td><p>List of hooks that will be executed outside of
+the gradient reversal step, and before the generator
+and classifier loss.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>post_g</code></td>
+        <td><code></code></td>
+        <td><p>List of hooks that will be executed after
+the generator and classifier losses.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>gradient_reversal</code></td>
+        <td><code></code></td>
+        <td><p>Called before all D hooks, including
+<code>pre_d</code>.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>use_logits</code></td>
+        <td><code></code></td>
+        <td><p>If <code>True</code>, then D receives the output of C
+instead of the output of G.</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>f_hook</code></td>
+        <td><code></code></td>
+        <td><p>The hook used for computing features and logits.
+If <code>None</code> then it defaults to
+<a href="../domain/features_for_domain_loss_hook/#pytorch_adapt.hooks.domain.FeaturesForDomainLossHook"><code>FeaturesForDomainLossHook</code></a></p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>d_hook</code></td>
+        <td><code></code></td>
+        <td><p>The hook used for computing discriminator logits.
+If <code>None</code> then it defaults to
+<a href="../features/dlogits_hook/#pytorch_adapt.hooks.features.DLogitsHook"><code>DLogitsHook</code></a></p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>c_hook</code></td>
+        <td><code></code></td>
+        <td><p>The hook used for computing the classifiers's loss.
+If <code>None</code> then it defaults to
+<a href="../classification/closs_hook/#pytorch_adapt.hooks.classification.CLossHook"><code>CLossHook</code></a></p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>domain_loss_hook</code></td>
+        <td><code></code></td>
+        <td><p>The hook used for computing the domain loss.
+If <code>None</code> then it defaults to
+<a href="../domain/domain_loss_hook/#pytorch_adapt.hooks.domain.DomainLossHook"><code>DomainLossHook</code></a>.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>d_hook_allowed</code></td>
+        <td><code></code></td>
+        <td><p>A regex string that specifies the allowed
+output names of the discriminator block.</p></td>
+        <td><code>&#39;_dlogits$&#39;</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">out_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <summary>Source code in <code>pytorch_adapt\hooks\dann.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">opts</span><span class="p">,</span>
+    <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">domain_loss_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">d_hook_allowed</span><span class="o">=</span><span class="s2">&quot;_dlogits$&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        loss_names: The keys of the loss dictionary</span>
-<span class="sd">            which will have ```tensor(0.)``` as its values.</span>
-<span class="sd">        out_names: The keys of the output dictionary</span>
-<span class="sd">            which will have ```None``` as its values.</span>
+<span class="sd">        opts: List of optimizers for updating the models.</span>
+<span class="sd">        weighter: Weights the losses before backpropagation.</span>
+<span class="sd">            If ```None``` then it defaults to</span>
+<span class="sd">            [```MeanWeighter```][pytorch_adapt.weighters.mean_weighter.MeanWeighter]</span>
+<span class="sd">        reducer: Reduces loss tensors.</span>
+<span class="sd">            If ```None``` then it defaults to</span>
+<span class="sd">            [```MeanReducer```][pytorch_adapt.hooks.reducers.MeanReducer]</span>
+<span class="sd">        pre: List of hooks that will be executed at the very</span>
+<span class="sd">            beginning of each iteration.</span>
+<span class="sd">        pre_d: List of hooks that will be executed after</span>
+<span class="sd">            gradient reversal, but before the domain loss.</span>
+<span class="sd">        post_d: List of hooks that will be executed after</span>
+<span class="sd">            gradient reversal, and after the domain loss.</span>
+<span class="sd">        pre_g: List of hooks that will be executed outside of</span>
+<span class="sd">            the gradient reversal step, and before the generator</span>
+<span class="sd">            and classifier loss.</span>
+<span class="sd">        post_g: List of hooks that will be executed after</span>
+<span class="sd">            the generator and classifier losses.</span>
+<span class="sd">        gradient_reversal: Called before all D hooks, including</span>
+<span class="sd">            ```pre_d```.</span>
+<span class="sd">        use_logits: If ```True```, then D receives the output of C</span>
+<span class="sd">            instead of the output of G.</span>
+<span class="sd">        f_hook: The hook used for computing features and logits.</span>
+<span class="sd">            If ```None``` then it defaults to</span>
+<span class="sd">            [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.domain.FeaturesForDomainLossHook]</span>
+<span class="sd">        d_hook: The hook used for computing discriminator logits.</span>
+<span class="sd">            If ```None``` then it defaults to</span>
+<span class="sd">            [```DLogitsHook```][pytorch_adapt.hooks.features.DLogitsHook]</span>
+<span class="sd">        c_hook: The hook used for computing the classifiers&#39;s loss.</span>
+<span class="sd">            If ```None``` then it defaults to</span>
+<span class="sd">            [```CLossHook```][pytorch_adapt.hooks.classification.CLossHook]</span>
+<span class="sd">        domain_loss_hook: The hook used for computing the domain loss.</span>
+<span class="sd">            If ```None``` then it defaults to</span>
+<span class="sd">            [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].</span>
+<span class="sd">        d_hook_allowed: A regex string that specifies the allowed</span>
+<span class="sd">            output names of the discriminator block.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">loss_names</span> <span class="o">=</span> <span class="n">loss_names</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">out_names</span> <span class="o">=</span> <span class="n">out_names</span>
+    <span class="p">[</span><span class="n">pre</span><span class="p">,</span> <span class="n">pre_d</span><span class="p">,</span> <span class="n">post_d</span><span class="p">,</span> <span class="n">pre_g</span><span class="p">,</span> <span class="n">post_g</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">many_default</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">pre</span><span class="p">,</span> <span class="n">pre_d</span><span class="p">,</span> <span class="n">post_d</span><span class="p">,</span> <span class="n">pre_g</span><span class="p">,</span> <span class="n">post_g</span><span class="p">],</span> <span class="p">[[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]]</span>
+    <span class="p">)</span>
+    <span class="n">f_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">f_hook</span><span class="p">,</span> <span class="n">FeaturesForDomainLossHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_logits&quot;</span><span class="p">:</span> <span class="n">use_logits</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">gradient_reversal</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">gradient_reversal</span><span class="p">,</span> <span class="n">GradientReversalHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;apply_to&quot;</span><span class="p">:</span> <span class="n">f_hook</span><span class="o">.</span><span class="n">out_keys</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">c_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">c_hook</span><span class="p">,</span> <span class="n">CLossHook</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">domain_loss_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">domain_loss_hook</span><span class="p">,</span> <span class="n">DomainLossHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;f_hook&quot;</span><span class="p">:</span> <span class="n">f_hook</span><span class="p">,</span> <span class="s2">&quot;d_hook&quot;</span><span class="p">:</span> <span class="n">d_hook</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">AssertHook</span><span class="p">(</span>
+        <span class="n">OnlyNewOutputsHook</span><span class="p">(</span>
+            <span class="n">ChainHook</span><span class="p">(</span>
+                <span class="n">gradient_reversal</span><span class="p">,</span>
+                <span class="o">*</span><span class="n">pre_d</span><span class="p">,</span>
+                <span class="n">domain_loss_hook</span><span class="p">,</span>
+                <span class="o">*</span><span class="n">post_d</span><span class="p">,</span>
+                <span class="n">overwrite</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">d_hook_allowed</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="o">*</span><span class="n">pre_g</span><span class="p">,</span> <span class="n">c_hook</span><span class="p">,</span> <span class="o">*</span><span class="n">post_g</span><span class="p">)</span>
+
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="o">*</span><span class="n">pre</span><span class="p">,</span> <span class="n">f_hook</span><span class="p">,</span> <span class="n">disc_hook</span><span class="p">,</span> <span class="n">gen_hook</span><span class="p">)</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
+    <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
         </details>
@@ -2010,14 +2267,15 @@ which will have <code>None</code> as its values.</p></td>
 
 
 
-
-
-
   </div>
 
     </div>
 
   </div>
+
+
+
+
 
 
 
@@ -2049,7 +2307,7 @@ which will have <code>None</code> as its values.</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../true_hook/" class="md-footer__link md-footer__link--prev" aria-label="Previous: TrueHook" rel="prev">
+        <a href="../classification/softmax_locally_hook/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SoftmaxLocallyHook" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2058,20 +2316,20 @@ which will have <code>None</code> as its values.</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              TrueHook
+              SoftmaxLocallyHook
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../../layers/" class="md-footer__link md-footer__link--next" aria-label="Next: Layers" rel="next">
+        <a href="../domain/domain_loss_hook/" class="md-footer__link md-footer__link--next" aria-label="Next: DomainLossHook" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Layers
+              DomainLossHook
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -2100,10 +2358,10 @@ which will have <code>None</code> as its values.</p></td>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.ddd52ceb.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ddd52ceb.min.js"></script>
       
     
   </body>
