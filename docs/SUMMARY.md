@@ -28,6 +28,10 @@
         - [FrozenModelHook](hooks/features/frozen_model_hook.md)
         - [LogitsHook](hooks/features/logits_hook.md)
     - [OptimizerHook](hooks/optimizer.md)
+    - Reducers
+        - [BaseReducer](hooks/reducers/base_reducer.md)
+        - [EntropyReducer](hooks/reducers/entropy_reducer.md)
+        - [MeanReducer](hooks/reducers/mean_reducer.md)
     - Utils
         - [ApplyFnHook](hooks/utils/apply_fn_hook.md)
         - [AssertHook](hooks/utils/assert_hook.md)
