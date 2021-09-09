@@ -1,0 +1,1 @@
+::: pytorch_adapt.hooks.atdoc

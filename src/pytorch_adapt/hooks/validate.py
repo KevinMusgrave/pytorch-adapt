@@ -27,6 +27,12 @@ def update_model_counts(hook, available_keys, model_counts):
 
 
 def validate_hook(hook, available_keys=None, depth=0, model_counts=None):
+    """
+    Arguments:
+        hook: the hook to validate
+        available_keys: a list of keys that the context
+            will start with.
+    """
     c_f.LOGGER.debug(f"VALIDATE: {'  '*depth}{c_f.cls_name(hook)}")
     available_keys = c_f.default(available_keys, [])
     model_counts = c_f.default(model_counts, defaultdict(int))

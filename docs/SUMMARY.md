@@ -14,6 +14,7 @@
 - [Frameworks](frameworks/index.md)
 - [Hooks](hooks/index.md)
     - [ADDAHook](hooks/adda.md)
+    - [ATDOCHook](hooks/atdoc.md)
     - Aligners
         - [AlignerHook](hooks/aligners/aligner_hook.md)
         - [AlignerPlusCHook](hooks/aligners/aligner_plus_c_hook.md)
@@ -63,6 +64,8 @@
         - [RepeatHook](hooks/utils/repeat_hook.md)
         - [TrueHook](hooks/utils/true_hook.md)
         - [ZeroLossHook](hooks/utils/zero_loss_hook.md)
+    - [VADAHook](hooks/vada.md)
+    - [Validate](hooks/validate.md)
 - [Layers](layers/index.md)
     - [AbsLoss](layers/abs_loss.md)
     - [AdaptiveFeatureNorm](layers/adaptive_feature_norm.md)

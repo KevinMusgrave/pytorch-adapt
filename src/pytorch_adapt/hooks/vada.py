@@ -8,6 +8,10 @@ from .utils import ChainHook
 
 
 class VATHook(BaseWrapperHook):
+    """
+    Applies the [```VATLoss```][pytorch_adapt.layers.vat_loss.VATLoss].
+    """
+
     def __init__(self, loss_fn=None, **kwargs):
         super().__init__(**kwargs)
         self.loss_fn = c_f.default(loss_fn, VATLoss, {})
@@ -42,6 +46,11 @@ class VATPlusEntropyHook(BaseWrapperHook):
 
 
 class VADAHook(GANHook):
+    """
+    Implementation of VADA from
+    [A DIRT-T Approach to Unsupervised Domain Adaptation](https://arxiv.org/abs/1802.08735).
+    """
+
     def __init__(self, vat_loss_fn=None, entropy_loss_fn=None, post_g=None, **kwargs):
         post_g = c_f.default(post_g, [])
         post_g += [VATPlusEntropyHook(vat_loss_fn, entropy_loss_fn)]
