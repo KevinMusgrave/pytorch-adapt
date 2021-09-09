@@ -77,6 +77,11 @@ class SymNetsGHook(BaseWrapperHook):
 
 
 class SymNetsHook(BaseWrapperHook):
+    """
+    Implementation of
+    [Domain-Symmetric Networks for Adversarial Domain Adaptation](https://arxiv.org/abs/1904.04663).
+    """
+
     def __init__(
         self,
         c_opts,

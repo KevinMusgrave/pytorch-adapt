@@ -44,6 +44,11 @@ class MCDLossHook(BaseWrapperHook):
 
 
 class MCDHook(BaseWrapperHook):
+    """
+    Implementation of
+    [Maximum Classifier Discrepancy for Unsupervised Domain Adaptation](https://arxiv.org/abs/1712.02560).
+    """
+
     def __init__(
         self,
         g_opts,

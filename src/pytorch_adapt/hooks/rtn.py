@@ -55,6 +55,11 @@ class RTNLogitsHook(BaseWrapperHook):
 
 
 class RTNHook(BaseWrapperHook):
+    """
+    Implementation of
+    [Unsupervised Domain Adaptation with Residual Transfer Networks](https://arxiv.org/abs/1602.04433).
+    """
+
     def __init__(
         self,
         opts,
