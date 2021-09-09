@@ -34,5 +34,6 @@
     - [StochasticLinear](layers/stochastic_linear.md)
     - [SufficientAccuracy](layers/sufficient_accuracy.md)
     - [UniformDistributionLoss](layers/uniform_distribution_loss.md)
+    - [VATLoss](layers/vat_loss.md)
 - [Meta Validators](meta_validators/index.md)
 - [Weighters](weighters/index.md)

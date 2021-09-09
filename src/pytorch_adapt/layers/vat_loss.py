@@ -19,7 +19,24 @@ def get_normalized_noise(noise):
 
 
 class VATLoss(torch.nn.Module):
-    def __init__(self, num_power_iterations=1, xi=1e-6, epsilon=8.0):
+    """
+    Implementation of the loss used in
+
+    - [Virtual Adversarial Training: A Regularization Method for Supervised and Semi-Supervised Learning](https://arxiv.org/abs/1704.03976)
+    - [A DIRT-T Approach to Unsupervised Domain Adaptation](https://arxiv.org/abs/1802.08735)
+    """
+
+    def __init__(
+        self, num_power_iterations: int = 1, xi: float = 1e-6, epsilon: float = 8.0
+    ):
+        """
+        Arguments:
+            num_power_iterations: The number of iterations for
+                computing the approximation of the adversarial perturbation.
+            xi: The L2 norm of the the generated noise which is used
+                in the process of creating the perturbation.
+            epsilon: The L2 norm of the generated perturbation.
+        """
         super().__init__()
         self.num_power_iterations = num_power_iterations
         self.xi = xi
@@ -29,7 +46,15 @@ class VATLoss(torch.nn.Module):
             self, list_of_names=["num_power_iterations", "xi", "epsilon"]
         )
 
-    def forward(self, imgs, logits, model):
+    def forward(
+        self, imgs: torch.Tensor, logits: torch.Tensor, model: torch.nn.Module
+    ) -> torch.Tensor:
+        """
+        Arguments:
+            imgs: The input to the model
+            logits: The model's logits computed from ```imgs```
+            model: The aforementioned model
+        """
         logits = logits.detach()
         model.apply(c_f.set_layers_mode("eval", c_f.batchnorm_types()))
         perturbation = self.get_perturbation(imgs, logits, model)
@@ -57,4 +82,5 @@ class VATLoss(torch.nn.Module):
         return self.epsilon * get_normalized_noise(noise)
 
     def extra_repr(self):
+        """"""
         return c_f.extra_repr(self, ["num_power_iterations", "xi", "epsilon"])
