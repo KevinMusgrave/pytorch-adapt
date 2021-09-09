@@ -21,11 +21,3 @@ y = torch.norm(logits)
 loss, components = weighter({"x": x, "y": y})
 loss.backward()
 ```
-
-
-
-::: pytorch_adapt.weighters.base_weighter
-
-::: pytorch_adapt.weighters.mean_weighter
-
-::: pytorch_adapt.weighters.sum_weighter
