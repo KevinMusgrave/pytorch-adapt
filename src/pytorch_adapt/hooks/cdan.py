@@ -49,6 +49,11 @@ class CDANDomainHookG(CDANDomainHook):
 
 
 class CDANHook(GANHook):
+    """
+    Implementation of
+    [Conditional Adversarial Domain Adaptation](https://arxiv.org/abs/1705.10667)
+    """
+
     def __init__(self, softmax=True, **kwargs):
         super().__init__(
             disc_hook=CDANDomainHookD(softmax=softmax),

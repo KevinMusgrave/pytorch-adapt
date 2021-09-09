@@ -7,6 +7,10 @@ from .utils import AssertHook, ChainHook, OnlyNewOutputsHook
 
 
 class GANHook(BaseWrapperHook):
+    """
+    A generic GAN architecture for domain adaptation.
+    """
+
     def __init__(
         self,
         d_opts,
@@ -37,6 +41,54 @@ class GANHook(BaseWrapperHook):
         gen_domain_loss_fn=None,
         **kwargs
     ):
+        """
+        Arguments:
+            d_opts: List of optimizers for the D phase.
+            g_opts: List of optimizers for the G phase.
+            d_weighter: A loss weighter for the D phase.
+                If ```None``` then ```MeanWeighter``` is used.
+            d_reducer: A loss reducer for the D phase.
+                If ```None``` then ```MeanReducer``` is used.
+            g_weighter: A loss weighter for the G phase.
+                If ```None``` then ```MeanWeighter``` is used.
+            g_reducer: A loss reducer for the G phase.
+                If ```None``` then ```MeanReducer``` is used.
+            pre_d: List of hooks that will be executed at the very
+                beginning of the D phase.
+            post_d: List of hooks that will be executed at the end
+                of the D phase, but before the optimizers are called.
+            pre_g: List of hooks that will be executed at the very
+                beginning of the G phase.
+            post_g: List of hooks that will be executed at the end
+                of the G phase, but before the optimizers are called.
+            use_logits: If ```True```, then D receives the output of C
+                instead of the output of G.
+            disc_hook: The hook used for computing the discriminator's
+                domain loss. If ```None``` then ```DomainLossHook``` is used.
+            gen_hook: The hook used for computing the generator's
+                domain loss. If ```None``` then ```DomainLossHook``` is used.
+            c_hook: The hook used for computing the classifiers's loss.
+                If ```None``` then ```CLossHook``` is used.
+            disc_conditions: The condition hooks used in the ```ChainHook```
+                for the D phase.
+            disc_alts: The alt hooks used in the ```ChainHook```
+                for the D phase.
+            gen_conditions: The condition hooks used in the ```ChainHook```
+                for the G phase.
+            gen_alts: The alt hooks used in the ```ChainHook```
+                for the G phase.
+            disc_domains: The domains used to compute the discriminator's
+                domain loss. If ```None```, then ```["src", "target"]``` is used.
+            gen_domains: The domains used to compute the generators's
+                domain loss. If ```None```, then ```["src", "target"]``` is used.
+            disc_domain_loss_fn: The loss function used to compute the
+                discriminator's domain loss. If ```None``` then
+                ```torch.nn.BCEWithLogitsLoss``` is used.
+            gen_domain_loss_fn: The loss function used to compute the
+                generator's domain loss. If ```None``` then
+                ```torch.nn.BCEWithLogitsLoss``` is used.
+        """
+
         super().__init__(**kwargs)
         [pre_d, post_d, pre_g, post_g] = c_f.many_default(
             [pre_d, post_d, pre_g, post_g], [[], [], [], []]

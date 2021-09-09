@@ -6,7 +6,17 @@ from .utils import ChainHook, EmptyHook, FalseHook, TrueHook
 
 
 class ADDAHook(GANHook):
-    def __init__(self, threshold=0.6, pre_g=None, post_g=None, **kwargs):
+    """
+    Implementation of
+    [Adversarial Discriminative Domain Adaptation](https://arxiv.org/abs/1702.05464)
+    """
+
+    def __init__(self, threshold: float = 0.6, pre_g=None, post_g=None, **kwargs):
+        """
+        Arguments:
+            threshold: In each training iteration, the generator is only updated
+                if the discriminator's accuracy is greater than ```threshold```.
+        """
         [pre_g, post_g] = c_f.many_default([pre_g, post_g], [[], []])
         sf_frozen = FrozenModelHook(FeaturesHook(detach=True, domains=["src"]), "G")
         tf_all = FeaturesWithGradAndDetachedHook(model_name="T", domains=["target"])

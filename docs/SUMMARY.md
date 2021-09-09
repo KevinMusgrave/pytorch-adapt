@@ -10,10 +10,13 @@
     - [SourceDataset](datasets/source_dataset.md)
     - [TargetDataset](datasets/target_dataset.md)
 - [Hooks](hooks/index.md)
+    - [ADDAHook](hooks/adda.md)
     - Base
         - [BaseConditionHook](hooks/base/base_condition_hook.md)
         - [BaseHook](hooks/base/base_hook.md)
         - [BaseWrapperHook](hooks/base/base_wrapper_hook.md)
+    - [CDANHook](hooks/cdan.md)
+    - [GANHook](hooks/gan.md)
     - Utils
         - [ApplyFnHook](hooks/utils/apply_fn_hook.md)
         - [AssertHook](hooks/utils/assert_hook.md)
