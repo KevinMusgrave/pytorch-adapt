@@ -1,5 +1,6 @@
 import copy
 from collections import defaultdict
+from typing import Dict
 
 from ..utils import common_functions as c_f
 from .base import BaseHook, check_keys_are_present, replace_mapped_keys
@@ -26,12 +27,16 @@ def update_model_counts(hook, available_keys, model_counts):
                         break
 
 
-def validate_hook(hook, available_keys=None, depth=0, model_counts=None):
+def validate_hook(
+    hook, available_keys=None, depth=0, model_counts=None
+) -> Dict[str, int]:
     """
     Arguments:
         hook: the hook to validate
         available_keys: a list of keys that the context
             will start with.
+    Returns:
+        A dictionary with each model's ```forward``` call count.
     """
     c_f.LOGGER.debug(f"VALIDATE: {'  '*depth}{c_f.cls_name(hook)}")
     available_keys = c_f.default(available_keys, [])

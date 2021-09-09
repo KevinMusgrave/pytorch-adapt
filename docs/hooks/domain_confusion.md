@@ -1,0 +1,1 @@
+::: pytorch_adapt.hooks.domain_confusion

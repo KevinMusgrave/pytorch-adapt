@@ -7,7 +7,19 @@ from .features import DLogitsHook, FeaturesChainHook, FeaturesHook
 
 
 class StrongDHook(BaseConditionHook):
-    def __init__(self, threshold=0.6, **kwargs):
+    """
+    Returns ```True``` if the discriminator's
+    accuracy is higher than some threshold.
+
+    Extends [```BaseConditionHook```][pytorch_adapt.hooks.base.BaseConditionHook]
+    """
+
+    def __init__(self, threshold: float = 0.6, **kwargs):
+        """
+        Arguments:
+            threshold: The discriminator's accuracy must be higher
+                than this threshold for the hook to return ```True```.
+        """
         super().__init__(**kwargs)
         self.accuracy_fn = SufficientAccuracy(
             threshold=threshold, to_probs_func=torch.nn.Sigmoid()
@@ -17,6 +29,7 @@ class StrongDHook(BaseConditionHook):
         )
 
     def call(self, losses, inputs):
+        """"""
         with torch.no_grad():
             outputs = self.hook(losses, inputs)[1]
             [d_src_logits, d_target_logits] = c_f.extract(

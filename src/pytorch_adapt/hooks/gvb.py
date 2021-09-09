@@ -117,6 +117,11 @@ class DBridgeLossHook(BridgeLossHook):
 
 
 class GVBHook(DANNHook):
+    """
+    Implementation of
+    [Gradually Vanishing Bridge for Adversarial Domain Adaptation](https://arxiv.org/abs/2003.13183)
+    """
+
     def __init__(self, pre=None, pre_d=None, pre_g=None, **kwargs):
         # f_hook and d_hook are used inside DomainLossHook
         f_hook = FeaturesForDomainLossHook(use_logits=True)

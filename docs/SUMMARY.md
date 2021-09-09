@@ -31,11 +31,15 @@
         - [FinetunerHook](hooks/classification/finetuner_hook.md)
         - [SoftmaxHook](hooks/classification/softmax_hook.md)
         - [SoftmaxLocallyHook](hooks/classification/softmax_locally_hook.md)
+    - Conditions
+        - [StrongDHook](hooks/conditions/strong_d_hook.md)
     - [DANNHook](hooks/dann.md)
     - Domain
         - [DomainLossHook](hooks/domain/domain_loss_hook.md)
         - [FeaturesForDomainLossHook](hooks/domain/features_for_domain_loss_hook.md)
+    - [DomainConfusionHook](hooks/domain_confusion.md)
     - [GANHook](hooks/gan.md)
+    - [GVBHook](hooks/gvb.md)
     - Features
         - [BaseFeaturesHook](hooks/features/base_features_hook.md)
         - [CombinedFeaturesHook](hooks/features/combined_features_hook.md)
