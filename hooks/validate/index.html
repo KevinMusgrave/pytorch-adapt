@@ -738,6 +738,49 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_7" type="checkbox" id="__nav_6_7" >
+      
+      <label class="md-nav__link" for="__nav_6_7">
+        <span class="md-nav__icon md-icon"></span>
+        
+          Conditions
+        
+      </label>
+      <nav class="md-nav" aria-label="Conditions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_7">
+          <span class="md-nav__icon md-icon"></span>
+          
+            Conditions
+          
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conditions/strong_d_hook/" class="md-nav__link">
+        StrongDHook
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
     <li class="md-nav__item">
       <a href="../dann/" class="md-nav__link">
         DANNHook
@@ -754,16 +797,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_8" type="checkbox" id="__nav_6_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_9" type="checkbox" id="__nav_6_9" >
       
-      <label class="md-nav__link" for="__nav_6_8">
+      <label class="md-nav__link" for="__nav_6_9">
         <span class="md-nav__icon md-icon"></span>
         
           Domain
         
       </label>
       <nav class="md-nav" aria-label="Domain" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_8">
+        <label class="md-nav__title" for="__nav_6_9">
           <span class="md-nav__icon md-icon"></span>
           
             Domain
@@ -806,8 +849,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../domain_confusion/" class="md-nav__link">
+        DomainConfusionHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../gan/" class="md-nav__link">
         GANHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gvb/" class="md-nav__link">
+        GVBHook
       </a>
     </li>
   
@@ -821,16 +888,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_10" type="checkbox" id="__nav_6_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_13" type="checkbox" id="__nav_6_13" >
       
-      <label class="md-nav__link" for="__nav_6_10">
+      <label class="md-nav__link" for="__nav_6_13">
         <span class="md-nav__icon md-icon"></span>
         
           Features
         
       </label>
       <nav class="md-nav" aria-label="Features" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_10">
+        <label class="md-nav__title" for="__nav_6_13">
           <span class="md-nav__icon md-icon"></span>
           
             Features
@@ -972,16 +1039,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_12" type="checkbox" id="__nav_6_12" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_15" type="checkbox" id="__nav_6_15" >
       
-      <label class="md-nav__link" for="__nav_6_12">
+      <label class="md-nav__link" for="__nav_6_15">
         <span class="md-nav__icon md-icon"></span>
         
           Reducers
         
       </label>
       <nav class="md-nav" aria-label="Reducers" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_12">
+        <label class="md-nav__title" for="__nav_6_15">
           <span class="md-nav__icon md-icon"></span>
           
             Reducers
@@ -1039,16 +1106,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_13" type="checkbox" id="__nav_6_13" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_16" type="checkbox" id="__nav_6_16" >
       
-      <label class="md-nav__link" for="__nav_6_13">
+      <label class="md-nav__link" for="__nav_6_16">
         <span class="md-nav__icon md-icon"></span>
         
           Utils
         
       </label>
       <nav class="md-nav" aria-label="Utils" data-md-level="2">
-        <label class="md-nav__title" for="__nav_6_13">
+        <label class="md-nav__title" for="__nav_6_16">
           <span class="md-nav__icon md-icon"></span>
           
             Utils
@@ -1954,10 +2021,24 @@ will start with.</p></td>
       </tr>
   </tbody>
 </table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, int]</code></td>
+      <td><p>A dictionary with each model's <code>forward</code> call count.</p></td>
+    </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\validate.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>29
-30
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>30
 31
 32
 33
@@ -2003,12 +2084,21 @@ will start with.</p></td>
 73
 74
 75
-76</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">available_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">model_counts</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+76
+77
+78
+79
+80
+81</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_hook</span><span class="p">(</span>
+    <span class="n">hook</span><span class="p">,</span> <span class="n">available_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">model_counts</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        hook: the hook to validate</span>
 <span class="sd">        available_keys: a list of keys that the context</span>
 <span class="sd">            will start with.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary with each model&#39;s ```forward``` call count.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;VALIDATE: {&#39;  &#39;*depth}{c_f.cls_name(hook)}&quot;</span><span class="p">)</span>
     <span class="n">available_keys</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">available_keys</span><span class="p">,</span> <span class="p">[])</span>
