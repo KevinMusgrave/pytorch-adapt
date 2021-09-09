@@ -14,7 +14,7 @@
     
     
       
-        <title>BatchSpectralLoss - PyTorch Adapt</title>
+        <title>CDANHook - PyTorch Adapt</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.layers.batch_spectral_loss" class="md-skip">
+        <a href="#pytorch_adapt.hooks.cdan" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              BatchSpectralLoss
+              CDANHook
             
           </span>
         </div>
@@ -386,17 +386,19 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       <label class="md-nav__link" for="__nav_3">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../hooks/" class="md-nav__link"
+          <a href="../" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Hooks
@@ -406,7 +408,7 @@
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../hooks/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Hooks
@@ -419,7 +421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/adda/" class="md-nav__link">
+      <a href="../adda/" class="md-nav__link">
         ADDAHook
       </a>
     </li>
@@ -456,7 +458,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/base/base_condition_hook/" class="md-nav__link">
+      <a href="../base/base_condition_hook/" class="md-nav__link">
         BaseConditionHook
       </a>
     </li>
@@ -468,7 +470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/base/base_hook/" class="md-nav__link">
+      <a href="../base/base_hook/" class="md-nav__link">
         BaseHook
       </a>
     </li>
@@ -480,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/base/base_wrapper_hook/" class="md-nav__link">
+      <a href="../base/base_wrapper_hook/" class="md-nav__link">
         BaseWrapperHook
       </a>
     </li>
@@ -496,11 +498,65 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../hooks/cdan/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            CDANHook
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         CDANHook
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.cdan" class="md-nav__link">
+    cdan
+  </a>
+  
+    <nav class="md-nav" aria-label="cdan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.hooks.cdan.CDANHook" class="md-nav__link">
+    CDANHook
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -510,7 +566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/gan/" class="md-nav__link">
+      <a href="../gan/" class="md-nav__link">
         GANHook
       </a>
     </li>
@@ -547,7 +603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/apply_fn_hook/" class="md-nav__link">
+      <a href="../utils/apply_fn_hook/" class="md-nav__link">
         ApplyFnHook
       </a>
     </li>
@@ -559,7 +615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/assert_hook/" class="md-nav__link">
+      <a href="../utils/assert_hook/" class="md-nav__link">
         AssertHook
       </a>
     </li>
@@ -571,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/chain_hook/" class="md-nav__link">
+      <a href="../utils/chain_hook/" class="md-nav__link">
         ChainHook
       </a>
     </li>
@@ -583,7 +639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/empty_hook/" class="md-nav__link">
+      <a href="../utils/empty_hook/" class="md-nav__link">
         EmptyHook
       </a>
     </li>
@@ -595,7 +651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/false_hook/" class="md-nav__link">
+      <a href="../utils/false_hook/" class="md-nav__link">
         FalseHook
       </a>
     </li>
@@ -607,7 +663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/multiplier_hook/" class="md-nav__link">
+      <a href="../utils/multiplier_hook/" class="md-nav__link">
         MultiplierHook
       </a>
     </li>
@@ -619,7 +675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/not_hook/" class="md-nav__link">
+      <a href="../utils/not_hook/" class="md-nav__link">
         NotHook
       </a>
     </li>
@@ -631,7 +687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/only_new_outputs_hook/" class="md-nav__link">
+      <a href="../utils/only_new_outputs_hook/" class="md-nav__link">
         OnlyNewOutputsHook
       </a>
     </li>
@@ -643,7 +699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/parallel_hook/" class="md-nav__link">
+      <a href="../utils/parallel_hook/" class="md-nav__link">
         ParallelHook
       </a>
     </li>
@@ -655,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/repeat_hook/" class="md-nav__link">
+      <a href="../utils/repeat_hook/" class="md-nav__link">
         RepeatHook
       </a>
     </li>
@@ -667,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/true_hook/" class="md-nav__link">
+      <a href="../utils/true_hook/" class="md-nav__link">
         TrueHook
       </a>
     </li>
@@ -679,7 +735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hooks/utils/zero_loss_hook/" class="md-nav__link">
+      <a href="../utils/zero_loss_hook/" class="md-nav__link">
         ZeroLossHook
       </a>
     </li>
@@ -704,19 +760,17 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       <label class="md-nav__link" for="__nav_4">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../" class="md-nav__link"
+          <a href="../../layers/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Layers
@@ -726,7 +780,7 @@
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../" class="md-nav__link"
+            <a href="../../layers/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Layers
@@ -739,7 +793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../abs_loss/" class="md-nav__link">
+      <a href="../../layers/abs_loss/" class="md-nav__link">
         AbsLoss
       </a>
     </li>
@@ -751,7 +805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adaptive_feature_norm/" class="md-nav__link">
+      <a href="../../layers/adaptive_feature_norm/" class="md-nav__link">
         AdaptiveFeatureNorm
       </a>
     </li>
@@ -761,78 +815,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-nav__icon md-icon"></span>
-          
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
-            BatchSpectralLoss
-          </a>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../layers/batch_spectral_loss/" class="md-nav__link">
         BatchSpectralLoss
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.layers.batch_spectral_loss" class="md-nav__link">
-    batch_spectral_loss
-  </a>
-  
-    <nav class="md-nav" aria-label="batch_spectral_loss">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss" class="md-nav__link">
-    BatchSpectralLoss
-  </a>
-  
-    <nav class="md-nav" aria-label="BatchSpectralLoss">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -842,7 +829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bnm_loss/" class="md-nav__link">
+      <a href="../../layers/bnm_loss/" class="md-nav__link">
         BNMLoss
       </a>
     </li>
@@ -854,7 +841,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concat_softmax/" class="md-nav__link">
+      <a href="../../layers/concat_softmax/" class="md-nav__link">
         ConcatSoftmax
       </a>
     </li>
@@ -866,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../confidence_weights/" class="md-nav__link">
+      <a href="../../layers/confidence_weights/" class="md-nav__link">
         ConfidenceWeights
       </a>
     </li>
@@ -878,7 +865,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../coral_loss/" class="md-nav__link">
+      <a href="../../layers/coral_loss/" class="md-nav__link">
         CORALLoss
       </a>
     </li>
@@ -890,7 +877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diversity_loss/" class="md-nav__link">
+      <a href="../../layers/diversity_loss/" class="md-nav__link">
         DiversityLoss
       </a>
     </li>
@@ -902,7 +889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../do_nothing_optimizer/" class="md-nav__link">
+      <a href="../../layers/do_nothing_optimizer/" class="md-nav__link">
         DoNothingOptimizer
       </a>
     </li>
@@ -914,7 +901,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../entropy_loss/" class="md-nav__link">
+      <a href="../../layers/entropy_loss/" class="md-nav__link">
         EntropyLoss
       </a>
     </li>
@@ -926,7 +913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../entropy_weights/" class="md-nav__link">
+      <a href="../../layers/entropy_weights/" class="md-nav__link">
         EntropyWeights
       </a>
     </li>
@@ -938,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gradient_reversal/" class="md-nav__link">
+      <a href="../../layers/gradient_reversal/" class="md-nav__link">
         GradientReversal
       </a>
     </li>
@@ -950,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mcc_loss/" class="md-nav__link">
+      <a href="../../layers/mcc_loss/" class="md-nav__link">
         MCCLoss
       </a>
     </li>
@@ -962,7 +949,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mcd_loss/" class="md-nav__link">
+      <a href="../../layers/mcd_loss/" class="md-nav__link">
         MCDLoss
       </a>
     </li>
@@ -974,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mmd_loss/" class="md-nav__link">
+      <a href="../../layers/mmd_loss/" class="md-nav__link">
         MMDLoss
       </a>
     </li>
@@ -986,7 +973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../model_with_bridge/" class="md-nav__link">
+      <a href="../../layers/model_with_bridge/" class="md-nav__link">
         ModelWithBridge
       </a>
     </li>
@@ -998,7 +985,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multiple_models/" class="md-nav__link">
+      <a href="../../layers/multiple_models/" class="md-nav__link">
         MultipleModels
       </a>
     </li>
@@ -1010,7 +997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../neighborhood_aggregation/" class="md-nav__link">
+      <a href="../../layers/neighborhood_aggregation/" class="md-nav__link">
         NeighborhoodAggregation
       </a>
     </li>
@@ -1022,7 +1009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../plus_residual/" class="md-nav__link">
+      <a href="../../layers/plus_residual/" class="md-nav__link">
         PlusResidual
       </a>
     </li>
@@ -1034,7 +1021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../randomized_dot_product/" class="md-nav__link">
+      <a href="../../layers/randomized_dot_product/" class="md-nav__link">
         RandomizedDotProduct
       </a>
     </li>
@@ -1046,7 +1033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../silhouette_score/" class="md-nav__link">
+      <a href="../../layers/silhouette_score/" class="md-nav__link">
         SilhouetteScore
       </a>
     </li>
@@ -1058,7 +1045,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sliced_wasserstein/" class="md-nav__link">
+      <a href="../../layers/sliced_wasserstein/" class="md-nav__link">
         SlicedWasserstein
       </a>
     </li>
@@ -1070,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../stochastic_linear/" class="md-nav__link">
+      <a href="../../layers/stochastic_linear/" class="md-nav__link">
         StochasticLinear
       </a>
     </li>
@@ -1082,7 +1069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sufficient_accuracy/" class="md-nav__link">
+      <a href="../../layers/sufficient_accuracy/" class="md-nav__link">
         SufficientAccuracy
       </a>
     </li>
@@ -1094,7 +1081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../uniform_distribution_loss/" class="md-nav__link">
+      <a href="../../layers/uniform_distribution_loss/" class="md-nav__link">
         UniformDistributionLoss
       </a>
     </li>
@@ -1106,7 +1093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vat_loss/" class="md-nav__link">
+      <a href="../../layers/vat_loss/" class="md-nav__link">
         VATLoss
       </a>
     </li>
@@ -1283,30 +1270,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.layers.batch_spectral_loss" class="md-nav__link">
-    batch_spectral_loss
+  <a href="#pytorch_adapt.hooks.cdan" class="md-nav__link">
+    cdan
   </a>
   
-    <nav class="md-nav" aria-label="batch_spectral_loss">
+    <nav class="md-nav" aria-label="cdan">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss" class="md-nav__link">
-    BatchSpectralLoss
+  <a href="#pytorch_adapt.hooks.cdan.CDANHook" class="md-nav__link">
+    CDANHook
   </a>
-  
-    <nav class="md-nav" aria-label="BatchSpectralLoss">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1327,23 +1301,23 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/layers/batch_spectral_loss.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/hooks/cdan.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>BatchSpectralLoss</h1>
+                  <h1>CDANHook</h1>
                 
                 <div class="doc doc-object doc-module">
 
 
 
-<h3 id="pytorch_adapt.layers.batch_spectral_loss" class="doc doc-heading">
-        <code>pytorch_adapt.layers.batch_spectral_loss</code>
+<h3 id="pytorch_adapt.hooks.cdan" class="doc doc-heading">
+        <code>pytorch_adapt.hooks.cdan</code>
 
 
 
-<a href="#pytorch_adapt.layers.batch_spectral_loss" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#pytorch_adapt.hooks.cdan" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1358,23 +1332,24 @@
 
 
 
+
+
+
   <div class="doc doc-object doc-class">
 
 
 
-<h4 id="pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss" class="doc doc-heading">
-        <code>BatchSpectralLoss</code>
+<h4 id="pytorch_adapt.hooks.cdan.CDANHook" class="doc doc-heading">
+        <code>CDANHook</code>
 
 
 
-<a href="#pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss" class="headerlink" title="Permanent link">&para;</a></h4>
+<a href="#pytorch_adapt.hooks.cdan.CDANHook" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
-      <p>Implementation of the loss in
-<a href="http://proceedings.mlr.press/v97/chen19i.html">Transferability vs. Discriminability: Batch Spectral
-Penalization for Adversarial Domain Adaptation</a>.
-The loss is the sum of the squares of the first k singular values.</p>
+      <p>Implementation of
+<a href="https://arxiv.org/abs/1705.10667">Conditional Adversarial Domain Adaptation</a></p>
 
 
 
@@ -1385,66 +1360,6 @@ The loss is the sum of the squares of the first k singular values.</p>
 
 
 
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#pytorch_adapt.layers.batch_spectral_loss.BatchSpectralLoss.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>k</code></td>
-        <td><code>int</code></td>
-        <td><p>the number of singular values to include in the loss</p></td>
-        <td><code>1</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\layers\batch_spectral_loss.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>19
-20
-21
-22
-23
-24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Arguments:</span>
-<span class="sd">        k: the number of singular values to include in the loss</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
-</code></pre></div>
-</td></tr></table>
-        </details>
-    </div>
-
-  </div>
 
 
 
@@ -1489,7 +1404,7 @@ The loss is the sum of the squares of the first k singular values.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../adaptive_feature_norm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: AdaptiveFeatureNorm" rel="prev">
+        <a href="../base/base_wrapper_hook/" class="md-footer__link md-footer__link--prev" aria-label="Previous: BaseWrapperHook" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1498,20 +1413,20 @@ The loss is the sum of the squares of the first k singular values.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              AdaptiveFeatureNorm
+              BaseWrapperHook
             </div>
           </div>
         </a>
       
       
         
-        <a href="../bnm_loss/" class="md-footer__link md-footer__link--next" aria-label="Next: BNMLoss" rel="next">
+        <a href="../gan/" class="md-footer__link md-footer__link--next" aria-label="Next: GANHook" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              BNMLoss
+              GANHook
             </div>
           </div>
           <div class="md-footer__button md-icon">
