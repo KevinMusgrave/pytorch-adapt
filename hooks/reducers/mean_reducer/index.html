@@ -14,7 +14,7 @@
     
     
       
-        <title>NotHook - PyTorch Adapt</title>
+        <title>MeanReducer - PyTorch Adapt</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.hooks.utils" class="md-skip">
+        <a href="#pytorch_adapt.hooks.reducers" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NotHook
+              MeanReducer
             
           </span>
         </div>
@@ -673,12 +673,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" type="checkbox" id="__nav_3_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" type="checkbox" id="__nav_3_7" checked>
       
       <label class="md-nav__link" for="__nav_3_7">
         <span class="md-nav__icon md-icon"></span>
@@ -700,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/base_reducer/" class="md-nav__link">
+      <a href="../base_reducer/" class="md-nav__link">
         BaseReducer
       </a>
     </li>
@@ -712,125 +714,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/entropy_reducer/" class="md-nav__link">
+      <a href="../entropy_reducer/" class="md-nav__link">
         EntropyReducer
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reducers/mean_reducer/" class="md-nav__link">
-        MeanReducer
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-            
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_8" type="checkbox" id="__nav_3_8" checked>
-      
-      <label class="md-nav__link" for="__nav_3_8">
-        <span class="md-nav__icon md-icon"></span>
-        
-          Utils
-        
-      </label>
-      <nav class="md-nav" aria-label="Utils" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_8">
-          <span class="md-nav__icon md-icon"></span>
-          
-            Utils
-          
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../apply_fn_hook/" class="md-nav__link">
-        ApplyFnHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../assert_hook/" class="md-nav__link">
-        AssertHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chain_hook/" class="md-nav__link">
-        ChainHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../empty_hook/" class="md-nav__link">
-        EmptyHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../false_hook/" class="md-nav__link">
-        FalseHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../multiplier_hook/" class="md-nav__link">
-        MultiplierHook
       </a>
     </li>
   
@@ -854,12 +739,12 @@
             <a href="./" class="md-nav__link md-nav__link--active"
               style="margin: initial; padding: initial; pointer-events: initial">
           
-            NotHook
+            MeanReducer
           </a>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        NotHook
+        MeanReducer
       </a>
       
         
@@ -875,30 +760,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils" class="md-nav__link">
-    utils
+  <a href="#pytorch_adapt.hooks.reducers" class="md-nav__link">
+    reducers
   </a>
   
-    <nav class="md-nav" aria-label="utils">
+    <nav class="md-nav" aria-label="reducers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.NotHook" class="md-nav__link">
-    NotHook
+  <a href="#pytorch_adapt.hooks.reducers.MeanReducer" class="md-nav__link">
+    MeanReducer
   </a>
-  
-    <nav class="md-nav" aria-label="NotHook">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.NotHook.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -915,12 +787,127 @@
   
 
           
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_8" type="checkbox" id="__nav_3_8" >
+      
+      <label class="md-nav__link" for="__nav_3_8">
+        <span class="md-nav__icon md-icon"></span>
+        
+          Utils
+        
+      </label>
+      <nav class="md-nav" aria-label="Utils" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_8">
+          <span class="md-nav__icon md-icon"></span>
+          
+            Utils
+          
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
   
   
   
     <li class="md-nav__item">
-      <a href="../only_new_outputs_hook/" class="md-nav__link">
+      <a href="../../utils/apply_fn_hook/" class="md-nav__link">
+        ApplyFnHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/assert_hook/" class="md-nav__link">
+        AssertHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/chain_hook/" class="md-nav__link">
+        ChainHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/empty_hook/" class="md-nav__link">
+        EmptyHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/false_hook/" class="md-nav__link">
+        FalseHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/multiplier_hook/" class="md-nav__link">
+        MultiplierHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/not_hook/" class="md-nav__link">
+        NotHook
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/only_new_outputs_hook/" class="md-nav__link">
         OnlyNewOutputsHook
       </a>
     </li>
@@ -932,7 +919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../parallel_hook/" class="md-nav__link">
+      <a href="../../utils/parallel_hook/" class="md-nav__link">
         ParallelHook
       </a>
     </li>
@@ -944,7 +931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../repeat_hook/" class="md-nav__link">
+      <a href="../../utils/repeat_hook/" class="md-nav__link">
         RepeatHook
       </a>
     </li>
@@ -956,7 +943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../true_hook/" class="md-nav__link">
+      <a href="../../utils/true_hook/" class="md-nav__link">
         TrueHook
       </a>
     </li>
@@ -968,7 +955,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zero_loss_hook/" class="md-nav__link">
+      <a href="../../utils/zero_loss_hook/" class="md-nav__link">
         ZeroLossHook
       </a>
     </li>
@@ -1503,30 +1490,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils" class="md-nav__link">
-    utils
+  <a href="#pytorch_adapt.hooks.reducers" class="md-nav__link">
+    reducers
   </a>
   
-    <nav class="md-nav" aria-label="utils">
+    <nav class="md-nav" aria-label="reducers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.NotHook" class="md-nav__link">
-    NotHook
+  <a href="#pytorch_adapt.hooks.reducers.MeanReducer" class="md-nav__link">
+    MeanReducer
   </a>
-  
-    <nav class="md-nav" aria-label="NotHook">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.utils.NotHook.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1547,23 +1521,23 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/hooks/utils/not_hook.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/hooks/reducers/mean_reducer.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>NotHook</h1>
+                  <h1>MeanReducer</h1>
                 
                 <div class="doc doc-object doc-module">
 
 
 
-<h3 id="pytorch_adapt.hooks.utils" class="doc doc-heading">
-        <code>pytorch_adapt.hooks.utils</code>
+<h3 id="pytorch_adapt.hooks.reducers" class="doc doc-heading">
+        <code>pytorch_adapt.hooks.reducers</code>
 
 
 
-<a href="#pytorch_adapt.hooks.utils" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#pytorch_adapt.hooks.reducers" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1582,16 +1556,16 @@
 
 
 
-<h4 id="pytorch_adapt.hooks.utils.NotHook" class="doc doc-heading">
-        <code>NotHook</code>
+<h4 id="pytorch_adapt.hooks.reducers.MeanReducer" class="doc doc-heading">
+        <code>MeanReducer</code>
 
 
 
-<a href="#pytorch_adapt.hooks.utils.NotHook" class="headerlink" title="Permanent link">&para;</a></h4>
+<a href="#pytorch_adapt.hooks.reducers.MeanReducer" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
-      <p>Returns the boolean negation of the wrapped hook.</p>
+      <p>Reduces loss elements by taking the mean.</p>
 
 
 
@@ -1604,64 +1578,6 @@
 
 
 
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.hooks.utils.NotHook.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#pytorch_adapt.hooks.utils.NotHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>hook</code></td>
-        <td><code>BaseConditionHook</code></td>
-        <td><p>The condition hook that will be negated.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\hooks\utils.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>288
-289
-290
-291
-292
-293
-294</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">BaseConditionHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Arguments:</span>
-<span class="sd">        hook: The condition hook that will be negated.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">hook</span>
-</code></pre></div>
-</td></tr></table>
-        </details>
-    </div>
-
-  </div>
 
 
 
@@ -1704,7 +1620,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../multiplier_hook/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MultiplierHook" rel="prev">
+        <a href="../entropy_reducer/" class="md-footer__link md-footer__link--prev" aria-label="Previous: EntropyReducer" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1713,20 +1629,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              MultiplierHook
+              EntropyReducer
             </div>
           </div>
         </a>
       
       
         
-        <a href="../only_new_outputs_hook/" class="md-footer__link md-footer__link--next" aria-label="Next: OnlyNewOutputsHook" rel="next">
+        <a href="../../utils/apply_fn_hook/" class="md-footer__link md-footer__link--next" aria-label="Next: ApplyFnHook" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              OnlyNewOutputsHook
+              ApplyFnHook
             </div>
           </div>
           <div class="md-footer__button md-icon">
