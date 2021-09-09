@@ -17,6 +17,16 @@
         - [BaseWrapperHook](hooks/base/base_wrapper_hook.md)
     - [CDANHook](hooks/cdan.md)
     - [GANHook](hooks/gan.md)
+    - Features
+        - [BaseFeaturesHook](hooks/features/base_features_hook.md)
+        - [CombinedFeaturesHook](hooks/features/combined_features_hook.md)
+        - [DLogitsHook](hooks/features/dlogits_hook.md)
+        - [FeaturesAndLogitsHook](hooks/features/features_and_logits_hook.md)
+        - [FeaturesChainHook](hooks/features/features_chain_hook.md)
+        - [FeaturesHook](hooks/features/features_hook.md)
+        - [FeaturesWithGradAndDetachedHook](hooks/features/features_with_grad_and_detached_hook.md)
+        - [FrozenModelHook](hooks/features/frozen_model_hook.md)
+        - [LogitsHook](hooks/features/logits_hook.md)
     - Utils
         - [ApplyFnHook](hooks/utils/apply_fn_hook.md)
         - [AssertHook](hooks/utils/assert_hook.md)

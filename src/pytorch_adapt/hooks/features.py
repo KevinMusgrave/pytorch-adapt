@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 import torch
 
@@ -8,15 +9,60 @@ from .utils import ChainHook
 
 
 class BaseFeaturesHook(BaseHook):
+    """
+    This hook:
+
+    1. Checks to see if specific tensors are in the context
+    2. Exits if the tensors are already in the context
+    3. Otherwise computes those tensors using the appropriate
+        inputs and models, and adds them to the context.
+    """
+
     def __init__(
         self,
-        model_name,
-        in_suffixes=None,
-        out_suffixes=None,
-        domains=None,
-        detach=False,
+        model_name: str,
+        in_suffixes: List[str] = None,
+        out_suffixes: List[str] = None,
+        domains: List[str] = None,
+        detach: bool = False,
         **kwargs,
     ):
+        """
+        Arguments:
+            model_name: The name of the model that will
+                be used to compute any missing tensors.
+
+            in_suffixes: The suffixes of the names of the inputs
+                to the model. For example if:
+
+                - ```domains = ["src", "target"]```
+                - ```in_suffixes = ["_imgs_features"]```
+
+                then the model will be given
+
+                - ```["src_imgs_features", "target_imgs_features"]```.
+
+            out_suffixes: The suffixes of the names of the outputs
+                of the model. Output suffixes are appended to the input name.
+                For example, if
+
+                - ```domains = ["src", "target"]```
+                - ```in_suffixes = ["_imgs_features"]```
+                - ```out_suffixes = ["_logits"]```
+
+                then the output keys will be
+
+                - ```["src_imgs_features_logits", "target_imgs_features_logits"]```
+
+            domains: The names of the domains to use. If ```None```,
+                this defaults to ```["src", "target"]```.
+
+            detach: If ```True```, then the output will be detached
+                from the autograd graph. Any output that is detached
+                will have ```"_detached"``` appended to its name in the
+                context.
+        """
+
         super().__init__(**kwargs)
         self.model_name = model_name
         self.domains = c_f.default(domains, ["src", "target"])
@@ -24,6 +70,7 @@ class BaseFeaturesHook(BaseHook):
         self.init_suffixes(in_suffixes, out_suffixes)
 
     def call(self, losses, inputs):
+        """"""
         outputs = {}
         for domain in self.domains:
             detach = self.check_grad_mode(domain)
@@ -169,9 +216,11 @@ class BaseFeaturesHook(BaseHook):
         }
 
     def _loss_keys(self):
+        """"""
         return []
 
     def _out_keys(self):
+        """"""
         return self.all_out_keys
 
     def extra_repr(self):
@@ -179,6 +228,22 @@ class BaseFeaturesHook(BaseHook):
 
 
 class FeaturesHook(BaseFeaturesHook):
+    """
+    Default input/output context names:
+
+    - Model: ```"G"```
+    - Inputs:
+        ```
+        ["src_imgs",
+        "target_imgs"]
+        ```
+    - Outputs:
+        ```
+        ["src_imgs_features",
+        "target_imgs_features"]
+        ```
+    """
+
     def __init__(
         self,
         model_name="G",
@@ -197,6 +262,22 @@ class FeaturesHook(BaseFeaturesHook):
 
 
 class LogitsHook(BaseFeaturesHook):
+    """
+    Default input/output context names:
+
+    - Model: ```"C"```
+    - Inputs:
+        ```
+        ["src_imgs_features",
+        "target_imgs_features"]
+        ```
+    - Outputs:
+        ```
+        ["src_imgs_features_logits",
+        "target_imgs_features_logits"]
+        ```
+    """
+
     def __init__(
         self,
         model_name="C",
@@ -215,6 +296,12 @@ class LogitsHook(BaseFeaturesHook):
 
 
 class FeaturesChainHook(ChainHook):
+    """
+    A special [```ChainHook```][pytorch_adapt.hooks.utils.ChainHook]
+    for features hooks. It sets each sub-hook's ```in_keys``` using
+    the previous sub-hook's ```out_keys```.
+    """
+
     def __init__(
         self,
         *hooks,
@@ -226,14 +313,30 @@ class FeaturesChainHook(ChainHook):
 
 
 class FeaturesAndLogitsHook(FeaturesChainHook):
+    """
+    Chains together [```FeaturesHook```][pytorch_adapt.hooks.features.FeaturesHook]
+    and [```LogitsHook```][pytorch_adapt.hooks.features.LogitsHook].
+    """
+
     def __init__(
         self,
-        domains=None,
-        detach_features=False,
-        detach_logits=False,
-        other_hooks=None,
+        domains: List[str] = None,
+        detach_features: bool = False,
+        detach_logits: bool = False,
+        other_hooks: List[BaseHook] = None,
         **kwargs,
     ):
+        """
+        Arguments:
+            domains: The domains used by both the features and logits hooks.
+                If ```None```, it defaults to ```["src", "target"]```
+            detach_features: If ```True```, returns features that are
+                detached from the autograd graph.
+            detach_logits: If ```True```, returns logits that are
+                detached from the autograd graph.
+            other_hooks: A list of hooks that will be called after
+                the features and logits hooks.
+        """
         features_hook = FeaturesHook(detach=detach_features, domains=domains)
         logits_hook = LogitsHook(detach=detach_logits, domains=domains)
         other_hooks = c_f.default(other_hooks, [])
@@ -241,6 +344,24 @@ class FeaturesAndLogitsHook(FeaturesChainHook):
 
 
 class FeaturesWithGradAndDetachedHook(BaseWrapperHook):
+    """
+    Default input/output context names:
+
+    - Model: ```"G"```
+    - Inputs:
+        ```
+        ["src_imgs",
+        "target_imgs"]
+        ```
+    - Outputs:
+        ```
+        ["src_imgs_features",
+        "target_imgs_features",
+        "src_imgs_features_detached",
+        "target_imgs_features_detached"]
+        ```
+    """
+
     def __init__(
         self,
         model_name="G",
@@ -266,6 +387,24 @@ class FeaturesWithGradAndDetachedHook(BaseWrapperHook):
 
 
 class CombinedFeaturesHook(BaseFeaturesHook):
+    """
+    Default input/output context names:
+
+    - Model: ```"feature_combiner"```
+    - Inputs:
+        ```
+        ["src_imgs_features",
+        "src_imgs_features_logits",
+        "target_imgs_features",
+        "target_imgs_features_logits"]
+        ```
+    - Outputs:
+        ```
+        ["src_imgs_features_AND_src_imgs_features_logits_combined",
+        "target_imgs_features_AND_target_imgs_features_logits_combined"]
+        ```
+    """
+
     def __init__(
         self,
         in_suffixes=None,
@@ -285,6 +424,22 @@ class CombinedFeaturesHook(BaseFeaturesHook):
 
 
 class DLogitsHook(BaseFeaturesHook):
+    """
+    Default input/output context names:
+
+    - Model: ```"D"```
+    - Inputs:
+        ```
+        ["src_imgs_features",
+        "target_imgs_features"]
+        ```
+    - Outputs:
+        ```
+        ["src_imgs_features_dlogits",
+        "target_imgs_features_dlogits"]
+        ```
+    """
+
     def __init__(
         self,
         model_name="D",
@@ -303,12 +458,24 @@ class DLogitsHook(BaseFeaturesHook):
 
 
 class FrozenModelHook(BaseWrapperHook):
-    def __init__(self, hook, model_name, **kwargs):
+    """
+    Sets model to ```eval()``` mode, and does all
+    computations with gradients turned off.
+    """
+
+    def __init__(self, hook: BaseHook, model_name: str, **kwargs):
+        """
+        Arguments:
+            hook: The wrapped hook which computes all losses and outputs.
+            model_name: The name of the model that will be set to eval() mode.
+        """
+
         super().__init__(**kwargs)
         self.hook = hook
         self.model_name = model_name
 
     def call(self, losses, inputs):
+        """"""
         model = inputs[self.model_name]
         model.eval()
         with torch.no_grad():
