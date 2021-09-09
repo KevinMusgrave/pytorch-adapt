@@ -27,7 +27,8 @@ class OptimizerHook(BaseHook):
         """
         Arguments:
             hook: the hook that computes the losses
-            optimizers: a list of optimizers that will be stepped
+            optimizers: a list of optimizers that will be used
+                to update model weights
             weighter: weights the returned losses and outputs a
                 single value on which ```.backward()``` is called.
                 If ```None```, then it defaults to

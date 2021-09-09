@@ -30,6 +30,13 @@ class SoftmaxGradientReversalHook(BaseWrapperHook):
 
 
 class DANNHook(BaseWrapperHook):
+    """
+    Implementation of
+    [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818).
+
+    This includes the model optimization step.
+    """
+
     def __init__(
         self,
         opts,
@@ -49,6 +56,45 @@ class DANNHook(BaseWrapperHook):
         d_hook_allowed="_dlogits$",
         **kwargs
     ):
+        """
+        Arguments:
+            opts: List of optimizers for updating the models.
+            weighter: Weights the losses before backpropagation.
+                If ```None``` then it defaults to
+                [```MeanWeighter```][pytorch_adapt.weighters.mean_weighter.MeanWeighter]
+            reducer: Reduces loss tensors.
+                If ```None``` then it defaults to
+                [```MeanReducer```][pytorch_adapt.hooks.reducers.MeanReducer]
+            pre: List of hooks that will be executed at the very
+                beginning of each iteration.
+            pre_d: List of hooks that will be executed after
+                gradient reversal, but before the domain loss.
+            post_d: List of hooks that will be executed after
+                gradient reversal, and after the domain loss.
+            pre_g: List of hooks that will be executed outside of
+                the gradient reversal step, and before the generator
+                and classifier loss.
+            post_g: List of hooks that will be executed after
+                the generator and classifier losses.
+            gradient_reversal: Called before all D hooks, including
+                ```pre_d```.
+            use_logits: If ```True```, then D receives the output of C
+                instead of the output of G.
+            f_hook: The hook used for computing features and logits.
+                If ```None``` then it defaults to
+                [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.domain.FeaturesForDomainLossHook]
+            d_hook: The hook used for computing discriminator logits.
+                If ```None``` then it defaults to
+                [```DLogitsHook```][pytorch_adapt.hooks.features.DLogitsHook]
+            c_hook: The hook used for computing the classifiers's loss.
+                If ```None``` then it defaults to
+                [```CLossHook```][pytorch_adapt.hooks.classification.CLossHook]
+            domain_loss_hook: The hook used for computing the domain loss.
+                If ```None``` then it defaults to
+                [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].
+            d_hook_allowed: A regex string that specifies the allowed
+                output names of the discriminator block.
+        """
         super().__init__(**kwargs)
         [pre, pre_d, post_d, pre_g, post_g] = c_f.many_default(
             [pre, pre_d, post_d, pre_g, post_g], [[], [], [], [], []]

@@ -9,6 +9,7 @@ from .utils import AssertHook, ChainHook, OnlyNewOutputsHook
 class GANHook(BaseWrapperHook):
     """
     A generic GAN architecture for domain adaptation.
+    This includes the model optimization steps.
     """
 
     def __init__(

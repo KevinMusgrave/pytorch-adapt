@@ -30,6 +30,10 @@
         - [FinetunerHook](hooks/classification/finetuner_hook.md)
         - [SoftmaxHook](hooks/classification/softmax_hook.md)
         - [SoftmaxLocallyHook](hooks/classification/softmax_locally_hook.md)
+    - [DANNHook](hooks/dann.md)
+    - Domain
+        - [DomainLossHook](hooks/domain/domain_loss_hook.md)
+        - [FeaturesForDomainLossHook](hooks/domain/features_for_domain_loss_hook.md)
     - [GANHook](hooks/gan.md)
     - Features
         - [BaseFeaturesHook](hooks/features/base_features_hook.md)

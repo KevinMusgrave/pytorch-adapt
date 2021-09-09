@@ -13,6 +13,12 @@ from .utils import ChainHook
 
 
 class FeaturesForDomainLossHook(FeaturesChainHook):
+    """
+    A [```FeaturesChainHook```][pytorch_adapt.hooks.features.FeaturesChainHook]
+    that has options specific to
+    [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].
+    """
+
     def __init__(
         self,
         f_hook=None,
@@ -22,6 +28,17 @@ class FeaturesForDomainLossHook(FeaturesChainHook):
         detach=False,
         **kwargs,
     ):
+        """
+        Arguments:
+            f_hook: hook for computing features
+            l_hook: hook for computing logits. This will be used
+                only if ```use_logits``` is ```True```.
+            use_logits: If ```True```, the logits hook is executed
+                after the features hook.
+            domains: the domains for which features will be computed.
+            detach: If ```True```, all outputs will be detached
+                from the autograd graph.
+        """
         hooks = [
             c_f.default(
                 f_hook,
@@ -36,6 +53,11 @@ class FeaturesForDomainLossHook(FeaturesChainHook):
 
 
 class DomainLossHook(BaseWrapperHook):
+    """
+    Computes the loss of a discriminator's output with
+    respect to domain labels.
+    """
+
     def __init__(
         self,
         d_loss_fn=None,
@@ -46,6 +68,20 @@ class DomainLossHook(BaseWrapperHook):
         d_hook=None,
         **kwargs,
     ):
+        """
+        Arguments:
+            d_loss_fn: The loss applied to the discriminator's logits.
+                If ```None``` it defaults to
+                ```torch.nn.BCEWithLogitsLoss```.
+            detach_features: If ```True```, the input to the
+                discriminator will be detached first.
+            reverse_labels: If ```True```, the ```"src"``` and
+                ```"target"``` domain labels will be swapped.
+            domains: The domains to apply the loss to.
+                If ```None``` it defaults to ```["src", "target"]```.
+            f_hook: The hook for computing the input to the discriminator.
+            d_hook: The hook for computing the discriminator logits.
+        """
         super().__init__(**kwargs)
         self.d_loss_fn = c_f.default(
             d_loss_fn, torch.nn.BCEWithLogitsLoss, {"reduction": "none"}
