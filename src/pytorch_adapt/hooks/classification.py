@@ -1,3 +1,5 @@
+from typing import Callable, List
+
 import torch
 
 from ..utils import common_functions as c_f
@@ -14,19 +16,60 @@ from .utils import ApplyFnHook, ChainHook, OnlyNewOutputsHook
 
 
 class SoftmaxHook(ApplyFnHook):
+    """
+    Applies ```torch.nn.Softmax(dim=1)``` to the
+    specified inputs.
+
+    Extends [```ApplyFnHook```][pytorch_adapt.hooks.utils.ApplyFnHook]
+    """
+
     def __init__(self, **kwargs):
         super().__init__(fn=torch.nn.Softmax(dim=1), **kwargs)
 
 
 class SoftmaxLocallyHook(BaseWrapperHook):
-    def __init__(self, apply_to, *hooks, **kwargs):
+    """
+    Applies ```torch.nn.Softmax(dim=1)``` to the
+    specifieid inputs, which are overwritten, but
+    only inside this hook.
+    """
+
+    def __init__(self, apply_to: List[str], *hooks: BaseHook, **kwargs):
+        """
+        Arguments:
+            apply_to: list of names of tensors that softmax
+                will be applied to.
+            hooks: the hooks that will receive the softmaxed
+                tensors.
+        """
         super().__init__(**kwargs)
         s_hook = SoftmaxHook(apply_to=apply_to)
         self.hook = OnlyNewOutputsHook(ChainHook(s_hook, *hooks, overwrite=True))
 
 
 class CLossHook(BaseWrapperHook):
-    def __init__(self, loss_fn=None, detach_features=False, f_hook=None, **kwargs):
+    """
+    Computes a classification loss on the specified tensors.
+    The default setting is to compute the cross entropy loss
+    of the source domain logits.
+    """
+
+    def __init__(
+        self,
+        loss_fn: Callable[[torch.Tensor, torch.Tensor], torch.Tensor] = None,
+        detach_features: bool = False,
+        f_hook: BaseHook = None,
+        **kwargs,
+    ):
+        """
+        Arguments:
+            loss_fn: The classification loss function. If ```None```,
+                it defaults to ```torch.nn.CrossEntropyLoss```.
+            detach_features: Whether or not to detach the features,
+                from which logits are computed.
+            f_hook: The hook for computing logits.
+        """
+
         super().__init__(**kwargs)
         self.loss_fn = c_f.default(
             loss_fn, torch.nn.CrossEntropyLoss, {"reduction": "none"}
@@ -38,6 +81,7 @@ class CLossHook(BaseWrapperHook):
         )
 
     def call(self, losses, inputs):
+        """"""
         outputs = self.hook(losses, inputs)[1]
         [src_logits] = c_f.extract(
             [outputs, inputs], c_f.filter(self.hook.out_keys, "_logits$")
@@ -46,10 +90,16 @@ class CLossHook(BaseWrapperHook):
         return {self._loss_keys()[0]: loss}, outputs
 
     def _loss_keys(self):
+        """"""
         return ["c_loss"]
 
 
 class ClassifierHook(BaseWrapperHook):
+    """
+    This computes the classification loss and also
+    optimizes the models.
+    """
+
     def __init__(
         self,
         opts,
@@ -72,6 +122,12 @@ class ClassifierHook(BaseWrapperHook):
 
 
 class FinetunerHook(ClassifierHook):
+    """
+    This is the same as
+    [```ClassifierHook```][pytorch_adapt.hooks.classification.ClassifierHook],
+    but it freezes the generator model ("G").
+    """
+
     def __init__(self, **kwargs):
         f_hook = FrozenModelHook(FeaturesHook(detach=True, domains=["src"]), "G")
         f_hook = FeaturesChainHook(f_hook, LogitsHook(domains=["src"]))

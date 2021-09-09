@@ -16,6 +16,12 @@
         - [BaseHook](hooks/base/base_hook.md)
         - [BaseWrapperHook](hooks/base/base_wrapper_hook.md)
     - [CDANHook](hooks/cdan.md)
+    - Classification
+        - [ClassifierHook](hooks/classification/classifier_hook.md)
+        - [CLossHook](hooks/classification/closs_hook.md)
+        - [FinetunerHook](hooks/classification/finetuner_hook.md)
+        - [SoftmaxHook](hooks/classification/softmax_hook.md)
+        - [SoftmaxLocallyHook](hooks/classification/softmax_locally_hook.md)
     - [GANHook](hooks/gan.md)
     - Features
         - [BaseFeaturesHook](hooks/features/base_features_hook.md)
