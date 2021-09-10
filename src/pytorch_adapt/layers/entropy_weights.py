@@ -4,7 +4,7 @@ import torch
 
 from ..utils import common_functions as c_f
 from .entropy_loss import get_entropy
-from .normalizers import sum_normalizer
+from .normalizers import SumNormalizer
 
 
 def entropy_weights(logits, after_softmax, normalizer):
@@ -38,7 +38,7 @@ class EntropyWeights(torch.nn.Module):
         """
         super().__init__()
         self.after_softmax = after_softmax
-        self.normalizer = c_f.default(normalizer, sum_normalizer)
+        self.normalizer = c_f.default(normalizer, SumNormalizer, {})
 
     def forward(self, logits: torch.Tensor) -> torch.Tensor:
         """
