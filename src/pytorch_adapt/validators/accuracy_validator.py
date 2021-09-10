@@ -6,6 +6,11 @@ from .base_validator import BaseValidator
 
 
 class AccuracyValidator(BaseValidator):
+    """
+    Returns accuracy using the
+    [torchmetrics accuracy function](https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func)
+    """
+
     def __init__(self, layer="preds", torchmetric_kwargs=None, **kwargs):
         super().__init__(**kwargs)
         self.layer = layer

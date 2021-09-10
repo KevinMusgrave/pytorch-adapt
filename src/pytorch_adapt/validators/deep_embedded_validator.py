@@ -17,6 +17,11 @@ from .base_validator import BaseValidator
 
 
 class DeepEmbeddedValidator(BaseValidator):
+    """
+    Implementation of
+    [Towards Accurate Model Selection in Deep Unsupervised Domain Adaptation](http://proceedings.mlr.press/v97/you19a.html)
+    """
+
     def __init__(self, layer="features", num_workers=0, batch_size=32, **kwargs):
         super().__init__(**kwargs)
         self.layer = layer

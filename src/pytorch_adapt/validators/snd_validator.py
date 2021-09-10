@@ -10,6 +10,11 @@ from .base_validator import BaseValidator
 
 # https://arxiv.org/pdf/2108.10860.pdf
 class SNDValidator(BaseValidator):
+    """
+    Implementation of
+    [Tune it the Right Way: Unsupervised Validation of Domain Adaptation via Soft Neighborhood Density](https://arxiv.org/abs/2108.10860)
+    """
+
     def __init__(self, layer="preds", T=0.05, batch_size=1000, **kwargs):
         super().__init__(**kwargs)
         self.layer = layer
