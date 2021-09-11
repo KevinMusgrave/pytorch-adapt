@@ -4,6 +4,10 @@ from .base_adapter import BaseGCAdapter
 
 
 class MCD(BaseGCAdapter):
+    """
+    Wraps [MCDHook][pytorch_adapt.hooks.mcd].
+    """
+
     hook_cls = MCDHook
 
     def inference_default(self, x, domain=None):

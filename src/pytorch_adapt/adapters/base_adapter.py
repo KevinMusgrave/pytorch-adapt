@@ -9,6 +9,10 @@ from .utils import default_optimizer_tuple
 
 
 class BaseAdapter(ABC):
+    """
+    Parent class of all adapters.
+    """
+
     def __init__(
         self,
         models=None,
@@ -21,6 +25,23 @@ class BaseAdapter(ABC):
         before_training_starts=None,
         hook_kwargs=None,
     ):
+        """
+        Arguments:
+            models: A [```Models```][pytorch_adapt.containers.models] container.
+                The models will be passed to the wrapped hook at each
+                training iteration.
+            optimizers: An [```Optimizers```][pytorch_adapt.containers.optimizers] container.
+                The optimizers will be passed into the wrapped hook during
+                initialization. The hook uses the optimizers at each training iteration.
+            lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.lr_schedulers] container.
+                The lr schedulers are called automatically by the
+                [```framework```](../frameworks/index.md) that wrap this adapter.
+            misc: A [```Misc```][pytorch_adapt.containers.misc] container for any
+                miscellaneous objects. These are passed into the wrapped hook
+                at each training iteration.
+            hook_kwargs: A dictionary of key word arguments that will be
+                passed into the wrapped hook during initialization.
+        """
         self.containers = c_f.default(
             default_containers, self.get_default_containers, {}
         )

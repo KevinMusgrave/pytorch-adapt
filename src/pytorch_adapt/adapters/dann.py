@@ -5,6 +5,10 @@ from .base_adapter import BaseGCDAdapter
 
 
 class DANN(BaseGCDAdapter):
+    """
+    Wraps [DANNHook][pytorch_adapt.hooks.dann].
+    """
+
     hook_cls = DANNHook
 
     def init_hook(self, hook_kwargs):
@@ -12,6 +16,10 @@ class DANN(BaseGCDAdapter):
 
 
 class GVB(DANN):
+    """
+    Wraps [GVBHook][pytorch_adapt.hooks.gvb].
+    """
+
     hook_cls = GVBHook
 
     def init_containers_and_check_keys(self):

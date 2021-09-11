@@ -7,6 +7,10 @@ from .base_adapter import BaseGCDAdapter
 
 
 class GAN(BaseGCDAdapter):
+    """
+    Wraps [GANHook][pytorch_adapt.hooks.gan].
+    """
+
     hook_cls = GANHook
 
     def init_hook(self, hook_kwargs):
@@ -16,6 +20,10 @@ class GAN(BaseGCDAdapter):
 
 
 class CDAN(GAN):
+    """
+    Wraps [CDANHook][pytorch_adapt.hooks.cdan].
+    """
+
     hook_cls = CDANHook
 
     def get_key_enforcer(self):
@@ -25,10 +33,18 @@ class CDAN(GAN):
 
 
 class DomainConfusion(GAN):
+    """
+    Wraps [DomainConfusionHook][pytorch_adapt.hooks.domain_confusion].
+    """
+
     hook_cls = DomainConfusionHook
 
 
 class VADA(GAN):
+    """
+    Wraps [VADAHook][pytorch_adapt.hooks.vada].
+    """
+
     hook_cls = VADAHook
 
     def init_containers_and_check_keys(self):

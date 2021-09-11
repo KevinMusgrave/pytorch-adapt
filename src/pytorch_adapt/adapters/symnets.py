@@ -5,6 +5,10 @@ from .base_adapter import BaseGCAdapter
 
 
 class SymNets(BaseGCAdapter):
+    """
+    Wraps [SymNetsHook][pytorch_adapt.hooks.symnets].
+    """
+
     hook_cls = SymNetsHook
 
     def inference_default(self, x, domain):

@@ -10,6 +10,10 @@ from .utils import default_optimizer_tuple
 
 
 class ADDA(BaseAdapter):
+    """
+    Wraps [ADDAHook][pytorch_adapt.hooks.adda].
+    """
+
     hook_cls = ADDAHook
 
     def inference_default(self, x, domain):

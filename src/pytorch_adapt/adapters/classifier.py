@@ -7,6 +7,10 @@ from .utils import default_optimizer_tuple
 
 
 class Classifier(BaseGCAdapter):
+    """
+    Wraps [ClassifierHook][pytorch_adapt.hooks.classification.ClassifierHook].
+    """
+
     hook_cls = ClassifierHook
 
     def init_hook(self, hook_kwargs):
@@ -14,6 +18,10 @@ class Classifier(BaseGCAdapter):
 
 
 class Finetuner(Classifier):
+    """
+    Wraps [FinetunerHook][pytorch_adapt.hooks.classification.FinetunerHook].
+    """
+
     hook_cls = FinetunerHook
 
     def get_default_containers(self):

@@ -5,6 +5,10 @@ from .base_adapter import BaseGCAdapter
 
 
 class Aligner(BaseGCAdapter):
+    """
+    Wraps [AlignerPlusCHook][pytorch_adapt.hooks.aligners.AlignerPlusCHook].
+    """
+
     hook_cls = AlignerPlusCHook
 
     def init_hook(self, hook_kwargs):
@@ -12,6 +16,10 @@ class Aligner(BaseGCAdapter):
 
 
 class RTN(Aligner):
+    """
+    Wraps [RTNHook][pytorch_adapt.hooks.rtn].
+    """
+
     hook_cls = RTNHook
 
     def inference_default(self, x, domain=None):
