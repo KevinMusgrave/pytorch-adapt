@@ -2,15 +2,48 @@ import inspect
 import json
 import os
 from abc import ABC, abstractmethod
+from typing import Callable, Dict, List
 
 import numpy as np
+import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ..utils import common_functions as c_f
 
 
 class BaseValidator(ABC):
-    def __init__(self, normalizer=None, key_map=None, ignore_epoch=0):
+    """
+    The parent class of all validators.
+
+    The main purpose of validators is to give an estimate
+    of target domain accuracy, without having access to
+    class labels.
+    """
+
+    def __init__(
+        self,
+        normalizer: Callable[[np.ndarray], np.ndarray] = None,
+        key_map: Dict[str, str] = None,
+        ignore_epoch: int = 0,
+    ):
+        """
+        Arguments:
+            normalizer: A function that receives the current unnormalized
+                score history, and returns a normalized version of the
+                score history. If ```None```, then it defaults to
+                no normalization.
+            key_map: A mapping from ```<new_split_names>``` to
+                ```<original_split_names>```. For example,
+                [```AccuracyValidator```][pytorch_adapt.validators.AccuracyValidator]
+                expects ```src_val``` by default. When used with one of the
+                [```frameworks```](../frameworks/index.md), this default
+                indicates that data related to the ```src_val``` split should be retrieved.
+                If you instead want to compute accuracy for the ```src_train``` split,
+                you would set the ```key_map``` to ```{"src_train": "src_val"}```.
+            ignore_epoch: This epoch will ignored when determining
+                the best scoring epoch. The default of 0 is meant to be
+                reserved for the initial model (before training has begun).
+        """
         self.normalizer = c_f.default(normalizer, return_raw)
         self.score_history = np.array([])
         self.raw_score_history = np.array([])
@@ -28,7 +61,11 @@ class BaseValidator(ABC):
         return args
 
     @property
-    def required_data(self):
+    def required_data(self) -> List[str]:
+        """
+        Returns:
+            A list of dataset split names.
+        """
         output = set(self._required_data()) - set(self.key_map.values())
         output = list(output)
         for k, v in self.key_map.items():
@@ -39,7 +76,19 @@ class BaseValidator(ABC):
     def compute_score(self):
         pass
 
-    def score(self, epoch, **kwargs):
+    def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
+        """
+        Arguments:
+            epoch: The epoch to be scored.
+            **kwargs: A mapping from dataset split name to
+                dictionaries containing:
+
+                - ```"features"```
+                - ```"logits"```
+                - ```"preds"```
+                - ```"domain"```
+                - ```"src_labels"``` (if available)
+        """
         kwargs = self.kwargs_check(epoch, kwargs)
         score = self.compute_score(**kwargs)
         self.append_to_history_and_normalize(score, epoch)
@@ -76,17 +125,32 @@ class BaseValidator(ABC):
         return len(x) > 0 and np.isfinite(x).any()
 
     @property
-    def best_score(self):
+    def best_score(self) -> float:
+        """
+        Returns:
+            The best score, ignoring ```self.ignore_epoch```.
+            Returns ```None``` if no valid scores are available.
+        """
         if self.has_valid_history():
             return self.score_history_ignore_epoch[self.best_idx]
 
     @property
-    def best_epoch(self):
+    def best_epoch(self) -> int:
+        """
+        Returns:
+            The best epoch, ignoring ```self.ignore_epoch```.
+            Returns ```None``` if no valid epochs are available.
+        """
         if self.has_valid_history():
             return self.epochs_ignore_epoch[self.best_idx]
 
     @property
-    def best_idx(self):
+    def best_idx(self) -> int:
+        """
+        Returns:
+            The index of the best score in ```self.score_history_ignore_epoch```.
+            Returns ```None``` if no valid epochs are available.
+        """
         if self.has_valid_history():
             return (
                 np.nanargmax(self.score_history_ignore_epoch)
@@ -95,23 +159,44 @@ class BaseValidator(ABC):
             )
 
     @property
-    def latest_epoch(self):
+    def latest_epoch(self) -> int:
+        """
+        Returns:
+            The latest epoch, including ```self.ignore_epoch```.
+            Returns ```None``` if no epochs have been scored.
+        """
         if self.has_valid_history(False):
             return self.epochs[-1]
 
     @property
-    def latest_score(self):
+    def latest_score(self) -> float:
+        """
+        Returns:
+            The latest score, including ```self.ignore_epoch```.
+            Returns ```None``` if no epochs have been scored.
+        """
         if self.has_valid_history(False):
             return self.score_history[-1]
 
     @property
-    def latest_is_best(self):
+    def latest_is_best(self) -> bool:
+        """
+        Returns:
+            ```False``` if the latest epoch was not the best
+            scoring epoch, or if the latest epoch is ```ignore_epoch```.
+            ```True``` otherwise.
+        """
         if self.has_valid_history(False):
             return self.best_epoch == self.latest_epoch
         return False
 
     @property
-    def maximize(self):
+    def maximize(self) -> bool:
+        """
+        Returns:
+            ```True``` if a higher validation score indicates a better model.
+            The default is ```True```.
+        """
         return True
 
     def __repr__(self):

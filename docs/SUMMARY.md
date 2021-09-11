@@ -107,6 +107,7 @@
 - [Utils](utils/index.md)
 - [Validators](validators/index.md)
     - [AccuracyValidator](validators/accuracy_validator.md)
+    - [BaseValidator](validators/base_validator.md)
     - [DeepEmbeddedValidator](validators/deep_embedded_validator.md)
     - [DiversityValidator](validators/diversity_validator.md)
     - [EntropyValidator](validators/entropy_validator.md)
