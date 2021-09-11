@@ -18,6 +18,11 @@ class IgniteEmptyLogger:
 
 
 class IgniteRecordKeeperLogger:
+    """
+    Uses [record-keeper](https://github.com/KevinMusgrave/record-keeper)
+    to record data tensorboard, csv, and sqlite.
+    """
+
     def __init__(
         self,
         folder=None,
@@ -25,6 +30,12 @@ class IgniteRecordKeeperLogger:
         record_writer=None,
         attr_list_names=None,
     ):
+        """
+        Arguments:
+            folder: path where records will be saved.
+            tensorboard_writer:
+            record_writer: a ```RecordWriter``` object (see record-keeper)
+        """
         import record_keeper
 
         c_f.LOGGER.info(f"record_keeper version {record_keeper.__version__}")

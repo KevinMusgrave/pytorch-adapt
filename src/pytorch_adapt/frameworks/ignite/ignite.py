@@ -12,7 +12,21 @@ from .loggers import IgniteEmptyLogger
 
 
 class Ignite:
+    """
+    Wraps an [Adapter](../../adapters/index.md) and takes
+    care of validation, model saving, etc. by using
+    the event handler system of PyTorch Ignite.
+    """
+
     def __init__(self, adapter, logger=None, log_freq=50, with_pbars=True):
+        """
+        Arguments:
+            adapter: An [Adapter](../../adapters/index.md) object
+            logger:
+            log_freq: The number of iterations between logging
+            with_pbars: If ```True```, progress bars are shown during
+                each epoch.
+        """
         self.adapter = adapter
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
