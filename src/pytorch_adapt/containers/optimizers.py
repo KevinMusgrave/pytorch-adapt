@@ -5,7 +5,19 @@ from .base_container import BaseContainer
 
 
 class Optimizers(BaseContainer):
+    """
+    A container for model optimizers.
+    """
+
     def __init__(self, *args, multipliers=None, **kwargs):
+        """
+        Arguments:
+            multipliers: A dictionary mapping from
+                optimizer name to lr multiplier. Each
+                optimizer will have ```lr = lr * multiplier```
+                upon initialization. If ```None```,
+                then multiplier is 1.
+        """
         self.multipliers = c_f.default(multipliers, {})
         super().__init__(*args, **kwargs)
 

@@ -5,7 +5,28 @@ from ..utils import common_functions as c_f
 
 # https://stackoverflow.com/a/3387975
 class BaseContainer(MutableMapping):
+    """
+    The parent class of all containers.
+    """
+
     def __init__(self, store, other=None, keys=None):
+        """
+        Arguments:
+            store: A tuple or dictionary
+
+                - A tuple consists of ```(<class_ref>, <init kwargs>)```.
+                For example, ```(torch.optim.Adam, {"lr": 0.1})```
+                - A dictionary maps from object name to either a tuple
+                or a fully constructed object.
+
+            other: Another container which is used in the process
+                of creating objects in this container, (e.g
+                optimizers require model parameters).
+
+            keys: Converts ```store``` from tuple to dict format,
+                where each dict value is the tuple. This only works
+                if ```store``` is passed in as a tuple.
+        """
         if not isinstance(store, (tuple, dict)):
             raise TypeError("BaseContainer input must be a tuple or dict")
         if isinstance(store, tuple):
@@ -46,6 +67,11 @@ class BaseContainer(MutableMapping):
         return str(self.store)
 
     def merge(self, other):
+        """
+        Merges another container into this one.
+        Arguments:
+            other: The container that will be merged into this container.
+        """
         if not isinstance(other, BaseContainer):
             raise TypeError("merge can only be done with another container")
         if other.store_as_tuple:
@@ -59,6 +85,10 @@ class BaseContainer(MutableMapping):
                 self[k] = v
 
     def create(self):
+        """
+        Initializes objects by converting all
+        tuples in the store into objects.
+        """
         for k, v in self.items():
             if isinstance(v, tuple):
                 if len(v) == 2:

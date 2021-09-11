@@ -3,7 +3,19 @@ from .base_container import BaseContainer
 
 
 class LRSchedulers(BaseContainer):
+    """
+    A container for optimizer learning rate schedulers.
+    """
+
     def __init__(self, store, scheduler_types=None, **kwargs):
+        """
+        Arguments:
+            store: See [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]
+            scheduler_types: A dictionary mapping from
+                scheduler type (```"per_step"``` or ```"per_epoch"```)
+                to a list of object names. If ```None```, then all
+                schedulers are assumed to be ```"per_step"```
+        """
         self.scheduler_types = scheduler_types
         super().__init__(store, **kwargs)
 
@@ -24,6 +36,11 @@ class LRSchedulers(BaseContainer):
             del self[k]
 
     def step(self, scheduler_type):
+        """
+        Step the lr schedulers of the specified type.
+        Arguments:
+            scheduler_type: ```"per_step"``` or ```"per_epoch"```
+        """
         for v in self.filter_by_scheduler_type(scheduler_type):
             v.step()
 
