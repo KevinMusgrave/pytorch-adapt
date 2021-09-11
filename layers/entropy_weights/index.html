@@ -1910,6 +1910,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../validators/base_validator/" class="md-nav__link">
+        BaseValidator
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../validators/deep_embedded_validator/" class="md-nav__link">
         DeepEmbeddedValidator
       </a>
@@ -2262,7 +2274,7 @@ If <code>None</code>, then sum normalization is used.</p></td>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">after_softmax</span> <span class="o">=</span> <span class="n">after_softmax</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">normalizer</span><span class="p">,</span> <span class="n">sum_normalizer</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">normalizer</span><span class="p">,</span> <span class="n">SumNormalizer</span><span class="p">,</span> <span class="p">{})</span>
 </code></pre></div>
 </td></tr></table>
         </details>
