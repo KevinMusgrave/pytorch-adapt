@@ -27,15 +27,15 @@ PyTorch Adapt consists of 11 modules
 
 | Module | Description |
 | --- | --- |
-| Adapters | Wrappers for training and inference steps
-| Containers | Dictionaries for simplifying object creation
-| Datasets | Commonly used datasets and tools for domain adaptation
-| Frameworks | Wrappers for training/testing pipelines
-| Hooks | Modular building blocks for domain adaptation algorithms
-| Layers | Loss functions and helper layers that extend ```torch.nn.Module```
-| Meta Validators | Post-processing of metrics, for hyperparameter optimization
-| Models | Architectures used for benchmarking and in examples
-| Utils | Various tools
-| Validators | Metrics for determining/estimating accuracy
-| Weighters | Functions for weighting losses
+| [**Adapters**](https://kevinmusgrave.github.io/pytorch-adapt/adapters) | Wrappers for training and inference steps
+| [**Containers**](https://kevinmusgrave.github.io/pytorch-adapt/containers) | Dictionaries for simplifying object creation
+| [**Datasets**](https://kevinmusgrave.github.io/pytorch-adapt/datasets) | Commonly used datasets and tools for domain adaptation
+| [**Frameworks**](https://kevinmusgrave.github.io/pytorch-adapt/frameworks) | Wrappers for training/testing pipelines
+| [**Hooks**](https://kevinmusgrave.github.io/pytorch-adapt/hooks) | Modular building blocks for domain adaptation algorithms
+| [**Layers**](https://kevinmusgrave.github.io/pytorch-adapt/layers) | Loss functions and helper layers
+| [**Meta Validators**](https://kevinmusgrave.github.io/pytorch-adapt/meta_validators) | Post-processing of metrics, for hyperparameter optimization
+| [**Models**](https://kevinmusgrave.github.io/pytorch-adapt/models) | Architectures used for benchmarking and in examples
+| [**Utils**](https://kevinmusgrave.github.io/pytorch-adapt/utils) | Various tools
+| [**Validators**](https://kevinmusgrave.github.io/pytorch-adapt/validators) | Metrics for determining and estimating accuracy
+| [**Weighters**](https://kevinmusgrave.github.io/pytorch-adapt/weighters) | Functions for weighting losses
   
