@@ -59,16 +59,3 @@ Pull requests are welcome!
 
 ### Logo
 Thanks to [Jeff Musgrave](https://jeffmusgrave.com) for designing the logo.
-
-## Citing this library
-If you'd like to cite pytorch-adapt in your paper, you can use this:
-```latex
-@misc{MusgravePyTorch2021,
-  author={Kevin Musgrave and Serge Belongie and Ser-Nam Lim},
-  title = {PyTorch Adapt},
-  year = {2021},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/KevinMusgrave/pytorch-adapt}}
-}
-```
