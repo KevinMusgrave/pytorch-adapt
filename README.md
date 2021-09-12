@@ -13,11 +13,12 @@
 
 ## Documentation
 - [**View the documentation here**](https://kevinmusgrave.github.io/pytorch-adapt/)
+- [**View the installation instructions here**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
 
 ## Google Colab Examples
 See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/master/examples/README.md) for notebooks you can download or run on Google Colab.
   
-## PyTorch Adapt Overview
+## Overview
 This library consists of 11 modules:
 
 | Module | Description |
@@ -34,6 +35,40 @@ This library consists of 11 modules:
 | [**Validators**](https://kevinmusgrave.github.io/pytorch-adapt/validators) | Metrics for determining and estimating accuracy
 | [**Weighters**](https://kevinmusgrave.github.io/pytorch-adapt/weighters) | Functions for weighting losses
  
+## How to use
+
+### Use in vanilla PyTorch
+```python
+from pytorch_adapt.hooks import DANNHook
+from pytorch_adapt.utils.common_functions import batch_to_device
+
+# Assuming that models, optimizers, and dataloader are already created.
+hook = DANNHook(optimizers)
+for data in dataloader:
+    data = batch_to_device(data, device)
+    # Optimization is done inside the hook.
+    # The returned loss is for logging.
+    loss, _ = hook({}, {**models, **data})
+```
+
+### Build complex algorithms
+Let's customize ```DANNHook``` with the following:
+- virtual adversarial training
+- entropy conditioning
+
+```python
+from pytorch_adapt.hooks import EntropyReducer, MeanReducer, VATHook
+
+# G and C are the Generator and Classifier models
+models["combined_model"] = torch.nn.Sequential(G, C)
+reducer = EntropyReducer(
+    apply_to=["src_domain_loss", "target_domain_loss"], default_reducer=MeanReducer()
+)
+hook = DANNHook(opts, reducer=reducer, post_g=[VATHook()])
+
+# then loop through the dataloader as shown above
+```
+
 ## Installation
 
 ### Pip
