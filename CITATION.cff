@@ -8,4 +8,6 @@ authors:
 - family-names: "Lim"
   given-names: "Ser-Nam"
 title: "PyTorch Adapt"
+version: 0.1.0
+date-released: 2021-10-01
 url: "https://github.com/KevinMusgrave/pytorch-adapt"
