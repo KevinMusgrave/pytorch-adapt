@@ -1,5 +1,7 @@
 - [Overview](index.md)
-- [Algorithms Overview](algorithms.md)
+- Algorithms Overview
+    - [Unsupervised Domain Adaptation](algorithms/uda.md)
+    - [Validators](algorithms/validators.md)
 - [Adapters](adapters/index.md)
     - [ADDA](adapters/adda.md)
     - [Aligner](adapters/aligner.md)
