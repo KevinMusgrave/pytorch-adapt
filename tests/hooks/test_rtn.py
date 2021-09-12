@@ -30,7 +30,8 @@ class TestRTN(unittest.TestCase):
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)
         C = Net(16, 10)
-        residual_model = PlusResidual(Net(10, 10))
+        residual_layers = Net(10, 10)
+        residual_model = PlusResidual(residual_layers)
         h1 = FeaturesAndLogitsHook()
         h2 = ResidualHook(domains=["src"])
 
@@ -53,9 +54,11 @@ class TestRTN(unittest.TestCase):
         )
         self.assertTrue(outputs2.keys() == {"src_imgs_features_logits_plus_residual"})
 
+        C_out = C(G(src_imgs))
+
         self.assertTrue(
             torch.equal(
-                residual_model(C(G(src_imgs))),
+                C_out + residual_layers(C_out),
                 outputs2["src_imgs_features_logits_plus_residual"],
             )
         )
@@ -66,7 +69,8 @@ class TestRTN(unittest.TestCase):
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)
         C = Net(16, 10)
-        residual_model = PlusResidual(Net(10, 10))
+        residual_layers = Net(10, 10)
+        residual_model = PlusResidual(residual_layers)
         h = RTNLogitsHook()
 
         losses, outputs = h({}, locals())
@@ -90,8 +94,10 @@ class TestRTN(unittest.TestCase):
         correct_entropy_loss = EntropyLoss()(C(G(target_imgs)))
         self.assertTrue(correct_entropy_loss == losses["entropy_loss"])
 
+        C_out = C(G(src_imgs))
+
         correct_c_loss = torch.nn.functional.cross_entropy(
-            residual_model(C(G(src_imgs))), src_labels
+            C_out + residual_layers(C_out), src_labels
         )
         self.assertTrue(torch.isclose(correct_c_loss, torch.mean(losses["c_loss"])))
 
@@ -145,11 +151,13 @@ class TestRTN(unittest.TestCase):
             target_domain,
         ) = get_models_and_data()
         feature_combiner = RandomizedDotProduct([16, 10], 16)
-        residual_model = PlusResidual(Net(10, 10))
+
+        residual_layers = Net(10, 10)
+        residual_model = PlusResidual(residual_layers)
 
         originalG = copy.deepcopy(G)
         originalC = copy.deepcopy(C)
-        originalR = copy.deepcopy(residual_model)
+        originalR = copy.deepcopy(residual_layers)
 
         opts = get_opts(G, C, residual_model)
         h = RTNHook(opts)
@@ -200,7 +208,7 @@ class TestRTN(unittest.TestCase):
         src_logits = originalC(src_features)
         target_logits = originalC(target_features)
 
-        c_loss = F.cross_entropy(originalR(src_logits), src_labels)
+        c_loss = F.cross_entropy(originalR(src_logits) + src_logits, src_labels)
         src_features = feature_combiner(src_features, src_logits)
         target_features = feature_combiner(target_features, target_logits)
         f_loss = MMDLoss()(src_features, target_features)
@@ -219,7 +227,7 @@ class TestRTN(unittest.TestCase):
         total_loss.backward()
         [x.step() for x in opts]
 
-        for x, y in [(G, originalG), (C, originalC), (residual_model, originalR)]:
+        for x, y in [(G, originalG), (C, originalC), (residual_layers, originalR)]:
             self.assertTrue(
                 c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-6)
             )
