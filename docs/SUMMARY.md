@@ -1,4 +1,5 @@
 - [Overview](index.md)
+- [Algorithms Overview](algorithms.md)
 - [Adapters](adapters/index.md)
     - [ADDA](adapters/adda.md)
     - [Aligner](adapters/aligner.md)
