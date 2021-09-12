@@ -6,12 +6,7 @@
 <p align="center">
  <a href="https://badge.fury.io/py/pytorch-adapt">
      <img alt="PyPi version" src="https://badge.fury.io/py/pytorch-adapt.svg">
- </a>
- 
-<a href="https://pypistats.org/packages/pytorch-adapt">
-     <img alt="PyPi stats" src="https://img.shields.io/pypi/dm/pytorch-adapt">
- </a>
- 
+ </a> 
 </p>
 
 ## News
@@ -23,7 +18,7 @@
 See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/master/examples/README.md) for notebooks you can download or run on Google Colab.
   
 ## PyTorch Adapt Overview
-PyTorch Adapt consists of 11 modules
+This library consists of 11 modules:
 
 | Module | Description |
 | --- | --- |
@@ -38,4 +33,42 @@ PyTorch Adapt consists of 11 modules
 | [**Utils**](https://kevinmusgrave.github.io/pytorch-adapt/utils) | Various tools
 | [**Validators**](https://kevinmusgrave.github.io/pytorch-adapt/validators) | Metrics for determining and estimating accuracy
 | [**Weighters**](https://kevinmusgrave.github.io/pytorch-adapt/weighters) | Functions for weighting losses
-  
+ 
+## Installation
+
+### Pip
+```
+pip install pytorch-adapt
+```
+
+**To get the latest dev version**:
+```
+pip install pytorch-adapt --pre
+```
+
+### Conda
+Coming soon...
+
+### Dependencies
+Coming soon...
+
+## Acknowledgements
+
+### Contributors
+Pull requests are welcome!
+
+### Logo
+Thanks to [Jeff Musgrave](https://jeffmusgrave.com) for designing the logo.
+
+## Citing this library
+If you'd like to cite pytorch-adapt in your paper, you can use this:
+```latex
+@misc{MusgravePyTorch2021,
+  author={Kevin Musgrave and Serge Belongie and Ser-Nam Lim},
+  title = {PyTorch Adapt},
+  year = {2021},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/KevinMusgrave/pytorch-adapt}}
+}
+```
