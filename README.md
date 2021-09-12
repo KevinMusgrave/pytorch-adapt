@@ -35,7 +35,7 @@ This library consists of 11 modules:
 | [**Validators**](https://kevinmusgrave.github.io/pytorch-adapt/validators) | Metrics for determining and estimating accuracy
 | [**Weighters**](https://kevinmusgrave.github.io/pytorch-adapt/weighters) | Functions for weighting losses
  
-## How to use
+## How to...
 
 ### Use in vanilla PyTorch
 ```python
@@ -52,7 +52,7 @@ for data in dataloader:
 ```
 
 ### Build complex algorithms
-Let's customize ```DANNHook``` with the following:
+Let's customize ```DANNHook``` with:
 - virtual adversarial training
 - entropy conditioning
 
@@ -62,12 +62,48 @@ from pytorch_adapt.hooks import EntropyReducer, MeanReducer, VATHook
 # G and C are the Generator and Classifier models
 models["combined_model"] = torch.nn.Sequential(G, C)
 reducer = EntropyReducer(
-    apply_to=["src_domain_loss", "target_domain_loss"], default_reducer=MeanReducer()
+    apply_to=["src_domain_loss", "target_domain_loss"], 
+    default_reducer=MeanReducer()
 )
 hook = DANNHook(opts, reducer=reducer, post_g=[VATHook()])
 
-# then loop through the dataloader as shown above
+# then loop through the dataloader as usual
 ```
+
+### Remove some boilerplate
+Adapters and containers can simplify object creation.
+```python
+import torch
+from pytorch_adapt.adapters import DANN
+from pytorch_adapt.containers import Models, Optimizers
+
+# Assume G, C and D are existing models
+models = Models(models)
+# Override the default optimizer for G and C
+optimizers = Optimizers({torch.optim.Adam, {"lr": 0.123}}, keys=["G", "C"])
+adapter = DANN(models=models, optimizers=optimizers)
+
+for data in dataloader:
+    adapter.training_step(data, device, None)
+```
+
+### Wrap with your favorite PyTorch framework
+For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite.) 
+```python
+from pytorch_adapter.frameworks import Ignite
+
+adapter = DANN(models=models, optimizers=optimizers)
+adapter = Ignite(adapter)
+adapter.run(datasets)
+```
+The plan is to add wrappers for other frameworks like PyTorch Lightning and Catalyst.
+
+### Validate your model
+
+
+### Load a toy dataset for testing
+
+
 
 ## Installation
 
@@ -91,6 +127,9 @@ Coming soon...
 
 ### Contributors
 Pull requests are welcome!
+
+### Advisors
+Thank you to Ser-Nam Lim and Professor Serge Belongie.
 
 ### Logo
 Thanks to [Jeff Musgrave](https://jeffmusgrave.com) for designing the logo.
