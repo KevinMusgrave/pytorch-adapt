@@ -4,9 +4,7 @@ Before running the notebooks, make sure that the runtime type is set to "GPU", b
 
 Click "Open in playground" on the Colab header to interact with the notebook.
 
-
-## Simple examples
-
 |Notebook|Description|Colab Link|
 |:---|:---:|:---|
-[DANN For-Loop](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNForLoop.ipynb) | Use the DANNHook in a for loop. |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNForLoop.ipynb)
+[DANN Vanilla PyTorch](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNVanilla.ipynb) | Use the DANNHook in a for loop |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNVanilla.ipynb)
+[DANN PyTorch Ignite](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNIgnite.ipynb) | Use DANN with PyTorch Ignite |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNIgnite.ipynb)
