@@ -21,6 +21,7 @@ def get_datasets(
     target_domains,
     folder,
     dataset_getter,
+    return_target_with_labels,
 ):
     def getter(domains, train, is_training):
         return get_multiple(domains, train, is_training, folder, dataset_getter)
@@ -30,12 +31,13 @@ def get_datasets(
     output["src_val"] = SourceDataset(getter(src_domains, False, False))
     output["target_train"] = TargetDataset(getter(target_domains, True, False))
     output["target_val"] = TargetDataset(getter(target_domains, False, False))
-    output["target_train_with_labels"] = SourceDataset(
-        getter(target_domains, True, False), domain=1
-    )
-    output["target_val_with_labels"] = SourceDataset(
-        getter(target_domains, False, False), domain=1
-    )
+    if return_target_with_labels:
+        output["target_train_with_labels"] = SourceDataset(
+            getter(target_domains, True, False), domain=1
+        )
+        output["target_val_with_labels"] = SourceDataset(
+            getter(target_domains, False, False), domain=1
+        )
     output["train"] = CombinedSourceAndTargetDataset(
         SourceDataset(getter(src_domains, True, True)),
         TargetDataset(getter(target_domains, True, True)),
@@ -65,13 +67,12 @@ def get_mnist(domain, train, is_training, folder):
 
 
 def get_mnist_mnistm(
-    src_domains,
-    target_domains,
-    folder,
+    src_domains, target_domains, folder, return_target_with_labels=False
 ):
     return get_datasets(
         src_domains,
         target_domains,
         folder,
         get_mnist,
+        return_target_with_labels,
     )

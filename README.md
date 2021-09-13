@@ -60,27 +60,28 @@ Let's customize ```DANNHook``` with:
 from pytorch_adapt.hooks import EntropyReducer, MeanReducer, VATHook
 
 # G and C are the Generator and Classifier models
-models["combined_model"] = torch.nn.Sequential(G, C)
+misc = {"combined_model": torch.nn.Sequential(G, C)}
 reducer = EntropyReducer(
-    apply_to=["src_domain_loss", "target_domain_loss"], 
-    default_reducer=MeanReducer()
+    apply_to=["src_domain_loss", "target_domain_loss"], default_reducer=MeanReducer()
 )
-hook = DANNHook(opts, reducer=reducer, post_g=[VATHook()])
-
-# then loop through the dataloader as usual
+hook = DANNHook(optimizers, reducer=reducer, post_g=[VATHook()])
+for data in dataloader:
+    data = batch_to_device(data, device)
+    loss, _ = hook({}, {**models, **data, **misc})
 ```
 
 ### Remove some boilerplate
 Adapters and containers can simplify object creation.
 ```python
 import torch
+
 from pytorch_adapt.adapters import DANN
 from pytorch_adapt.containers import Models, Optimizers
 
 # Assume G, C and D are existing models
 models = Models(models)
 # Override the default optimizer for G and C
-optimizers = Optimizers({torch.optim.Adam, {"lr": 0.123}}, keys=["G", "C"])
+optimizers = Optimizers((torch.optim.Adam, {"lr": 0.123}), keys=["G", "C"])
 adapter = DANN(models=models, optimizers=optimizers)
 
 for data in dataloader:
@@ -90,19 +91,45 @@ for data in dataloader:
 ### Wrap with your favorite PyTorch framework
 For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite.) 
 ```python
-from pytorch_adapter.frameworks import Ignite
+from pytorch_adapt.frameworks import Ignite
 
-adapter = DANN(models=models, optimizers=optimizers)
-adapter = Ignite(adapter)
-adapter.run(datasets)
+wrapped_adapter = Ignite(adapter)
+wrapped_adapter.run(datasets)
 ```
-The plan is to add wrappers for other frameworks like PyTorch Lightning and Catalyst.
+Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) is coming soon.
 
-### Validate your model
+### Check accuracy of your model
+You can do this in vanilla PyTorch:
+```python
+from pytorch_adapt.validators import SNDValidator
 
+# Assuming predictions have been collected
+target_train = {"preds": preds}
+validator = SNDValidator()
+score = validator.score(epoch=1, target_train=target_train)
+```
 
-### Load a toy dataset for testing
+You can also do this using a framework wrapper:
+```python
+from pytorch_adapt.validators import SNDValidator
 
+validator = SNDValidator()
+wrapped_adapter.run(datasets, validator=validator)
+```
+
+### Load a toy dataset
+```python
+import torch
+
+from pytorch_adapt.datasets.getters import get_mnist_mnistm
+
+# mnist is the source domain
+# mnistm is the target domain
+datasets = get_mnist_mnistm(["mnist"], ["mnistm"], ".")
+dataloader = torch.utils.data.DataLoader(
+    datasets["train"], batch_size=32, num_workers=2
+)
+```
 
 
 ## Installation
