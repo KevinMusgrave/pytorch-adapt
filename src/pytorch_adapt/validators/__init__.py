@@ -2,6 +2,7 @@ from .accuracy_validator import AccuracyValidator
 from .base_validator import BaseValidator
 from .deep_embedded_validator import DeepEmbeddedValidator
 from .diversity_validator import DiversityValidator
+from .entropy_diversity_validator import EntropyDiversityValidator
 from .entropy_validator import EntropyValidator
 from .error_validator import ErrorValidator
 from .knn_validator import ClusterValidator, KNNValidator

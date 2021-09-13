@@ -6,7 +6,7 @@
 | Documentation | Example Notebook |
 | --- | --- |
 | [adapters.DANN][pytorch_adapt.adapters.DANN] |
-| [hooks.DANNHook][pytorch_adapt.hooks.DANNHook] |
+| [hooks.DANNHook][pytorch_adapt.hooks.DANNHook] | [DANNForLoop](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNForLoop.ipynb)
 | [layers.GradientReversal][pytorch_adapt.layers.GradientReversal] |
 
 ### MMD

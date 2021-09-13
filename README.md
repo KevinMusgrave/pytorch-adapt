@@ -156,7 +156,7 @@ Coming soon...
 Pull requests are welcome!
 
 ### Advisors
-Thank you to Ser-Nam Lim and Professor Serge Belongie.
+Thank you to [Ser-Nam Lim](https://research.fb.com/people/lim-ser-nam/), and my research advisor, [Professor Serge Belongie](https://vision.cornell.edu/se3/people/serge-belongie/).
 
 ### Logo
 Thanks to [Jeff Musgrave](https://jeffmusgrave.com) for designing the logo.
