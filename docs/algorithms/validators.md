@@ -3,13 +3,9 @@
 ### Deep Embedded Validation
 [Towards Accurate Model Selection in Deep Unsupervised Domain Adaptation](http://proceedings.mlr.press/v97/you19a.html)
 
-| Documentation | Example Notebook |
-| --- | --- |
-| [validators.DeepEmbeddedValidator][pytorch_adapt.validators.DeepEmbeddedValidator] |
+- [validators.DeepEmbeddedValidator][pytorch_adapt.validators.DeepEmbeddedValidator]
 
 ### Soft Neighborhood Density
 [Tune it the Right Way: Unsupervised Validation of Domain Adaptation via Soft Neighborhood Density](https://arxiv.org/abs/2108.10860)
 
-| Documentation | Example Notebook |
-| --- | --- |
-| [validators.SNDValidator][pytorch_adapt.validators.SNDValidator] |
+- [validators.SNDValidator][pytorch_adapt.validators.SNDValidator]

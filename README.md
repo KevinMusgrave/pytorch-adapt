@@ -16,7 +16,7 @@
 - [**View the installation instructions here**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
 
 ## Google Colab Examples
-See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/master/examples/README.md) for notebooks you can download or run on Google Colab.
+See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md) for notebooks you can download or run on Google Colab.
   
 ## Overview
 This library consists of 11 modules:
