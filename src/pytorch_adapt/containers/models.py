@@ -27,3 +27,7 @@ class Models(BaseContainer):
         """
         for v in self.values():
             v.zero_grad()
+
+    def to(self, device):
+        for v in self.values():
+            v.to(device)

@@ -85,7 +85,7 @@ optimizers = Optimizers((torch.optim.Adam, {"lr": 0.123}), keys=["G", "C"])
 adapter = DANN(models=models, optimizers=optimizers)
 
 for data in dataloader:
-    adapter.training_step(data, device, None)
+    adapter.training_step(data, device)
 ```
 
 ### Wrap with your favorite PyTorch framework
@@ -131,6 +131,10 @@ dataloader = torch.utils.data.DataLoader(
 )
 ```
 
+### Run the above examples
+See [this notebook](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/README_examples.ipynb).
+
+See [the examples page](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/) for more notebooks.
 
 ## Installation
 
