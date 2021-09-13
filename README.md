@@ -132,9 +132,7 @@ dataloader = torch.utils.data.DataLoader(
 ```
 
 ### Run the above examples
-See [this notebook](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/README_examples.ipynb).
-
-See [the examples page](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/) for more notebooks.
+See [this notebook](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/README_examples.ipynb) and [the examples page](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/) for other notebooks.
 
 ## Installation
 
