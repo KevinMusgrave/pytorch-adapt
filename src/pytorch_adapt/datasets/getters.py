@@ -10,9 +10,9 @@ from .source_dataset import SourceDataset
 from .target_dataset import TargetDataset
 
 
-def get_multiple(domains, train, is_training, folder, dataset_getter):
+def get_multiple(domains, train, is_training, folder, dataset_getter, download):
     return ConcatDataset(
-        [dataset_getter(d, train, is_training, folder) for d in domains]
+        [dataset_getter(d, train, is_training, folder, download) for d in domains]
     )
 
 
@@ -21,10 +21,13 @@ def get_datasets(
     target_domains,
     folder,
     dataset_getter,
+    download,
     return_target_with_labels,
 ):
     def getter(domains, train, is_training):
-        return get_multiple(domains, train, is_training, folder, dataset_getter)
+        return get_multiple(
+            domains, train, is_training, folder, dataset_getter, download
+        )
 
     output = {}
     output["src_train"] = SourceDataset(getter(src_domains, True, False))
@@ -45,7 +48,7 @@ def get_datasets(
     return output
 
 
-def get_mnist(domain, train, is_training, folder):
+def get_mnist(domain, train, is_training, folder, download):
     if domain == "mnist":
         transform = T.Compose(
             [
@@ -55,7 +58,9 @@ def get_mnist(domain, train, is_training, folder):
                 T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
             ]
         )
-        return datasets.MNIST(folder, train=train, download=True, transform=transform)
+        return datasets.MNIST(
+            folder, train=train, download=download, transform=transform
+        )
     elif domain == "mnistm":
         transform = T.Compose(
             [
@@ -63,16 +68,17 @@ def get_mnist(domain, train, is_training, folder):
                 T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
             ]
         )
-        return MNISTM(folder, train, transform)
+        return MNISTM(folder, train, transform, download=download)
 
 
 def get_mnist_mnistm(
-    src_domains, target_domains, folder, return_target_with_labels=False
+    src_domains, target_domains, folder, download=False, return_target_with_labels=False
 ):
     return get_datasets(
         src_domains,
         target_domains,
         folder,
         get_mnist,
+        download,
         return_target_with_labels,
     )
