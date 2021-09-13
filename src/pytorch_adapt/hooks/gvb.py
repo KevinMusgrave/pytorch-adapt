@@ -122,12 +122,16 @@ class GVBHook(DANNHook):
     [Gradually Vanishing Bridge for Adversarial Domain Adaptation](https://arxiv.org/abs/2003.13183)
     """
 
-    def __init__(self, pre=None, pre_d=None, pre_g=None, **kwargs):
+    def __init__(
+        self, gradient_reversal_weight=1, pre=None, pre_d=None, pre_g=None, **kwargs
+    ):
         # f_hook and d_hook are used inside DomainLossHook
         f_hook = FeaturesForDomainLossHook(use_logits=True)
         d_hook = DBridgeAndLogitsHook()
         apply_to = c_f.filter(f_hook.out_keys, "_logits$")
-        gradient_reversal = SoftmaxGradientReversalHook(apply_to)
+        gradient_reversal = SoftmaxGradientReversalHook(
+            weight=gradient_reversal_weight, apply_to=apply_to
+        )
         [pre, pre_d, pre_g] = c_f.many_default([pre, pre_d, pre_g], [[], [], []])
         pre += [FeaturesLogitsAndGBridge()]
         pre_d += [DBridgeLossHook()]

@@ -15,16 +15,16 @@ from .utils import (
 
 
 class GradientReversalHook(ApplyFnHook):
-    def __init__(self, **kwargs):
-        super().__init__(fn=GradientReversal(), **kwargs)
+    def __init__(self, weight=1, **kwargs):
+        super().__init__(fn=GradientReversal(weight), **kwargs)
 
 
 class SoftmaxGradientReversalHook(BaseWrapperHook):
-    def __init__(self, apply_to, **kwargs):
+    def __init__(self, apply_to, weight=1, **kwargs):
         super().__init__(**kwargs)
         self.hook = ChainHook(
             SoftmaxHook(apply_to=apply_to),
-            GradientReversalHook(apply_to=apply_to),
+            GradientReversalHook(weight=weight, apply_to=apply_to),
             overwrite=True,
         )
 
@@ -48,6 +48,7 @@ class DANNHook(BaseWrapperHook):
         pre_g=None,
         post_g=None,
         gradient_reversal=None,
+        gradient_reversal_weight=1,
         use_logits=False,
         f_hook=None,
         d_hook=None,
@@ -103,7 +104,9 @@ class DANNHook(BaseWrapperHook):
             f_hook, FeaturesForDomainLossHook, {"use_logits": use_logits}
         )
         gradient_reversal = c_f.default(
-            gradient_reversal, GradientReversalHook, {"apply_to": f_hook.out_keys}
+            gradient_reversal,
+            GradientReversalHook,
+            {"weight": gradient_reversal_weight, "apply_to": f_hook.out_keys},
         )
         c_hook = c_f.default(c_hook, CLossHook, {})
         domain_loss_hook = c_f.default(
