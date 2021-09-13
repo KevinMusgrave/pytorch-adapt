@@ -6,10 +6,13 @@ import logging
 import os
 import re
 import shutil
+import tarfile
+import zipfile
 from collections import OrderedDict
 
 import numpy as np
 import torch
+import tqdm
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
 LOGGER_NAME = "PDA"
@@ -490,3 +493,15 @@ def assert_dicts_are_disjoint(*x):
         is_overlap, overlap = dicts_are_overlapping(a, b, True)
         if is_overlap:
             raise KeyError(f"dicts have overlapping keys {overlap}")
+
+
+def extract_progress(compressed_obj):
+    LOGGER.info("Extracting dataset")
+    if isinstance(compressed_obj, tarfile.TarFile):
+        iterable = compressed_obj
+        length = len(compressed_obj.getmembers())
+    elif isinstance(compressed_obj, zipfile.ZipFile):
+        iterable = compressed_obj.namelist()
+        length = len(iterable)
+    for member in tqdm.tqdm(iterable, total=length):
+        yield member
