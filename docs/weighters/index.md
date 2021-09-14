@@ -2,7 +2,7 @@
 
 Weighters multiply losses by scalar values, and then reduce the losses to a single value on which you call ```.backward()```.
 
-For example:
+## [Examples](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
 ```python
 import torch
 from pytorch_adapt.weighters import MeanWeighter
