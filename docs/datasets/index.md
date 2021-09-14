@@ -32,3 +32,17 @@ xy = CombinedSourceAndTargetDataset(x, y)
 # xy returns a dictionary
 print(xy[0])
 ```
+
+
+[Getters and DataloaderCreator](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#datasets.index.md-getters-and-DataloaderCreator)
+```python
+from pytorch_adapt.datasets import DataloaderCreator, get_mnist_mnistm
+
+datasets = get_mnist_mnistm(["mnist"], ["mnistm"], folder=".")
+dc = DataloaderCreator(batch_size=128)
+dataloaders = dc(**datasets)
+
+# datasets and dataloaders are dictionaries
+print(datasets)
+print(dataloaders)
+```
