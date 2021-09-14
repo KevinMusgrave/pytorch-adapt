@@ -2452,7 +2452,7 @@
                 <h1 id="adapters">Adapters<a class="headerlink" href="#adapters" title="Permanent link">&para;</a></h1>
 <p>Adapters contain an algorithm's training step and inference step. The training step is defined in the wrapped <a href="../hooks/">hook</a>. </p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#adapters.index.md-initialization">Initialization</a>
+<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Initialization</a>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="kn">from</span> <span class="nn">pytorch_adapt.adapters</span> <span class="kn">import</span> <span class="n">DANN</span>
@@ -2465,7 +2465,7 @@
 
 <span class="n">adapter</span> <span class="o">=</span> <span class="n">DANN</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>
 </code></pre></div></p>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#adapters.index.md-training-step">Training step</a>
+<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Training step</a>
 <div class="highlight"><pre><span></span><code><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 <span class="n">adapter</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 
@@ -2479,7 +2479,7 @@
 
 <span class="n">loss</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
 </code></pre></div></p>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#adapters.index.md-inference">Inference</a>
+<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Inference</a>
 <div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 <span class="n">features</span><span class="p">,</span> <span class="n">logits</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">inference</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div></p>
