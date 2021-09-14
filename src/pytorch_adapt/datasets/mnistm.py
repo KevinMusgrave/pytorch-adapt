@@ -18,7 +18,9 @@ class MNISTM(BaseDataset):
     filename = "mnist_m.tar.gz"
     md5 = "859df31c91afe82e80e5012ba928f279"
 
-    def __init__(self, root: str, train: bool, transform, download=False, **kwargs):
+    def __init__(
+        self, root: str, train: bool, transform=None, download=False, **kwargs
+    ):
         """
         Arguments:
             root: The dataset must be located at ```<root>/mnist_m```

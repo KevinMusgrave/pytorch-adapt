@@ -12,8 +12,9 @@
 ## News
 
 ## Documentation
-- [**View the documentation here**](https://kevinmusgrave.github.io/pytorch-adapt/)
-- [**View the installation instructions here**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
+- [**Documentation**](https://kevinmusgrave.github.io/pytorch-adapt/)
+- [**Installation instructions**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
+- [**List of algorithms/papers implemented**](https://kevinmusgrave.github.io/pytorch-adapt/algorithms/uda)
 
 ## Google Colab Examples
 See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md) for notebooks you can download or run on Google Colab.
@@ -34,7 +35,7 @@ This library consists of 11 modules:
 | [**Utils**](https://kevinmusgrave.github.io/pytorch-adapt/utils) | Various tools
 | [**Validators**](https://kevinmusgrave.github.io/pytorch-adapt/validators) | Metrics for determining and estimating accuracy
 | [**Weighters**](https://kevinmusgrave.github.io/pytorch-adapt/weighters) | Functions for weighting losses
- 
+
 ## How to...
 
 ### Use in vanilla PyTorch
@@ -121,7 +122,7 @@ wrapped_adapter.run(datasets, validator=validator)
 ```python
 import torch
 
-from pytorch_adapt.datasets.getters import get_mnist_mnistm
+from pytorch_adapt.datasets import get_mnist_mnistm
 
 # mnist is the source domain
 # mnistm is the target domain

@@ -15,7 +15,8 @@ class BaseDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         label = self.labels[idx]
         img = Image.open(self.img_paths[idx]).convert("RGB")
-        img = self.transform(img)
+        if self.transform is not None:
+            img = self.transform(img)
         return img, label
 
     def __repr__(self):
