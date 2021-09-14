@@ -2461,6 +2461,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#mcd" class="md-nav__link">
+    MCD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcd-afn-mmd" class="md-nav__link">
+    MCD + AFN + MMD
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2544,6 +2558,29 @@
 <span class="n">hook</span> <span class="o">=</span> <span class="n">CDANHook</span><span class="p">(</span><span class="n">d_opts</span><span class="o">=</span><span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="p">[</span><span class="n">VATHook</span><span class="p">()])</span>
 <span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 <span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">misc</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="mcd">MCD<a class="headerlink" href="#mcd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">MCDHook</span>
+<span class="kn">from</span> <span class="nn">pytorch_adapt.layers</span> <span class="kn">import</span> <span class="n">MultipleModels</span>
+
+<span class="n">C</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">C1</span><span class="p">,</span> <span class="n">C2</span> <span class="o">=</span> <span class="n">C</span><span class="p">,</span> <span class="n">c_f</span><span class="o">.</span><span class="n">reinit</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">MultipleModels</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">)</span>
+<span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span>
+
+<span class="n">g_opts</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">optimizers</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">])</span>
+<span class="n">c_opts</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">optimizers</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">])</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">MCDHook</span><span class="p">(</span><span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="n">c_opts</span><span class="o">=</span><span class="n">c_opts</span><span class="p">)</span>
+<span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="mcd-afn-mmd">MCD + AFN + MMD<a class="headerlink" href="#mcd-afn-mmd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">AFNHook</span><span class="p">,</span> <span class="n">AlignerHook</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">MCDHook</span><span class="p">(</span><span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="n">c_opts</span><span class="o">=</span><span class="n">c_opts</span><span class="p">,</span> <span class="n">post_x</span><span class="o">=</span><span class="p">[</span><span class="n">AFNHook</span><span class="p">()],</span> <span class="n">post_z</span><span class="o">=</span><span class="p">[</span><span class="n">AlignerHook</span><span class="p">()])</span>
+<span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
 </code></pre></div>
 <h2 id="building-blocks"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Building Blocks</a><a class="headerlink" href="#building-blocks" title="Permanent link">&para;</a></h2>
 <p>Every hook is a callable that takes in 2 arguments that represent the current context:</p>
