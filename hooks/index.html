@@ -2419,6 +2419,21 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2435,14 +2450,39 @@
                 
                 
                 <h1 id="hooks">Hooks<a class="headerlink" href="#hooks" title="Permanent link">&para;</a></h1>
-<p>Hooks are the main building block of this library.</p>
+<p>Hooks are the building blocks of the algorithms in this library.</p>
 <p>Every hook is a callable that takes in 2 arguments that represent the current context:</p>
 <ol>
 <li>A dictionary of previously computed losses.</li>
 <li>A dictionary of everything else that has been previously computed or passed in.</li>
 </ol>
-<p>The purpose of the context is to compute data only when necessary. </p>
-<p>For example, to compute a classification loss, a hook will need logits. If these logits are not available in the context, then they are computed, added to the context, and then used to compute the loss. If they are already in the context, then only the loss is computed.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#Hooks-Basics">Computing Features</a>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">FeaturesHook</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="n">G</span><span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;src_imgs&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="s2">&quot;target_imgs&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">FeaturesHook</span><span class="p">()</span>
+
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+<span class="c1"># outputs contains src_imgs_features and target_imgs_features</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">outputs</span><span class="p">})</span>
+<span class="c1"># outputs is empty</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">FeaturesHook</span><span class="p">(</span><span class="n">detach</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">outputs</span><span class="p">})</span>
+<span class="c1"># outputs contains</span>
+<span class="c1"># src_imgs_features_detached and target_imgs_features_detached</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</code></pre></div></p>
                 
               
               
