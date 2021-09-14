@@ -2426,9 +2426,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
+  <a href="#customizing-algorithms" class="md-nav__link">
+    Customizing Algorithms
   </a>
+  
+    <nav class="md-nav" aria-label="Customizing Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dann" class="md-nav__link">
+    DANN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dann-mcc-atdoc" class="md-nav__link">
+    DANN + MCC + ATDOC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cdan" class="md-nav__link">
+    CDAN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cdan-vat" class="md-nav__link">
+    CDAN + VAT
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-blocks" class="md-nav__link">
+    Building Blocks
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Blocks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#computing-features" class="md-nav__link">
+    Computing Features
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2451,13 +2505,53 @@
                 
                 <h1 id="hooks">Hooks<a class="headerlink" href="#hooks" title="Permanent link">&para;</a></h1>
 <p>Hooks are the building blocks of the algorithms in this library.</p>
+<h2 id="customizing-algorithms"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/CustomizingAlgorithms.ipynb">Customizing Algorithms</a><a class="headerlink" href="#customizing-algorithms" title="Permanent link">&para;</a></h2>
+<p>This section shows examples of combining hooks to create complex algorithms.</p>
+<h3 id="dann">DANN<a class="headerlink" href="#dann" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">DANNHook</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">DANNHook</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+<span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="dann-mcc-atdoc">DANN + MCC + ATDOC<a class="headerlink" href="#dann-mcc-atdoc" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">ATDOCHook</span><span class="p">,</span> <span class="n">MCCHook</span>
+
+<span class="n">mcc</span> <span class="o">=</span> <span class="n">MCCHook</span><span class="p">()</span>
+<span class="n">atdoc</span> <span class="o">=</span> <span class="n">ATDOCHook</span><span class="p">(</span><span class="n">dataset_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">feature_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">DANNHook</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="p">[</span><span class="n">mcc</span><span class="p">,</span> <span class="n">atdoc</span><span class="p">])</span>
+<span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="cdan">CDAN<a class="headerlink" href="#cdan" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">CDANHook</span>
+<span class="kn">from</span> <span class="nn">pytorch_adapt.layers</span> <span class="kn">import</span> <span class="n">RandomizedDotProduct</span>
+<span class="kn">from</span> <span class="nn">pytorch_adapt.utils</span> <span class="kn">import</span> <span class="n">common_functions</span> <span class="k">as</span> <span class="n">c_f</span>
+
+<span class="n">d_opts</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">optimizers</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<span class="n">g_opts</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">optimizers</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
+<span class="n">misc</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">:</span> <span class="n">RandomizedDotProduct</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="mi">100</span><span class="p">)}</span>
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">CDANHook</span><span class="p">(</span><span class="n">d_opts</span><span class="o">=</span><span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">)</span>
+<span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">misc</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="cdan-vat">CDAN + VAT<a class="headerlink" href="#cdan-vat" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">VATHook</span>
+
+<span class="n">misc</span><span class="p">[</span><span class="s2">&quot;combined_model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+<span class="n">hook</span> <span class="o">=</span> <span class="n">CDANHook</span><span class="p">(</span><span class="n">d_opts</span><span class="o">=</span><span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="p">[</span><span class="n">VATHook</span><span class="p">()])</span>
+<span class="n">validate_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">misc</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
+</code></pre></div>
+<h2 id="building-blocks"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Building Blocks</a><a class="headerlink" href="#building-blocks" title="Permanent link">&para;</a></h2>
 <p>Every hook is a callable that takes in 2 arguments that represent the current context:</p>
 <ol>
 <li>A dictionary of previously computed losses.</li>
 <li>A dictionary of everything else that has been previously computed or passed in.</li>
 </ol>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#Hooks-Basics">Computing Features</a>
+<h3 id="computing-features">Computing Features<a class="headerlink" href="#computing-features" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">FeaturesHook</span>
 
 <span class="n">G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -2482,7 +2576,7 @@
 <span class="c1"># outputs contains</span>
 <span class="c1"># src_imgs_features_detached and target_imgs_features_detached</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</code></pre></div></p>
+</code></pre></div>
                 
               
               

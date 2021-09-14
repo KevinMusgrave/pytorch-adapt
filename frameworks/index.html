@@ -2430,6 +2430,19 @@
     Examples
   </a>
   
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ignite" class="md-nav__link">
+    Ignite
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2453,8 +2466,8 @@
 <p>This library works with plain PyTorch, but what about PyTorch frameworks like <a href="https://github.com/pytorch/ignite">Ignite</a>, <a href="https://github.com/PyTorchLightning/pytorch-lightning">Lightning</a>, and <a href="https://github.com/catalyst-team/catalyst">Catalyst</a>?</p>
 <p>Of course, anything that works in PyTorch will also work in PyTorch frameworks. However, there is some setup involved, like registering event handlers in Ignite, or writing class definitions in Lightning and Catalyst.</p>
 <p>The purpose of the <code>frameworks</code> module is to eliminate that setup.</p>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb">Ignite</a>
+<h2 id="examples"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb">Examples</a><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="ignite">Ignite<a class="headerlink" href="#ignite" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="kn">from</span> <span class="nn">pytorch_adapt.adapters</span> <span class="kn">import</span> <span class="n">DANN</span>
@@ -2478,7 +2491,7 @@
 <span class="n">dc</span> <span class="o">=</span> <span class="n">DataloaderCreator</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">wrapped_adapter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="n">dc</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div></p>
+</code></pre></div>
                 
               
               

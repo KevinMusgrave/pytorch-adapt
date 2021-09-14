@@ -2430,6 +2430,26 @@
     Examples
   </a>
   
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-and-target-datasets" class="md-nav__link">
+    Source and target datasets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getters-and-dataloadercreator" class="md-nav__link">
+    Getters and DataloaderCreator
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2452,8 +2472,8 @@
                 <h1 id="datasets">Datasets<a class="headerlink" href="#datasets" title="Permanent link">&para;</a></h1>
 <p>The datasets module consists of wrapper classes that output data in a format compatible with <a href="../hooks/">hooks</a>.</p>
 <p>It also contains some common domain-adaptation datasets like <a href="mnistm/">MNISTM</a>, <a href="office31/">Office31</a>, and <a href="domainnet/">DomainNet</a>.</p>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Source and target datasets</a>
+<h2 id="examples"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Examples</a><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="source-and-target-datasets">Source and target datasets<a class="headerlink" href="#source-and-target-datasets" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">MNIST</span>
 
 <span class="kn">from</span> <span class="nn">pytorch_adapt.datasets</span> <span class="kn">import</span> <span class="p">(</span>
@@ -2478,8 +2498,8 @@
 <span class="n">xy</span> <span class="o">=</span> <span class="n">CombinedSourceAndTargetDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="c1"># xy returns a dictionary</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</code></pre></div></p>
-<p><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Getters and DataloaderCreator</a>
+</code></pre></div>
+<h3 id="getters-and-dataloadercreator">Getters and DataloaderCreator<a class="headerlink" href="#getters-and-dataloadercreator" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.datasets</span> <span class="kn">import</span> <span class="n">DataloaderCreator</span><span class="p">,</span> <span class="n">get_mnist_mnistm</span>
 
 <span class="n">datasets</span> <span class="o">=</span> <span class="n">get_mnist_mnistm</span><span class="p">([</span><span class="s2">&quot;mnist&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;mnistm&quot;</span><span class="p">],</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
@@ -2489,7 +2509,7 @@
 <span class="c1"># datasets and dataloaders are dictionaries</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dataloaders</span><span class="p">)</span>
-</code></pre></div></p>
+</code></pre></div>
                 
               
               
