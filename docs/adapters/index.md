@@ -3,7 +3,7 @@
 Adapters contain an algorithm's training step and inference step. The training step is defined in the wrapped [hook](../hooks/index.md). 
 
 ## Examples
-[Initialization](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#adapters.index.md-initialization)
+[Initialization](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
 ```python
 import torch
 
@@ -18,7 +18,7 @@ models = Models({"G": G, "C": C, "D": D})
 adapter = DANN(models=models)
 ```
 
-[Training step](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#adapters.index.md-training-step)
+[Training step](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
 ```python
 device = torch.device("cuda")
 adapter.models.to(device)
@@ -34,7 +34,7 @@ data = {
 loss = adapter.training_step(data, device)
 ```
 
-[Inference](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb#adapters.index.md-inference)
+[Inference](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
 ```python
 data = torch.randn(32, 1000).to(device)
 features, logits = adapter.inference(data)
