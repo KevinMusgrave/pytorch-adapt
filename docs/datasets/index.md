@@ -4,8 +4,8 @@ The datasets module consists of wrapper classes that output data in a format com
 
 It also contains some common domain-adaptation datasets like [MNISTM](mnistm.md), [Office31](office31.md), and [DomainNet](domainnet.md).
 
-## Examples
-[Source and target datasets](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
+## [Examples](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
+### Source and target datasets
 ```python
 from torchvision.datasets import MNIST
 
@@ -34,7 +34,7 @@ print(xy[0])
 ```
 
 
-[Getters and DataloaderCreator](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
+### Getters and DataloaderCreator
 ```python
 from pytorch_adapt.datasets import DataloaderCreator, get_mnist_mnistm
 

@@ -6,8 +6,8 @@ Of course, anything that works in PyTorch will also work in PyTorch frameworks. 
 
 The purpose of the ```frameworks``` module is to eliminate that setup.
 
-## Examples
-[Ignite](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb)
+## [Examples](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb)
+### Ignite
 ```python
 import torch
 

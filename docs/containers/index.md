@@ -2,8 +2,8 @@
 
 Containers simplify object creation. 
 
-## Examples
-[Create with](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
+## [Examples](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
+### Create with
 ```python
 import torch
 
@@ -29,7 +29,7 @@ print(schedulers)
 ```
 
 
-[Merge](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb)
+### Merge
 ```python
 more_models = Models({"X": torch.nn.Linear(20, 1)})
 models.merge(more_models)
