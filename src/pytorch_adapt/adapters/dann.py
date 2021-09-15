@@ -1,7 +1,8 @@
 from ..containers import KeyEnforcer
-from ..hooks import DANNEHook, DANNHook, GVBEHook, GVBHook
+from ..hooks import CDANNEHook, DANNEHook, DANNHook, GVBEHook, GVBHook
 from ..layers import ModelWithBridge
 from .base_adapter import BaseGCDAdapter
+from .gan import CDAN
 
 
 class DANN(BaseGCDAdapter):
@@ -15,8 +16,12 @@ class DANN(BaseGCDAdapter):
         self.hook = self.hook_cls(opts=list(self.optimizers.values()), **hook_kwargs)
 
 
-class DANNE(BaseGCDAdapter):
+class DANNE(DANN):
     hook_cls = DANNEHook
+
+
+class CDANNE(DANN, CDAN):
+    hook_cls = CDANNEHook
 
 
 class GVB(DANN):

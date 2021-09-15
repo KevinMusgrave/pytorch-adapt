@@ -20,9 +20,7 @@ def get_entropy_reducer(apply_to, detach_weights):
     return EntropyReducer(
         apply_to=apply_to,
         default_reducer=MeanReducer(),
-        entropy_weights_fn=EntropyWeights(
-            normalizer=MaxNormalizer(detach=detach_weights)
-        ),
+        entropy_weights_fn=EntropyWeights(normalizer=MaxNormalizer(detach=True)),
         detach_weights=detach_weights,
     )
 

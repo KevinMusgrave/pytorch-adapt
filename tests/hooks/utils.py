@@ -110,11 +110,18 @@ def post_g_hook_update_total_loss(
 
 
 def get_entropy_weights(c_logits, bs, detach_reducer):
-    entropy_weighter = EntropyWeights(normalizer=MaxNormalizer(detach=detach_reducer))
+    entropy_weighter = EntropyWeights(normalizer=MaxNormalizer(detach=True))
     entropy_context = torch.no_grad() if detach_reducer else nullcontext()
 
     with entropy_context:
         src_entropy_weights = entropy_weighter(c_logits[:bs])
         target_entropy_weights = entropy_weighter(c_logits[bs:])
+
+    if c_logits.requires_grad:
+        if any(
+            x.requires_grad != (not detach_reducer)
+            for x in [src_entropy_weights, target_entropy_weights]
+        ):
+            raise ValueError
 
     return src_entropy_weights, target_entropy_weights

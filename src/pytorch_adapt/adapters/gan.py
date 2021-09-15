@@ -26,7 +26,7 @@ class GAN(BaseGCDAdapter):
         self.hook = self.hook_cls(d_opts=d_opts, g_opts=g_opts, **hook_kwargs)
 
 
-class GANE(BaseGCDAdapter):
+class GANE(GAN):
     hook_cls = GANEHook
 
 
