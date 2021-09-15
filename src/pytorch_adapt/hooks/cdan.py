@@ -39,17 +39,22 @@ def get_entropy_reducers_for_gan(detach_entropy_reducer):
     return d_reducer, g_reducer
 
 
+def get_cdan_features_hooks(softmax):
+    f_hook = FeaturesAndLogitsHook()
+    fc_hook = CombinedFeaturesHook()
+    key_map = cdan_key_map(fc_hook)
+    if softmax:
+        strs = c_f.filter(f_hook.out_keys, "_features_logits$", ["^src", "^target"])
+        fc_hook = SoftmaxLocallyHook(strs, fc_hook)
+    return f_hook, fc_hook, key_map
+
+
 class CDANDomainHook(BaseWrapperHook):
     def __init__(
         self, loss_prefix, detach_features, reverse_labels, softmax=True, **kwargs
     ):
         super().__init__(**kwargs)
-        f_hook = FeaturesAndLogitsHook()
-        fc_hook = CombinedFeaturesHook()
-        key_map = cdan_key_map(fc_hook)
-        if softmax:
-            strs = c_f.filter(f_hook.out_keys, "_features_logits$", ["^src", "^target"])
-            fc_hook = SoftmaxLocallyHook(strs, fc_hook)
+        f_hook, fc_hook, key_map = get_cdan_features_hooks(softmax)
         d_hook = DomainLossHook(
             loss_prefix=loss_prefix,
             detach_features=detach_features,

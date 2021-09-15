@@ -9,12 +9,13 @@ from pytorch_adapt.hooks import (
     AFNHook,
     BNMHook,
     BSPHook,
+    CDANNEHook,
     DANNEHook,
     DANNHook,
     MCCHook,
     validate_hook,
 )
-from pytorch_adapt.layers import GradientReversal
+from pytorch_adapt.layers import GradientReversal, RandomizedDotProduct
 from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (
@@ -31,11 +32,11 @@ from .utils import (
 class TestDANN(unittest.TestCase):
     def test_dann(self):
         for post_g in [None, BSPHook(), BNMHook(), MCCHook(), AFNHook()]:
-            for hook_cls in [DANNHook, DANNEHook]:
+            for hook_cls in [DANNHook, DANNEHook, CDANNEHook]:
                 for detach_reducer in [False, True]:
-                    if detach_reducer and hook_cls is not DANNEHook:
+                    if detach_reducer and hook_cls is DANNHook:
                         continue
-                    if hook_cls is DANNEHook and post_g is not None:
+                    if hook_cls in [DANNEHook, CDANNEHook] and post_g is not None:
                         continue
 
                     (
@@ -58,10 +59,16 @@ class TestDANN(unittest.TestCase):
                         "opts": opts,
                         "post_g": post_g_,
                     }
-                    if hook_cls is DANNEHook:
+                    if hook_cls in [DANNEHook, CDANNEHook]:
                         hook_kwargs["detach_entropy_reducer"] = detach_reducer
                     h = hook_cls(**hook_kwargs)
+
                     models = {"G": G, "D": D, "C": C}
+                    if hook_cls is CDANNEHook:
+                        feature_combiner = RandomizedDotProduct([16, 10], 16)
+                        originalFeatureCombiner = copy.deepcopy(feature_combiner)
+                        models["feature_combiner"] = feature_combiner
+
                     data = {
                         "src_imgs": src_imgs,
                         "target_imgs": target_imgs,
@@ -81,8 +88,7 @@ class TestDANN(unittest.TestCase):
                         "target_imgs_features_dlogits",
                         "src_imgs_features_logits",
                     }
-
-                    if hook_cls is DANNEHook:
+                    if hook_cls in [DANNEHook, CDANNEHook]:
                         if detach_reducer:
                             output_keys.update(
                                 {
@@ -95,6 +101,19 @@ class TestDANN(unittest.TestCase):
                             )
                         else:
                             output_keys.update({"target_imgs_features_logits"})
+                    if hook_cls is CDANNEHook:
+                        output_keys.update(
+                            {
+                                "src_imgs_features_AND_src_imgs_features_logits_combined",
+                                "target_imgs_features_AND_target_imgs_features_logits_combined",
+                                "src_imgs_features_AND_src_imgs_features_logits_combined_dlogits",
+                                "target_imgs_features_AND_target_imgs_features_logits_combined_dlogits",
+                            }
+                        )
+                        output_keys -= {
+                            "src_imgs_features_dlogits",
+                            "target_imgs_features_dlogits",
+                        }
 
                     loss_keys = {
                         "src_domain_loss",
@@ -116,7 +135,7 @@ class TestDANN(unittest.TestCase):
                     )
 
                     self.assertTrue(losses["total_loss"].keys() == loss_keys)
-                    if hook_cls is DANNEHook:
+                    if hook_cls in [DANNEHook, CDANNEHook]:
                         correct_c_count = 2
                     elif post_g is None or isinstance(post_g, (BSPHook, AFNHook)):
                         correct_c_count = 1
@@ -137,8 +156,29 @@ class TestDANN(unittest.TestCase):
                     src_features = originalG(src_imgs)
                     target_features = originalG(target_imgs)
                     src_logits = originalC(src_features)
-                    src_dlogits = originalD(grl(src_features))
-                    target_dlogits = originalD(grl(target_features))
+
+                    if hook_cls in [DANNHook, DANNEHook]:
+                        src_dlogits = originalD(grl(src_features))
+                        target_dlogits = originalD(grl(target_features))
+                    elif hook_cls is CDANNEHook:
+                        src_dlogits = originalD(
+                            grl(
+                                originalFeatureCombiner(
+                                    src_features,
+                                    torch.nn.functional.softmax(src_logits, dim=1),
+                                )
+                            )
+                        )
+                        target_dlogits = originalD(
+                            grl(
+                                originalFeatureCombiner(
+                                    target_features,
+                                    torch.nn.functional.softmax(
+                                        originalC(target_features), dim=1
+                                    ),
+                                )
+                            )
+                        )
 
                     src_domain_loss = F.binary_cross_entropy_with_logits(
                         src_dlogits, src_domain, reduction="none"
@@ -147,7 +187,7 @@ class TestDANN(unittest.TestCase):
                         target_dlogits, target_domain, reduction="none"
                     )
 
-                    if hook_cls is DANNEHook:
+                    if hook_cls in [DANNEHook, CDANNEHook]:
                         target_logits = originalC(target_features)
                         c_logits = torch.cat([src_logits, target_logits], dim=0)
                         c_logits = grl(c_logits)

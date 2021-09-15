@@ -3,10 +3,15 @@ from typing import List
 from ..layers import GradientReversal
 from ..utils import common_functions as c_f
 from .base import BaseHook, BaseWrapperHook
-from .cdan import get_entropy_reducer
+from .cdan import CDANDomainHook, get_cdan_features_hooks, get_entropy_reducer
 from .classification import CLossHook, SoftmaxHook
 from .domain import DomainLossHook, FeaturesForDomainLossHook
-from .features import FeaturesHook, LogitsHook
+from .features import (
+    CombinedFeaturesHook,
+    FeaturesAndLogitsHook,
+    FeaturesHook,
+    LogitsHook,
+)
 from .optimizer import OptimizerHook, SummaryHook
 from .utils import (
     ApplyFnHook,
@@ -189,3 +194,13 @@ class DANNEHook(DANNHook):
         super().__init__(
             reducer=reducer, gradient_reversal_weight=gradient_reversal_weight, **kwargs
         )
+
+
+class CDANNEHook(DANNEHook):
+    def __init__(self, softmax=True, **kwargs):
+        f_hook, fc_hook, _ = get_cdan_features_hooks(softmax)
+        f_hook = ChainHook(f_hook, fc_hook)
+        domain_loss_hook = CDANDomainHook(
+            loss_prefix="", detach_features=False, reverse_labels=False, softmax=True
+        )
+        super().__init__(f_hook=f_hook, domain_loss_hook=domain_loss_hook, **kwargs)

@@ -12,6 +12,7 @@ from .cdan import CDANDomainHookD, CDANDomainHookG, CDANEHook, CDANHook, GANEHoo
 from .classification import ClassifierHook, CLossHook, FinetunerHook, SoftmaxHook
 from .conditions import StrongDHook
 from .dann import (
+    CDANNEHook,
     DANNEHook,
     DANNHook,
     DANNLogitsHook,
