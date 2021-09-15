@@ -10,6 +10,7 @@ from .. import TEST_DEVICE
 
 class TestKNNValidator(unittest.TestCase):
     def test_knn_validator(self):
+        torch.cuda.empty_cache()
         knn_validator = KNNValidator()
         cluster_validator = ClusterValidator()
         for epoch in [1, 2]:

@@ -11,6 +11,7 @@ from pytorch_adapt.validators import (
 
 class TestMultipleValidators(unittest.TestCase):
     def test_multiple_validators(self):
+        torch.cuda.empty_cache()
         v1 = SilhouetteScoreValidator()
         v2 = DeepEmbeddedValidator()
 

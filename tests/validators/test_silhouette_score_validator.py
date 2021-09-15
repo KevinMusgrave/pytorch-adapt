@@ -56,6 +56,7 @@ def get_clustering_performance(feats, plabels, num_classes):
 
 class TestSilhouetteScoreValidator(unittest.TestCase):
     def test_silhouette_score_validator(self):
+        torch.cuda.empty_cache()
         validator = SilhouetteScoreValidator()
         dataset_size = 10000
         num_classes = 2
