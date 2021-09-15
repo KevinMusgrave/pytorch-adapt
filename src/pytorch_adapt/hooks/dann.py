@@ -6,7 +6,7 @@ from .base import BaseHook, BaseWrapperHook
 from .cdan import get_entropy_reducer
 from .classification import CLossHook, SoftmaxHook
 from .domain import DomainLossHook, FeaturesForDomainLossHook
-from .features import FeaturesHook
+from .features import FeaturesHook, LogitsHook
 from .optimizer import OptimizerHook, SummaryHook
 from .utils import (
     ApplyFnHook,
@@ -163,13 +163,29 @@ class DANNSoftmaxLogitsHook(DANNHook):
         super().__init__(f_hook=f_hook, gradient_reversal=gradient_reversal, **kwargs)
 
 
-class DANNEHook(DANNHook):
-    def __init__(self, detach_entropy_reducer=True, **kwargs):
-        apply_to = ["src_domain_loss", "target_domain_loss"]
+class GradientReversalThenEntropyReducer(BaseWrapperHook):
+    def __init__(
+        self, detach_entropy_reducer=True, gradient_reversal_weight=1, **kwargs
+    ):
+        super().__init__(**kwargs)
         reducer = get_entropy_reducer(
-            apply_to=apply_to, detach_weights=detach_entropy_reducer
+            apply_to=["src_domain_loss", "target_domain_loss"],
+            detach_weights=detach_entropy_reducer,
         )
+        apply_to = ["src_imgs_features_logits", "target_imgs_features_logits"]
         reducer = GradientReversalLocallyHook(
-            apply_to, reducer, weight=kwargs["gradient_reversal_weight"]
+            apply_to, reducer, weight=gradient_reversal_weight
         )
-        super().__init__(reducer=reducer, **kwargs)
+        self.hook = ChainHook(LogitsHook(), reducer)
+
+
+class DANNEHook(DANNHook):
+    def __init__(
+        self, detach_entropy_reducer=True, gradient_reversal_weight=1, **kwargs
+    ):
+        reducer = GradientReversalThenEntropyReducer(
+            detach_entropy_reducer, gradient_reversal_weight
+        )
+        super().__init__(
+            reducer=reducer, gradient_reversal_weight=gradient_reversal_weight, **kwargs
+        )

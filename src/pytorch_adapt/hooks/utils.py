@@ -96,21 +96,22 @@ class ChainHook(BaseHook):
 
     def call(self, losses, inputs):
         """"""
-        losses, outputs = {}, {}
-        all_inputs = inputs
-        prev_outputs = {}
+        out_losses, outputs = {}, {}
+        all_losses, all_inputs = losses, inputs
+        prev_losses, prev_outputs = {}, {}
         for i, h in enumerate(self.hooks):
-            self.check_overwrite(i, all_inputs, prev_outputs)
+            self.check_overwrite(i, all_losses, prev_losses, False)
+            self.check_overwrite(i, all_inputs, prev_outputs, self.overwrite)
+            all_losses = {**all_losses, **prev_losses}
             all_inputs = {**all_inputs, **prev_outputs}
-            if self.conditions[i](losses, all_inputs):
-                x = h(losses, all_inputs)
+            if self.conditions[i](all_losses, all_inputs):
+                x = h(all_losses, all_inputs)
             else:
-                x = self.alts[i](losses, all_inputs)
-            prev_outputs = x[1]
-            self.check_loss_overlap(losses, x[0])
-            losses.update(x[0])
+                x = self.alts[i](all_losses, all_inputs)
+            prev_losses, prev_outputs = x
+            out_losses.update(prev_losses)
             outputs.update(prev_outputs)
-        return losses, outputs
+        return out_losses, outputs
 
     def check_overlap(self, x, y, names):
         is_overlap, overlap = c_f.dicts_are_overlapping(x, y, return_overlap=True)
@@ -119,14 +120,9 @@ class ChainHook(BaseHook):
                 f"overwrite is false, but {names[0]} and {names[1]} have overlapping keys: {overlap}"
             )
 
-    def check_overwrite(self, i, kwargs, prev_outputs):
-        if not self.overwrite or (
-            isinstance(self.overwrite, list) and i not in self.overwrite
-        ):
+    def check_overwrite(self, i, kwargs, prev_outputs, overwrite):
+        if not overwrite or (isinstance(overwrite, list) and i not in overwrite):
             self.check_overlap(kwargs, prev_outputs, ["kwargs", "prev_outputs"])
-
-    def check_loss_overlap(self, losses, new_losses):
-        self.check_overlap(losses, new_losses, ["losses", "new_losses"])
 
     def _loss_keys(self):
         """"""
@@ -180,13 +176,13 @@ class ParallelHook(BaseHook):
 
     def call(self, losses, inputs):
         """"""
-        losses, outputs = {}, {}
+        out_losses, outputs = {}, {}
         for h in self.hooks:
             x = h(losses, inputs)
-            losses.update(x[0])
+            out_losses.update(x[0])
             outputs.update(x[1])
 
-        return losses, outputs
+        return out_losses, outputs
 
     def children_repr(self):
         x = super().children_repr()
