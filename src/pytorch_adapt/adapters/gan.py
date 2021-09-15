@@ -1,7 +1,14 @@
 import torch
 
 from ..containers import KeyEnforcer
-from ..hooks import CDANHook, DomainConfusionHook, GANHook, VADAHook
+from ..hooks import (
+    CDANEHook,
+    CDANHook,
+    DomainConfusionHook,
+    GANEHook,
+    GANHook,
+    VADAHook,
+)
 from ..utils import common_functions as c_f
 from .base_adapter import BaseGCDAdapter
 
@@ -19,6 +26,10 @@ class GAN(BaseGCDAdapter):
         self.hook = self.hook_cls(d_opts=d_opts, g_opts=g_opts, **hook_kwargs)
 
 
+class GANE(BaseGCDAdapter):
+    hook_cls = GANEHook
+
+
 class CDAN(GAN):
     """
     Wraps [CDANHook][pytorch_adapt.hooks.cdan].
@@ -30,6 +41,10 @@ class CDAN(GAN):
         ke = super().get_key_enforcer()
         ke.requirements["misc"] = ["feature_combiner"]
         return ke
+
+
+class CDANE(CDAN):
+    hook_cls = CDANEHook
 
 
 class DomainConfusion(GAN):

@@ -1,5 +1,5 @@
 from ..containers import KeyEnforcer
-from ..hooks import DANNHook, GVBHook
+from ..hooks import DANNEHook, DANNHook, GVBEHook, GVBHook
 from ..layers import ModelWithBridge
 from .base_adapter import BaseGCDAdapter
 
@@ -15,6 +15,10 @@ class DANN(BaseGCDAdapter):
         self.hook = self.hook_cls(opts=list(self.optimizers.values()), **hook_kwargs)
 
 
+class DANNE(BaseGCDAdapter):
+    hook_cls = DANNEHook
+
+
 class GVB(DANN):
     """
     Wraps [GVBHook][pytorch_adapt.hooks.gvb].
@@ -28,3 +32,7 @@ class GVB(DANN):
             if not isinstance(models[k], ModelWithBridge):
                 models[k] = ModelWithBridge(models[k])
         super().init_containers_and_check_keys()
+
+
+class GVBE(GVB):
+    hook_cls = GVBEHook

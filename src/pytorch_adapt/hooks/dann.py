@@ -1,6 +1,9 @@
+from typing import List
+
 from ..layers import GradientReversal
 from ..utils import common_functions as c_f
-from .base import BaseWrapperHook
+from .base import BaseHook, BaseWrapperHook
+from .cdan import get_entropy_reducer
 from .classification import CLossHook, SoftmaxHook
 from .domain import DomainLossHook, FeaturesForDomainLossHook
 from .features import FeaturesHook
@@ -19,6 +22,13 @@ class GradientReversalHook(ApplyFnHook):
         super().__init__(fn=GradientReversal(weight), **kwargs)
 
 
+class GradientReversalLocallyHook(BaseWrapperHook):
+    def __init__(self, apply_to: List[str], *hooks: BaseHook, weight=1, **kwargs):
+        super().__init__(**kwargs)
+        grl = GradientReversalHook(weight=weight, apply_to=apply_to)
+        self.hook = OnlyNewOutputsHook(ChainHook(grl, *hooks, overwrite=True))
+
+
 class SoftmaxGradientReversalHook(BaseWrapperHook):
     def __init__(self, apply_to, weight=1, **kwargs):
         super().__init__(**kwargs)
@@ -27,6 +37,13 @@ class SoftmaxGradientReversalHook(BaseWrapperHook):
             GradientReversalHook(weight=weight, apply_to=apply_to),
             overwrite=True,
         )
+
+
+class SoftmaxGradientReversalLocallyHook(BaseWrapperHook):
+    def __init__(self, apply_to, *hooks, weight=1, **kwargs):
+        super().__init__(**kwargs)
+        sgrl = SoftmaxGradientReversalHook(apply_to, weight)
+        self.hook = OnlyNewOutputsHook(ChainHook(sgrl, *hooks, overwrite=True))
 
 
 class DANNHook(BaseWrapperHook):
@@ -144,3 +161,15 @@ class DANNSoftmaxLogitsHook(DANNHook):
         f_hook = FeaturesForDomainLossHook(use_logits=True)
         gradient_reversal = SoftmaxGradientReversalHook(apply_to=f_hook.out_keys)
         super().__init__(f_hook=f_hook, gradient_reversal=gradient_reversal, **kwargs)
+
+
+class DANNEHook(DANNHook):
+    def __init__(self, detach_entropy_reducer=True, **kwargs):
+        apply_to = ["src_domain_loss", "target_domain_loss"]
+        reducer = get_entropy_reducer(
+            apply_to=apply_to, detach_weights=detach_entropy_reducer
+        )
+        reducer = GradientReversalLocallyHook(
+            apply_to, reducer, weight=kwargs["gradient_reversal_weight"]
+        )
+        super().__init__(reducer=reducer, **kwargs)

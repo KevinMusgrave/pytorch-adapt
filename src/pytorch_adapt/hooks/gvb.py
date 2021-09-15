@@ -2,7 +2,11 @@ from ..layers import AbsLoss
 from ..utils import common_functions as c_f
 from .base import BaseHook, BaseWrapperHook
 from .classification import SoftmaxLocallyHook
-from .dann import DANNHook, SoftmaxGradientReversalHook
+from .dann import (
+    DANNHook,
+    SoftmaxGradientReversalHook,
+    SoftmaxGradientReversalLocallyHook,
+)
 from .domain import DomainLossHook, FeaturesForDomainLossHook
 from .features import (
     BaseFeaturesHook,
@@ -147,6 +151,18 @@ class GVBHook(DANNHook):
             d_hook_allowed="_dlogits$|_dbridge$",
             **kwargs,
         )
+
+
+class GVBEHook(GVBHook):
+    def __init__(self, detach_entropy_reducer=True, **kwargs):
+        apply_to = ["src_domain_loss", "target_domain_loss"]
+        reducer = get_entropy_reducer(
+            apply_to=apply_to, detach_weights=detach_entropy_reducer
+        )
+        reducer = SoftmaxGradientReversalLocallyHook(
+            apply_to, reducer, weight=kwargs["gradient_reversal_weight"]
+        )
+        super().__init__(reducer=reducer, **kwargs)
 
 
 class DBridgeLossWithSoftmaxHook(BaseWrapperHook):

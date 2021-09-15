@@ -1,3 +1,5 @@
+from contextlib import nullcontext
+
 import torch
 
 from pytorch_adapt.hooks import AFNHook, BNMHook, BSPHook, MCCHook
@@ -5,6 +7,8 @@ from pytorch_adapt.layers import (
     AdaptiveFeatureNorm,
     BatchSpectralLoss,
     BNMLoss,
+    EntropyWeights,
+    MaxNormalizer,
     MCCLoss,
 )
 
@@ -103,3 +107,14 @@ def post_g_hook_update_total_loss(
     elif isinstance(post_g, AFNHook):
         loss_fn = AdaptiveFeatureNorm()
         total_loss.append(loss_fn(src_features) + loss_fn(target_features))
+
+
+def get_entropy_weights(c_logits, bs, detach_reducer):
+    entropy_weighter = EntropyWeights(normalizer=MaxNormalizer(detach=detach_reducer))
+    entropy_context = torch.no_grad() if detach_reducer else nullcontext()
+
+    with entropy_context:
+        src_entropy_weights = entropy_weighter(c_logits[:bs])
+        target_entropy_weights = entropy_weighter(c_logits[bs:])
+
+    return src_entropy_weights, target_entropy_weights

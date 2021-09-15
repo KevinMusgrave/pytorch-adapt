@@ -1,17 +1,42 @@
 import torch
 
+from ..layers import EntropyWeights, MaxNormalizer
 from ..utils import common_functions as c_f
 from .base import BaseWrapperHook
 from .classification import SoftmaxLocallyHook
 from .domain import DomainLossHook
 from .features import CombinedFeaturesHook, FeaturesAndLogitsHook
 from .gan import GANHook
+from .reducers import EntropyReducer, MeanReducer
 from .utils import ChainHook
 
 
 def cdan_key_map(fc_hook):
     strs = c_f.filter(fc_hook.out_keys, "", ["^src", "^target"])
     return {k: v for k, v in zip(strs, ["src_imgs_features", "target_imgs_features"])}
+
+
+def get_entropy_reducer(apply_to, detach_weights):
+    return EntropyReducer(
+        apply_to=apply_to,
+        default_reducer=MeanReducer(),
+        entropy_weights_fn=EntropyWeights(
+            normalizer=MaxNormalizer(detach=detach_weights)
+        ),
+        detach_weights=detach_weights,
+    )
+
+
+def get_entropy_reducers_for_gan(detach_entropy_reducer):
+    d_reducer = get_entropy_reducer(
+        ["d_src_domain_loss", "d_target_domain_loss"],
+        detach_weights=True,
+    )
+    g_reducer = get_entropy_reducer(
+        ["g_src_domain_loss", "g_target_domain_loss"],
+        detach_weights=detach_entropy_reducer,
+    )
+    return d_reducer, g_reducer
 
 
 class CDANDomainHook(BaseWrapperHook):
@@ -62,3 +87,15 @@ class CDANHook(GANHook):
             gen_hook=CDANDomainHookG(softmax=softmax),
             **kwargs
         )
+
+
+class CDANEHook(CDANHook):
+    def __init__(self, detach_entropy_reducer=True, **kwargs):
+        d_reducer, g_reducer = get_entropy_reducers_for_gan(detach_entropy_reducer)
+        super().__init__(d_reducer=d_reducer, g_reducer=g_reducer, **kwargs)
+
+
+class GANEHook(GANHook):
+    def __init__(self, detach_entropy_reducer=True, **kwargs):
+        d_reducer, g_reducer = get_entropy_reducers_for_gan(detach_entropy_reducer)
+        super().__init__(d_reducer=d_reducer, g_reducer=g_reducer, **kwargs)

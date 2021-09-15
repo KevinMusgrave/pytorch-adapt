@@ -8,15 +8,18 @@ from .aligners import (
     ManyAlignerHook,
 )
 from .atdoc import ATDOCHook
-from .cdan import CDANDomainHookD, CDANDomainHookG, CDANHook
+from .cdan import CDANDomainHookD, CDANDomainHookG, CDANEHook, CDANHook, GANEHook
 from .classification import ClassifierHook, CLossHook, FinetunerHook, SoftmaxHook
 from .conditions import StrongDHook
 from .dann import (
+    DANNEHook,
     DANNHook,
     DANNLogitsHook,
     DANNSoftmaxLogitsHook,
     GradientReversalHook,
+    GradientReversalLocallyHook,
     SoftmaxGradientReversalHook,
+    SoftmaxGradientReversalLocallyHook,
 )
 from .domain import DomainLossHook, FeaturesForDomainLossHook
 from .domain_confusion import DomainConfusionHook
