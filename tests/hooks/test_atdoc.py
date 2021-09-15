@@ -26,7 +26,6 @@ def get_data(dataset_size, feature_dim, num_classes, batch_size):
 
 class TestATDOC(unittest.TestCase):
     def test_atdoc_hook(self):
-        torch.manual_seed(4308)
         dataset_size = 10000
         feature_dim = 128
         num_classes = 10
@@ -61,7 +60,7 @@ class TestATDOC(unittest.TestCase):
 
         self.assertTrue(
             all(
-                np.isclose(x, y.item(), rtol=1e-6)
+                np.isclose(x, y.item(), rtol=1e-2)
                 for x, y in zip(all_losses, all_correct_losses)
             )
         )
