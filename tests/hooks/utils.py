@@ -123,5 +123,7 @@ def get_entropy_weights(c_logits, bs, detach_reducer):
             for x in [src_entropy_weights, target_entropy_weights]
         ):
             raise ValueError
+    elif any(x.requires_grad for x in [src_entropy_weights, target_entropy_weights]):
+        raise ValueError
 
     return src_entropy_weights, target_entropy_weights
