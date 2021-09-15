@@ -33,7 +33,7 @@ from .features import (
     LogitsHook,
 )
 from .gan import GANHook
-from .gvb import GVBGANHook, GVBHook
+from .gvb import GVBEHook, GVBGANHook, GVBHook
 from .losses import AFNHook, BaseLossHook, BNMHook, BSPHook, MCCHook, TargetEntropyHook
 from .mcd import MCDHook, MCDLossHook, MultipleCLossHook
 from .reducers import EntropyReducer, MeanReducer, MultipleReducers

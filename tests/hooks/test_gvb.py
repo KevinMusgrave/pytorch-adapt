@@ -1,13 +1,14 @@
 import copy
 import unittest
 
+import numpy as np
 import torch
 
-from pytorch_adapt.hooks import GVBGANHook, GVBHook, validate_hook
+from pytorch_adapt.hooks import GVBEHook, GVBGANHook, GVBHook, validate_hook
 from pytorch_adapt.layers import GradientReversal, ModelWithBridge
 from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_opts
+from .utils import Net, assertRequiresGrad, get_entropy_weights, get_opts
 
 
 def get_models_and_data():
@@ -41,119 +42,167 @@ def get_models_and_data():
 
 class TestGVB(unittest.TestCase):
     def test_gvb_hook(self):
-        (
-            G,
-            C,
-            D,
-            originalG,
-            originalC,
-            originalD,
-            src_imgs,
-            src_labels,
-            target_imgs,
-            src_domain,
-            target_domain,
-            bs,
-        ) = get_models_and_data()
-        opts = get_opts(G, C, D)
-        h = GVBHook(opts=opts)
-        model_counts = validate_hook(
-            h, ["src_imgs", "src_labels", "target_imgs", "src_domain", "target_domain"]
-        )
-        losses, outputs = h({}, locals())
-        self.assertTrue(
-            losses["total_loss"].keys()
-            == {
-                "d_src_bridge_loss",
-                "g_src_bridge_loss",
-                "d_target_bridge_loss",
-                "g_target_bridge_loss",
-                "c_loss",
-                "src_domain_loss",
-                "target_domain_loss",
-                "total",
-            }
-        )
-        losses = losses["total_loss"]
-        assertRequiresGrad(self, outputs)
-        self.assertTrue(
-            G.count
-            == C.model.count
-            == D.model.count
-            == model_counts["G"]
-            == model_counts["C"]
-            == model_counts["D"]
-        )
+        for hook_cls in [GVBHook, GVBEHook]:
+            for detach_reducer in [False, True]:
+                if detach_reducer and hook_cls is not GVBEHook:
+                    continue
+                (
+                    G,
+                    C,
+                    D,
+                    originalG,
+                    originalC,
+                    originalD,
+                    src_imgs,
+                    src_labels,
+                    target_imgs,
+                    src_domain,
+                    target_domain,
+                    bs,
+                ) = get_models_and_data()
+                opts = get_opts(G, C, D)
+                hook_kwargs = {
+                    "opts": opts,
+                }
+                if hook_cls is GVBEHook:
+                    hook_kwargs["detach_entropy_reducer"] = detach_reducer
 
-        original_opts = get_opts(originalG, originalC, originalD)
-        grl = GradientReversal()
-        features = originalG(torch.cat([src_imgs, target_imgs], dim=0))
-        logits, gbridge = originalC(features, return_bridge=True)
-        dlogits, dbridge = originalD(
-            grl(torch.nn.functional.softmax(logits, dim=1)), return_bridge=True
-        )
-        self.assertTrue(torch.equal(logits[:bs], outputs["src_imgs_features_logits"]))
-        self.assertTrue(
-            torch.equal(logits[bs:], outputs["target_imgs_features_logits"])
-        )
-        self.assertTrue(torch.equal(gbridge[:bs], outputs["src_imgs_features_gbridge"]))
-        self.assertTrue(
-            torch.equal(gbridge[bs:], outputs["target_imgs_features_gbridge"])
-        )
-        self.assertTrue(
-            torch.equal(dlogits[:bs], outputs["src_imgs_features_logits_dlogits"])
-        )
-        self.assertTrue(
-            torch.equal(dlogits[bs:], outputs["target_imgs_features_logits_dlogits"])
-        )
-        self.assertTrue(
-            torch.equal(dbridge[:bs], outputs["src_imgs_features_logits_dbridge"])
-        )
-        self.assertTrue(
-            torch.equal(dbridge[bs:], outputs["target_imgs_features_logits_dbridge"])
-        )
+                h = hook_cls(**hook_kwargs)
+                model_counts = validate_hook(
+                    h,
+                    [
+                        "src_imgs",
+                        "src_labels",
+                        "target_imgs",
+                        "src_domain",
+                        "target_domain",
+                    ],
+                )
+                losses, outputs = h({}, locals())
+                self.assertTrue(
+                    losses["total_loss"].keys()
+                    == {
+                        "d_src_bridge_loss",
+                        "g_src_bridge_loss",
+                        "d_target_bridge_loss",
+                        "g_target_bridge_loss",
+                        "c_loss",
+                        "src_domain_loss",
+                        "target_domain_loss",
+                        "total",
+                    }
+                )
+                losses = losses["total_loss"]
+                assertRequiresGrad(self, outputs)
+                self.assertTrue(
+                    G.count
+                    == C.model.count
+                    == D.model.count
+                    == model_counts["G"]
+                    == model_counts["C"]
+                    == model_counts["D"]
+                )
 
-        total_loss = 0
-        correct_loss = torch.nn.functional.cross_entropy(logits[:bs], src_labels)
-        self.assertTrue(losses["c_loss"] == correct_loss)
-        total_loss += correct_loss
+                original_opts = get_opts(originalG, originalC, originalD)
+                grl = GradientReversal()
+                features = originalG(torch.cat([src_imgs, target_imgs], dim=0))
+                logits, gbridge = originalC(features, return_bridge=True)
+                dlogits, dbridge = originalD(
+                    grl(torch.nn.functional.softmax(logits, dim=1)), return_bridge=True
+                )
+                self.assertTrue(
+                    torch.equal(logits[:bs], outputs["src_imgs_features_logits"])
+                )
+                self.assertTrue(
+                    torch.equal(logits[bs:], outputs["target_imgs_features_logits"])
+                )
+                self.assertTrue(
+                    torch.equal(gbridge[:bs], outputs["src_imgs_features_gbridge"])
+                )
+                self.assertTrue(
+                    torch.equal(gbridge[bs:], outputs["target_imgs_features_gbridge"])
+                )
+                self.assertTrue(
+                    torch.equal(
+                        dlogits[:bs], outputs["src_imgs_features_logits_dlogits"]
+                    )
+                )
+                self.assertTrue(
+                    torch.equal(
+                        dlogits[bs:], outputs["target_imgs_features_logits_dlogits"]
+                    )
+                )
+                self.assertTrue(
+                    torch.equal(
+                        dbridge[:bs], outputs["src_imgs_features_logits_dbridge"]
+                    )
+                )
+                self.assertTrue(
+                    torch.equal(
+                        dbridge[bs:], outputs["target_imgs_features_logits_dbridge"]
+                    )
+                )
 
-        correct_loss = torch.mean(torch.abs(gbridge[:bs]))
-        self.assertTrue(losses["g_src_bridge_loss"] == correct_loss)
-        total_loss += correct_loss
+                total_loss = 0
+                correct_loss = torch.nn.functional.cross_entropy(
+                    logits[:bs], src_labels
+                )
+                self.assertTrue(np.isclose(losses["c_loss"], correct_loss.item()))
+                total_loss += correct_loss
 
-        correct_loss = torch.mean(torch.abs(gbridge[bs:]))
-        self.assertTrue(losses["g_target_bridge_loss"] == correct_loss)
-        total_loss += correct_loss
+                correct_loss = torch.mean(torch.abs(gbridge[:bs]))
+                self.assertTrue(losses["g_src_bridge_loss"] == correct_loss)
+                total_loss += correct_loss
 
-        correct_loss = torch.mean(torch.abs(dbridge[:bs]))
-        self.assertTrue(losses["d_src_bridge_loss"] == correct_loss)
-        total_loss += correct_loss
+                correct_loss = torch.mean(torch.abs(gbridge[bs:]))
+                self.assertTrue(losses["g_target_bridge_loss"] == correct_loss)
+                total_loss += correct_loss
 
-        correct_loss = torch.mean(torch.abs(dbridge[bs:]))
-        self.assertTrue(losses["d_target_bridge_loss"] == correct_loss)
-        total_loss += correct_loss
+                correct_loss = torch.mean(torch.abs(dbridge[:bs]))
+                self.assertTrue(losses["d_src_bridge_loss"] == correct_loss)
+                total_loss += correct_loss
 
-        correct_loss = torch.nn.functional.binary_cross_entropy_with_logits(
-            dlogits[:bs], src_domain
-        )
-        self.assertTrue(losses["src_domain_loss"] == correct_loss)
-        total_loss += correct_loss
+                correct_loss = torch.mean(torch.abs(dbridge[bs:]))
+                self.assertTrue(losses["d_target_bridge_loss"] == correct_loss)
+                total_loss += correct_loss
 
-        correct_loss = torch.nn.functional.binary_cross_entropy_with_logits(
-            dlogits[bs:], target_domain
-        )
-        self.assertTrue(losses["target_domain_loss"] == correct_loss)
-        total_loss += correct_loss
+                src_domain_loss = torch.nn.functional.binary_cross_entropy_with_logits(
+                    dlogits[:bs], src_domain, reduction="none"
+                )
+                target_domain_loss = (
+                    torch.nn.functional.binary_cross_entropy_with_logits(
+                        dlogits[bs:], target_domain, reduction="none"
+                    )
+                )
 
-        total_loss /= 7
-        [x.zero_grad() for x in original_opts]
-        total_loss.backward()
-        [x.step() for x in original_opts]
-        for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
-            self.assertTrue(
-                c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-6)
-            )
+                if hook_cls is GVBEHook:
+                    (
+                        src_entropy_weights,
+                        target_entropy_weights,
+                    ) = get_entropy_weights(grl(logits), bs, detach_reducer)
+                    src_domain_loss = torch.mean(src_domain_loss * src_entropy_weights)
+                    target_domain_loss = torch.mean(
+                        target_domain_loss * target_entropy_weights
+                    )
+                else:
+                    src_domain_loss = torch.mean(src_domain_loss)
+                    target_domain_loss = torch.mean(target_domain_loss)
+
+                self.assertTrue(losses["src_domain_loss"] == src_domain_loss)
+                total_loss += src_domain_loss
+                self.assertTrue(losses["target_domain_loss"] == target_domain_loss)
+                total_loss += target_domain_loss
+
+                total_loss /= 7
+                [x.zero_grad() for x in original_opts]
+                total_loss.backward()
+                [x.step() for x in original_opts]
+                for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
+                    self.assertTrue(
+                        c_f.state_dicts_are_equal(
+                            x.state_dict(), y.state_dict(), rtol=1e-6
+                        )
+                    )
 
     def test_gvb_gan_hook(self):
         torch.manual_seed(123)

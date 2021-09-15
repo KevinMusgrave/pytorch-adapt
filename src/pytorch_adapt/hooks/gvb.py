@@ -4,6 +4,7 @@ from .base import BaseHook, BaseWrapperHook
 from .classification import SoftmaxLocallyHook
 from .dann import (
     DANNHook,
+    GradientReversalThenEntropyReducer,
     SoftmaxGradientReversalHook,
     SoftmaxGradientReversalLocallyHook,
 )
@@ -154,15 +155,15 @@ class GVBHook(DANNHook):
 
 
 class GVBEHook(GVBHook):
-    def __init__(self, detach_entropy_reducer=True, **kwargs):
-        apply_to = ["src_domain_loss", "target_domain_loss"]
-        reducer = get_entropy_reducer(
-            apply_to=apply_to, detach_weights=detach_entropy_reducer
+    def __init__(
+        self, detach_entropy_reducer=True, gradient_reversal_weight=1, **kwargs
+    ):
+        reducer = GradientReversalThenEntropyReducer(
+            detach_entropy_reducer, gradient_reversal_weight
         )
-        reducer = SoftmaxGradientReversalLocallyHook(
-            apply_to, reducer, weight=kwargs["gradient_reversal_weight"]
+        super().__init__(
+            reducer=reducer, gradient_reversal_weight=gradient_reversal_weight, **kwargs
         )
-        super().__init__(reducer=reducer, **kwargs)
 
 
 class DBridgeLossWithSoftmaxHook(BaseWrapperHook):
