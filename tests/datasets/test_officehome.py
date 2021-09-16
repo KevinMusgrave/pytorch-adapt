@@ -12,7 +12,7 @@ class TestOfficeHome(unittest.TestCase):
         check_train_test_matches_full(
             self,
             65,
-            ["Art", "Clipart", "Product", "Real"],
+            ["art", "clipart", "product", "real"],
             OfficeHomeFull,
             OfficeHome,
             DATASET_FOLDER,
@@ -22,7 +22,7 @@ class TestOfficeHome(unittest.TestCase):
     def test_officehome_full(self):
         all_d = [
             OfficeHomeFull(DATASET_FOLDER, d, simple_transform())
-            for d in ["Art", "Clipart", "Product", "Real"]
+            for d in ["art", "clipart", "product", "real"]
         ]
         all_d = [len(d) for d in all_d]
         self.assertTrue(sum(all_d) == 15588)

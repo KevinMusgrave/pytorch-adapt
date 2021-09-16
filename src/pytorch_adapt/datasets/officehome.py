@@ -12,11 +12,11 @@ class OfficeHomeFull(BaseDataset):
         super().__init__(domain=domain)
         self.transform = transform
         self.dataset = torch_datasets.ImageFolder(
-            os.path.join(root, "OfficeHomeDataset_10072016", domain),
+            os.path.join(root, "officehome", domain),
             transform=self.transform,
         )
         check_length(
-            self, {"Art": 2427, "Clipart": 4365, "Product": 4439, "Real": 4357}[domain]
+            self, {"art": 2427, "clipart": 4365, "product": 4439, "real": 4357}[domain]
         )
 
     def __len__(self):
@@ -32,10 +32,8 @@ class OfficeHome(BaseDataset):
         if not isinstance(train, bool):
             raise TypeError("train should be True or False")
         name = "train" if train else "test"
-        labels_file = os.path.join(
-            root, "OfficeHomeDataset_10072016", f"{domain}_{name}.txt"
-        )
-        img_dir = os.path.join(root, "OfficeHomeDataset_10072016")
+        labels_file = os.path.join(root, "officehome", f"{domain}_{name}.txt")
+        img_dir = os.path.join(root, "officehome")
 
         with open(labels_file) as f:
             content = [line.rstrip().split(" ") for line in f]
@@ -44,10 +42,10 @@ class OfficeHome(BaseDataset):
         check_length(
             self,
             {
-                "Art": {"train": 1941, "test": 486}[name],
-                "Clipart": {"train": 3492, "test": 873}[name],
-                "Product": {"train": 3551, "test": 888}[name],
-                "Real": {"train": 3485, "test": 872}[name],
+                "art": {"train": 1941, "test": 486}[name],
+                "clipart": {"train": 3492, "test": 873}[name],
+                "product": {"train": 3551, "test": 888}[name],
+                "real": {"train": 3485, "test": 872}[name],
             }[domain],
         )
         self.labels = [int(x[1]) for x in content]
