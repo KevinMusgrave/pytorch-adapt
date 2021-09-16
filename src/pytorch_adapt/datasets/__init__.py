@@ -6,7 +6,7 @@ from .domainnet import DomainNet, DomainNet126, DomainNet126Full
 from .getters import get_mnist_mnistm
 from .mnistm import MNISTM
 from .office31 import Office31, Office31Full
-from .office_home import OfficeHome, OfficeHomeFull
+from .officehome import OfficeHome, OfficeHomeFull
 from .pseudo_labeled_dataset import PseudoLabeledDataset
 from .source_dataset import SourceDataset
 from .target_dataset import TargetDataset

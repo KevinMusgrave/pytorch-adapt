@@ -8,7 +8,7 @@ from .utils import check_train_test_matches_full, simple_transform, skip_reason
 
 class TestOfficeHome(unittest.TestCase):
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
-    def test_office_home(self):
+    def test_officehome(self):
         check_train_test_matches_full(
             self,
             65,
@@ -19,7 +19,7 @@ class TestOfficeHome(unittest.TestCase):
         )
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
-    def test_office_home_full(self):
+    def test_officehome_full(self):
         all_d = [
             OfficeHomeFull(DATASET_FOLDER, d, simple_transform())
             for d in ["Art", "Clipart", "Product", "Real"]
