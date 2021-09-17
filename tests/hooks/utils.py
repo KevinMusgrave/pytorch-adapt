@@ -56,7 +56,7 @@ def assertRequiresGrad(cls, outputs):
     )
 
 
-def get_models_and_data(with_batch_norm=False, d_out=1):
+def get_models_and_data(with_batch_norm=False, d_out=1, d_uses_logits=False):
     src_domain = torch.randint(0, 2, size=(100,)).float()
     target_domain = torch.randint(0, 2, size=(100,)).float()
     src_labels = torch.randint(0, 10, size=(100,))
@@ -64,7 +64,10 @@ def get_models_and_data(with_batch_norm=False, d_out=1):
     target_imgs = torch.randn(100, 32)
     G = Net(32, 16, with_batch_norm)
     C = Net(16, 10, with_batch_norm)
-    D = Net(16, d_out, with_batch_norm)
+    if d_uses_logits:
+        D = Net(10, d_out, with_batch_norm)
+    else:
+        D = Net(16, d_out, with_batch_norm)
     return G, C, D, src_imgs, src_labels, target_imgs, src_domain, target_domain
 
 

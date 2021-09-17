@@ -12,6 +12,7 @@ from pytorch_adapt.hooks import (
     CDANNEHook,
     DANNEHook,
     DANNHook,
+    DANNSoftmaxLogitsHook,
     MCCHook,
     validate_hook,
 )
@@ -32,9 +33,9 @@ from .utils import (
 class TestDANN(unittest.TestCase):
     def test_dann(self):
         for post_g in [None, BSPHook(), BNMHook(), MCCHook(), AFNHook()]:
-            for hook_cls in [DANNHook, DANNEHook, CDANNEHook]:
+            for hook_cls in [DANNHook, DANNEHook, CDANNEHook, DANNSoftmaxLogitsHook]:
                 for detach_reducer in [False, True]:
-                    if detach_reducer and hook_cls is DANNHook:
+                    if detach_reducer and hook_cls in [DANNHook, DANNSoftmaxLogitsHook]:
                         continue
                     if hook_cls in [DANNEHook, CDANNEHook] and post_g is not None:
                         continue
@@ -48,7 +49,9 @@ class TestDANN(unittest.TestCase):
                         target_imgs,
                         src_domain,
                         target_domain,
-                    ) = get_models_and_data()
+                    ) = get_models_and_data(
+                        d_uses_logits=hook_cls is DANNSoftmaxLogitsHook
+                    )
                     originalG = copy.deepcopy(G)
                     originalC = copy.deepcopy(C)
                     originalD = copy.deepcopy(D)
@@ -114,6 +117,18 @@ class TestDANN(unittest.TestCase):
                             "src_imgs_features_dlogits",
                             "target_imgs_features_dlogits",
                         }
+                    if hook_cls is DANNSoftmaxLogitsHook:
+                        output_keys.update(
+                            {
+                                "target_imgs_features_logits",
+                                "src_imgs_features_logits_dlogits",
+                                "target_imgs_features_logits_dlogits",
+                            }
+                        )
+                        output_keys -= {
+                            "src_imgs_features_dlogits",
+                            "target_imgs_features_dlogits",
+                        }
 
                     loss_keys = {
                         "src_domain_loss",
@@ -135,7 +150,7 @@ class TestDANN(unittest.TestCase):
                     )
 
                     self.assertTrue(losses["total_loss"].keys() == loss_keys)
-                    if hook_cls in [DANNEHook, CDANNEHook]:
+                    if hook_cls in [DANNEHook, CDANNEHook, DANNSoftmaxLogitsHook]:
                         correct_c_count = 2
                     elif post_g is None or isinstance(post_g, (BSPHook, AFNHook)):
                         correct_c_count = 1
@@ -157,15 +172,22 @@ class TestDANN(unittest.TestCase):
                     target_features = originalG(target_imgs)
                     src_logits = originalC(src_features)
 
+                    softmax_fn = torch.nn.functional.softmax
                     if hook_cls in [DANNHook, DANNEHook]:
                         src_dlogits = originalD(grl(src_features))
                         target_dlogits = originalD(grl(target_features))
+                    elif hook_cls is DANNSoftmaxLogitsHook:
+                        target_logits = originalC(target_features)
+                        src_dlogits = originalD(grl(softmax_fn(src_logits, dim=1)))
+                        target_dlogits = originalD(
+                            grl(softmax_fn(target_logits, dim=1))
+                        )
                     elif hook_cls is CDANNEHook:
                         src_dlogits = originalD(
                             grl(
                                 originalFeatureCombiner(
                                     src_features,
-                                    torch.nn.functional.softmax(src_logits, dim=1),
+                                    softmax_fn(src_logits, dim=1),
                                 )
                             )
                         )
@@ -173,9 +195,7 @@ class TestDANN(unittest.TestCase):
                             grl(
                                 originalFeatureCombiner(
                                     target_features,
-                                    torch.nn.functional.softmax(
-                                        originalC(target_features), dim=1
-                                    ),
+                                    softmax_fn(originalC(target_features), dim=1),
                                 )
                             )
                         )
