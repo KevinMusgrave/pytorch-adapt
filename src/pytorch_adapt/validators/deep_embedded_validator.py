@@ -7,6 +7,7 @@ import torch
 import torch.nn.functional as F
 from pytorch_metric_learning.utils import common_functions as pml_cf
 from sklearn.model_selection import train_test_split
+from torchmetrics.functional import accuracy as tmf_accuracy
 
 from ..adapters import Finetuner
 from ..containers import Models, Optimizers
@@ -33,13 +34,17 @@ class DeepEmbeddedValidator(BaseValidator):
         self.layer = layer
         self.num_workers = num_workers
         self.batch_size = batch_size
-        self.D_accuracy = None
-        pml_cf.add_to_recordable_attributes(self, "D_accuracy")
+        self.D_accuracy_val = None
+        self.D_accuracy_test = None
+        self.mean_error = None
+        pml_cf.add_to_recordable_attributes(
+            self, list_of_names=["D_accuracy_val", "D_accuracy_test", "mean_error"]
+        )
 
     def compute_score(self, src_train, src_val, target_train):
         init_logging_level = c_f.LOGGER.level
         c_f.LOGGER.setLevel(logging.WARNING)
-        weights, self.D_accuracy = get_weights(
+        weights, self.D_accuracy_val, self.D_accuracy_test = get_weights(
             src_train[self.layer],
             src_val[self.layer],
             target_train[self.layer],
@@ -51,12 +56,13 @@ class DeepEmbeddedValidator(BaseValidator):
             src_val["logits"], src_val["labels"], reduction="none"
         )
         output = get_dev_risk(weights, error_per_sample[:, None])
+        self.mean_error = torch.mean(error_per_sample)
         c_f.LOGGER.setLevel(init_logging_level)
         return -output
 
     def extra_repr(self):
         x = super().extra_repr()
-        x += f"\n{c_f.extra_repr(self, ['D_accuracy'])}"
+        x += f"\n{c_f.extra_repr(self, ['D_accuracy_val', 'D_accuracy_test', 'mean_error'])}"
         return x
 
 
@@ -126,14 +132,12 @@ def get_weights(
     val_set = SourceDataset(pml_cf.EmbeddingDataset(feature_for_test, label_for_test))
 
     decays = [1e-1, 3e-2, 1e-2, 3e-3, 1e-3, 3e-4, 1e-4, 3e-5, 1e-5]
-    val_acc = []
-    trainers = []
-    savers = []
+    val_acc, trainers, savers, folders = [], [], [], []
     epochs = 100
     patience = 2
 
     for i, decay in enumerate(decays):
-        curr_folder = os.path.join(temp_folder, str(i))
+        curr_folder = os.path.join(temp_folder, f"DeepEmbeddedValidation{i}")
         models = Models(
             {
                 "G": torch.nn.Identity(),
@@ -154,7 +158,9 @@ def get_weights(
                 num_workers=num_workers, batch_size=bs
             ),
             max_epochs=epochs,
-            validator=AccuracyValidator(),
+            validator=AccuracyValidator(
+                torchmetric_kwargs={"average": "macro", "num_classes": 2}
+            ),
             saver=saver,
             validation_interval=1,
             patience=patience,
@@ -162,13 +168,13 @@ def get_weights(
         val_acc.append(acc)
         trainers.append(trainer)
         savers.append(saver)
+        folders.append(curr_folder)
 
-    D_accuracy = max(val_acc)
-    index = val_acc.index(D_accuracy)
+    D_accuracy_val = max(val_acc)
+    index = val_acc.index(D_accuracy_val)
 
-    validation_set = SourceDataset(
-        pml_cf.EmbeddingDataset(validation_feature, np.ones(len(validation_feature)))
-    )
+    labels = torch.ones(len(validation_feature), dtype=int)
+    validation_set = SourceDataset(pml_cf.EmbeddingDataset(validation_feature, labels))
     trainer, saver = trainers[index], savers[index]
     saver.load_adapter(trainer.adapter, "best")
     bs = min(len(validation_set), batch_size)
@@ -179,6 +185,8 @@ def get_weights(
     domain_out = domain_out["val"]["preds"]
     weights = (domain_out[:, :1] / domain_out[:, 1:]) * (float(N_s) / N_t)
 
-    shutil.rmtree(temp_folder)
+    [shutil.rmtree(f) for f in folders]
 
-    return weights, D_accuracy
+    D_accuracy_test = tmf_accuracy(domain_out, labels.to(domain_out.device))
+
+    return weights, D_accuracy_val, D_accuracy_test

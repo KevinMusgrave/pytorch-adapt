@@ -1,3 +1,4 @@
+import shutil
 import unittest
 
 import numpy as np
@@ -9,6 +10,8 @@ from pytorch_adapt.validators import (
     EntropyValidator,
     MultipleValidators,
 )
+
+from .. import TEST_FOLDER
 
 
 class TestKeyMap(unittest.TestCase):
@@ -56,7 +59,7 @@ class TestKeyMap(unittest.TestCase):
             validators={
                 "entropy": EntropyValidator(key_map={"goo": "target_train"}),
                 "diversity": DiversityValidator(),
-                "dev": DeepEmbeddedValidator(),
+                "dev": DeepEmbeddedValidator(temp_folder=TEST_FOLDER),
             },
             key_map={"baaa": "target_train"},
         )

@@ -1,3 +1,4 @@
+import shutil
 import unittest
 
 import torch
@@ -8,12 +9,14 @@ from pytorch_adapt.validators import (
     SilhouetteScoreValidator,
 )
 
+from .. import TEST_FOLDER
+
 
 class TestMultipleValidators(unittest.TestCase):
     def test_multiple_validators(self):
         torch.cuda.empty_cache()
         v1 = SilhouetteScoreValidator()
-        v2 = DeepEmbeddedValidator()
+        v2 = DeepEmbeddedValidator(temp_folder=TEST_FOLDER)
 
         for i, weights in enumerate([None, [1, 5]]):
             validator = MultipleValidators([v1, v2], weights)
@@ -50,3 +53,4 @@ class TestMultipleValidators(unittest.TestCase):
                     + v2.latest_score * actual_weights[1]
                 )
             )
+        shutil.rmtree(TEST_FOLDER)
