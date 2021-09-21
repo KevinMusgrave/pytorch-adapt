@@ -1,3 +1,5 @@
+import os
+import shutil
 import unittest
 
 import numpy as np
@@ -7,7 +9,7 @@ from sklearn.neural_network import MLPClassifier
 
 from pytorch_adapt.validators import DeepEmbeddedValidator
 
-from .. import TEST_DEVICE
+from .. import TEST_DEVICE, TEST_FOLDER
 
 
 ### original implementation ###
@@ -75,28 +77,37 @@ def get_weight(source_feature, target_feature, validation_feature):
 
 class TestDeepEmbeddedValidator(unittest.TestCase):
     def test_deep_embedded_validator(self):
-        validator = DeepEmbeddedValidator()
-        dataset_size = 1000
-        features = torch.randn(dataset_size, 512, device=TEST_DEVICE)
-        src_train = {"features": features}
-
-        features = torch.randn(dataset_size, 512, device=TEST_DEVICE)
-        labels = torch.arange(5, device=TEST_DEVICE).repeat(200)
-        logits = torch.nn.functional.one_hot(labels).to(TEST_DEVICE)
-        logits[800:] = torch.flip(
-            logits[800:1000], dims=(0,)
-        )  # make some of the logits incorrect
-        logits = logits.float()
-        src_val = {"features": features, "logits": logits, "labels": labels}
-
-        shift_by = 0.1
-        features = torch.randn(dataset_size, 512, device=TEST_DEVICE) + shift_by
-        target_train = {"features": features}
-
-        score = validator.score(
-            epoch=0, src_train=src_train, src_val=src_val, target_train=target_train
+        validator = DeepEmbeddedValidator(
+            temp_folder=os.path.join(TEST_FOLDER, "deep_embedded_validation"),
+            batch_size=1000,
         )
-        print(score)
+        for epoch, dataset_size in enumerate([100, 1000]):
+            features = torch.randn(dataset_size, 512, device=TEST_DEVICE)
+            src_train = {"features": features}
+
+            features = torch.randn(dataset_size, 512, device=TEST_DEVICE)
+            labels = torch.arange(5, device=TEST_DEVICE).repeat(dataset_size // 5)
+            logits = torch.nn.functional.one_hot(labels).to(TEST_DEVICE)
+            s = int(dataset_size * (0.8))
+            logits[s:] = torch.flip(
+                logits[s:], dims=(0,)
+            )  # make some of the logits incorrect
+            logits = logits.float()
+            src_val = {"features": features, "logits": logits, "labels": labels}
+
+            shift_by = 0.1
+            features = torch.randn(dataset_size, 512, device=TEST_DEVICE) + shift_by
+            target_train = {"features": features}
+
+            score = validator.score(
+                epoch=epoch,
+                src_train=src_train,
+                src_val=src_val,
+                target_train=target_train,
+            )
+            print(score)
+
+        shutil.rmtree(TEST_FOLDER)
 
         # correct_weights = get_weight(
         #     src_train["features"].cpu().numpy(),

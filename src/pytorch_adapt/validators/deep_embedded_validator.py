@@ -1,4 +1,6 @@
 import logging
+import os
+import shutil
 
 import numpy as np
 import torch
@@ -12,6 +14,7 @@ from ..datasets import DataloaderCreator, SourceDataset
 from ..frameworks import Ignite
 from ..models import Discriminator
 from ..utils import common_functions as c_f
+from ..utils.savers import Saver
 from .accuracy_validator import AccuracyValidator
 from .base_validator import BaseValidator
 
@@ -22,12 +25,16 @@ class DeepEmbeddedValidator(BaseValidator):
     [Towards Accurate Model Selection in Deep Unsupervised Domain Adaptation](http://proceedings.mlr.press/v97/you19a.html)
     """
 
-    def __init__(self, layer="features", num_workers=0, batch_size=32, **kwargs):
+    def __init__(
+        self, temp_folder, layer="features", num_workers=0, batch_size=32, **kwargs
+    ):
         super().__init__(**kwargs)
+        self.temp_folder = temp_folder
         self.layer = layer
         self.num_workers = num_workers
         self.batch_size = batch_size
         self.D_accuracy = None
+        pml_cf.add_to_recordable_attributes(self, "D_accuracy")
 
     def compute_score(self, src_train, src_val, target_train):
         init_logging_level = c_f.LOGGER.level
@@ -38,6 +45,7 @@ class DeepEmbeddedValidator(BaseValidator):
             target_train[self.layer],
             self.num_workers,
             self.batch_size,
+            self.temp_folder,
         )
         error_per_sample = F.cross_entropy(
             src_val["logits"], src_val["labels"], reduction="none"
@@ -80,7 +88,12 @@ def get_dev_risk(weight, error):
 
 
 def get_weights(
-    source_feature, validation_feature, target_feature, num_workers, batch_size
+    source_feature,
+    validation_feature,
+    target_feature,
+    num_workers,
+    batch_size,
+    temp_folder,
 ):
     """
     :param source_feature: shape [N_tr, d], features from training set
@@ -115,9 +128,12 @@ def get_weights(
     decays = [1e-1, 3e-2, 1e-2, 3e-3, 1e-3, 3e-4, 1e-4, 3e-5, 1e-5]
     val_acc = []
     trainers = []
-    epochs = 2
+    savers = []
+    epochs = 100
+    patience = 2
 
-    for decay in decays:
+    for i, decay in enumerate(decays):
+        curr_folder = os.path.join(temp_folder, str(i))
         models = Models(
             {
                 "G": torch.nn.Identity(),
@@ -130,17 +146,22 @@ def get_weights(
         trainer = Finetuner(models=models, optimizers=optimizers)
         trainer = Ignite(trainer, with_pbars=False)
         datasets = {"train": train_set, "src_val": val_set}
+        bs = int(np.min([len(train_set), len(val_set), batch_size]))
+        saver = Saver(folder=curr_folder)
         acc, _ = trainer.run(
             datasets,
             dataloader_creator=DataloaderCreator(
-                num_workers=num_workers, batch_size=batch_size
+                num_workers=num_workers, batch_size=bs
             ),
             max_epochs=epochs,
             validator=AccuracyValidator(),
-            validation_interval=epochs,
+            saver=saver,
+            validation_interval=1,
+            patience=patience,
         )
         val_acc.append(acc)
         trainers.append(trainer)
+        savers.append(saver)
 
     D_accuracy = max(val_acc)
     index = val_acc.index(D_accuracy)
@@ -148,11 +169,16 @@ def get_weights(
     validation_set = SourceDataset(
         pml_cf.EmbeddingDataset(validation_feature, np.ones(len(validation_feature)))
     )
-    trainer = trainers[index]
+    trainer, saver = trainers[index], savers[index]
+    saver.load_adapter(trainer.adapter, "best")
+    bs = min(len(validation_set), batch_size)
     dataloader = torch.utils.data.DataLoader(
-        validation_set, num_workers=num_workers, batch_size=batch_size
+        validation_set, num_workers=num_workers, batch_size=bs
     )
     domain_out = trainer.get_all_outputs(dataloader, "val")
     domain_out = domain_out["val"]["preds"]
     weights = (domain_out[:, :1] / domain_out[:, 1:]) * (float(N_s) / N_t)
+
+    shutil.rmtree(temp_folder)
+
     return weights, D_accuracy

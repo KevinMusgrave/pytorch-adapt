@@ -5,7 +5,7 @@ import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ..frameworks import Ignite
-from ..validators import MultipleValidators
+from ..validators.multiple_validators import MultipleValidators
 from . import common_functions as c_f
 
 
