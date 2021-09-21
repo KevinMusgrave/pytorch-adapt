@@ -37,9 +37,8 @@ class DeepEmbeddedValidator(BaseValidator):
         self.D_accuracy_val = None
         self.D_accuracy_test = None
         self.mean_error = None
-        pml_cf.add_to_recordable_attributes(
-            self, list_of_names=["D_accuracy_val", "D_accuracy_test", "mean_error"]
-        )
+        self._DEV_recordable = ["D_accuracy_val", "D_accuracy_test", "mean_error"]
+        pml_cf.add_to_recordable_attributes(self, list_of_names=self._DEV_recordable)
 
     def compute_score(self, src_train, src_val, target_train):
         init_logging_level = c_f.LOGGER.level
@@ -62,7 +61,7 @@ class DeepEmbeddedValidator(BaseValidator):
 
     def extra_repr(self):
         x = super().extra_repr()
-        x += f"\n{c_f.extra_repr(self, ['D_accuracy_val', 'D_accuracy_test', 'mean_error'])}"
+        x += f"\n{c_f.extra_repr(self, self._DEV_recordable)}"
         return x
 
 
