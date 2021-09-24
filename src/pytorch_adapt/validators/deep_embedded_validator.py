@@ -55,7 +55,7 @@ class DeepEmbeddedValidator(BaseValidator):
             src_val["logits"], src_val["labels"], reduction="none"
         )
         output = get_dev_risk(weights, error_per_sample[:, None])
-        self.mean_error = torch.mean(error_per_sample)
+        self.mean_error = torch.mean(error_per_sample).item()
         c_f.LOGGER.setLevel(init_logging_level)
         return -output
 
@@ -136,6 +136,7 @@ def get_weights(
     patience = 2
 
     for i, decay in enumerate(decays):
+        torch.cuda.empty_cache()
         curr_folder = os.path.join(temp_folder, f"DeepEmbeddedValidation{i}")
         models = Models(
             {
@@ -169,6 +170,7 @@ def get_weights(
         savers.append(saver)
         folders.append(curr_folder)
 
+    torch.cuda.empty_cache()
     D_accuracy_val = max(val_acc)
     index = val_acc.index(D_accuracy_val)
 
@@ -186,6 +188,6 @@ def get_weights(
 
     [shutil.rmtree(f) for f in folders]
 
-    D_accuracy_test = tmf_accuracy(domain_out, labels.to(domain_out.device))
+    D_accuracy_test = tmf_accuracy(domain_out, labels.to(domain_out.device)).item()
 
     return weights, D_accuracy_val, D_accuracy_test
