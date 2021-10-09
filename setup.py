@@ -24,27 +24,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.0",
-    # install_requires=[
-    #     "torch",
-    #     "torchvision",
-    #     "torchmetrics",
-    #     "pytorch-metric-learning",
-    #     "pytorch-ignite",
-    #     "faiss-gpu",
-    #     "record-keeper",
-    #     "scikit-learn",
-    # ],
-    # extras_require={
-    #     "dev": [
-    #         "black",
-    #         "isort",
-    #         "nbqa",
-    #         "mkdocs-material",
-    #         "mkdocstrings",
-    #         "mkdocs-section-index",
-    #         "mkdocs-literate-nav",
-    #     ]
-    # },
     install_requires=[],
     extras_require={},
 )
