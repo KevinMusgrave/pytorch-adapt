@@ -5,14 +5,15 @@ import torch
 import torch.nn.functional as F
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
-from pytorch_adapt.adapters import Finetuner
+from pytorch_adapt.adapters import Classifier
 from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.datasets import (
     CombinedSourceAndTargetDataset,
     SourceDataset,
     TargetDataset,
 )
-from pytorch_adapt.frameworks import Ignite
+from pytorch_adapt.frameworks import Ignite, IgnitePredsAsFeatures
+from pytorch_adapt.layers import DoNothingOptimizer
 from pytorch_adapt.validators import SNDValidator
 
 from .. import TEST_DEVICE
@@ -61,33 +62,41 @@ class TestSNDValidator(unittest.TestCase):
                         )
 
     def test_snd_validator_with_framework(self):
-        dataset_size = 9999
+        for wrapper_type in [Ignite, IgnitePredsAsFeatures]:
+            dataset_size = 9999
 
-        train_datasets = []
-        all_features = []
-        for _ in range(3):
-            features = torch.randn(dataset_size, 128)
-            labels = torch.randint(0, 10, size=(dataset_size,))
-            all_features.append(features)
-            train_datasets.append(pml_cf.EmbeddingDataset(features, labels))
+            train_datasets = []
+            all_features = []
+            for _ in range(3):
+                features = torch.randn(dataset_size, 128)
+                labels = torch.randint(0, 10, size=(dataset_size,))
+                all_features.append(features)
+                train_datasets.append(pml_cf.EmbeddingDataset(features, labels))
 
-        train_dataset = CombinedSourceAndTargetDataset(
-            SourceDataset(train_datasets[0]), TargetDataset(train_datasets[1])
-        )
-        target_train = TargetDataset(train_datasets[2])
+            train_dataset = CombinedSourceAndTargetDataset(
+                SourceDataset(train_datasets[0]), TargetDataset(train_datasets[1])
+            )
+            target_train = TargetDataset(train_datasets[2])
 
-        C = torch.nn.Linear(128, 10)
-        models = Models({"G": torch.nn.Identity(), "C": C})
-        optimizers = Optimizers((torch.optim.Adam, {"lr": 0}))
-        adapter = Ignite(Finetuner(models=models, optimizers=optimizers))
-        score, _ = adapter.run(
-            {"train": train_dataset, "target_train": target_train},
-            validator=SNDValidator(),
-            epoch_length=1,
-        )
+            C = torch.nn.Linear(128, 10)
+            if wrapper_type is IgnitePredsAsFeatures:
+                C = torch.nn.Sequential(C, torch.nn.Softmax(dim=1))
+            models = Models({"G": C, "C": torch.nn.Identity()})
+            optimizers = Optimizers(
+                {"G": torch.optim.Adam(C.parameters(), lr=0), "C": DoNothingOptimizer()}
+            )
+            adapter = wrapper_type(Classifier(models=models, optimizers=optimizers))
+            score, _ = adapter.run(
+                {"train": train_dataset, "target_train": target_train},
+                validator=SNDValidator(),
+                epoch_length=1,
+            )
 
-        with torch.no_grad():
-            logits = C(all_features[2].to(TEST_DEVICE))
+            with torch.no_grad():
+                if wrapper_type is Ignite:
+                    logits = C(all_features[2].to(TEST_DEVICE))
+                else:
+                    logits = C[0](all_features[2].to(TEST_DEVICE))
 
-        correct_score = simple_compute_snd(logits, T=0.05)
-        self.assertTrue(np.isclose(score, correct_score))
+            correct_score = simple_compute_snd(logits, T=0.05)
+            self.assertTrue(np.isclose(score, correct_score))

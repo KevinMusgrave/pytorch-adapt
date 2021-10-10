@@ -1,1 +1,1 @@
-from .ignite import Ignite, IgniteRecordKeeperLogger
+from .ignite import Ignite, IgnitePredsAsFeatures, IgniteRecordKeeperLogger

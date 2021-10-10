@@ -194,6 +194,13 @@ class Ignite:
         )
         return i_g.get_validation_score(collected_data, validator, epoch)
 
+    def create_output_dict(self, features, logits):
+        return {
+            "features": features,
+            "logits": logits,
+            "preds": torch.softmax(logits, dim=1),
+        }
+
     def get_x_collector_step(self, inference, name):
         def collector_step(engine, batch):
             device = idist.device()
@@ -202,12 +209,8 @@ class Ignite:
                 features, logits = inference(
                     batch[f"{name}_imgs"], domain=batch[f"{name}_domain"]
                 )
-            output = {
-                "features": features,
-                "logits": logits,
-                "preds": torch.softmax(logits, dim=1),
-                "domain": batch[f"{name}_domain"],
-            }
+            output = self.create_output_dict(features, logits)
+            output["domain"] = batch[f"{name}_domain"]
             labels_key = f"{name}_labels"
             if labels_key in batch:
                 output["labels"] = batch[labels_key]
