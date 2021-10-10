@@ -79,8 +79,6 @@ class TestSNDValidator(unittest.TestCase):
             target_train = TargetDataset(train_datasets[2])
 
             C = torch.nn.Linear(128, 10)
-            if wrapper_type is IgnitePredsAsFeatures:
-                C = torch.nn.Sequential(C, torch.nn.Softmax(dim=1))
             models = Models({"G": C, "C": torch.nn.Identity()})
             optimizers = Optimizers(
                 {"G": torch.optim.Adam(C.parameters(), lr=0), "C": DoNothingOptimizer()}
@@ -93,10 +91,7 @@ class TestSNDValidator(unittest.TestCase):
             )
 
             with torch.no_grad():
-                if wrapper_type is Ignite:
-                    logits = C(all_features[2].to(TEST_DEVICE))
-                else:
-                    logits = C[0](all_features[2].to(TEST_DEVICE))
+                logits = C(all_features[2].to(TEST_DEVICE))
 
             correct_score = simple_compute_snd(logits, T=0.05)
             self.assertTrue(np.isclose(score, correct_score))
