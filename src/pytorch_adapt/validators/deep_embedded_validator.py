@@ -41,7 +41,9 @@ class DeepEmbeddedValidator(BaseValidator):
         self.layer = layer
         self.num_workers = num_workers
         self.batch_size = batch_size
-        self.error_fn = c_f.default(error_fn, F.cross_entropy)
+        self.error_fn = c_f.default(
+            error_fn, torch.nn.CrossEntropyLoss(reduction="none")
+        )
         self.error_layer = error_layer
         self.D_accuracy_val = None
         self.D_accuracy_test = None
@@ -60,9 +62,7 @@ class DeepEmbeddedValidator(BaseValidator):
             self.batch_size,
             self.temp_folder,
         )
-        error_per_sample = self.error_fn(
-            src_val[self.error_layer], src_val["labels"], reduction="none"
-        )
+        error_per_sample = self.error_fn(src_val[self.error_layer], src_val["labels"])
         output = get_dev_risk(weights, error_per_sample[:, None])
         self.mean_error = torch.mean(error_per_sample).item()
         c_f.LOGGER.setLevel(init_logging_level)
