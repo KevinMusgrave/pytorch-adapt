@@ -19,6 +19,7 @@ from .mmd_loss import MMDLoss
 from .model_with_bridge import ModelWithBridge
 from .multiple_models import MultipleModels
 from .neighborhood_aggregation import NeighborhoodAggregation
+from .nll_loss import NLLLoss
 from .normalizers import MaxNormalizer, MinMaxNormalizer, NoNormalizer, SumNormalizer
 from .plus_residual import PlusResidual
 from .randomized_dot_product import RandomizedDotProduct
