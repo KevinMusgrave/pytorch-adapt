@@ -13,7 +13,6 @@ from pytorch_adapt.datasets import (
     TargetDataset,
 )
 from pytorch_adapt.frameworks import Ignite, IgnitePredsAsFeatures
-from pytorch_adapt.layers import DoNothingOptimizer
 from pytorch_adapt.validators import SNDValidator
 
 from .. import TEST_DEVICE
@@ -80,9 +79,7 @@ class TestSNDValidator(unittest.TestCase):
 
             C = torch.nn.Linear(128, 10)
             models = Models({"G": C, "C": torch.nn.Identity()})
-            optimizers = Optimizers(
-                {"G": torch.optim.Adam(C.parameters(), lr=0), "C": DoNothingOptimizer()}
-            )
+            optimizers = Optimizers((torch.optim.Adam, {"lr": 0}))
             adapter = wrapper_type(Classifier(models=models, optimizers=optimizers))
             score, _ = adapter.run(
                 {"train": train_dataset, "target_train": target_train},

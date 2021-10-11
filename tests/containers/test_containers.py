@@ -5,6 +5,7 @@ import torchvision
 
 from pytorch_adapt.containers import LRSchedulers, Misc, Models, Optimizers
 from pytorch_adapt.hooks import EmptyHook
+from pytorch_adapt.layers import DoNothingOptimizer
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.weighters import MeanWeighter, SumWeighter
 
@@ -35,7 +36,7 @@ class TestContainers(unittest.TestCase):
             oc = Optimizers(optimizer_tuple, M)
             if not M:
                 oc.create_with(models)
-            self.assertTrue("A" not in oc)
+            self.assertTrue(isinstance(oc["A"], DoNothingOptimizer))
             self.assertTrue(isinstance(oc["B"], torch.optim.Adam))
             self.assertTrue(isinstance(oc["C"], torch.optim.Adam))
 
@@ -52,7 +53,8 @@ class TestContainers(unittest.TestCase):
         # test merging
         oc2 = Optimizers(optimizer_tuple, models)
         oc2.merge(oc)
-        self.assertTrue(list(oc2.keys()) == ["B", "C"])
+        self.assertTrue(list(oc2.keys()) == ["A", "B", "C"])
+        self.assertTrue(isinstance(oc2["A"], DoNothingOptimizer))
         self.assertTrue(isinstance(oc2["B"], torch.optim.SGD))
         self.assertTrue(isinstance(oc2["C"], torch.optim.Adam))
 
