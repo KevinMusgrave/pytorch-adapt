@@ -24,3 +24,6 @@ class TestNLLLoss(unittest.TestCase):
 
             correct_loss = F.nll_loss(F.log_softmax(x, dim=1), y)
             self.assertTrue(torch.isclose(loss, correct_loss))
+
+            correct_loss = F.cross_entropy(x, y)
+            self.assertTrue(torch.isclose(loss, correct_loss))
