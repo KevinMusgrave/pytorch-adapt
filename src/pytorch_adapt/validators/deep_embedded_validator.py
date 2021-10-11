@@ -27,13 +27,22 @@ class DeepEmbeddedValidator(BaseValidator):
     """
 
     def __init__(
-        self, temp_folder, layer="features", num_workers=0, batch_size=32, **kwargs
+        self,
+        temp_folder,
+        layer="features",
+        num_workers=0,
+        batch_size=32,
+        error_fn=None,
+        error_layer="logits",
+        **kwargs,
     ):
         super().__init__(**kwargs)
         self.temp_folder = temp_folder
         self.layer = layer
         self.num_workers = num_workers
         self.batch_size = batch_size
+        self.error_fn = c_f.default(error_fn, F.cross_entropy)
+        self.error_layer = error_layer
         self.D_accuracy_val = None
         self.D_accuracy_test = None
         self.mean_error = None
@@ -51,8 +60,8 @@ class DeepEmbeddedValidator(BaseValidator):
             self.batch_size,
             self.temp_folder,
         )
-        error_per_sample = F.cross_entropy(
-            src_val["logits"], src_val["labels"], reduction="none"
+        error_per_sample = self.error_fn(
+            src_val[self.error_layer], src_val["labels"], reduction="none"
         )
         output = get_dev_risk(weights, error_per_sample[:, None])
         self.mean_error = torch.mean(error_per_sample).item()

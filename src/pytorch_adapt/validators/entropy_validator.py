@@ -9,5 +9,10 @@ class EntropyValidator(BaseValidator):
     of all logits.
     """
 
+    def __init__(self, layer="logits", **kwargs):
+        super().__init__(**kwargs)
+        self.layer = layer
+        self.loss_fn = EntropyLoss(after_softmax=self.layer == "preds")
+
     def compute_score(self, target_train):
-        return -EntropyLoss()(target_train["logits"]).item()
+        return -self.loss_fn(target_train[self.layer]).item()

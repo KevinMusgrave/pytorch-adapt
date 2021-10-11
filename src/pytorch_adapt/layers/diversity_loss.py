@@ -1,6 +1,6 @@
 import torch
 
-from .entropy_loss import entropy
+from .entropy_loss import get_entropy
 
 
 class DiversityLoss(torch.nn.Module):
@@ -15,7 +15,16 @@ class DiversityLoss(torch.nn.Module):
     - A tensor with a small loss: ```torch.tensor([[1e4, 0, 0], [0, 1e4, 0], [0, 0, 1e4]])```
     """
 
+    def __init__(self, after_softmax: bool = False):
+        """
+        Arguments:
+            after_softmax: If ```True```, then the rows of the input are assumed to
+                already have softmax applied to them.
+        """
+        super().__init__()
+        self.after_softmax = after_softmax
+
     def forward(self, logits):
         """"""
         logits = torch.mean(logits, dim=0, keepdim=True)
-        return -torch.mean(entropy(logits))
+        return -torch.mean(get_entropy(logits, self.after_softmax))
