@@ -1,5 +1,6 @@
 import torch
 
+from ..utils import common_functions as c_f
 from .entropy_loss import get_entropy
 
 
@@ -28,3 +29,7 @@ class DiversityLoss(torch.nn.Module):
         """"""
         logits = torch.mean(logits, dim=0, keepdim=True)
         return -torch.mean(get_entropy(logits, self.after_softmax))
+
+    def extra_repr(self):
+        """"""
+        return c_f.extra_repr(self, ["after_softmax"])

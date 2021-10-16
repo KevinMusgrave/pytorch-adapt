@@ -35,7 +35,15 @@ from .features import (
 )
 from .gan import GANHook
 from .gvb import GVBEHook, GVBGANHook, GVBHook
-from .losses import AFNHook, BaseLossHook, BNMHook, BSPHook, MCCHook, TargetEntropyHook
+from .losses import (
+    AFNHook,
+    BaseLossHook,
+    BNMHook,
+    BSPHook,
+    MCCHook,
+    TargetDiversityHook,
+    TargetEntropyHook,
+)
 from .mcd import MCDHook, MCDLossHook, MultipleCLossHook
 from .reducers import EntropyReducer, MeanReducer, MultipleReducers
 from .rtn import ResidualHook, RTNAlignerHook, RTNHook, RTNLogitsHook

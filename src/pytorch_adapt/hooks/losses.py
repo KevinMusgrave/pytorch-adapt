@@ -2,6 +2,7 @@ from ..layers import (
     AdaptiveFeatureNorm,
     BatchSpectralLoss,
     BNMLoss,
+    DiversityLoss,
     EntropyLoss,
     MCCLoss,
 )
@@ -77,6 +78,21 @@ class TargetEntropyHook(BaseLossHook):
         super().__init__(
             loss_fn=loss_fn,
             loss_name="entropy_loss",
+            domains=domains,
+            layer="logits",
+            f_hook=f_hook,
+            **kwargs,
+        )
+
+
+class TargetDiversityHook(BaseLossHook):
+    def __init__(self, loss_fn=None, domains=None, **kwargs):
+        loss_fn = c_f.default(loss_fn, DiversityLoss, {})
+        domains = c_f.default(domains, ["target"])
+        f_hook = FeaturesAndLogitsHook(domains=domains)
+        super().__init__(
+            loss_fn=loss_fn,
+            loss_name="diversity_loss",
             domains=domains,
             layer="logits",
             f_hook=f_hook,
