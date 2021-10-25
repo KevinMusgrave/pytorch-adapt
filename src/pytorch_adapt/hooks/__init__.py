@@ -35,6 +35,7 @@ from .features import (
 )
 from .gan import GANHook
 from .gvb import GVBEHook, GVBGANHook, GVBHook
+from .itl import ISTLossHook
 from .losses import (
     AFNHook,
     BaseLossHook,

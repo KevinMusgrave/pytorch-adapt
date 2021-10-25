@@ -12,6 +12,7 @@ from .do_nothing_optimizer import DoNothingOptimizer
 from .entropy_loss import EntropyLoss
 from .entropy_weights import EntropyWeights
 from .gradient_reversal import GradientReversal
+from .ist_loss import ISTLoss
 from .mcc_loss import MCCLoss
 from .mcd_loss import GeneralMCDLoss, MCDLoss
 from .mean_dist_loss import MeanDistLoss
