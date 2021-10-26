@@ -13,11 +13,13 @@ class ISTLoss(torch.nn.Module):
     [Information-Theoretical Learning of Discriminative Clusters for Unsupervised Domain Adaptation](https://icml.cc/2012/papers/566.pdf)
     """
 
-    def __init__(self, distance=None):
+    def __init__(self, distance=None, with_div=True):
         super().__init__()
         self.distance = c_f.default(distance, CosineSimilarity, {})
+        self.with_div = with_div
         self.ent_loss_fn = EntropyLoss(after_softmax=True)
-        self.div_loss_fn = DiversityLoss(after_softmax=True)
+        if self.with_div:
+            self.div_loss_fn = DiversityLoss(after_softmax=True)
 
     def forward(self, x, y):
         """
@@ -45,4 +47,8 @@ class ISTLoss(torch.nn.Module):
         src_probs = 1 - target_probs
         probs = torch.cat([src_probs, target_probs], dim=1)
 
-        return -self.div_loss_fn(probs) - self.ent_loss_fn(probs)
+        ent_loss = self.ent_loss_fn(probs)
+
+        if self.with_div:
+            return -self.div_loss_fn(probs) - ent_loss
+        return -ent_loss
