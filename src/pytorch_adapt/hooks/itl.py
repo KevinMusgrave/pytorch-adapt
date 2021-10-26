@@ -7,9 +7,9 @@ from .features import FeaturesHook
 
 
 class ISTLossHook(BaseWrapperHook):
-    def __init__(self, distance=None, **kwargs):
+    def __init__(self, distance=None, with_div=True, **kwargs):
         super().__init__(**kwargs)
-        self.loss_fn = ISTLoss(distance=distance)
+        self.loss_fn = ISTLoss(distance=distance, with_div=with_div)
         self.hook = FeaturesHook()
 
     def call(self, losses, inputs):

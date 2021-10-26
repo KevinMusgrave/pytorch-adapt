@@ -52,3 +52,7 @@ class ISTLoss(torch.nn.Module):
         if self.with_div:
             return -self.div_loss_fn(probs) - ent_loss
         return -ent_loss
+
+    def extra_repr(self):
+        """"""
+        return c_f.extra_repr(self, ["with_div"])
