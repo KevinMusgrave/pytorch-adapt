@@ -46,9 +46,9 @@ class TestISTLoss(unittest.TestCase):
                             )
                         dists = dists.squeeze(0)
                         dists = F.softmax(dists, dim=0)
-                        probs = dists * (y[mask])
-                        target_prob = torch.sum(probs)
-                        src_prob = 1 - target_prob
+                        curr_y = y[mask]
+                        target_prob = torch.sum(dists[curr_y == 1])
+                        src_prob = torch.sum(dists[curr_y == 0])
                         ent = -(
                             src_prob * torch.log(src_prob)
                             + target_prob * torch.log(target_prob)
@@ -78,4 +78,4 @@ class TestISTLoss(unittest.TestCase):
                     x.grad = None
                     correct_loss.backward()
                     grad2 = x.grad.clone()
-                    self.assertTrue(torch.allclose(grad1, grad2, rtol=1e-2))
+                    self.assertTrue(torch.allclose(grad1, grad2, rtol=1e-6))

@@ -43,9 +43,8 @@ class ISTLoss(torch.nn.Module):
 
         y = y.repeat(n, 1)[~mask].view(n, n - 1)
 
-        domain_probs = mat * y
-        target_probs = torch.sum(domain_probs, dim=1, keepdims=True)
-        src_probs = 1 - target_probs
+        target_probs = torch.sum(mat * y, dim=1, keepdims=True)
+        src_probs = torch.sum(mat * (1 - y), dim=1, keepdims=True)
         probs = torch.cat([src_probs, target_probs], dim=1)
 
         ent_loss = self.ent_loss_fn(probs)
