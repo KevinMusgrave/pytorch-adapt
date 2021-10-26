@@ -28,7 +28,6 @@ class TestISTLoss(unittest.TestCase):
                     x.retain_grad()
                     y = torch.randint(0, 2, size=(batch_size,), device=TEST_DEVICE)
                     loss = loss_fn(x, y)
-                    loss.backward()
 
                     ents, all_logits = [], []
                     for i in range(len(x)):
@@ -56,7 +55,9 @@ class TestISTLoss(unittest.TestCase):
                         )
                         ents.append(ent)
 
-                        logits = torch.tensor([[src_prob, target_prob]])
+                        logits = torch.stack(
+                            [src_prob.unsqueeze(0), target_prob.unsqueeze(0)], dim=1
+                        )
                         all_logits.append(logits)
 
                     ent_loss = -(sum(ents) / len(ents))
@@ -71,3 +72,10 @@ class TestISTLoss(unittest.TestCase):
                         correct_loss = ent_loss
 
                     self.assertTrue(torch.isclose(loss, correct_loss, rtol=1e-3))
+
+                    loss.backward()
+                    grad1 = x.grad.clone()
+                    x.grad = None
+                    correct_loss.backward()
+                    grad2 = x.grad.clone()
+                    self.assertTrue(torch.allclose(grad1, grad2, rtol=1e-2))

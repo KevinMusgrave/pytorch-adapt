@@ -27,12 +27,13 @@ class ISTLoss(torch.nn.Module):
             x: source and target features
             y: domain labels, i.e. 0 for source domain, 1 for target domain
         """
+        n = x.shape[0]
         if torch.min(y) < 0 or torch.max(y) > 1:
             raise ValueError("y must be in the range 0 and 1")
+        if y.shape != torch.Size([n]):
+            raise TypeError("y must have shape (N,)")
 
         mat = self.distance(x)
-        n = mat.shape[0]
-
         # remove self comparisons
         mask = torch.eye(n, dtype=torch.bool)
         mat = mat[~mask].view(n, n - 1)
