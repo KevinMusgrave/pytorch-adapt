@@ -16,7 +16,7 @@ from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.datasets import DataloaderCreator, get_mnist_mnistm
 from pytorch_adapt.frameworks import Ignite
 from pytorch_adapt.models import Classifier, Discriminator, MNISTFeatures
-from pytorch_adapt.validators import EntropyDiversityValidator
+from pytorch_adapt.validators import IMValidator
 
 G = MNISTFeatures()
 C = Classifier(num_classes=10, in_size=1200, h=256)
@@ -26,7 +26,7 @@ optimizers = Optimizers((torch.optim.Adam, {"lr": 0.123}))
 
 adapter = DANN(models=models, optimizers=optimizers)
 wrapped_adapter = Ignite(adapter)
-validator = EntropyDiversityValidator()
+validator = IMValidator()
 
 datasets = get_mnist_mnistm(["mnist"], ["mnistm"], folder=".", download=True)
 dc = DataloaderCreator(batch_size=32, num_workers=2)
