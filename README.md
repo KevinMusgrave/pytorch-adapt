@@ -97,7 +97,7 @@ from pytorch_adapt.frameworks import Ignite
 wrapped_adapter = Ignite(adapter)
 wrapped_adapter.run(datasets)
 ```
-Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) is coming soon.
+Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are coming soon.
 
 ### Check accuracy of your model
 You can do this in vanilla PyTorch:
@@ -126,7 +126,7 @@ from pytorch_adapt.datasets import get_mnist_mnistm
 
 # mnist is the source domain
 # mnistm is the target domain
-datasets = get_mnist_mnistm(["mnist"], ["mnistm"], ".")
+datasets = get_mnist_mnistm(["mnist"], ["mnistm"], ".", download=True)
 dataloader = torch.utils.data.DataLoader(
     datasets["train"], batch_size=32, num_workers=2
 )

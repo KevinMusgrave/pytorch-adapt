@@ -10,3 +10,4 @@ venv/
 *.ipynb_checkpoints
 examples/notebooks/MNIST
 examples/notebooks/mnist_m
+examples/notebooks/mnist_m.tar.gz
