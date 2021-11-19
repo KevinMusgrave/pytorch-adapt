@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
-extras_require_ignite = ["ignite"]
+extras_require_ignite = ["pytorch-ignite"]
 extras_require_record_keeper = ["record-keeper >= 0.9.31.dev6"]
 
 
