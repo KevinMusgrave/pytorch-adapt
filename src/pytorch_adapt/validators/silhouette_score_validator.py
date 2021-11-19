@@ -1,6 +1,5 @@
 import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
-from pytorch_metric_learning.utils import stat_utils
 
 from ..layers import SilhouetteScore
 from .base_validator import BaseValidator
