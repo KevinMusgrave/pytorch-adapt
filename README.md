@@ -10,6 +10,7 @@
 </p>
 
 ## News
+**November 19**: Git repo is now public
 
 ## Documentation
 - [**Documentation**](https://kevinmusgrave.github.io/pytorch-adapt/)
