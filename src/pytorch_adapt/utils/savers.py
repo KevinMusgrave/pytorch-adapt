@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
-from ..frameworks import Ignite
 from ..validators.multiple_validators import MultipleValidators
 from . import common_functions as c_f
 
@@ -237,5 +236,7 @@ class Saver:
         if stat_getter:
             self.load_stat_getter(stat_getter)
         if framework:
+            from ..frameworks.ignite import Ignite
+
             if isinstance(framework, Ignite):
                 self.load_ignite(framework.trainer)

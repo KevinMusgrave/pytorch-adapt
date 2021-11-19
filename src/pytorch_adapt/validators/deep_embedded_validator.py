@@ -12,7 +12,6 @@ from torchmetrics.functional import accuracy as tmf_accuracy
 from ..adapters import Finetuner
 from ..containers import Models, Optimizers
 from ..datasets import DataloaderCreator, SourceDataset
-from ..frameworks import Ignite
 from ..models import Discriminator
 from ..utils import common_functions as c_f
 from ..utils.savers import Saver
@@ -34,6 +33,7 @@ class DeepEmbeddedValidator(BaseValidator):
         batch_size=32,
         error_fn=None,
         error_layer="logits",
+        framework_cls=None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -45,6 +45,11 @@ class DeepEmbeddedValidator(BaseValidator):
             error_fn, torch.nn.CrossEntropyLoss(reduction="none")
         )
         self.error_layer = error_layer
+        self.framework_cls = framework_cls
+        if self.framework_cls is None:
+            from ..frameworks.ignite import Ignite
+
+            self.framework_cls = Ignite
         self.D_accuracy_val = None
         self.D_accuracy_test = None
         self.mean_error = None
@@ -61,6 +66,7 @@ class DeepEmbeddedValidator(BaseValidator):
             self.num_workers,
             self.batch_size,
             self.temp_folder,
+            self.framework_cls,
         )
         error_per_sample = self.error_fn(src_val[self.error_layer], src_val["labels"])
         output = get_dev_risk(weights, error_per_sample[:, None])
@@ -108,6 +114,7 @@ def get_weights(
     num_workers,
     batch_size,
     temp_folder,
+    framework_cls,
 ):
     """
     :param source_feature: shape [N_tr, d], features from training set
@@ -157,7 +164,7 @@ def get_weights(
             (torch.optim.Adam, {"lr": 0.001, "weight_decay": decay})
         )
         trainer = Finetuner(models=models, optimizers=optimizers)
-        trainer = Ignite(trainer, with_pbars=False)
+        trainer = framework_cls(trainer, with_pbars=False)
         datasets = {"train": train_set, "src_val": val_set}
         bs = int(np.min([len(train_set), len(val_set), batch_size]))
         saver = Saver(folder=curr_folder)

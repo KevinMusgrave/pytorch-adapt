@@ -4,7 +4,7 @@ import os
 import shutil
 from pathlib import Path
 
-from pytorch_adapt.frameworks import Ignite, IgniteRecordKeeperLogger
+from pytorch_adapt.frameworks.ignite import Ignite, IgniteRecordKeeperLogger
 from pytorch_adapt.utils import savers
 from pytorch_adapt.validators import AccuracyValidator, EntropyValidator
 

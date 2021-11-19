@@ -12,7 +12,7 @@ from pytorch_adapt.datasets import (
     SourceDataset,
     TargetDataset,
 )
-from pytorch_adapt.frameworks import Ignite, IgnitePredsAsFeatures
+from pytorch_adapt.frameworks.ignite import Ignite, IgnitePredsAsFeatures
 from pytorch_adapt.validators import SNDValidator
 
 from .. import TEST_DEVICE

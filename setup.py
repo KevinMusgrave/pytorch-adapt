@@ -8,6 +8,11 @@ import pytorch_adapt
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
+extras_require_ignite = ["ignite"]
+extras_require_record_keeper = ["record-keeper >= 0.9.31.dev6"]
+
+
 setuptools.setup(
     name="pytorch-adapt",
     version=pytorch_adapt.__version__,
@@ -24,6 +29,15 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.0",
-    install_requires=[],
-    extras_require={},
+    install_requires=[
+        "numpy",
+        "torch",
+        "torchvision",
+        "torchmetrics",
+        "pytorch-metric-learning >= 1.0.0.dev5",
+    ],
+    extras_require={
+        "ignite": extras_require_ignite,
+        "record-keeper": extras_require_record_keeper,
+    },
 )
