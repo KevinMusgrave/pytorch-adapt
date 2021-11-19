@@ -1,10 +1,8 @@
 import logging
-import time
 
 import ignite.distributed as idist
-import torch
 from ignite.contrib.handlers import ProgressBar
-from ignite.engine import Engine, Events
+from ignite.engine import Events
 from ignite.utils import setup_logger
 
 from ...utils import common_functions as c_f

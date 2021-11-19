@@ -8,7 +8,6 @@ import re
 import shutil
 import tarfile
 import zipfile
-from collections import OrderedDict
 
 import numpy as np
 import torch
@@ -428,7 +427,7 @@ def check_domain(cls, domain, keep_len=False):
     if domain is not None:
         if len(torch.unique(domain)) > 1:
             raise ValueError(
-                f"{c_f.cls_name(cls)} inference only supports one domain per batch"
+                f"{cls_name(cls)} inference only supports one domain per batch"
             )
         if not keep_len and not len_one_tensor(domain):
             domain = domain[0]

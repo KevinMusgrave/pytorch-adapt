@@ -1,7 +1,5 @@
-import shutil
 import unittest
 
-import numpy as np
 import torch
 
 from pytorch_adapt.validators import (

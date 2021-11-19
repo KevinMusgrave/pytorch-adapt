@@ -1,11 +1,10 @@
 import unittest
 
 import torch
-import torch.nn.functional as F
 
 from pytorch_adapt.layers import ConfidenceWeights, NeighborhoodAggregation
 
-from .. import TEST_DEVICE, TEST_DTYPES
+from .. import TEST_DEVICE
 
 
 # from https://github.com/tim-learn/ATDOC/blob/main/demo_uda.py

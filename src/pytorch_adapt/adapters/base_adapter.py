@@ -1,7 +1,4 @@
 from abc import ABC, abstractmethod
-from enum import Enum
-
-import torch
 
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..utils import common_functions as c_f

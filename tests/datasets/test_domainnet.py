@@ -1,8 +1,5 @@
-import os
 import unittest
 
-import torch
-import tqdm
 from torchvision import transforms as torch_transforms
 
 from pytorch_adapt.datasets import DomainNet, DomainNet126, DomainNet126Full

@@ -9,7 +9,7 @@ from pytorch_adapt.hooks import AlignerPlusCHook, JointAlignerHook, validate_hoo
 from pytorch_adapt.layers import CORALLoss, MMDLoss
 from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_models_and_data, get_opts
+from .utils import assertRequiresGrad, get_models_and_data, get_opts
 
 
 class TestAligners(unittest.TestCase):

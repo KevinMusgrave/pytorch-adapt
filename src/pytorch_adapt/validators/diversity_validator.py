@@ -1,5 +1,3 @@
-import torch
-
 from ..layers import DiversityLoss
 from .base_validator import BaseValidator
 

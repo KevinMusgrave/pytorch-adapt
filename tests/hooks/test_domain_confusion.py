@@ -1,13 +1,10 @@
-import copy
 import unittest
 
-import numpy as np
 import torch
 
 from pytorch_adapt.hooks import DomainConfusionHook, validate_hook
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_models_and_data
+from .utils import assertRequiresGrad, get_models_and_data
 
 
 class TestDomainConfusion(unittest.TestCase):

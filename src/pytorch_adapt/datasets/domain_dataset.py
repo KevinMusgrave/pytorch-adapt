@@ -1,4 +1,3 @@
-import torch
 from torch.utils.data import Dataset
 
 from ..utils import common_functions as c_f

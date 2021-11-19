@@ -3,7 +3,6 @@ import unittest
 import torch
 
 from pytorch_adapt.hooks import CLossHook, SoftmaxHook
-from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import Net, assertRequiresGrad
 

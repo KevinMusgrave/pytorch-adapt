@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Dict
 
 from ..utils import common_functions as c_f
-from .base import BaseHook, check_keys_are_present, replace_mapped_keys
+from .base import BaseHook, check_keys_are_present
 from .features import BaseFeaturesHook
 from .utils import ChainHook, ParallelHook, RepeatHook
 

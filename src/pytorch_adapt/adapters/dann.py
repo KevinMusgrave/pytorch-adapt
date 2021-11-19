@@ -1,4 +1,3 @@
-from ..containers import KeyEnforcer
 from ..hooks import CDANNEHook, DANNEHook, DANNHook, GVBEHook, GVBHook
 from ..layers import ModelWithBridge
 from .base_adapter import BaseGCDAdapter

@@ -4,7 +4,7 @@ from ..layers import (
     SymNetsEntropyLossListInput,
 )
 from ..utils import common_functions as c_f
-from .base import BaseHook, BaseWrapperHook
+from .base import BaseWrapperHook
 from .classification import CLossHook
 from .features import FeaturesAndLogitsHook, FeaturesHook
 from .losses import TargetEntropyHook

@@ -1,4 +1,3 @@
-import shutil
 import unittest
 
 from pytorch_adapt.meta_validators import ForwardOnlyValidator

@@ -1,7 +1,5 @@
 import copy
 
-import torch
-
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..hooks import ADDAHook
 from ..utils.common_functions import check_domain

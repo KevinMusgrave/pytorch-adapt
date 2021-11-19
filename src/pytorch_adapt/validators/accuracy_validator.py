@@ -1,4 +1,3 @@
-import torch
 from torchmetrics.functional import accuracy
 
 from ..utils import common_functions as c_f

@@ -1,6 +1,4 @@
-import torch
-
-from ..containers import KeyEnforcer, MultipleContainers, Optimizers
+from ..containers import MultipleContainers, Optimizers
 from ..hooks import ClassifierHook, FinetunerHook
 from .base_adapter import BaseGCAdapter
 from .utils import default_optimizer_tuple

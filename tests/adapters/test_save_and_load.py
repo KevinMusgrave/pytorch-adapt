@@ -1,16 +1,13 @@
-import os
 import shutil
 import unittest
 
 import numpy as np
-import torch
 
 from pytorch_adapt.containers.base_container import containers_are_equal
-from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.utils import exceptions, savers
 from pytorch_adapt.validators import AccuracyValidator, MultipleValidators
 
-from .. import TEST_DEVICE, TEST_FOLDER
+from .. import TEST_FOLDER
 from .get_dann import get_dann
 
 

@@ -6,12 +6,7 @@ from .base import BaseHook, BaseWrapperHook
 from .cdan import CDANDomainHook, get_cdan_features_hooks, get_entropy_reducer
 from .classification import CLossHook, SoftmaxHook
 from .domain import DomainLossHook, FeaturesForDomainLossHook
-from .features import (
-    CombinedFeaturesHook,
-    FeaturesAndLogitsHook,
-    FeaturesHook,
-    LogitsHook,
-)
+from .features import LogitsHook
 from .optimizer import OptimizerHook, SummaryHook
 from .utils import (
     ApplyFnHook,

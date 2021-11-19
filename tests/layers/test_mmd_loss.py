@@ -1,6 +1,5 @@
 import unittest
 
-import numpy as np
 import torch
 
 from pytorch_adapt.layers import MMDLoss

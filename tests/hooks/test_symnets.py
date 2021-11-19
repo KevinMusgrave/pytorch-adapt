@@ -6,10 +6,8 @@ import torch
 
 from pytorch_adapt.hooks import (
     SymNetsCategoryLossHook,
-    SymNetsCHook,
     SymNetsDomainLossHook,
     SymNetsEntropyHook,
-    SymNetsGHook,
     SymNetsHook,
     validate_hook,
 )

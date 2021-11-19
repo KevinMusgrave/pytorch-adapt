@@ -1,12 +1,10 @@
-import copy
 import unittest
 
 import torch
 
 from pytorch_adapt.hooks import AssertHook, ChainHook, DomainLossHook, FeaturesHook
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad
+from .utils import Net
 
 
 class TestUtils(unittest.TestCase):

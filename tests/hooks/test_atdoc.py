@@ -1,4 +1,3 @@
-import copy
 import unittest
 
 import numpy as np
@@ -7,9 +6,6 @@ import torch.nn.functional as F
 
 from pytorch_adapt.hooks import ATDOCHook
 from pytorch_adapt.layers import ConfidenceWeights, NeighborhoodAggregation
-from pytorch_adapt.utils import common_functions as c_f
-
-from .utils import Net, assertRequiresGrad
 
 
 def get_data(dataset_size, feature_dim, num_classes, batch_size):

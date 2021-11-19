@@ -1,14 +1,13 @@
 from ..layers import AbsLoss
 from ..utils import common_functions as c_f
-from .base import BaseHook, BaseWrapperHook
+from .base import BaseWrapperHook
 from .classification import SoftmaxLocallyHook
 from .dann import (
     DANNHook,
     GradientReversalThenEntropyReducer,
     SoftmaxGradientReversalHook,
-    SoftmaxGradientReversalLocallyHook,
 )
-from .domain import DomainLossHook, FeaturesForDomainLossHook
+from .domain import FeaturesForDomainLossHook
 from .features import (
     BaseFeaturesHook,
     FeaturesAndLogitsHook,
@@ -16,7 +15,7 @@ from .features import (
     FeaturesHook,
 )
 from .gan import GANHook
-from .utils import ChainHook, MultiplierHook, OnlyNewOutputsHook
+from .utils import ChainHook, MultiplierHook
 
 
 class BridgeAndLogitsHook(BaseFeaturesHook):

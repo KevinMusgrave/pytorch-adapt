@@ -1,6 +1,5 @@
 import os
 
-import torch
 from torchvision import datasets as torch_datasets
 
 from .base_dataset import BaseDataset

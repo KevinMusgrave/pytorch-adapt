@@ -3,7 +3,7 @@ from .base import BaseWrapperHook
 from .classification import CLossHook
 from .domain import DomainLossHook, FeaturesForDomainLossHook
 from .optimizer import OptimizerHook, SummaryHook
-from .utils import AssertHook, ChainHook, OnlyNewOutputsHook
+from .utils import ChainHook
 
 
 class GANHook(BaseWrapperHook):

@@ -1,5 +1,3 @@
-import math
-
 import torch
 import torch.nn.functional as F
 from pytorch_metric_learning.distances import CosineSimilarity

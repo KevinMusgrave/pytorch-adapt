@@ -1,4 +1,3 @@
-from ..containers import KeyEnforcer
 from ..hooks import MCDHook
 from .base_adapter import BaseGCAdapter
 

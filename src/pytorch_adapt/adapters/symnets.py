@@ -1,4 +1,3 @@
-from ..containers import KeyEnforcer
 from ..hooks import SymNetsHook
 from ..utils.common_functions import check_domain
 from .base_adapter import BaseGCAdapter

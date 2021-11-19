@@ -4,7 +4,7 @@ import torch
 
 from ..utils import common_functions as c_f
 from ..weighters import BaseWeighter, MeanWeighter
-from .base import BaseHook, BaseWrapperHook
+from .base import BaseHook
 from .reducers import BaseReducer, MeanReducer
 
 

@@ -1,11 +1,9 @@
-import copy
 import unittest
 
 import torch
 
 from pytorch_adapt.hooks import VATHook, VATPlusEntropyHook
-from pytorch_adapt.layers import EntropyLoss, VATLoss
-from pytorch_adapt.utils import common_functions as c_f
+from pytorch_adapt.layers import EntropyLoss
 
 from .utils import Net, assertRequiresGrad
 

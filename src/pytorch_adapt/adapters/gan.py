@@ -1,6 +1,5 @@
 import torch
 
-from ..containers import KeyEnforcer
 from ..hooks import (
     CDANEHook,
     CDANHook,

@@ -20,7 +20,6 @@ from pytorch_adapt.layers import EntropyLoss, UniformDistributionLoss, VATLoss
 from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (
-    Net,
     assertRequiresGrad,
     get_entropy_weights,
     get_models_and_data,

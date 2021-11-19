@@ -4,7 +4,6 @@ import shutil
 
 import numpy as np
 import torch
-import torch.nn.functional as F
 from pytorch_metric_learning.utils import common_functions as pml_cf
 from sklearn.model_selection import train_test_split
 from torchmetrics.functional import accuracy as tmf_accuracy

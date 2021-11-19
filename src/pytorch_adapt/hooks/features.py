@@ -165,9 +165,6 @@ class BaseFeaturesHook(BaseHook):
                 return True
         return False
 
-    def find_detachable(self, keys):
-        keys = [k.replace("_", "")]
-
     def add_detached_string(self, keys):
         # delete existing detached string, then append to the very end
         # for example, if computing detached logits for: src_imgs_features_detached

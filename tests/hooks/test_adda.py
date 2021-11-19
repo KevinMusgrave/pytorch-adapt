@@ -6,7 +6,6 @@ import torch
 import torch.nn.functional as F
 
 from pytorch_adapt.hooks import ADDAHook, BSPHook, validate_hook
-from pytorch_adapt.layers import MMDLoss
 from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (

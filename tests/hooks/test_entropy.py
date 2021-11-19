@@ -4,7 +4,6 @@ import torch
 
 from pytorch_adapt.hooks import TargetEntropyHook
 from pytorch_adapt.layers import EntropyLoss
-from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import Net, assertRequiresGrad
 

@@ -1,7 +1,6 @@
 import unittest
 
 import torch
-import torchvision
 
 from pytorch_adapt.containers import DeleteKey, Models, Optimizers
 

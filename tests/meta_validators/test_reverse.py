@@ -4,8 +4,6 @@ import unittest
 import torch
 
 from pytorch_adapt.datasets import DataloaderCreator
-from pytorch_adapt.frameworks.ignite import Ignite
-from pytorch_adapt.layers import DoNothingOptimizer
 from pytorch_adapt.meta_validators import ReverseValidator
 from pytorch_adapt.utils.savers import Saver
 from pytorch_adapt.validators import AccuracyValidator

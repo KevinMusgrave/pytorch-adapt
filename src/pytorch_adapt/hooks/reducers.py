@@ -7,7 +7,7 @@ import torch
 
 from ..layers import EntropyWeights
 from ..utils import common_functions as c_f
-from .base import BaseHook, BaseWrapperHook
+from .base import BaseHook
 from .features import FeaturesAndLogitsHook
 
 

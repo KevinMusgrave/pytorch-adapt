@@ -1,6 +1,5 @@
 from typing import List, Union
 
-import numpy as np
 import torch
 from pytorch_metric_learning.distances import LpDistance
 from pytorch_metric_learning.utils import common_functions as pml_cf

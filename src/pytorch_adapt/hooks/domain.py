@@ -2,13 +2,7 @@ import torch
 
 from ..utils import common_functions as c_f
 from .base import BaseWrapperHook
-from .features import (
-    DLogitsHook,
-    FeaturesAndLogitsHook,
-    FeaturesChainHook,
-    FeaturesHook,
-    LogitsHook,
-)
+from .features import DLogitsHook, FeaturesChainHook, FeaturesHook, LogitsHook
 from .utils import ChainHook
 
 

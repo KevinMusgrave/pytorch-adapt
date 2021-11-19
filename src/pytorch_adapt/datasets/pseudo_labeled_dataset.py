@@ -1,6 +1,5 @@
 from typing import List
 
-import torch
 from torch.utils.data import Dataset
 
 from .domain_dataset import DomainDataset

@@ -1,9 +1,8 @@
 import unittest
 
-import numpy as np
 import torch
 
-from pytorch_adapt.validators import ClusterValidator, KNNValidator
+from pytorch_adapt.validators.knn_validator import ClusterValidator, KNNValidator
 
 from .. import TEST_DEVICE
 

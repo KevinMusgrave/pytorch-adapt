@@ -12,15 +12,13 @@ from pytorch_adapt.hooks import (
     CDANDomainHookD,
     CDANDomainHookG,
     CDANEHook,
-    CDANHook,
     MCCHook,
     validate_hook,
 )
-from pytorch_adapt.layers import MCCLoss, RandomizedDotProduct
+from pytorch_adapt.layers import RandomizedDotProduct
 from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (
-    Net,
     assertRequiresGrad,
     get_entropy_weights,
     get_models_and_data,

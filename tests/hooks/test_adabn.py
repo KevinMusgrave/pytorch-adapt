@@ -5,14 +5,9 @@ import torch
 
 from pytorch_adapt.hooks import AdaBNHook, validate_hook
 from pytorch_adapt.layers import AdaptiveBatchNorm2d
-from pytorch_adapt.layers.adaptive_batch_norm import (
-    finalize_bn,
-    set_bn_layer_to_train,
-    set_curr_domain,
-)
-from pytorch_adapt.utils import common_functions as c_f
+from pytorch_adapt.layers.adaptive_batch_norm import set_curr_domain
 
-from .utils import assertRequiresGrad, get_models_and_data
+from .utils import assertRequiresGrad
 
 
 class Net(torch.nn.Module):

@@ -3,7 +3,6 @@ from typing import Callable
 import torch
 
 from ..utils import common_functions as c_f
-from .entropy_loss import entropy_after_softmax
 from .entropy_weights import EntropyWeights
 from .normalizers import SumNormalizer
 
