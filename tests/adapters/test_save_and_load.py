@@ -51,7 +51,6 @@ class TestSaveAndLoad(unittest.TestCase):
             stat_getter2 = get_stat_getter()
             validator2 = get_validator()
             dann2, _ = get_dann()
-            dann2.dist_init()
 
             self.assert_not_equal(
                 dann1, validator1, stat_getter1, dann2, validator2, stat_getter2
@@ -70,7 +69,6 @@ class TestSaveAndLoad(unittest.TestCase):
             )
 
         dann3, _ = get_dann()
-        dann3.dist_init()
         stat_getter3 = get_stat_getter()
         validator3 = get_validator()
         self.assert_not_equal(

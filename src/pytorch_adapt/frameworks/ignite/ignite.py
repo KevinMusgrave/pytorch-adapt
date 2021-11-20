@@ -31,6 +31,7 @@ class Ignite:
         self.with_pbars = with_pbars
         self.engine_init()
         self.dist_init_done = False
+        self.dist_init()
 
     def training_step(self, engine, batch):
         device = idist.device()
@@ -129,8 +130,6 @@ class Ignite:
     ):
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
         dataloaders = dataloader_creator(**datasets)
-
-        self.dist_init()
 
         if validator:
             max_epochs = trainer_kwargs.get("max_epochs", 1)
