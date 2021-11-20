@@ -182,11 +182,17 @@ def register(engine, event, *args):
         engine.add_event_handler(event, h)
 
 
-def do_for_all_engines(cls, function):
+def do_for_all_engines(cls, function, keys):
     output = {}
-    for name in ["trainer", "labeled_collector", "unlabeled_collector"]:
+    for name in keys:
         output[name] = function(getattr(cls, name), name)
     return output
+
+
+def set_loggers_and_pbars(cls, keys):
+    do_for_all_engines(cls, set_engine_logger, keys)
+    if cls.with_pbars:
+        return do_for_all_engines(cls, attach_pbar, keys)
 
 
 def resume_checks(validator, stat_getter, framework):

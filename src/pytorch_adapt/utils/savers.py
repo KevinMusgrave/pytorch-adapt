@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
-from ..validators.multiple_validators import MultipleValidators
 from . import common_functions as c_f
 
 
@@ -116,13 +115,13 @@ class AdapterSaver(BaseSaver):
 
 class ValidatorSaver(BaseSaver):
     def save(self, validator, prefix=""):
-        if isinstance(validator, MultipleValidators):
+        if is_multiple_validator(validator):
             self.save_multiple(validator, prefix)
         else:
             self.save_single(validator, prefix)
 
     def load(self, validator, prefix=""):
-        if isinstance(validator, MultipleValidators):
+        if is_multiple_validator(validator):
             self.load_multiple(validator, prefix)
         else:
             self.load_single(validator, prefix)
@@ -240,3 +239,10 @@ class Saver:
 
             if isinstance(framework, Ignite):
                 self.load_ignite(framework.trainer)
+
+
+def is_multiple_validator(validator):
+    # must do this shit to avoid circular import -_-
+    from ..validators.multiple_validators import MultipleValidators
+
+    return isinstance(validator, MultipleValidators)

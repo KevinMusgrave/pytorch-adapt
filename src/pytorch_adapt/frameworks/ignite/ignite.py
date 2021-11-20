@@ -29,7 +29,8 @@ class Ignite:
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
         self.with_pbars = with_pbars
-        self.engine_init()
+        self.trainer_init()
+        self.collector_init()
         self.dist_init_done = False
         self.dist_init()
 
@@ -41,21 +42,9 @@ class Ignite:
     def before_training_starts(self, engine):
         self.adapter.before_training_starts(self)
 
-    def engine_init(self):
+    def trainer_init(self):
         self.trainer = Engine(self.training_step)
         self.trainer.state.adapter = self.adapter
-        self.labeled_collector = Engine(
-            self.get_labeled_collector_step(self.adapter.inference)
-        )
-        self.unlabeled_collector = Engine(
-            self.get_unlabeled_collector_step(self.adapter.inference)
-        )
-        i_g.do_for_all_engines(self, i_g.set_engine_logger)
-        self.register_event_handlers()
-
-    def register_event_handlers(self):
-        if self.with_pbars:
-            pbars = i_g.do_for_all_engines(self, i_g.attach_pbar)
         i_g.register(self.trainer, Events.STARTED, self.before_training_starts)
         i_g.register(
             self.trainer, Events.EPOCH_STARTED, self.set_to_train(self.adapter.models)
@@ -64,6 +53,7 @@ class Ignite:
             i_g.step_lr_schedulers(self.adapter.lr_schedulers, "per_step"),
             TerminateOnNan(),
         ]
+        pbars = i_g.set_loggers_and_pbars(self, ["trainer"])
         if self.with_pbars:
             iteration_complete.append(i_g.pbar_print_losses(pbars["trainer"]))
         i_g.register(self.trainer, Events.ITERATION_COMPLETED, *iteration_complete)
@@ -79,6 +69,15 @@ class Ignite:
             self.logger.write,
             i_g.zero_grad(self.adapter),
         )
+
+    def collector_init(self):
+        self.labeled_collector = Engine(
+            self.get_labeled_collector_step(self.adapter.inference)
+        )
+        self.unlabeled_collector = Engine(
+            self.get_unlabeled_collector_step(self.adapter.inference)
+        )
+        i_g.set_loggers_and_pbars(self, ["labeled_collector", "unlabeled_collector"])
         i_g.register(
             self.labeled_collector,
             Events.EPOCH_STARTED,
@@ -130,6 +129,8 @@ class Ignite:
     ):
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
         dataloaders = dataloader_creator(**datasets)
+
+        self.trainer_init()
 
         if validator:
             max_epochs = trainer_kwargs.get("max_epochs", 1)

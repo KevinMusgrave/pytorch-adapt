@@ -98,7 +98,7 @@ from pytorch_adapt.frameworks import Ignite
 wrapped_adapter = Ignite(adapter)
 wrapped_adapter.run(datasets)
 ```
-Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are coming soon.
+Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are planned to be added.
 
 ### Check accuracy of your model
 You can do this in vanilla PyTorch:
