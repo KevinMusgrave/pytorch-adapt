@@ -52,7 +52,7 @@ class Ignite:
 
     def training_step(self, engine, batch):
         batch = c_f.batch_to_device(batch, self.device)
-        return self.adapter.training_step(batch, self.device, self)
+        return self.adapter.training_step(batch, self)
 
     def before_training_starts(self, engine):
         self.adapter.before_training_starts(self)

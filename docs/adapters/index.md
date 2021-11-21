@@ -31,7 +31,7 @@ data = {
     "target_domain": torch.zeros(32),
 }
 
-loss = adapter.training_step(data, device)
+loss = adapter.training_step(data)
 ```
 
 ### Inference

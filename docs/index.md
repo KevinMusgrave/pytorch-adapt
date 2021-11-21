@@ -70,7 +70,7 @@ optimizers = Optimizers((torch.optim.Adam, {"lr": 0.123}), keys=["G", "C"])
 adapter = DANN(models=models, optimizers=optimizers)
 
 for data in dataloader:
-    adapter.training_step(data, device)
+    adapter.training_step(data)
 ```
 
 ### Wrap with your favorite PyTorch framework

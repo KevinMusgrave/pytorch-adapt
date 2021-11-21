@@ -59,8 +59,7 @@ class BaseAdapter(ABC):
         self.init_hook(hook_kwargs)
         self.inference = c_f.class_default(self, inference, self.inference_default)
 
-    def training_step(self, batch, device, framework=None):
-        batch = c_f.batch_to_device(batch, device)
+    def training_step(self, batch, framework=None):
         c_f.assert_dicts_are_disjoint(self.models, self.misc, batch)
         losses, _ = self.hook({}, {**self.models, **self.misc, **batch})
         return losses
