@@ -151,19 +151,17 @@ class Ignite:
                 check_initial_accuracy,
             )
 
-            event = Events.EPOCH_STARTED
             self.add_temp_event_handler(
-                event, i_g.early_stopper(patience, self.validator)
+                Events.EPOCH_STARTED, i_g.early_stopper(patience, self.validator)
             )
 
         if self.saver:
-            event = Events.EPOCH_COMPLETED
             if not self.validator:
                 self.add_temp_event_handler(
-                    event,
+                    Events.EPOCH_COMPLETED,
                     i_g.save_adapter_without_validator(self.saver, self.adapter),
                 )
-            self.add_temp_event_handler(event, self.saver.save_ignite)
+            self.add_temp_event_handler(Events.EPOCH_COMPLETED, self.saver.save_ignite)
 
         if resume is not None:
             if resume != "latest":
@@ -277,11 +275,9 @@ class Ignite:
 
     def add_temp_event_handler(self, event, handler):
         self.trainer.add_event_handler(event, handler)
-        print("added", handler, event)
         self.temp_events.append((handler, event))
 
     def remove_temp_events(self):
         for h, e in self.temp_events:
-            print("removing", h, e)
             self.trainer.remove_event_handler(h, e)
         self.temp_events = []

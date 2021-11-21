@@ -2,7 +2,6 @@ import logging
 
 import ignite.distributed as idist
 from ignite.contrib.handlers import ProgressBar
-from ignite.engine import Events
 from ignite.utils import setup_logger
 
 from ...utils import common_functions as c_f
