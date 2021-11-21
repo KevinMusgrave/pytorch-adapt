@@ -14,7 +14,7 @@ import torch
 import tqdm
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
-LOGGER_NAME = "PDA"
+LOGGER_NAME = "pytorch-adapt"
 LOGGER = logging.getLogger(LOGGER_NAME)
 
 

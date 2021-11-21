@@ -45,6 +45,7 @@ class Ignite:
         self.collector_init()
         self.dist_init_done = False
         self.dist_init()
+        self.temp_events = []
 
     def training_step(self, engine, batch):
         device = idist.device()
@@ -139,35 +140,30 @@ class Ignite:
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
         dataloaders = dataloader_creator(**datasets)
 
-        self.trainer_init()
+        self.remove_temp_events()
 
         if self.validator:
             max_epochs = trainer_kwargs.get("max_epochs", 1)
-            i_g.add_validation_runner(
-                self,
+            self.add_validation_runner(
                 dataloaders,
-                self.validator,
-                self.stat_getter,
                 validation_interval,
                 max_epochs,
-                self.saver,
-                self.logger,
                 check_initial_accuracy,
             )
 
-            self.trainer.add_event_handler(
-                Events.EPOCH_STARTED, i_g.early_stopper(patience, self.validator)
+            event = Events.EPOCH_STARTED
+            self.add_temp_event_handler(
+                event, i_g.early_stopper(patience, self.validator)
             )
 
         if self.saver:
+            event = Events.EPOCH_COMPLETED
             if not self.validator:
-                self.trainer.add_event_handler(
-                    Events.EPOCH_COMPLETED,
+                self.add_temp_event_handler(
+                    event,
                     i_g.save_adapter_without_validator(self.saver, self.adapter),
                 )
-            self.trainer.add_event_handler(
-                Events.EPOCH_COMPLETED, self.saver.save_ignite
-            )
+            self.add_temp_event_handler(event, self.saver.save_ignite)
 
         if resume is not None:
             if resume != "latest":
@@ -190,6 +186,30 @@ class Ignite:
             return self.validator.best_score, self.validator.best_epoch
 
         return None, None
+
+    def add_validation_runner(
+        self,
+        dataloaders,
+        validation_interval,
+        max_epochs,
+        check_initial_accuracy,
+    ):
+        validation_condition = Events.EPOCH_COMPLETED(every=validation_interval)
+        if max_epochs % validation_interval != 0:
+            validation_condition |= Events.EPOCH_COMPLETED(once=max_epochs)
+        if check_initial_accuracy:
+            validation_condition |= Events.STARTED
+        self.add_temp_event_handler(
+            validation_condition,
+            i_g.get_validation_runner(
+                self,
+                dataloaders,
+                self.validator,
+                self.stat_getter,
+                self.saver,
+                self.logger,
+            ),
+        )
 
     def evaluate_best_model(
         self, datasets, validator, saver, epoch, dataloader_creator=None
@@ -254,3 +274,14 @@ class Ignite:
             models.eval()
 
         return handler
+
+    def add_temp_event_handler(self, event, handler):
+        self.trainer.add_event_handler(event, handler)
+        print("added", handler, event)
+        self.temp_events.append((handler, event))
+
+    def remove_temp_events(self):
+        for h, e in self.temp_events:
+            print("removing", h, e)
+            self.trainer.remove_event_handler(h, e)
+        self.temp_events = []

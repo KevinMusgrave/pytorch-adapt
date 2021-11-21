@@ -11,35 +11,6 @@ from ...weighters import get_multiple_loss_totals
 from .dictionary_accumulator import DictionaryAccumulator
 
 
-def add_validation_runner(
-    ignite_wrapper,
-    dataloaders,
-    validator,
-    stat_getter,
-    validation_interval,
-    max_epochs,
-    saver,
-    logger,
-    check_initial_accuracy,
-):
-    validation_condition = Events.EPOCH_COMPLETED(every=validation_interval)
-    if max_epochs % validation_interval != 0:
-        validation_condition |= Events.EPOCH_COMPLETED(once=max_epochs)
-    if check_initial_accuracy:
-        validation_condition |= Events.STARTED
-    ignite_wrapper.trainer.add_event_handler(
-        validation_condition,
-        get_validation_runner(
-            ignite_wrapper,
-            dataloaders,
-            validator,
-            stat_getter,
-            saver,
-            logger,
-        ),
-    )
-
-
 def get_validation_runner(
     cls,
     dataloaders,
