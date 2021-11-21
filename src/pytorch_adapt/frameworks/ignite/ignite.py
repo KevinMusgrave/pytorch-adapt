@@ -25,6 +25,7 @@ class Ignite:
         logger=None,
         log_freq=50,
         with_pbars=True,
+        device=None,
     ):
         """
         Arguments:
@@ -41,16 +42,17 @@ class Ignite:
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
         self.with_pbars = with_pbars
+        self.device = c_f.default(device, idist.device, {})
         self.trainer_init()
         self.collector_init()
         self.dist_init_done = False
-        self.dist_init()
+        if device is None:
+            self.dist_init()
         self.temp_events = []
 
     def training_step(self, engine, batch):
-        device = idist.device()
-        batch = c_f.batch_to_device(batch, device)
-        return self.adapter.training_step(batch, device, self)
+        batch = c_f.batch_to_device(batch, self.device)
+        return self.adapter.training_step(batch, self.device, self)
 
     def before_training_starts(self, engine):
         self.adapter.before_training_starts(self)
@@ -230,9 +232,8 @@ class Ignite:
 
     def get_x_collector_step(self, inference, name):
         def collector_step(engine, batch):
-            device = idist.device()
             with torch.no_grad():
-                batch = c_f.batch_to_device(batch, device)
+                batch = c_f.batch_to_device(batch, self.device)
                 features, logits = inference(
                     batch[f"{name}_imgs"], domain=batch[f"{name}_domain"]
                 )
