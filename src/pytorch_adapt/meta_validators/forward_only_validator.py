@@ -16,7 +16,7 @@ class ForwardOnlyValidator:
         Returns:
             the best score and best epoch
         """
-        if "validator" not in kwargs:
+        if not adapter.validator:
             raise KeyError(
                 "An adapter validator is required when using ForwardOnlyValidator"
             )

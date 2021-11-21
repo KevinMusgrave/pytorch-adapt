@@ -163,20 +163,22 @@ def get_weights(
             (torch.optim.Adam, {"lr": 0.001, "weight_decay": decay})
         )
         trainer = Finetuner(models=models, optimizers=optimizers)
-        trainer = framework_cls(trainer, with_pbars=False)
+        validator = AccuracyValidator(
+            torchmetric_kwargs={"average": "macro", "num_classes": 2}
+        )
+        saver = Saver(folder=curr_folder)
+        trainer = framework_cls(
+            trainer, validator=validator, saver=saver, with_pbars=False
+        )
         datasets = {"train": train_set, "src_val": val_set}
         bs = int(np.min([len(train_set), len(val_set), batch_size]))
-        saver = Saver(folder=curr_folder)
+
         acc, _ = trainer.run(
             datasets,
             dataloader_creator=DataloaderCreator(
                 num_workers=num_workers, batch_size=bs
             ),
             max_epochs=epochs,
-            validator=AccuracyValidator(
-                torchmetric_kwargs={"average": "macro", "num_classes": 2}
-            ),
-            saver=saver,
             validation_interval=1,
             patience=patience,
         )

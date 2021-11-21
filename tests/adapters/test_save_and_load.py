@@ -37,13 +37,12 @@ class TestSaveAndLoad(unittest.TestCase):
         stat_getter1 = get_stat_getter()
         validator1 = get_validator()
 
-        dann1, datasets = get_dann()
+        dann1, datasets = get_dann(
+            validator=validator1, stat_getter=stat_getter1, saver=saver
+        )
         dann1.run(
             datasets=datasets,
             epoch_length=2,
-            validator=validator1,
-            stat_getter=stat_getter1,
-            saver=saver,
             max_epochs=max_epochs,
         )
 
@@ -68,21 +67,18 @@ class TestSaveAndLoad(unittest.TestCase):
                 dann1, validator1, stat_getter1, dann2, validator2, stat_getter2
             )
 
-        dann3, _ = get_dann()
+        saver = savers.Saver(folder=TEST_FOLDER)
         stat_getter3 = get_stat_getter()
         validator3 = get_validator()
+        dann3, _ = get_dann(validator=validator3, stat_getter=stat_getter3, saver=saver)
         self.assert_not_equal(
             dann1, validator1, stat_getter1, dann3, validator3, stat_getter3
         )
-        saver = savers.Saver(folder=TEST_FOLDER)
         # this should load and then not run
         # because it has already run for max_epochs
         dann3.run(
             datasets=datasets,
             epoch_length=2,
-            validator=validator3,
-            stat_getter=stat_getter3,
-            saver=saver,
             max_epochs=max_epochs,
             resume="latest",
         )
@@ -97,9 +93,6 @@ class TestSaveAndLoad(unittest.TestCase):
             dann3.run(
                 datasets=datasets,
                 epoch_length=2,
-                validator=validator3,
-                stat_getter=stat_getter3,
-                saver=saver,
                 max_epochs=max_epochs,
                 resume="latest",
             )

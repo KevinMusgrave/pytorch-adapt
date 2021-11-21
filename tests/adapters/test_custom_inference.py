@@ -27,9 +27,6 @@ class TestCustomInference(unittest.TestCase):
                 dim_size = 512
                 inference = None
 
-            dann, datasets = get_dann(inference)
-            dataset_size = len(datasets["src_val"])
-
             class CustomAccuracyValidator(BaseValidator):
                 def __init__(self, unittester, correct_shape, **kwargs):
                     super().__init__(**kwargs)
@@ -42,12 +39,17 @@ class TestCustomInference(unittest.TestCase):
                     self.unittester.assertTrue(features.shape == self.correct_shape)
                     return 0
 
+            dann, datasets = get_dann(inference)
+            dataset_size = len(datasets["src_val"])
+
+            validator = CustomAccuracyValidator(
+                self, torch.Size([dataset_size, dim_size])
+            )
+            dann.validator = validator
+
             # using default inference method
             dann.run(
                 datasets=datasets,
-                validator=CustomAccuracyValidator(
-                    self, torch.Size([dataset_size, dim_size])
-                ),
                 epoch_length=1,
                 max_epochs=1,
             )

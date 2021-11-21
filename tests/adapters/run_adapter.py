@@ -15,13 +15,19 @@ from .utils import get_datasets
 def run_adapter(cls, test_folder, adapter, log_files=None):
     saver = savers.Saver(folder=test_folder)
     datasets = get_datasets()
+    validator = EntropyValidator()
+    stat_getter = AccuracyValidator()
     logger = IgniteRecordKeeperLogger(folder=test_folder)
-    adapter = Ignite(adapter, logger, log_freq=1)
+    adapter = Ignite(
+        adapter,
+        validator=validator,
+        stat_getter=stat_getter,
+        saver=saver,
+        logger=logger,
+        log_freq=1,
+    )
     adapter.run(
         datasets=datasets,
-        validator=EntropyValidator(),
-        stat_getter=AccuracyValidator(),
-        saver=saver,
     )
     if log_files:
         all_logs = glob.glob(os.path.join(test_folder, "*.csv"))

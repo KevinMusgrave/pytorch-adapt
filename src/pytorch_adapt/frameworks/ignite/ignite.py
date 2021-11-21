@@ -16,7 +16,16 @@ class Ignite:
     the event handler system of PyTorch Ignite.
     """
 
-    def __init__(self, adapter, logger=None, log_freq=50, with_pbars=True):
+    def __init__(
+        self,
+        adapter,
+        validator=None,
+        stat_getter=None,
+        saver=None,
+        logger=None,
+        log_freq=50,
+        with_pbars=True,
+    ):
         """
         Arguments:
             adapter: An [Adapter](../../adapters/index.md) object
@@ -26,6 +35,9 @@ class Ignite:
                 each epoch.
         """
         self.adapter = adapter
+        self.validator = validator
+        self.stat_getter = stat_getter
+        self.saver = saver
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
         self.with_pbars = with_pbars
@@ -118,11 +130,8 @@ class Ignite:
         self,
         datasets,
         dataloader_creator=None,
-        validator=None,
-        stat_getter=None,
         validation_interval=1,
         patience=10,
-        saver=None,
         resume=None,
         check_initial_accuracy=False,
         **trainer_kwargs,
@@ -132,51 +141,53 @@ class Ignite:
 
         self.trainer_init()
 
-        if validator:
+        if self.validator:
             max_epochs = trainer_kwargs.get("max_epochs", 1)
             i_g.add_validation_runner(
                 self,
                 dataloaders,
-                validator,
-                stat_getter,
+                self.validator,
+                self.stat_getter,
                 validation_interval,
                 max_epochs,
-                saver,
+                self.saver,
                 self.logger,
                 check_initial_accuracy,
             )
 
             self.trainer.add_event_handler(
-                Events.EPOCH_STARTED, i_g.early_stopper(patience, validator)
+                Events.EPOCH_STARTED, i_g.early_stopper(patience, self.validator)
             )
 
-        if saver:
-            if not validator:
+        if self.saver:
+            if not self.validator:
                 self.trainer.add_event_handler(
                     Events.EPOCH_COMPLETED,
-                    i_g.save_adapter_without_validator(saver, self.adapter),
+                    i_g.save_adapter_without_validator(self.saver, self.adapter),
                 )
-            self.trainer.add_event_handler(Events.EPOCH_COMPLETED, saver.save_ignite)
+            self.trainer.add_event_handler(
+                Events.EPOCH_COMPLETED, self.saver.save_ignite
+            )
 
         if resume is not None:
             if resume != "latest":
                 raise ValueError("Only 'latest' resume is currently supported")
-            if not saver:
+            if not self.saver:
                 raise ValueError("To resume, a Saver must be provided")
-            saver.load_all(
+            self.saver.load_all(
                 adapter=self.adapter,
-                validator=validator,
-                stat_getter=stat_getter,
+                validator=self.validator,
+                stat_getter=self.stat_getter,
                 framework=self,
                 suffix=resume,
             )
-            i_g.resume_checks(validator, stat_getter, self)
+            i_g.resume_checks(self.validator, self.stat_getter, self)
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
 
-        if validator:
-            return validator.best_score, validator.best_epoch
+        if self.validator:
+            return self.validator.best_score, self.validator.best_epoch
 
         return None, None
 

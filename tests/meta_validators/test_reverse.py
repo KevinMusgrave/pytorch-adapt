@@ -28,8 +28,13 @@ class TestReverseValidator(unittest.TestCase):
     def test_reverse_validator(self):
         for forward_with_validator in [True, False]:
             mv = ReverseValidator()
-            forward_adapter, datasets = get_dann()
-            reverse_adapter, _ = get_dann()
+            if forward_with_validator:
+                validator = AccuracyValidator()
+                saver = Saver(folder=TEST_FOLDER)
+            else:
+                validator, saver = None, None
+            forward_adapter, datasets = get_dann(validator=validator, saver=saver)
+            reverse_adapter, _ = get_dann(validator=AccuracyValidator())
             pl_dataloader_creator = DataloaderCreator(
                 all_val=True, val_kwargs={"batch_size": 32, "num_workers": 4}
             )
@@ -42,12 +47,7 @@ class TestReverseValidator(unittest.TestCase):
             reverse_kwargs = {
                 "max_epochs": 3,
                 "dataloader_creator": dataloader_creator,
-                "validator": AccuracyValidator(),
             }
-            if forward_with_validator:
-                forward_kwargs["validator"] = AccuracyValidator()
-                forward_kwargs["saver"] = Saver(folder=TEST_FOLDER)
-
             best_score, best_epoch = mv.run(
                 forward_adapter,
                 reverse_adapter,

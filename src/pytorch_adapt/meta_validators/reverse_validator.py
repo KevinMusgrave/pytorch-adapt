@@ -67,12 +67,12 @@ class ReverseValidator:
             raise KeyError(
                 "'datasets' should not be in reverse_kwargs because the reverse datasets will be pseudo labeled."
             )
-        if "validator" not in reverse_kwargs:
-            raise KeyError("reverse_kwargs must include 'validator'")
+        if not reverse_adapter.validator:
+            raise KeyError("reverse_adapter must include 'validator'")
 
         forward_adapter.run(**forward_kwargs)
-        if all(x in forward_kwargs for x in ["validator", "saver"]):
-            forward_kwargs["saver"].load_adapter(forward_adapter.adapter, "best")
+        if all(getattr(forward_adapter, x) for x in ["validator", "saver"]):
+            forward_adapter.saver.load_adapter(forward_adapter.adapter, "best")
 
         datasets = forward_kwargs["datasets"]
         pl_dataloader_creator = c_f.default(
