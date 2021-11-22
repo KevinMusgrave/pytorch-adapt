@@ -148,11 +148,21 @@ pip install pytorch-adapt
 pip install pytorch-adapt --pre
 ```
 
+**To use ```pytorch_adapt.frameworks.ignite```**:
+```
+pip install pytorch-adapt[ignite]
+```
+
 ### Conda
 Coming soon...
 
 ### Dependencies
-Coming soon...
+Required dependencies: 
+- numpy
+- torch >= 1.6
+- torchvision
+- torchmetrics
+- pytorch-metric-learning >= 1.0.0.dev5
 
 ## Acknowledgements
 
