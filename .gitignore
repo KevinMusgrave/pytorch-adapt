@@ -11,3 +11,4 @@ venv/
 examples/notebooks/MNIST
 examples/notebooks/mnist_m
 examples/notebooks/mnist_m.tar.gz
+examples/notebooks/saved_models
