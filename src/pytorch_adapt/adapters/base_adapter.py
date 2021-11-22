@@ -88,11 +88,11 @@ class BaseAdapter(ABC):
             setattr(self, k, v)
 
     def before_training_starts_default(self, framework):
-        c_f.LOGGER.info(f"models\n{self.models}")
-        c_f.LOGGER.info(f"optimizers\n{self.optimizers}")
-        c_f.LOGGER.info(f"lr_schedulers\n{self.lr_schedulers}")
-        c_f.LOGGER.info(f"misc\n{self.misc}")
-        c_f.LOGGER.info(f"hook\n{self.hook}")
+        c_f.LOGGER.debug(f"models\n{self.models}")
+        c_f.LOGGER.debug(f"optimizers\n{self.optimizers}")
+        c_f.LOGGER.debug(f"lr_schedulers\n{self.lr_schedulers}")
+        c_f.LOGGER.debug(f"misc\n{self.misc}")
+        c_f.LOGGER.debug(f"hook\n{self.hook}")
 
 
 class BaseGCDAdapter(BaseAdapter):
