@@ -73,7 +73,7 @@ for data in tqdm(dataloader):
 ```
 
 ### Wrap with your favorite PyTorch framework
-For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite.) 
+For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite). 
 ```python
 from pytorch_adapt.adapters import DANN
 from pytorch_adapt.containers import Models, Optimizers
