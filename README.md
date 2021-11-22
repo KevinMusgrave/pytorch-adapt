@@ -92,17 +92,15 @@ trainer.run(datasets, dataloader_creator=dc)
 ```
 Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are planned to be added.
 
-### Check accuracy of your model
+### Check your model's performance
 You can do this in vanilla PyTorch:
 ```python
 from pytorch_adapt.validators import SNDValidator
 
-split_name = "target_train"
-dataloaders = dc(**datasets)
-outputs = trainer.get_all_outputs(dataloaders[split_name], split_name)
-
+# Assuming predictions have been collected
+target_train = {"preds": preds}
 validator = SNDValidator()
-score = validator.score(epoch=1, **outputs)
+score = validator.score(epoch=1, target_train=target_train)
 ```
 
 You can also do this using a framework wrapper:
