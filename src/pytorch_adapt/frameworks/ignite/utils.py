@@ -186,7 +186,7 @@ def is_done(trainer, max_epochs=None, **kwargs):
 
 def zero_grad(adapter):
     def handler(engine):
-        c_f.LOGGER.info("zeroing grads")
+        c_f.LOGGER.debug("zeroing grads")
         adapter.models.zero_grad()
         adapter.optimizers.zero_grad()
 

@@ -136,7 +136,7 @@ class Ignite:
         validation_interval=1,
         patience=10,
         resume=None,
-        check_initial_accuracy=False,
+        check_initial_score=False,
         **trainer_kwargs,
     ):
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
@@ -150,7 +150,7 @@ class Ignite:
                 dataloaders,
                 validation_interval,
                 max_epochs,
-                check_initial_accuracy,
+                check_initial_score,
             )
 
             self.add_temp_event_handler(
@@ -192,12 +192,12 @@ class Ignite:
         dataloaders,
         validation_interval,
         max_epochs,
-        check_initial_accuracy,
+        check_initial_score,
     ):
         validation_condition = Events.EPOCH_COMPLETED(every=validation_interval)
         if max_epochs % validation_interval != 0:
             validation_condition |= Events.EPOCH_COMPLETED(once=max_epochs)
-        if check_initial_accuracy:
+        if check_initial_score:
             validation_condition |= Events.STARTED
         self.add_temp_event_handler(
             validation_condition,
