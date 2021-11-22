@@ -3,7 +3,13 @@ import unittest
 import torch
 import torchvision
 
-from pytorch_adapt.containers import LRSchedulers, Misc, Models, Optimizers
+from pytorch_adapt.containers import (
+    LRSchedulers,
+    Misc,
+    Models,
+    MultipleContainers,
+    Optimizers,
+)
 from pytorch_adapt.hooks import EmptyHook
 from pytorch_adapt.layers import DoNothingOptimizer
 from pytorch_adapt.utils import common_functions as c_f
@@ -134,3 +140,14 @@ class TestContainers(unittest.TestCase):
         with self.assertRaises(ValueError):
             hooks = Misc((EmptyHook, 1, 2), keys=["A", "B"])
             hooks.create()
+
+    def test_merge_with_non_container(self):
+        x = MultipleContainers()
+        for non_container in [[], {}]:
+            with self.assertRaises(TypeError):
+                x.merge(optimizers=non_container)
+
+        default_opt = (torch.optim.Adam, {"lr": 0.1})
+        x = MultipleContainers(optimizers=Optimizers(default_opt))
+        x.merge(optimizers=None)
+        x["optimizers"].store == default_opt

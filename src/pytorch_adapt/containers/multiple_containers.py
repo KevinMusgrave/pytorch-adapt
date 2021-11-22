@@ -1,3 +1,4 @@
+from ..utils import common_functions as c_f
 from .base_container import BaseContainer
 from .lr_schedulers import LRSchedulers
 from .misc import Misc
@@ -29,9 +30,13 @@ class MultipleContainers(BaseContainer):
                     self[k].merge(v)
                 else:
                     self[k] = v
-            else:
+            elif v is None:
                 if k not in self:
                     self[k] = get_container(k)
+            else:
+                raise TypeError(
+                    f"Input to {c_f.cls_name(self)}.merge must be BaseContainer or None"
+                )
 
     def create(self):
         self["models"].create()
