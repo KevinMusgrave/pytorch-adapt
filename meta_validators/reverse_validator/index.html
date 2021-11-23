@@ -2378,6 +2378,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../validators/im_validator/" class="md-nav__link">
+        IMValidator
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../validators/snd_validator/" class="md-nav__link">
         SNDValidator
       </a>
@@ -2705,12 +2717,12 @@ for obtaining pseudolabels in step 2.</p></td>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
             <span class="s2">&quot;&#39;datasets&#39; should not be in reverse_kwargs because the reverse datasets will be pseudo labeled.&quot;</span>
         <span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;validator&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reverse_kwargs</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;reverse_kwargs must include &#39;validator&#39;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">reverse_adapter</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;reverse_adapter must include &#39;validator&#39;&quot;</span><span class="p">)</span>
 
     <span class="n">forward_adapter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">forward_kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span> <span class="ow">in</span> <span class="n">forward_kwargs</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;validator&quot;</span><span class="p">,</span> <span class="s2">&quot;saver&quot;</span><span class="p">]):</span>
-        <span class="n">forward_kwargs</span><span class="p">[</span><span class="s2">&quot;saver&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">load_adapter</span><span class="p">(</span><span class="n">forward_adapter</span><span class="o">.</span><span class="n">adapter</span><span class="p">,</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">forward_adapter</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;validator&quot;</span><span class="p">,</span> <span class="s2">&quot;saver&quot;</span><span class="p">]):</span>
+        <span class="n">forward_adapter</span><span class="o">.</span><span class="n">saver</span><span class="o">.</span><span class="n">load_adapter</span><span class="p">(</span><span class="n">forward_adapter</span><span class="o">.</span><span class="n">adapter</span><span class="p">,</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
 
     <span class="n">datasets</span> <span class="o">=</span> <span class="n">forward_kwargs</span><span class="p">[</span><span class="s2">&quot;datasets&quot;</span><span class="p">]</span>
     <span class="n">pl_dataloader_creator</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>

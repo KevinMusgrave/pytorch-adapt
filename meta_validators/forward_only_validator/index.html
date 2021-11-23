@@ -2378,6 +2378,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../validators/im_validator/" class="md-nav__link">
+        IMValidator
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../validators/snd_validator/" class="md-nav__link">
         SNDValidator
       </a>
@@ -2659,7 +2671,7 @@ that is returned by the inner adapter.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        the best score and best epoch</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;validator&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">adapter</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
             <span class="s2">&quot;An adapter validator is required when using ForwardOnlyValidator&quot;</span>
         <span class="p">)</span>

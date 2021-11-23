@@ -2380,6 +2380,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../validators/im_validator/" class="md-nav__link">
+        IMValidator
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../validators/snd_validator/" class="md-nav__link">
         SNDValidator
       </a>
@@ -2603,7 +2615,7 @@ the event handler system of PyTorch Ignite.</p>
 
 
 <h5 id="pytorch_adapt.frameworks.ignite.ignite.Ignite.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stat_getter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">saver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -2654,7 +2666,17 @@ each epoch.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\frameworks\ignite\ignite.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">adapter</span><span class="p">,</span>
+    <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">stat_getter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">saver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        adapter: An [Adapter](../../adapters/index.md) object</span>
@@ -2664,16 +2686,27 @@ each epoch.</p></td>
 <span class="sd">            each epoch.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">adapter</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">validator</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">stat_getter</span> <span class="o">=</span> <span class="n">stat_getter</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">saver</span> <span class="o">=</span> <span class="n">saver</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">IgniteEmptyLogger</span><span class="p">,</span> <span class="p">{})</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">=</span> <span class="n">log_freq</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">with_pbars</span> <span class="o">=</span> <span class="n">with_pbars</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">engine_init</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">idist</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trainer_init</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">collector_init</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">dist_init_done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist_init</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">temp_events</span> <span class="o">=</span> <span class="p">[]</span>
 </code></pre></div>
         </details>
     </div>
 
   </div>
+
+
+
 
 
 
