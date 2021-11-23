@@ -533,6 +533,46 @@
     lr_schedulers
   </a>
   
+    <nav class="md-nav" aria-label="lr_schedulers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers" class="md-nav__link">
+    LRSchedulers
+  </a>
+  
+    <nav class="md-nav" aria-label="LRSchedulers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.merge" class="md-nav__link">
+    merge()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.step" class="md-nav__link">
+    step()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2469,6 +2509,46 @@
     lr_schedulers
   </a>
   
+    <nav class="md-nav" aria-label="lr_schedulers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers" class="md-nav__link">
+    LRSchedulers
+  </a>
+  
+    <nav class="md-nav" aria-label="LRSchedulers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.merge" class="md-nav__link">
+    merge()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.step" class="md-nav__link">
+    step()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2512,6 +2592,214 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.containers.lr_schedulers.LRSchedulers" class="doc doc-heading">
+        <code>LRSchedulers</code>
+
+
+
+<a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>A container for optimizer learning rate schedulers.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.lr_schedulers.LRSchedulers.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">scheduler_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>store</code></td>
+        <td><code></code></td>
+        <td><p>See <a href="../base_container/#pytorch_adapt.containers.base_container.BaseContainer"><code>BaseContainer</code></a></p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>scheduler_types</code></td>
+        <td><code></code></td>
+        <td><p>A dictionary mapping from
+scheduler type (<code>"per_step"</code> or <code>"per_epoch"</code>)
+to a list of object names. If <code>None</code>, then all
+schedulers are assumed to be <code>"per_step"</code></p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\lr_schedulers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">scheduler_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        store: See [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]</span>
+<span class="sd">        scheduler_types: A dictionary mapping from</span>
+<span class="sd">            scheduler type (```&quot;per_step&quot;``` or ```&quot;per_epoch&quot;```)</span>
+<span class="sd">            to a list of object names. If ```None```, then all</span>
+<span class="sd">            schedulers are assumed to be ```&quot;per_step&quot;```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_types</span> <span class="o">=</span> <span class="n">scheduler_types</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.lr_schedulers.LRSchedulers.merge" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.merge" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Merges another container into this one.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>other</code></td>
+        <td><code></code></td>
+        <td><p>The container that will be merged into this container.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\lr_schedulers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">scheduler_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">scheduler_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">curr_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_types</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">curr_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_types</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">curr_list</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_types</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">scheduler_types</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.lr_schedulers.LRSchedulers.step" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler_type</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.lr_schedulers.LRSchedulers.step" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Step the lr schedulers of the specified type.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>scheduler_type</code></td>
+        <td><code></code></td>
+        <td><p><code>"per_step"</code> or <code>"per_epoch"</code></p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\lr_schedulers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Step the lr schedulers of the specified type.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        scheduler_type: ```&quot;per_step&quot;``` or ```&quot;per_epoch&quot;```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_by_scheduler_type</span><span class="p">(</span><span class="n">scheduler_type</span><span class="p">):</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

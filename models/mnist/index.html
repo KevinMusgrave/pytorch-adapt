@@ -2218,19 +2218,6 @@
     MNISTFeatures
   </a>
   
-    <nav class="md-nav" aria-label="MNISTFeatures">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.models.mnist.MNISTFeatures.forward" class="md-nav__link">
-    forward()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -2503,19 +2490,6 @@
     MNISTFeatures
   </a>
   
-    <nav class="md-nav" aria-label="MNISTFeatures">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.models.mnist.MNISTFeatures.forward" class="md-nav__link">
-    forward()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -2579,6 +2553,8 @@
 
     <div class="doc doc-contents ">
 
+      <p>A small convnet for extracting features
+from MNIST.</p>
 
 
 
@@ -2592,44 +2568,6 @@
 
 
 
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.models.mnist.MNISTFeatures.forward" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.models.mnist.MNISTFeatures.forward" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-      <p>Defines the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<p>.. note::
-    Although the recipe for forward pass needs to be defined within
-    this function, one should call the :class:<code>Module</code> instance afterwards
-    instead of this since the former takes care of running the
-    registered hooks while the latter silently ignores them.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\models\mnist.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
 
 
 

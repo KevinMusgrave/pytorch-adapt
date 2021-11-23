@@ -2453,18 +2453,19 @@
 <p>Weighters multiply losses by scalar values, and then reduce the losses to a single value on which you call <code>.backward()</code>.</p>
 <h2 id="examples"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Examples</a><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+
 <span class="kn">from</span> <span class="nn">pytorch_adapt.weighters</span> <span class="kn">import</span> <span class="n">MeanWeighter</span>
 
 <span class="n">weighter</span> <span class="o">=</span> <span class="n">MeanWeighter</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mf">2.3</span><span class="p">})</span>
 
-<span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">512</span><span class="p">)</span>
+<span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,))</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
 
 <span class="c1"># y will by multiplied by 2.3</span>
-<span class="c1"># x wasn&#39;t given a weight, </span>
+<span class="c1"># x wasn&#39;t given a weight,</span>
 <span class="c1"># so it gets multiplied by the default value of 1.</span>
 <span class="n">loss</span><span class="p">,</span> <span class="n">components</span> <span class="o">=</span> <span class="n">weighter</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
 <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>

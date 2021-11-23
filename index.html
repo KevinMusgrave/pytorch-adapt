@@ -300,13 +300,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#remove-some-boilerplate" class="md-nav__link">
-    Remove some boilerplate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#wrap-with-your-favorite-pytorch-framework" class="md-nav__link">
     Wrap with your favorite PyTorch framework
   </a>
@@ -314,15 +307,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-accuracy-of-your-model" class="md-nav__link">
-    Check accuracy of your model
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#load-a-toy-dataset" class="md-nav__link">
-    Load a toy dataset
+  <a href="#check-your-models-performance" class="md-nav__link">
+    Check your model's performance
   </a>
   
 </li>
@@ -2605,13 +2591,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#remove-some-boilerplate" class="md-nav__link">
-    Remove some boilerplate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#wrap-with-your-favorite-pytorch-framework" class="md-nav__link">
     Wrap with your favorite PyTorch framework
   </a>
@@ -2619,15 +2598,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-accuracy-of-your-model" class="md-nav__link">
-    Check accuracy of your model
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#load-a-toy-dataset" class="md-nav__link">
-    Load a toy dataset
+  <a href="#check-your-models-performance" class="md-nav__link">
+    Check your model's performance
   </a>
   
 </li>
@@ -2761,16 +2733,18 @@
 
 <span class="c1"># Assuming that models, optimizers, and dataloader are already created.</span>
 <span class="n">hook</span> <span class="o">=</span> <span class="n">DANNHook</span><span class="p">(</span><span class="n">optimizers</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">batch_to_device</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
     <span class="c1"># Optimization is done inside the hook.</span>
     <span class="c1"># The returned loss is for logging.</span>
     <span class="n">loss</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
 </code></pre></div>
 <h3 id="build-complex-algorithms">Build complex algorithms<a class="headerlink" href="#build-complex-algorithms" title="Permanent link">&para;</a></h3>
-<p>Let's customize <code>DANNHook</code> with:
-- virtual adversarial training
-- entropy conditioning</p>
+<p>Let's customize <code>DANNHook</code> with:</p>
+<ul>
+<li>virtual adversarial training</li>
+<li>entropy conditioning</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">EntropyReducer</span><span class="p">,</span> <span class="n">MeanReducer</span><span class="p">,</span> <span class="n">VATHook</span>
 
 <span class="c1"># G and C are the Generator and Classifier models</span>
@@ -2779,35 +2753,29 @@
     <span class="n">apply_to</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;src_domain_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;target_domain_loss&quot;</span><span class="p">],</span> <span class="n">default_reducer</span><span class="o">=</span><span class="n">MeanReducer</span><span class="p">()</span>
 <span class="p">)</span>
 <span class="n">hook</span> <span class="o">=</span> <span class="n">DANNHook</span><span class="p">(</span><span class="n">optimizers</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="n">reducer</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="p">[</span><span class="n">VATHook</span><span class="p">()])</span>
-<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">batch_to_device</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
     <span class="n">loss</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">misc</span><span class="p">})</span>
 </code></pre></div>
-<h3 id="remove-some-boilerplate">Remove some boilerplate<a class="headerlink" href="#remove-some-boilerplate" title="Permanent link">&para;</a></h3>
-<p>Adapters and containers can simplify object creation.
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="kn">from</span> <span class="nn">pytorch_adapt.adapters</span> <span class="kn">import</span> <span class="n">DANN</span>
+<h3 id="wrap-with-your-favorite-pytorch-framework">Wrap with your favorite PyTorch framework<a class="headerlink" href="#wrap-with-your-favorite-pytorch-framework" title="Permanent link">&para;</a></h3>
+<p>For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite). 
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.adapters</span> <span class="kn">import</span> <span class="n">DANN</span>
 <span class="kn">from</span> <span class="nn">pytorch_adapt.containers</span> <span class="kn">import</span> <span class="n">Models</span><span class="p">,</span> <span class="n">Optimizers</span>
+<span class="kn">from</span> <span class="nn">pytorch_adapt.datasets</span> <span class="kn">import</span> <span class="n">DataloaderCreator</span>
+<span class="kn">from</span> <span class="nn">pytorch_adapt.frameworks.ignite</span> <span class="kn">import</span> <span class="n">Ignite</span>
 
 <span class="c1"># Assume G, C and D are existing models</span>
-<span class="n">models</span> <span class="o">=</span> <span class="n">Models</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+<span class="n">models_cont</span> <span class="o">=</span> <span class="n">Models</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
 <span class="c1"># Override the default optimizer for G and C</span>
-<span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.123</span><span class="p">}),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
-<span class="n">adapter</span> <span class="o">=</span> <span class="n">DANN</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
+<span class="n">optimizers_cont</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.123</span><span class="p">}),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">DANN</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models_cont</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers_cont</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
-    <span class="n">adapter</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
-</code></pre></div></p>
-<h3 id="wrap-with-your-favorite-pytorch-framework">Wrap with your favorite PyTorch framework<a class="headerlink" href="#wrap-with-your-favorite-pytorch-framework" title="Permanent link">&para;</a></h3>
-<p>For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite.) 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.frameworks</span> <span class="kn">import</span> <span class="n">Ignite</span>
-
-<span class="n">wrapped_adapter</span> <span class="o">=</span> <span class="n">Ignite</span><span class="p">(</span><span class="n">adapter</span><span class="p">)</span>
-<span class="n">wrapped_adapter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
+<span class="n">dc</span> <span class="o">=</span> <span class="n">DataloaderCreator</span><span class="p">(</span><span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Ignite</span><span class="p">(</span><span class="n">adapter</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="n">dc</span><span class="p">)</span>
 </code></pre></div>
-Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) is coming soon.</p>
-<h3 id="check-accuracy-of-your-model">Check accuracy of your model<a class="headerlink" href="#check-accuracy-of-your-model" title="Permanent link">&para;</a></h3>
+Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are planned to be added.</p>
+<h3 id="check-your-models-performance">Check your model's performance<a class="headerlink" href="#check-your-models-performance" title="Permanent link">&para;</a></h3>
 <p>You can do this in vanilla PyTorch:
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.validators</span> <span class="kn">import</span> <span class="n">SNDValidator</span>
 
@@ -2817,23 +2785,10 @@ Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) is coming so
 <span class="n">score</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target_train</span><span class="o">=</span><span class="n">target_train</span><span class="p">)</span>
 </code></pre></div></p>
 <p>You can also do this using a framework wrapper:
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.validators</span> <span class="kn">import</span> <span class="n">SNDValidator</span>
-
-<span class="n">validator</span> <span class="o">=</span> <span class="n">SNDValidator</span><span class="p">()</span>
-<span class="n">wrapped_adapter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">validator</span> <span class="o">=</span> <span class="n">SNDValidator</span><span class="p">()</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Ignite</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="n">dc</span><span class="p">)</span>
 </code></pre></div></p>
-<h3 id="load-a-toy-dataset">Load a toy dataset<a class="headerlink" href="#load-a-toy-dataset" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="kn">from</span> <span class="nn">pytorch_adapt.datasets</span> <span class="kn">import</span> <span class="n">get_mnist_mnistm</span>
-
-<span class="c1"># mnist is the source domain</span>
-<span class="c1"># mnistm is the target domain</span>
-<span class="n">datasets</span> <span class="o">=</span> <span class="n">get_mnist_mnistm</span><span class="p">([</span><span class="s2">&quot;mnist&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;mnistm&quot;</span><span class="p">],</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="n">dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">datasets</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
-</code></pre></div>
 <h3 id="run-the-above-examples">Run the above examples<a class="headerlink" href="#run-the-above-examples" title="Permanent link">&para;</a></h3>
 <p>See <a href="https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/README_examples.ipynb">this notebook</a> and <a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/">the examples page</a> for other notebooks.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
@@ -2843,10 +2798,18 @@ Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) is coming so
 <p><strong>To get the latest dev version</strong>:
 <div class="highlight"><pre><span></span><code>pip install pytorch-adapt --pre
 </code></pre></div></p>
+<p><strong>To use <code>pytorch_adapt.frameworks.ignite</code></strong>:
+<div class="highlight"><pre><span></span><code>pip install pytorch-adapt[ignite]
+</code></pre></div></p>
 <h3 id="conda">Conda<a class="headerlink" href="#conda" title="Permanent link">&para;</a></h3>
 <p>Coming soon...</p>
 <h3 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h3>
-<p>Coming soon...</p>
+<p>Required dependencies: 
+- numpy
+- torch &gt;= 1.6
+- torchvision
+- torchmetrics
+- pytorch-metric-learning &gt;= 1.0.0.dev5</p>
                 
               
               

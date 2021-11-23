@@ -802,6 +802,32 @@
     loggers
   </a>
   
+    <nav class="md-nav" aria-label="loggers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger" class="md-nav__link">
+    IgniteRecordKeeperLogger
+  </a>
+  
+    <nav class="md-nav" aria-label="IgniteRecordKeeperLogger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2471,6 +2497,32 @@
     loggers
   </a>
   
+    <nav class="md-nav" aria-label="loggers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger" class="md-nav__link">
+    IgniteRecordKeeperLogger
+  </a>
+  
+    <nav class="md-nav" aria-label="IgniteRecordKeeperLogger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2515,6 +2567,137 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger" class="doc doc-heading">
+        <code>IgniteRecordKeeperLogger</code>
+
+
+
+<a href="#pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Uses <a href="https://github.com/KevinMusgrave/record-keeper">record-keeper</a>
+to record data tensorboard, csv, and sqlite.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tensorboard_writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">record_writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attr_list_names</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.frameworks.ignite.loggers.IgniteRecordKeeperLogger.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>folder</code></td>
+        <td><code></code></td>
+        <td><p>path where records will be saved.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>tensorboard_writer</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>record_writer</code></td>
+        <td><code></code></td>
+        <td><p>a <code>RecordWriter</code> object (see record-keeper)</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\frameworks\ignite\loggers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">tensorboard_writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">record_writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">attr_list_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        folder: path where records will be saved.</span>
+<span class="sd">        tensorboard_writer:</span>
+<span class="sd">        record_writer: a ```RecordWriter``` object (see record-keeper)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">record_keeper</span>
+
+    <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;record_keeper version </span><span class="si">{</span><span class="n">record_keeper</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">record_keeper</span> <span class="kn">import</span> <span class="n">RecordKeeper</span><span class="p">,</span> <span class="n">RecordWriter</span>
+    <span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+
+    <span class="n">tensorboard_writer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">tensorboard_writer</span><span class="p">,</span>
+        <span class="n">SummaryWriter</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;log_dir&quot;</span><span class="p">:</span> <span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;max_queue&quot;</span><span class="p">:</span> <span class="mi">1000000</span><span class="p">,</span> <span class="s2">&quot;flush_secs&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">record_writer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">record_writer</span><span class="p">,</span> <span class="n">RecordWriter</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;folder&quot;</span><span class="p">:</span> <span class="n">folder</span><span class="p">})</span>
+    <span class="n">attr_list_names</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">attr_list_names</span><span class="p">,</span> <span class="n">pml_cf</span><span class="o">.</span><span class="n">list_of_recordable_attributes_list_names</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">record_keeper</span> <span class="o">=</span> <span class="n">RecordKeeper</span><span class="p">(</span>
+        <span class="n">tensorboard_writer</span><span class="o">=</span><span class="n">tensorboard_writer</span><span class="p">,</span>
+        <span class="n">record_writer</span><span class="o">=</span><span class="n">record_writer</span><span class="p">,</span>
+        <span class="n">attributes_to_search_for</span><span class="o">=</span><span class="n">attr_list_names</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

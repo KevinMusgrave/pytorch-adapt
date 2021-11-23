@@ -2632,6 +2632,7 @@
 
 
 
+
   <div class="doc doc-object doc-class">
 
 
@@ -2645,6 +2646,7 @@
 
     <div class="doc doc-contents ">
 
+      <p>Wraps <a href="../../hooks/dann/#pytorch_adapt.hooks.dann">DANNHook</a>.</p>
 
 
 
@@ -2692,7 +2694,7 @@
 
 
 <h6 id="pytorch_adapt.adapters.dann.DANN.hook_cls.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">domain_loss_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook_allowed</span><span class="o">=</span><span class="s1">&#39;_dlogits$&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">domain_loss_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook_allowed</span><span class="o">=</span><span class="s1">&#39;_dlogits$&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -2840,6 +2842,7 @@ output names of the discriminator block.</p></td>
     <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">gradient_reversal_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2895,7 +2898,9 @@ output names of the discriminator block.</p></td>
         <span class="n">f_hook</span><span class="p">,</span> <span class="n">FeaturesForDomainLossHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;use_logits&quot;</span><span class="p">:</span> <span class="n">use_logits</span><span class="p">}</span>
     <span class="p">)</span>
     <span class="n">gradient_reversal</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-        <span class="n">gradient_reversal</span><span class="p">,</span> <span class="n">GradientReversalHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;apply_to&quot;</span><span class="p">:</span> <span class="n">f_hook</span><span class="o">.</span><span class="n">out_keys</span><span class="p">}</span>
+        <span class="n">gradient_reversal</span><span class="p">,</span>
+        <span class="n">GradientReversalHook</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">gradient_reversal_weight</span><span class="p">,</span> <span class="s2">&quot;apply_to&quot;</span><span class="p">:</span> <span class="n">f_hook</span><span class="o">.</span><span class="n">out_keys</span><span class="p">},</span>
     <span class="p">)</span>
     <span class="n">c_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">c_hook</span><span class="p">,</span> <span class="n">CLossHook</span><span class="p">,</span> <span class="p">{})</span>
     <span class="n">domain_loss_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
@@ -2951,6 +2956,7 @@ output names of the discriminator block.</p></td>
 
 
 
+
   <div class="doc doc-object doc-class">
 
 
@@ -2964,6 +2970,7 @@ output names of the discriminator block.</p></td>
 
     <div class="doc doc-contents ">
 
+      <p>Wraps <a href="../../hooks/gvb/#pytorch_adapt.hooks.gvb">GVBHook</a>.</p>
 
 
 
@@ -3026,6 +3033,7 @@ output names of the discriminator block.</p></td>
     </div>
 
   </div>
+
 
 
 

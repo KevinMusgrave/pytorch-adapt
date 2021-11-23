@@ -557,6 +557,39 @@
     optimizers
   </a>
   
+    <nav class="md-nav" aria-label="optimizers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers" class="md-nav__link">
+    Optimizers
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimizers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.merge" class="md-nav__link">
+    merge()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2469,6 +2502,39 @@
     optimizers
   </a>
   
+    <nav class="md-nav" aria-label="optimizers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers" class="md-nav__link">
+    Optimizers
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimizers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.merge" class="md-nav__link">
+    merge()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2512,6 +2578,153 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.containers.optimizers.Optimizers" class="doc doc-heading">
+        <code>Optimizers</code>
+
+
+
+<a href="#pytorch_adapt.containers.optimizers.Optimizers" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>A container for model optimizers.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.optimizers.Optimizers.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">multipliers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.containers.optimizers.Optimizers.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>multipliers</code></td>
+        <td><code></code></td>
+        <td><p>A dictionary mapping from
+optimizer name to lr multiplier. Each
+optimizer will have <code>lr = lr * multiplier</code>
+upon initialization. If <code>None</code>,
+then multiplier is 1.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\optimizers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">multipliers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        multipliers: A dictionary mapping from</span>
+<span class="sd">            optimizer name to lr multiplier. Each</span>
+<span class="sd">            optimizer will have ```lr = lr * multiplier```</span>
+<span class="sd">            upon initialization. If ```None```,</span>
+<span class="sd">            then multiplier is 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">multipliers</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">multipliers</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.optimizers.Optimizers.merge" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.optimizers.Optimizers.merge" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Merges another container into this one.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>other</code></td>
+        <td><code></code></td>
+        <td><p>The container that will be merged into this container.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\optimizers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">multipliers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">multipliers</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

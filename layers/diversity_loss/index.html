@@ -1862,6 +1862,19 @@
     DiversityLoss
   </a>
   
+    <nav class="md-nav" aria-label="DiversityLoss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.layers.diversity_loss.DiversityLoss.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -2490,6 +2503,19 @@
     DiversityLoss
   </a>
   
+    <nav class="md-nav" aria-label="DiversityLoss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.layers.diversity_loss.DiversityLoss.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -2574,6 +2600,61 @@ Takes logits (before softmax) as input.</p>
 
 
 
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.layers.diversity_loss.DiversityLoss.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">after_softmax</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.layers.diversity_loss.DiversityLoss.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>after_softmax</code></td>
+        <td><code>bool</code></td>
+        <td><p>If <code>True</code>, then the rows of the input are assumed to
+already have softmax applied to them.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\layers\diversity_loss.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">after_softmax</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        after_softmax: If ```True```, then the rows of the input are assumed to</span>
+<span class="sd">            already have softmax applied to them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">after_softmax</span> <span class="o">=</span> <span class="n">after_softmax</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

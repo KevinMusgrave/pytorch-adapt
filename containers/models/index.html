@@ -545,6 +545,46 @@
     models
   </a>
   
+    <nav class="md-nav" aria-label="models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models" class="md-nav__link">
+    Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models.eval" class="md-nav__link">
+    eval()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models.zero_grad" class="md-nav__link">
+    zero_grad()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2469,6 +2509,46 @@
     models
   </a>
   
+    <nav class="md-nav" aria-label="models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models" class="md-nav__link">
+    Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models.eval" class="md-nav__link">
+    eval()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.models.Models.zero_grad" class="md-nav__link">
+    zero_grad()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2512,6 +2592,135 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.containers.models.Models" class="doc doc-heading">
+        <code>Models</code>
+
+
+
+<a href="#pytorch_adapt.containers.models.Models" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>A container with some functions specific to models
+that have optimizable parameters.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.models.Models.eval" class="doc doc-heading">
+<code class="highlight language-python"><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.models.Models.eval" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Sets all models to eval mode.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets all models to eval mode.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.models.Models.train" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.models.Models.train" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Sets all models to train mode.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets all models to train mode.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.models.Models.zero_grad" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">zero_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.models.Models.zero_grad" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Zeros the gradients in all models.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">zero_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zeros the gradients in all models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

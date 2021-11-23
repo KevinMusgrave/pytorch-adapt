@@ -509,6 +509,46 @@
     base_container
   </a>
   
+    <nav class="md-nav" aria-label="base_container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer" class="md-nav__link">
+    BaseContainer
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseContainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer.create" class="md-nav__link">
+    create()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer.merge" class="md-nav__link">
+    merge()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2469,6 +2509,46 @@
     base_container
   </a>
   
+    <nav class="md-nav" aria-label="base_container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer" class="md-nav__link">
+    BaseContainer
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseContainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer.create" class="md-nav__link">
+    create()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.base_container.BaseContainer.merge" class="md-nav__link">
+    merge()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2512,6 +2592,255 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.containers.base_container.BaseContainer" class="doc doc-heading">
+        <code>BaseContainer</code>
+
+
+
+<a href="#pytorch_adapt.containers.base_container.BaseContainer" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>The parent class of all containers.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.base_container.BaseContainer.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.containers.base_container.BaseContainer.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>store</code></td>
+        <td><code></code></td>
+        <td><p>A tuple or dictionary</p>
+<ul>
+<li>A tuple consists of <code>(&lt;class_ref&gt;, &lt;init kwargs&gt;)</code>.
+For example, <code>(torch.optim.Adam, {"lr": 0.1})</code></li>
+<li>A dictionary maps from object name to either a tuple
+or a fully constructed object.</li>
+</ul></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>other</code></td>
+        <td><code></code></td>
+        <td><p>Another container which is used in the process
+of creating objects in this container, (e.g
+optimizers require model parameters).</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>keys</code></td>
+        <td><code></code></td>
+        <td><p>Converts <code>store</code> from tuple to dict format,
+where each dict value is the tuple. This only works
+if <code>store</code> is passed in as a tuple.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\base_container.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        store: A tuple or dictionary</span>
+
+<span class="sd">            - A tuple consists of ```(&lt;class_ref&gt;, &lt;init kwargs&gt;)```.</span>
+<span class="sd">            For example, ```(torch.optim.Adam, {&quot;lr&quot;: 0.1})```</span>
+<span class="sd">            - A dictionary maps from object name to either a tuple</span>
+<span class="sd">            or a fully constructed object.</span>
+
+<span class="sd">        other: Another container which is used in the process</span>
+<span class="sd">            of creating objects in this container, (e.g</span>
+<span class="sd">            optimizers require model parameters).</span>
+
+<span class="sd">        keys: Converts ```store``` from tuple to dict format,</span>
+<span class="sd">            where each dict value is the tuple. This only works</span>
+<span class="sd">            if ```store``` is passed in as a tuple.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;BaseContainer input must be a tuple or dict&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_as_tuple</span> <span class="o">=</span> <span class="n">store</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_as_tuple</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">store</span>
+    <span class="k">if</span> <span class="n">keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duplicate</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_with</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.base_container.BaseContainer.create" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.base_container.BaseContainer.create" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Initializes objects by converting all
+tuples in the store into objects.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\base_container.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes objects by converting all</span>
+<span class="sd">    tuples in the store into objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">class_ref</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_ref</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The tuple </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2"> has length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">, but it must be of length 1 or 2&quot;</span>
+                <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">delete_unwanted_keys</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.base_container.BaseContainer.merge" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.base_container.BaseContainer.merge" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Merges another container into this one.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>other</code></td>
+        <td><code></code></td>
+        <td><p>The container that will be merged into this container.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\base_container.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merges another container into this one.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        other: The container that will be merged into this container.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">BaseContainer</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;merge can only be done with another container&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">store_as_tuple</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">store_as_tuple</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">store_as_tuple</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">store_as_tuple</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

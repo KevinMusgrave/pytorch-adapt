@@ -790,6 +790,32 @@
     ignite
   </a>
   
+    <nav class="md-nav" aria-label="ignite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite" class="md-nav__link">
+    Ignite
+  </a>
+  
+    <nav class="md-nav" aria-label="Ignite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2471,6 +2497,32 @@
     ignite
   </a>
   
+    <nav class="md-nav" aria-label="ignite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite" class="md-nav__link">
+    Ignite
+  </a>
+  
+    <nav class="md-nav" aria-label="Ignite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2514,6 +2566,143 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.frameworks.ignite.ignite.Ignite" class="doc doc-heading">
+        <code>Ignite</code>
+
+
+
+<a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Wraps an <a href="../../../adapters/">Adapter</a> and takes
+care of validation, model saving, etc. by using
+the event handler system of PyTorch Ignite.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.frameworks.ignite.ignite.Ignite.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>adapter</code></td>
+        <td><code></code></td>
+        <td><p>An <a href="../../../adapters/">Adapter</a> object</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>logger</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>log_freq</code></td>
+        <td><code></code></td>
+        <td><p>The number of iterations between logging</p></td>
+        <td><code>50</code></td>
+      </tr>
+      <tr>
+        <td><code>with_pbars</code></td>
+        <td><code></code></td>
+        <td><p>If <code>True</code>, progress bars are shown during
+each epoch.</p></td>
+        <td><code>True</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\frameworks\ignite\ignite.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        adapter: An [Adapter](../../adapters/index.md) object</span>
+<span class="sd">        logger:</span>
+<span class="sd">        log_freq: The number of iterations between logging</span>
+<span class="sd">        with_pbars: If ```True```, progress bars are shown during</span>
+<span class="sd">            each epoch.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">adapter</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">IgniteEmptyLogger</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">=</span> <span class="n">log_freq</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">with_pbars</span> <span class="o">=</span> <span class="n">with_pbars</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">engine_init</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dist_init_done</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

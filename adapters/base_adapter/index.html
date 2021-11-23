@@ -397,6 +397,32 @@
     base_adapter
   </a>
   
+    <nav class="md-nav" aria-label="base_adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter" class="md-nav__link">
+    BaseAdapter
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseAdapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2469,6 +2495,32 @@
     base_adapter
   </a>
   
+    <nav class="md-nav" aria-label="base_adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter" class="md-nav__link">
+    BaseAdapter
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseAdapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2512,6 +2564,176 @@
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.adapters.base_adapter.BaseAdapter" class="doc doc-heading">
+        <code>BaseAdapter</code>
+
+
+
+<a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Parent class of all adapters.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lr_schedulers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">misc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default_containers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_enforcer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inference</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">before_training_starts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>models</code></td>
+        <td><code></code></td>
+        <td><p>A <a href="../../containers/models/#pytorch_adapt.containers.models"><code>Models</code></a> container.
+The models will be passed to the wrapped hook at each
+training iteration.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>optimizers</code></td>
+        <td><code></code></td>
+        <td><p>An <a href="../../containers/optimizers/#pytorch_adapt.containers.optimizers"><code>Optimizers</code></a> container.
+The optimizers will be passed into the wrapped hook during
+initialization. The hook uses the optimizers at each training iteration.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>lr_schedulers</code></td>
+        <td><code></code></td>
+        <td><p>An <a href="../../containers/lr_schedulers/#pytorch_adapt.containers.lr_schedulers"><code>LRSchedulers</code></a> container.
+The lr schedulers are called automatically by the
+<a href="../../frameworks/"><code>framework</code></a> that wrap this adapter.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>misc</code></td>
+        <td><code></code></td>
+        <td><p>A <a href="../../containers/misc/#pytorch_adapt.containers.misc"><code>Misc</code></a> container for any
+miscellaneous objects. These are passed into the wrapped hook
+at each training iteration.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>hook_kwargs</code></td>
+        <td><code></code></td>
+        <td><p>A dictionary of key word arguments that will be
+passed into the wrapped hook during initialization.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">models</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">optimizers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">lr_schedulers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">misc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">default_containers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">key_enforcer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">inference</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">before_training_starts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">hook_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        models: A [```Models```][pytorch_adapt.containers.models] container.</span>
+<span class="sd">            The models will be passed to the wrapped hook at each</span>
+<span class="sd">            training iteration.</span>
+<span class="sd">        optimizers: An [```Optimizers```][pytorch_adapt.containers.optimizers] container.</span>
+<span class="sd">            The optimizers will be passed into the wrapped hook during</span>
+<span class="sd">            initialization. The hook uses the optimizers at each training iteration.</span>
+<span class="sd">        lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.lr_schedulers] container.</span>
+<span class="sd">            The lr schedulers are called automatically by the</span>
+<span class="sd">            [```framework```](../frameworks/index.md) that wrap this adapter.</span>
+<span class="sd">        misc: A [```Misc```][pytorch_adapt.containers.misc] container for any</span>
+<span class="sd">            miscellaneous objects. These are passed into the wrapped hook</span>
+<span class="sd">            at each training iteration.</span>
+<span class="sd">        hook_kwargs: A dictionary of key word arguments that will be</span>
+<span class="sd">            passed into the wrapped hook during initialization.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">containers</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+        <span class="n">default_containers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_containers</span><span class="p">,</span> <span class="p">{}</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">key_enforcer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">key_enforcer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">before_training_starts</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">class_default</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">before_training_starts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_training_starts_default</span>
+    <span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span>
+        <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">,</span>
+        <span class="n">lr_schedulers</span><span class="o">=</span><span class="n">lr_schedulers</span><span class="p">,</span>
+        <span class="n">misc</span><span class="o">=</span><span class="n">misc</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">hook_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">hook_kwargs</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">init_containers_and_check_keys</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">init_hook</span><span class="p">(</span><span class="n">hook_kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inference</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">class_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inference</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_default</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
