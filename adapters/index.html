@@ -2431,48 +2431,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#initialization" class="md-nav__link">
-    Initialization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#training-step" class="md-nav__link">
-    Training step
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inference" class="md-nav__link">
-    Inference
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -2490,41 +2448,7 @@
                 
                 <h1 id="adapters">Adapters<a class="headerlink" href="#adapters" title="Permanent link">&para;</a></h1>
 <p>Adapters contain an algorithm's training step and inference step. The training step is defined in the wrapped <a href="../hooks/">hook</a>. </p>
-<h2 id="examples"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Examples</a><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<h3 id="initialization">Initialization<a class="headerlink" href="#initialization" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="kn">from</span> <span class="nn">pytorch_adapt.adapters</span> <span class="kn">import</span> <span class="n">DANN</span>
-<span class="kn">from</span> <span class="nn">pytorch_adapt.containers</span> <span class="kn">import</span> <span class="n">Models</span>
-
-<span class="n">G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="n">start_dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-<span class="n">models</span> <span class="o">=</span> <span class="n">Models</span><span class="p">({</span><span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="n">G</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">C</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">D</span><span class="p">})</span>
-
-<span class="n">adapter</span> <span class="o">=</span> <span class="n">DANN</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="training-step">Training step<a class="headerlink" href="#training-step" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.utils</span> <span class="kn">import</span> <span class="n">common_functions</span> <span class="k">as</span> <span class="n">c_f</span>
-
-<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
-<span class="n">adapter</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;src_imgs&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
-    <span class="s2">&quot;target_imgs&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
-    <span class="s2">&quot;src_labels&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,)),</span>
-    <span class="s2">&quot;src_domain&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
-    <span class="s2">&quot;target_domain&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
-<span class="p">}</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">batch_to_device</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
-<span class="n">loss</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="inference">Inference<a class="headerlink" href="#inference" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-<span class="n">features</span><span class="p">,</span> <span class="n">logits</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">inference</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
+<p>View <strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples/adapters.ipynb">this notebook for examples</a></strong>.</p>
                 
               
               

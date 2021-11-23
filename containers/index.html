@@ -2431,41 +2431,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-with" class="md-nav__link">
-    Create with
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#merge" class="md-nav__link">
-    Merge
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -2483,47 +2448,7 @@
                 
                 <h1 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h1>
 <p>Containers simplify object creation. </p>
-<h2 id="examples"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples.ipynb">Examples</a><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<h3 id="create-with">Create with<a class="headerlink" href="#create-with" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="kn">from</span> <span class="nn">pytorch_adapt.containers</span> <span class="kn">import</span> <span class="n">LRSchedulers</span><span class="p">,</span> <span class="n">Models</span><span class="p">,</span> <span class="n">Optimizers</span>
-
-<span class="n">G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="n">models</span> <span class="o">=</span> <span class="n">Models</span><span class="p">({</span><span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="n">G</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">C</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">D</span><span class="p">})</span>
-<span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.456</span><span class="p">}))</span>
-<span class="n">schedulers</span> <span class="o">=</span> <span class="n">LRSchedulers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ExponentialLR</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">}))</span>
-
-<span class="n">optimizers</span><span class="o">.</span><span class="n">create_with</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-<span class="n">schedulers</span><span class="o">.</span><span class="n">create_with</span><span class="p">(</span><span class="n">optimizers</span><span class="p">)</span>
-
-<span class="c1"># optimizers contains an optimizer for G, C, and D</span>
-<span class="c1"># schedulers contains an LR scheduler for each optimizer</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">optimizers</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">schedulers</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="merge">Merge<a class="headerlink" href="#merge" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">more_models</span> <span class="o">=</span> <span class="n">Models</span><span class="p">({</span><span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)})</span>
-<span class="n">models</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">more_models</span><span class="p">)</span>
-
-<span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.456</span><span class="p">}))</span>
-<span class="n">special_opt</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">])</span>
-<span class="n">optimizers</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">special_opt</span><span class="p">)</span>
-<span class="n">optimizers</span><span class="o">.</span><span class="n">create_with</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-
-<span class="c1"># models contains G, C, D, and X</span>
-<span class="c1"># optimizers:</span>
-<span class="c1"># - the Adam optimizer with lr 0.456 for models C and D</span>
-<span class="c1"># - the SGD optimizer with lr 1 for models G and X</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">optimizers</span><span class="p">)</span>
-</code></pre></div>
+<p>View <strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples/containers.ipynb">this notebook for examples</a></strong>.</p>
                 
               
               

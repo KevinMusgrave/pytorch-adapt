@@ -2518,19 +2518,6 @@
     Building Blocks
   </a>
   
-    <nav class="md-nav" aria-label="Building Blocks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#computing-features" class="md-nav__link">
-    Computing Features
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
@@ -2665,32 +2652,7 @@
 <li>A dictionary of previously computed losses.</li>
 <li>A dictionary of everything else that has been previously computed or passed in.</li>
 </ol>
-<h3 id="computing-features">Computing Features<a class="headerlink" href="#computing-features" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.hooks</span> <span class="kn">import</span> <span class="n">FeaturesHook</span>
-
-<span class="n">G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">models</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="n">G</span><span class="p">}</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;src_imgs&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
-    <span class="s2">&quot;target_imgs&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
-<span class="p">}</span>
-
-<span class="n">hook</span> <span class="o">=</span> <span class="n">FeaturesHook</span><span class="p">()</span>
-
-<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">})</span>
-<span class="c1"># outputs contains src_imgs_features and target_imgs_features</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">outputs</span><span class="p">})</span>
-<span class="c1"># outputs is empty</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<span class="n">hook</span> <span class="o">=</span> <span class="n">FeaturesHook</span><span class="p">(</span><span class="n">detach</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">losses</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">hook</span><span class="p">({},</span> <span class="p">{</span><span class="o">**</span><span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">outputs</span><span class="p">})</span>
-<span class="c1"># outputs contains</span>
-<span class="c1"># src_imgs_features_detached and target_imgs_features_detached</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</code></pre></div>
+<p>View <strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples/hooks.ipynb">this notebook for examples</a></strong>.</p>
                 
               
               
