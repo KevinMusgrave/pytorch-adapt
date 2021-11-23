@@ -138,4 +138,4 @@ Every hook is a callable that takes in 2 arguments that represent the current co
 1. A dictionary of previously computed losses.
 2. A dictionary of everything else that has been previously computed or passed in.
 
-View **[this notebook for examples](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples/hooks.ipynb)**.
+View **[this notebook for examples](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/docs_examples/Hooks.ipynb)**.
