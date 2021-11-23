@@ -12,3 +12,6 @@ examples/notebooks/MNIST
 examples/notebooks/mnist_m
 examples/notebooks/mnist_m.tar.gz
 examples/notebooks/saved_models
+examples/notebooks/docs_examples/MNIST
+examples/notebooks/docs_examples/mnist_m
+examples/notebooks/docs_examples/mnist_m.tar.gz
