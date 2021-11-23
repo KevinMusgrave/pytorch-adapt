@@ -29,7 +29,7 @@ from pytorch_adapt.utils.common_functions import batch_to_device
 
 # Assuming that models, optimizers, and dataloader are already created.
 hook = DANNHook(optimizers)
-for data in dataloader:
+for data in tqdm(dataloader):
     data = batch_to_device(data, device)
     # Optimization is done inside the hook.
     # The returned loss is for logging.
@@ -38,6 +38,7 @@ for data in dataloader:
 
 ### Build complex algorithms
 Let's customize ```DANNHook``` with:
+
 - virtual adversarial training
 - entropy conditioning
 
@@ -50,40 +51,32 @@ reducer = EntropyReducer(
     apply_to=["src_domain_loss", "target_domain_loss"], default_reducer=MeanReducer()
 )
 hook = DANNHook(optimizers, reducer=reducer, post_g=[VATHook()])
-for data in dataloader:
+for data in tqdm(dataloader):
     data = batch_to_device(data, device)
     loss, _ = hook({}, {**models, **data, **misc})
 ```
 
-### Remove some boilerplate
-Adapters and containers can simplify object creation.
+### Wrap with your favorite PyTorch framework
+For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite). 
 ```python
-import torch
-
 from pytorch_adapt.adapters import DANN
 from pytorch_adapt.containers import Models, Optimizers
+from pytorch_adapt.datasets import DataloaderCreator
+from pytorch_adapt.frameworks.ignite import Ignite
 
 # Assume G, C and D are existing models
-models = Models(models)
+models_cont = Models(models)
 # Override the default optimizer for G and C
-optimizers = Optimizers((torch.optim.Adam, {"lr": 0.123}), keys=["G", "C"])
-adapter = DANN(models=models, optimizers=optimizers)
+optimizers_cont = Optimizers((torch.optim.Adam, {"lr": 0.123}), keys=["G", "C"])
+adapter = DANN(models=models_cont, optimizers=optimizers_cont)
 
-for data in dataloader:
-    adapter.training_step(data)
+dc = DataloaderCreator(num_workers=2)
+trainer = Ignite(adapter)
+trainer.run(datasets, dataloader_creator=dc)
 ```
+Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are planned to be added.
 
-### Wrap with your favorite PyTorch framework
-For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite.) 
-```python
-from pytorch_adapt.frameworks import Ignite
-
-wrapped_adapter = Ignite(adapter)
-wrapped_adapter.run(datasets)
-```
-Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) is coming soon.
-
-### Check accuracy of your model
+### Check your model's performance
 You can do this in vanilla PyTorch:
 ```python
 from pytorch_adapt.validators import SNDValidator
@@ -96,24 +89,9 @@ score = validator.score(epoch=1, target_train=target_train)
 
 You can also do this using a framework wrapper:
 ```python
-from pytorch_adapt.validators import SNDValidator
-
 validator = SNDValidator()
-wrapped_adapter.run(datasets, validator=validator)
-```
-
-### Load a toy dataset
-```python
-import torch
-
-from pytorch_adapt.datasets import get_mnist_mnistm
-
-# mnist is the source domain
-# mnistm is the target domain
-datasets = get_mnist_mnistm(["mnist"], ["mnistm"], ".")
-dataloader = torch.utils.data.DataLoader(
-    datasets["train"], batch_size=32, num_workers=2
-)
+trainer = Ignite(adapter, validator=validator)
+trainer.run(datasets, dataloader_creator=dc)
 ```
 
 ### Run the above examples
@@ -131,8 +109,18 @@ pip install pytorch-adapt
 pip install pytorch-adapt --pre
 ```
 
+**To use ```pytorch_adapt.frameworks.ignite```**:
+```
+pip install pytorch-adapt[ignite]
+```
+
 ### Conda
 Coming soon...
 
 ### Dependencies
-Coming soon...
+Required dependencies: 
+- numpy
+- torch >= 1.6
+- torchvision
+- torchmetrics
+- pytorch-metric-learning >= 1.0.0.dev5

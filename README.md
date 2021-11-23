@@ -55,6 +55,7 @@ for data in tqdm(dataloader):
 
 ### Build complex algorithms
 Let's customize ```DANNHook``` with:
+
 - virtual adversarial training
 - entropy conditioning
 

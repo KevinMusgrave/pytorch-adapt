@@ -12,7 +12,7 @@ from pytorch_adapt.containers import Models
 
 G = torch.nn.Linear(1000, 100)
 C = torch.nn.Linear(100, 10)
-D = torch.nn.Linear(100, 1)
+D = torch.nn.Sequential(torch.nn.Linear(100, 1), torch.nn.Flatten(start_dim=0))
 models = Models({"G": G, "C": C, "D": D})
 
 adapter = DANN(models=models)
@@ -20,6 +20,8 @@ adapter = DANN(models=models)
 
 ### Training step
 ```python
+from pytorch_adapt.utils import common_functions as c_f
+
 device = torch.device("cuda")
 adapter.models.to(device)
 
@@ -31,6 +33,7 @@ data = {
     "target_domain": torch.zeros(32),
 }
 
+data = c_f.batch_to_device(data, device)
 loss = adapter.training_step(data)
 ```
 
