@@ -90,6 +90,18 @@ Docs coming soon
 - [layers.ModelWithBridge][pytorch_adapt.layers.ModelWithBridge]
 
 
+### IM
+
+- [layers.EntropyLoss][pytorch_adapt.layers.EntropyLoss]
+- [layers.DiversityLoss][pytorch_adapt.layers.DiversityLoss]
+
+
+### ITL 
+[Information-Theoretical Learning of Discriminative Clusters for Unsupervised Domain Adaptation](https://icml.cc/2012/papers/566.pdf)
+
+Docs coming soon
+
+
 ### JMMD
 [Deep Transfer Learning with Joint Adaptation Networks](https://arxiv.org/abs/1605.06636)
 
