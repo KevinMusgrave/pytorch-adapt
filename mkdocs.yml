@@ -37,7 +37,7 @@ plugins:
           heading_level: 3
         setup_commands:
           - import sys
-          - sys.path.append("src")
+          - sys.path.insert(0, "src")
       watch:
       - src/pytorch_adapt
       selection:

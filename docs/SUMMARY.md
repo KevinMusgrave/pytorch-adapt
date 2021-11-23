@@ -134,6 +134,7 @@
     - [DiversityValidator](validators/diversity_validator.md)
     - [EntropyValidator](validators/entropy_validator.md)
     - [ErrorValidator](validators/error_validator.md)
+    - [IMValidator](validators/im_validator.md)
     - [SNDValidator](validators/snd_validator.md)
 - [Weighters](weighters/index.md)
     - [BaseWeighter](weighters/base_weighter.md)

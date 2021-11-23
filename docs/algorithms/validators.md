@@ -5,6 +5,12 @@
 
 - [validators.DeepEmbeddedValidator][pytorch_adapt.validators.DeepEmbeddedValidator]
 
+
+### Information Maximization Validator
+
+- [validators.IMValidator][pytorch_adapt.validators.IMValidator]
+
+
 ### Soft Neighborhood Density
 [Tune it the Right Way: Unsupervised Validation of Domain Adaptation via Soft Neighborhood Density](https://arxiv.org/abs/2108.10860)
 
