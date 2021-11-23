@@ -2431,34 +2431,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ignite" class="md-nav__link">
-    Ignite
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -2478,32 +2450,11 @@
 <p>This library works with plain PyTorch, but what about PyTorch frameworks like <a href="https://github.com/pytorch/ignite">Ignite</a>, <a href="https://github.com/PyTorchLightning/pytorch-lightning">Lightning</a>, and <a href="https://github.com/catalyst-team/catalyst">Catalyst</a>?</p>
 <p>Of course, anything that works in PyTorch will also work in PyTorch frameworks. However, there is some setup involved, like registering event handlers in Ignite, or writing class definitions in Lightning and Catalyst.</p>
 <p>The purpose of the <code>frameworks</code> module is to eliminate that setup.</p>
-<h2 id="examples"><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb">Examples</a><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<h3 id="ignite">Ignite<a class="headerlink" href="#ignite" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="kn">from</span> <span class="nn">pytorch_adapt.adapters</span> <span class="kn">import</span> <span class="n">DANN</span>
-<span class="kn">from</span> <span class="nn">pytorch_adapt.containers</span> <span class="kn">import</span> <span class="n">Models</span><span class="p">,</span> <span class="n">Optimizers</span>
-<span class="kn">from</span> <span class="nn">pytorch_adapt.datasets</span> <span class="kn">import</span> <span class="n">DataloaderCreator</span><span class="p">,</span> <span class="n">get_mnist_mnistm</span>
-<span class="kn">from</span> <span class="nn">pytorch_adapt.frameworks</span> <span class="kn">import</span> <span class="n">Ignite</span>
-<span class="kn">from</span> <span class="nn">pytorch_adapt.models</span> <span class="kn">import</span> <span class="n">Classifier</span><span class="p">,</span> <span class="n">Discriminator</span><span class="p">,</span> <span class="n">MNISTFeatures</span>
-<span class="kn">from</span> <span class="nn">pytorch_adapt.validators</span> <span class="kn">import</span> <span class="n">IMValidator</span>
-
-<span class="n">G</span> <span class="o">=</span> <span class="n">MNISTFeatures</span><span class="p">()</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">in_size</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">Discriminator</span><span class="p">(</span><span class="n">in_size</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
-<span class="n">models</span> <span class="o">=</span> <span class="n">Models</span><span class="p">({</span><span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="n">G</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">C</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">D</span><span class="p">})</span>
-<span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.123</span><span class="p">}))</span>
-
-<span class="n">adapter</span> <span class="o">=</span> <span class="n">DANN</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
-<span class="n">wrapped_adapter</span> <span class="o">=</span> <span class="n">Ignite</span><span class="p">(</span><span class="n">adapter</span><span class="p">)</span>
-<span class="n">validator</span> <span class="o">=</span> <span class="n">IMValidator</span><span class="p">()</span>
-
-<span class="n">datasets</span> <span class="o">=</span> <span class="n">get_mnist_mnistm</span><span class="p">([</span><span class="s2">&quot;mnist&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;mnistm&quot;</span><span class="p">],</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">dc</span> <span class="o">=</span> <span class="n">DataloaderCreator</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="n">wrapped_adapter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="n">dc</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div>
+<p>Check out these notebooks for examples:</p>
+<ul>
+<li><strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb">DANN with PyTorch Ignite</a></strong></li>
+<li><strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgniteWithViz.ipynb">DANN with PyTorch Ignite + Visualizations</a></strong></li>
+</ul>
                 
               
               
