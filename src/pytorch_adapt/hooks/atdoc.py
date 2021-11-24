@@ -49,11 +49,11 @@ class ATDOCHook(BaseHook):
             [outputs, inputs],
             c_f.filter(self.hook.out_keys, "", ["_features$", "_logits$"]),
         )
-        pseudo_labels, neighbor_logits = self.labeler(
+        pseudo_labels, neighbor_preds = self.labeler(
             features, logits, update=True, idx=inputs["target_sample_idx"]
         )
         loss = self.loss_fn(logits, pseudo_labels)
-        weights = self.weighter(neighbor_logits)
+        weights = self.weighter(neighbor_preds)
         loss = torch.mean(weights * loss)
         return {"pseudo_label_loss": loss}, outputs
 

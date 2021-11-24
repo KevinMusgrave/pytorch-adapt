@@ -66,10 +66,10 @@ class NeighborhoodAggregation(torch.nn.Module):
         self.pred_memory = pml_cf.to_device(self.pred_memory, features)
         with torch.no_grad():
             features = F.normalize(features)
-            pseudo_labels, mean_logits = self.get_pseudo_labels(features, idx)
+            pseudo_labels, mean_preds = self.get_pseudo_labels(features, idx)
             if update:
                 self.update_memory(features, logits, idx)
-        return pseudo_labels, mean_logits
+        return pseudo_labels, mean_preds
 
     def get_pseudo_labels(self, normalized_features, idx):
         dis = torch.mm(normalized_features, self.feat_memory.t())
@@ -84,7 +84,7 @@ class NeighborhoodAggregation(torch.nn.Module):
     def update_memory(self, normalized_features, logits, idx):
         logits = F.softmax(logits, dim=1)
         p = 1.0 / self.T
-        logits = (logits ** p) / torch.sum(logits ** p, dim=1, keepdims=True)
+        logits = (logits ** p) / torch.sum(logits ** p, dim=0)
         self.feat_memory[idx] = normalized_features
         self.pred_memory[idx] = logits
 
