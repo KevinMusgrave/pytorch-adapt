@@ -1,4 +1,5 @@
 - [Overview](index.md)
+- [Getting started](getting_started.md)
 - Algorithms Overview
     - [Unsupervised Domain Adaptation](algorithms/uda.md)
     - [Validators](algorithms/validators.md)
