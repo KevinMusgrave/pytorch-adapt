@@ -18,7 +18,7 @@
 - [**List of algorithms/papers implemented**](https://kevinmusgrave.github.io/pytorch-adapt/algorithms/uda)
 
 ## Google Colab Examples
-See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md) for notebooks you can download or run on Google Colab.
+See the **[examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md)** for notebooks you can download or run on Google Colab.
   
 ## Overview
 This library consists of 11 modules:
