@@ -31,3 +31,9 @@ class TestKeyRemoval(unittest.TestCase):
         optimizers1.merge(optimizers2)
         optimizers1.create_with(models)
         self.assertTrue(optimizers1.keys() == {"classifier", "discriminator"})
+
+        optimizers1 = Optimizers((torch.optim.SGD, {"lr": 0.01, "momentum": 0.9}))
+        optimizers2 = Optimizers((DeleteKey, {}), keys=["classifier", "discriminator"])
+        optimizers1.merge(optimizers2)
+        optimizers1.create_with(models)
+        self.assertTrue(optimizers1.keys() == {"feature_extractor"})

@@ -138,7 +138,7 @@ class BaseContainer(MutableMapping):
     def delete_unwanted_keys(self):
         del_list = []
         for k, v in self.items():
-            if isinstance(v, DeleteKey):
+            if isinstance(v, DeleteKey) or (isinstance(v, tuple) and v[0] == DeleteKey):
                 del_list.append(k)
         for k in del_list:
             del self[k]
