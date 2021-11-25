@@ -6,25 +6,25 @@ Before running the notebooks, make sure that the runtime type is set to "GPU", b
 
 |Notebook|Colab Link|
 |:---|:---|
-[DANN Vanilla PyTorch](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNVanilla.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNVanilla.ipynb)
-[DANN PyTorch Ignite](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNIgnite.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNIgnite.ipynb)
-[DANN PyTorch Ignite With Visualizations](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNIgniteWithViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DANNIgniteWithViz.ipynb)
-[Customizing algorithms](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/CustomizingAlgorithms.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/CustomizingAlgorithms.ipynb)
+[DANN Vanilla PyTorch](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNVanilla.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNVanilla.ipynb)
+[DANN PyTorch Ignite](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNIgnite.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNIgnite.ipynb)
+[DANN PyTorch Ignite With Visualizations](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNIgniteWithViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNIgniteWithViz.ipynb)
+[Customizing algorithms](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/CustomizingAlgorithms.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/CustomizingAlgorithms.ipynb)
 
 
 ## In depth examples
 
 |Notebook|Colab Link|
 |:---|:---|
-[Adapters](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Adapters.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Adapters.ipynb)
-[Containers](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Containers.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Containers.ipynb)
-[Datasets](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Datasets.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Datasets.ipynb)
-[Hooks](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Hooks.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Hooks.ipynb)
-[Weighters](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Weighters.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Weighters.ipynb)
+[Adapters](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Adapters.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Adapters.ipynb)
+[Containers](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Containers.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Containers.ipynb)
+[Datasets](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Datasets.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Datasets.ipynb)
+[Hooks](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Hooks.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Hooks.ipynb)
+[Weighters](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Weighters.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/in_depth/Weighters.ipynb)
 
 ## Other
 
 |Notebook|Colab Link|
 |:---|:---|
-[README examples](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/ReadmeExamples.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/ReadmeExamples.ipynb)
-[Display MNIST and MNIST-M](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DigitsViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DigitsViz.ipynb)
+[README examples](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/other/ReadmeExamples.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/other/ReadmeExamples.ipynb)
+[Display MNIST and MNIST-M](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/other/DigitsViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/other/DigitsViz.ipynb)

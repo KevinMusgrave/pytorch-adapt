@@ -8,5 +8,5 @@ The purpose of the ```frameworks``` module is to eliminate that setup.
 
 Check out these notebooks for examples:
 
-- **[DANN with PyTorch Ignite](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgnite.ipynb)**
-- **[DANN with PyTorch Ignite + Visualizations](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/notebooks/DANNIgniteWithViz.ipynb)**
+- **[DANN with PyTorch Ignite](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/getting_started/DANNIgnite.ipynb)**
+- **[DANN with PyTorch Ignite + Visualizations](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/getting_started/DANNIgniteWithViz.ipynb)**
