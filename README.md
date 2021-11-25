@@ -167,3 +167,5 @@ Thanks to [Jeff Musgrave](https://www.designgenius.ca/) for designing the logo.
 - https://github.com/thuml/Deep-Embedded-Validation
 - https://github.com/lr94/abas
 - https://github.com/thuml/Batch-Spectral-Penalization
+- https://github.com/jvanvugt/pytorch-domain-adaptation
+- https://github.com/ptrblck/pytorch_misc
