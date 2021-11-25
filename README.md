@@ -152,3 +152,18 @@ Thank you to [Ser-Nam Lim](https://research.fb.com/people/lim-ser-nam/), and my 
 
 ### Logo
 Thanks to [Jeff Musgrave](https://www.designgenius.ca/) for designing the logo.
+
+### Code references (in no particular order)
+- https://github.com/wgchang/DSBN
+- https://github.com/jihanyang/AFN
+- https://github.com/thuml/Versatile-Domain-Adaptation
+- https://github.com/tim-learn/ATDOC
+- https://github.com/thuml/CDAN
+- https://github.com/takerum/vat_chainer
+- https://github.com/takerum/vat_tf
+- https://github.com/RuiShu/dirt-t
+- https://github.com/lyakaap/VAT-pytorch
+- https://github.com/9310gaurav/virtual-adversarial-training
+- https://github.com/thuml/Deep-Embedded-Validation
+- https://github.com/lr94/abas
+- https://github.com/thuml/Batch-Spectral-Penalization
