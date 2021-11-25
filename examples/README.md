@@ -2,7 +2,7 @@
 
 Before running the notebooks, make sure that the runtime type is set to "GPU", by going to the Runtime menu, and clicking on "Change runtime type".
 
-Click "Open in playground" on the Colab header to interact with the notebook.
+## Getting started
 
 |Notebook|Colab Link|
 |:---|:---|
@@ -12,7 +12,7 @@ Click "Open in playground" on the Colab header to interact with the notebook.
 [Customizing algorithms](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/CustomizingAlgorithms.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/CustomizingAlgorithms.ipynb)
 
 
-## Examples accompanying the documentation
+## In depth examples
 
 |Notebook|Colab Link|
 |:---|:---|
@@ -21,4 +21,10 @@ Click "Open in playground" on the Colab header to interact with the notebook.
 [Datasets](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Datasets.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Datasets.ipynb)
 [Hooks](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Hooks.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Hooks.ipynb)
 [Weighters](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Weighters.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/docs_examples/Weighters.ipynb)
+
+## Other
+
+|Notebook|Colab Link|
+|:---|:---|
 [README examples](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/ReadmeExamples.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/ReadmeExamples.ipynb)
+[Display MNIST and MNIST-M](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DigitsViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/notebooks/DigitsViz.ipynb)
