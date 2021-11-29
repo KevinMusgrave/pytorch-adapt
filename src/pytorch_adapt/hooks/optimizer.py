@@ -19,7 +19,7 @@ class OptimizerHook(BaseHook):
     def __init__(
         self,
         hook: BaseHook,
-        optimizers: List[torch.optim.Optimizer],
+        optimizer_names: List[str],
         weighter: BaseWeighter = None,
         reducer: BaseReducer = None,
         **kwargs
@@ -27,8 +27,8 @@ class OptimizerHook(BaseHook):
         """
         Arguments:
             hook: the hook that computes the losses
-            optimizers: a list of optimizers that will be used
-                to update model weights
+            optimizer_names: a list of optimizer names that 
+                will be used to update model weights
             weighter: weights the returned losses and outputs a
                 single value on which ```.backward()``` is called.
                 If ```None```, then it defaults to
@@ -39,7 +39,7 @@ class OptimizerHook(BaseHook):
         """
         super().__init__(**kwargs)
         self.hook = hook
-        self.optimizers = optimizers
+        self.optimizer_names = optimizer_names
         self.weighter = c_f.default(weighter, MeanWeighter, {})
         self.reducer = c_f.default(reducer, MeanReducer, {})
         self.loss_components = {}
@@ -51,7 +51,8 @@ class OptimizerHook(BaseHook):
         losses, new_outputs = self.reducer(losses, {**inputs, **outputs})
         outputs.update(new_outputs)
         loss, self.loss_components = self.weighter(losses)
-        c_f.zero_back_step(loss, self.optimizers)
+        optimizers = c_f.extract(inputs, self.optimizer_names)
+        c_f.zero_back_step(loss, optimizers)
         return {}, outputs
 
     def _loss_keys(self):
@@ -63,7 +64,7 @@ class OptimizerHook(BaseHook):
         return c_f.join_lists([self.hook.out_keys, self.reducer.out_keys])
 
     def extra_repr(self):
-        return c_f.extra_repr(self, ["optimizers", "weighter"])
+        return c_f.extra_repr(self, ["optimizer_names", "weighter"])
 
 
 class SummaryHook(BaseHook):
