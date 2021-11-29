@@ -72,7 +72,9 @@ def get_models_and_data(with_batch_norm=False, d_out=1, d_uses_logits=False):
 
 
 def get_opts(models):
-    return {f"{k}_opt": torch.optim.SGD(v.parameters(), lr=0.1) for k,v in models.items()}
+    return {
+        f"{k}_opt": torch.optim.SGD(v.parameters(), lr=0.1) for k, v in models.items()
+    }
 
 
 def post_g_hook_update_keys(post_g, loss_keys, output_keys):

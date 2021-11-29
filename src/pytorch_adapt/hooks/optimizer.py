@@ -27,7 +27,7 @@ class OptimizerHook(BaseHook):
         """
         Arguments:
             hook: the hook that computes the losses
-            optimizer_names: a list of optimizer names that 
+            optimizer_names: a list of optimizer names that
                 will be used to update model weights
             weighter: weights the returned losses and outputs a
                 single value on which ```.backward()``` is called.
@@ -43,6 +43,10 @@ class OptimizerHook(BaseHook):
         self.weighter = c_f.default(weighter, MeanWeighter, {})
         self.reducer = c_f.default(reducer, MeanReducer, {})
         self.loss_components = {}
+        if not isinstance(optimizer_names, (list, tuple)):
+            raise TypeError("optimizer_names must be a list of strings")
+        if not all(isinstance(x, str) for x in optimizer_names):
+            raise TypeError("optimizer_names must be strings")
 
     def call(self, losses, inputs):
         """"""

@@ -504,4 +504,3 @@ def extract_progress(compressed_obj):
         length = len(iterable)
     for member in tqdm.tqdm(iterable, total=length):
         yield member
-

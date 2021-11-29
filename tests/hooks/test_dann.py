@@ -66,7 +66,6 @@ class TestDANN(unittest.TestCase):
                         hook_kwargs["detach_entropy_reducer"] = detach_reducer
                     h = hook_cls(**hook_kwargs)
 
-                    
                     if hook_cls is CDANNEHook:
                         feature_combiner = RandomizedDotProduct([16, 10], 16)
                         originalFeatureCombiner = copy.deepcopy(feature_combiner)
