@@ -504,3 +504,7 @@ def extract_progress(compressed_obj):
         length = len(iterable)
     for member in tqdm.tqdm(iterable, total=length):
         yield member
+
+
+def dict_to_cls_names(x):
+    return {k: cls_name(v) for k, v in x.items()}
