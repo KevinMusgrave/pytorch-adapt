@@ -4,7 +4,7 @@ from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..hooks import ADDAHook
 from ..utils.common_functions import check_domain
 from .base_adapter import BaseAdapter
-from .utils import default_optimizer_tuple
+from .utils import default_optimizer_tuple, with_opt
 
 
 class ADDA(BaseAdapter):
@@ -33,7 +33,7 @@ class ADDA(BaseAdapter):
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(
-            d_opts=[self.optimizers["D"]], g_opts=[self.optimizers["T"]], **hook_kwargs
+            d_opts=with_opt(["D"]), g_opts=with_opt(["T"]), **hook_kwargs
         )
 
     def init_containers_and_check_keys(self):

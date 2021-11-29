@@ -20,20 +20,13 @@ class LRSchedulers(BaseContainer):
         super().__init__(store, **kwargs)
 
     def _create_with(self, other):
-        to_be_deleted = []
         for k, v in self.items():
             try:
                 class_ref, kwargs = v
             except TypeError:
                 continue
             optimizer = other[k]
-            if not c_f.is_optimizer(optimizer):
-                to_be_deleted.append(k)
-            else:
-                self[k] = class_ref(optimizer, **kwargs)
-
-        for k in to_be_deleted:
-            del self[k]
+            self[k] = class_ref(optimizer, **kwargs)
 
     def step(self, scheduler_type):
         """

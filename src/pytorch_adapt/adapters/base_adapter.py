@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..utils import common_functions as c_f
-from .utils import default_optimizer_tuple
+from .utils import default_optimizer_tuple, with_opt
 
 
 class BaseAdapter(ABC):
@@ -61,8 +61,9 @@ class BaseAdapter(ABC):
 
     def training_step(self, batch, models=None, optimizers=None, misc=None):
         models = c_f.default(models, getattr, [self, "models"])
-        optimizers = c_f.default(models, getattr, [self, "optimizers"])
+        optimizers = c_f.default(optimizers, getattr, [self, "optimizers"])
         misc = c_f.default(misc, getattr, [self, "misc"])
+        optimizers = with_opt(optimizers)
         c_f.assert_dicts_are_disjoint(models, misc, optimizers, batch)
         losses, _ = self.hook({}, {**models, **optimizers, **misc, **batch})
         return losses
