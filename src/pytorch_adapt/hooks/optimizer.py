@@ -63,7 +63,7 @@ class OptimizerHook(BaseHook):
         return c_f.join_lists([self.hook.out_keys, self.reducer.out_keys])
 
     def extra_repr(self):
-        return c_f.extra_repr(self, ["weighter"])
+        return c_f.extra_repr(self, ["optimizers", "weighter"])
 
 
 class SummaryHook(BaseHook):

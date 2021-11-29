@@ -18,7 +18,7 @@ class TestLightning(unittest.TestCase):
         adapter = DANN(models)
         validator = IMValidator()
         adapter = Lightning(adapter, validator=validator)
-        trainer = pl.Trainer(gpus=1, max_epochs=1)
+        trainer = pl.Trainer(gpus=1, max_epochs=1, max_steps=1)
 
         dataloaders = DataloaderCreator(num_workers=2)(**datasets)
         trainer.fit(adapter, dataloaders["train"])

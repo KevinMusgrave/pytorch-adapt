@@ -5,9 +5,12 @@ import torch
 class Lightning(pl.LightningModule):
     def __init__(self, adapter, validator=None):
         super().__init__()
-        self.adapter = adapter
         self.models = torch.nn.ModuleDict(adapter.models)
+        self.misc = torch.nn.ModuleDict(adapter.misc)
+        del adapter.models
+        del adapter.misc
         self.validator = validator
+        self.adapter = adapter
         self.automatic_optimization = False
 
     def forward(self, x, domain=None):
@@ -15,7 +18,8 @@ class Lightning(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         optimizers = self.optimizers()
-        losses = self.adapter.training_step(batch)
+        print(self.adapter.hook)
+        losses = self.adapter.training_step(batch, models=self.models, misc=self.misc)
 
     def configure_optimizers(self):
         keys = sorted(self.adapter.optimizers.keys())
