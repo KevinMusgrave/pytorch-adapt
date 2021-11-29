@@ -60,25 +60,25 @@ class TestGVB(unittest.TestCase):
                     target_domain,
                     bs,
                 ) = get_models_and_data()
-                opts = get_opts(G, C, D)
+                models = {"G": G, "C": C, "D": D}
+                opts = get_opts(models)
                 hook_kwargs = {
-                    "opts": opts,
+                    "opts": list(opts.keys()),
                 }
                 if hook_cls is GVBEHook:
                     hook_kwargs["detach_entropy_reducer"] = detach_reducer
 
+                data = {
+                    "src_imgs": src_imgs,
+                    "src_labels": src_labels,
+                    "target_imgs": target_imgs,
+                    "src_domain": src_domain,
+                    "target_domain": target_domain,
+                }
+
                 h = hook_cls(**hook_kwargs)
-                model_counts = validate_hook(
-                    h,
-                    [
-                        "src_imgs",
-                        "src_labels",
-                        "target_imgs",
-                        "src_domain",
-                        "target_domain",
-                    ],
-                )
-                losses, outputs = h({}, locals())
+                model_counts = validate_hook(h, list(data.keys()))
+                losses, outputs = h({}, {**models, **opts, **data})
                 self.assertTrue(
                     losses["total_loss"].keys()
                     == {
@@ -103,7 +103,9 @@ class TestGVB(unittest.TestCase):
                     == model_counts["D"]
                 )
 
-                original_opts = get_opts(originalG, originalC, originalD)
+                original_opts = get_opts(
+                    {"G": originalG, "C": originalC, "D": originalD}
+                )
                 grl = GradientReversal()
                 features = originalG(torch.cat([src_imgs, target_imgs], dim=0))
                 logits, gbridge = originalC(features, return_bridge=True)
@@ -194,9 +196,9 @@ class TestGVB(unittest.TestCase):
                 total_loss += target_domain_loss
 
                 total_loss /= 7
-                [x.zero_grad() for x in original_opts]
+                [x.zero_grad() for x in original_opts.values()]
                 total_loss.backward()
-                [x.step() for x in original_opts]
+                [x.step() for x in original_opts.values()]
                 for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
                     self.assertTrue(
                         c_f.state_dicts_are_equal(
@@ -220,13 +222,21 @@ class TestGVB(unittest.TestCase):
             target_domain,
             bs,
         ) = get_models_and_data()
-        d_opts = get_opts(D)
-        g_opts = get_opts(G, C)
-        h = GVBGANHook(d_opts=d_opts, g_opts=g_opts)
-        model_counts = validate_hook(
-            h, ["src_imgs", "src_labels", "target_imgs", "src_domain", "target_domain"]
-        )
-        losses, outputs = h({}, locals())
+        models = {"G": G, "C": C, "D": D}
+        d_opts = get_opts({"D": D})
+        g_opts = get_opts({"G": G, "C": C})
+        h = GVBGANHook(d_opts=list(d_opts.keys()), g_opts=list(g_opts.keys()))
+        data = {
+            "src_imgs": src_imgs,
+            "src_labels": src_labels,
+            "target_imgs": target_imgs,
+            "src_domain": src_domain,
+            "target_domain": target_domain,
+        }
+
+        model_counts = validate_hook(h, list(data.keys()))
+
+        losses, outputs = h({}, {**models, **d_opts, **g_opts, **data})
 
         self.assertTrue(
             losses["d_loss"].keys()
@@ -257,8 +267,8 @@ class TestGVB(unittest.TestCase):
         )
         self.assertTrue(D.model.count == 4 == model_counts["D"])
 
-        d_opts = get_opts(originalD)
-        g_opts = get_opts(originalG, originalC)
+        d_opts = get_opts({"D": originalD})["D_opt"]
+        g_opts = get_opts({"G": originalG, "C": originalC})
         features = originalG(torch.cat([src_imgs, target_imgs], dim=0))
         logits, gbridge = originalC(features, return_bridge=True)
         dlogits, dbridge = originalD(
@@ -315,9 +325,9 @@ class TestGVB(unittest.TestCase):
         total_loss += correct_loss
         total_loss /= 4
 
-        d_opts[0].zero_grad()
+        d_opts.zero_grad()
         total_loss.backward()
-        d_opts[0].step()
+        d_opts.step()
 
         dlogits, dbridge = originalD(
             torch.nn.functional.softmax(logits, dim=1), return_bridge=True
@@ -370,11 +380,9 @@ class TestGVB(unittest.TestCase):
         total_loss += correct_loss
 
         total_loss /= 7
-        g_opts[0].zero_grad()
-        g_opts[1].zero_grad()
+        [x.zero_grad() for x in g_opts.values()]
         total_loss.backward()
-        g_opts[0].step()
-        g_opts[1].step()
+        [x.step() for x in g_opts.values()]
 
         for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
             self.assertTrue(
