@@ -132,8 +132,8 @@ class TestSymNets(unittest.TestCase):
         originalG = copy.deepcopy(G)
         originalC = copy.deepcopy(C)
 
-        c_opts = get_opts(C)
-        g_opts = get_opts(G)
+        c_opts = get_opts({"C": C})
+        g_opts = get_opts({"G": G})
 
         src_labels = torch.randint(0, num_classes, size=(batch_size,))
         models = {"G": G, "C": C}
@@ -143,10 +143,10 @@ class TestSymNets(unittest.TestCase):
             "src_labels": src_labels,
         }
         outputs = {}
-        h = SymNetsHook(c_opts, g_opts)
+        h = SymNetsHook(list(c_opts.keys()), list(g_opts.keys()))
         model_counts = validate_hook(h, list(data.keys()))
 
-        losses, outputs = h({}, {**models, **data})
+        losses, outputs = h({}, {**models, **c_opts, **g_opts, **data})
         self.assertTrue(G.count == model_counts["G"] == 2)
         self.assertTrue(
             C.models[0].count == C.models[1].count == model_counts["C"] == 4
@@ -187,8 +187,8 @@ class TestSymNets(unittest.TestCase):
             }
         )
 
-        c_opts = get_opts(originalC)
-        g_opts = get_opts(originalG)
+        c_opts = get_opts({"C": originalC})["C_opt"]
+        g_opts = get_opts({"G": originalG})["G_opt"]
 
         src_features = originalG(src_imgs)
         src_logits = originalC(src_features)
@@ -207,9 +207,9 @@ class TestSymNets(unittest.TestCase):
             np.isclose(total_loss.item(), losses["c_loss"]["total"], rtol=1e-4)
         )
 
-        c_opts[0].zero_grad()
+        c_opts.zero_grad()
         total_loss.backward()
-        c_opts[0].step()
+        c_opts.step()
 
         d1_loss = get_correct_domain_loss(
             originalG, originalC, src_imgs, target_imgs, num_classes, "target", 1
@@ -230,9 +230,9 @@ class TestSymNets(unittest.TestCase):
         self.assertTrue(
             np.isclose(total_loss.item(), losses["g_loss"]["total"], rtol=1e-4)
         )
-        g_opts[0].zero_grad()
+        g_opts.zero_grad()
         total_loss.backward()
-        g_opts[0].step()
+        g_opts.step()
 
         for x, y in [(G, originalG), (C, originalC)]:
             self.assertTrue(

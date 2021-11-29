@@ -159,8 +159,8 @@ class TestRTN(unittest.TestCase):
         originalC = copy.deepcopy(C)
         originalR = copy.deepcopy(residual_layers)
 
-        opts = get_opts(G, C, residual_model)
-        h = RTNHook(opts)
+        opts = get_opts({"G": G, "C": C, "residual_model": residual_model})
+        h = RTNHook(list(opts.keys()))
         models = {
             "G": G,
             "C": C,
@@ -174,7 +174,7 @@ class TestRTN(unittest.TestCase):
         }
         model_counts = validate_hook(h, list(data.keys()))
 
-        losses, outputs = h({}, {**models, **data})
+        losses, outputs = h({}, {**models, **opts, **data})
         assertRequiresGrad(self, outputs)
         self.assertTrue(
             outputs.keys()
@@ -201,7 +201,7 @@ class TestRTN(unittest.TestCase):
             G.count == model_counts["G"] == C.count == model_counts["C"] == 2
         )
 
-        opts = get_opts(originalG, originalC, originalR)
+        opts = get_opts({"G": originalG, "C": originalC, "residual_model": originalR})
 
         src_features = originalG(src_imgs)
         target_features = originalG(target_imgs)
@@ -223,9 +223,9 @@ class TestRTN(unittest.TestCase):
             )
         )
 
-        [x.zero_grad() for x in opts]
+        [x.zero_grad() for x in opts.values()]
         total_loss.backward()
-        [x.step() for x in opts]
+        [x.step() for x in opts.values()]
 
         for x, y in [(G, originalG), (C, originalC), (residual_layers, originalR)]:
             self.assertTrue(
