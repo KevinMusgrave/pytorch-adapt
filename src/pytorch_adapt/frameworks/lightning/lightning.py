@@ -1,7 +1,14 @@
 import pytorch_lightning as pl
 import torch
 
+from ...containers import Optimizers
 from .. import utils as f_utils
+
+
+def set_adapter_optimizers_to_pl(adapter, pl_optimizers):
+    if isinstance(adapter.optimizers, Optimizers):
+        keys = adapter.optimizers.keys()
+        adapter.optimizers = {k: v for k, v in zip(keys, pl_optimizers)}
 
 
 class Lightning(pl.LightningModule):
@@ -11,7 +18,6 @@ class Lightning(pl.LightningModule):
         self.misc = torch.nn.ModuleDict(adapter.misc)
         adapter.models = self.models
         adapter.misc = self.misc
-        self.optimizer_keys = sorted(adapter.optimizers.keys())
         self.validator = validator
         self.adapter = adapter
         self.automatic_optimization = False
@@ -20,10 +26,9 @@ class Lightning(pl.LightningModule):
         return self.adapter.inference(x, domain=domain)
 
     def training_step(self, batch, batch_idx):
-        optimizers = {k: v for k, v in zip(self.optimizer_keys, self.optimizers())}
+        set_adapter_optimizers_to_pl(self.adapter, self.optimizers())
         losses = self.adapter.training_step(
             batch,
-            optimizers=optimizers,
             custom_backward=self.manual_backward,
         )
         for k, v in losses.items():
@@ -33,7 +38,7 @@ class Lightning(pl.LightningModule):
         return f_utils.collector_step(self, batch, f_utils.create_output_dict)
 
     def configure_optimizers(self):
-        optimizers = [self.adapter.optimizers[k] for k in self.optimizer_keys]
+        optimizers = list(self.adapter.optimizers.values())
         lr_schedulers = []
         for interval in ["epoch", "step"]:
             for v in self.adapter.lr_schedulers.filter_by_scheduler_type(
