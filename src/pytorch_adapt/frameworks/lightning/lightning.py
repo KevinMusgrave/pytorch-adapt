@@ -19,9 +19,12 @@ class Lightning(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         optimizers = {k: v for k, v in zip(self.optimizer_keys, self.optimizers())}
+        batch["custom_backward"] = self.manual_backward
         losses = self.adapter.training_step(
             batch, models=self.models, optimizers=optimizers, misc=self.misc
         )
 
     def configure_optimizers(self):
-        return [self.adapter.optimizers[k] for k in self.optimizer_keys]
+        optimizers = [self.adapter.optimizers[k] for k in self.optimizer_keys]
+        del self.adapter.optimizers
+        return optimizers

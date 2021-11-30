@@ -345,11 +345,14 @@ def zero_loss():
     return torch.tensor(0, dtype=torch.float, requires_grad=True)
 
 
-def zero_back_step(loss, optimizers):
+def zero_back_step(loss, optimizers, custom_backward=None):
     for x in optimizers:
         x.zero_grad()
     if loss.grad_fn is not None:
-        loss.backward()
+        if custom_backward:
+            custom_backward(loss)
+        else:
+            loss.backward()
         for x in optimizers:
             x.step()
 
@@ -493,7 +496,7 @@ def assert_dicts_are_disjoint(*x):
         output.update(y)
         total_len += len(y)
     if len(output) != total_len:
-        raise KeyError(f"dicts have overlapping keys {overlap}")
+        raise KeyError(f"dicts have overlapping keys")
     return output
 
 

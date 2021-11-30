@@ -52,9 +52,9 @@ class OptimizerHook(BaseHook):
         outputs.update(new_outputs)
         loss, self.loss_components = self.weighter(losses)
         optimizers = self.optimizers
-        if isinstance(self.optimizers[0], str):
+        if isinstance(optimizers[0], str):
             optimizers = c_f.extract(inputs, optimizers)
-        c_f.zero_back_step(loss, optimizers)
+        c_f.zero_back_step(loss, optimizers, inputs.get("custom_backward"))
         return {}, outputs
 
     def _loss_keys(self):
