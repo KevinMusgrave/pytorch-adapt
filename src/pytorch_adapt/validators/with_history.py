@@ -173,6 +173,7 @@ class WithHistories(WithHistory):
         if not validator.return_sub_scores:
             raise ValueError("validator.return_sub_scores must be True")
         self.histories = {k: WithHistory(v) for k, v in validator.validators.items()}
+        pml_cf.add_to_recordable_attributes(self, list_of_names=["histories"])
 
     def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
         score, sub_scores = super().score(epoch, **kwargs)

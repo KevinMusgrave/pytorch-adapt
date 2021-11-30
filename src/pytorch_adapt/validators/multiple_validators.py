@@ -13,9 +13,7 @@ class MultipleValidators(BaseValidator):
         self.weights = c_f.default(weights, {k: 1 for k in self.validators.keys()})
         self.weights = c_f.enumerate_to_dict(self.weights)
         self.return_sub_scores = return_sub_scores
-        pml_cf.add_to_recordable_attributes(
-            self, list_of_names=["validators", "weights"]
-        )
+        pml_cf.add_to_recordable_attributes(self, list_of_names=["weights"])
 
     def _required_data(self):
         output = [v.required_data for v in self.validators.values()]

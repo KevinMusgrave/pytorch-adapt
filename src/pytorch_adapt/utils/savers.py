@@ -115,6 +115,18 @@ class AdapterSaver(BaseSaver):
 
 class ValidatorSaver(BaseSaver):
     def save(self, validator, prefix=""):
+        if is_multiple_histories(validator):
+            self.save_multiple(validator, prefix)
+        else:
+            self.save_single(validator, prefix)
+
+    def load(self, validator, prefix=""):
+        if is_multiple_histories(validator):
+            self.load_multiple(validator, prefix)
+        else:
+            self.load_single(validator, prefix)
+
+    def save_single(self, validator, prefix=""):
         # cast best_epoch from int64 to regular int so it can be json-parsed
         best_epoch = validator.best_epoch
         if best_epoch is not None:
@@ -129,10 +141,22 @@ class ValidatorSaver(BaseSaver):
             filename = c_f.class_as_prefix(validator, name, prefix=prefix)
             c_f.save_npy(getattr(validator, name), self.folder, f"{filename}.npy")
 
-    def load(self, validator, prefix=""):
+    def load_single(self, validator, prefix=""):
         for name in self.saveable_attrs:
             filename = c_f.class_as_prefix(validator, name, prefix=prefix)
             setattr(validator, name, c_f.load_npy(self.folder, f"{filename}.npy"))
+
+    def save_multiple(self, validator, prefix=""):
+        for k, v in validator.histories.items():
+            child_prefix = c_f.class_as_prefix(validator, k, prefix=prefix)
+            self.save_single(v, child_prefix)
+        self.save_single(validator, prefix)
+
+    def load_multiple(self, validator, prefix=""):
+        for k, v in validator.histories.items():
+            child_prefix = c_f.class_as_prefix(validator, k, prefix=prefix)
+            self.load_single(v, child_prefix)
+        self.load_single(validator, prefix)
 
     @property
     def saveable_attrs(self):
@@ -215,3 +239,10 @@ class Saver:
 
             if isinstance(framework, Ignite):
                 self.load_ignite(framework.trainer)
+
+
+def is_multiple_histories(validator):
+    # to avoid circular import
+    from ..validators.with_history import WithHistories
+
+    return isinstance(validator, WithHistories)
