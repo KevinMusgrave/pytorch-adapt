@@ -26,5 +26,12 @@ class Lightning(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizers = [self.adapter.optimizers[k] for k in self.optimizer_keys]
+        lr_schedulers = []
+        for interval in ["epoch", "step"]:
+            for v in self.adapter.lr_schedulers.filter_by_scheduler_type(
+                f"per_{interval}"
+            ):
+                lr_schedulers.append({"lr_scheduler": v, "interval": interval})
         del self.adapter.optimizers
-        return optimizers
+        del self.adapter.lr_schedulers
+        return optimizers, lr_schedulers

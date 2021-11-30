@@ -49,7 +49,12 @@ class LRSchedulers(BaseContainer):
             return [v for k, v in self.items() if k in self.scheduler_types[x]]
         elif x == "per_step":
             return self.values()
-        return []
+        elif x == "per_epoch":
+            return []
+        else:
+            raise ValueError(
+                f"scheduler types are 'per_step' or 'per_epoch', but input is '{x}'"
+            )
 
     def merge(self, other):
         super().merge(other)
