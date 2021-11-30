@@ -138,21 +138,17 @@ class TestMCD(unittest.TestCase):
                 originalG = copy.deepcopy(G)
                 originalC = copy.deepcopy(C)
 
-                models = {
-                    "G": G,
-                    "C": C,
-                }
-                opts = get_opts(models)
+                opts = get_opts(G, C)
 
                 repeat = 5
 
                 h = MCDHook(
-                    g_opts=["G_opt"],
-                    c_opts=["C_opt"],
-                    repeat=repeat,
-                    discrepancy_loss_fn=loss_fn,
+                    [opts[0]], [opts[1]], repeat=repeat, discrepancy_loss_fn=loss_fn
                 )
-
+                models = {
+                    "G": G,
+                    "C": C,
+                }
                 data = {
                     "src_imgs": src_imgs,
                     "target_imgs": target_imgs,
@@ -161,7 +157,7 @@ class TestMCD(unittest.TestCase):
                 model_counts = validate_hook(h, list(data.keys()))
 
                 torch.manual_seed(seed)
-                losses, outputs = h({}, {**models, **opts, **data})
+                losses, outputs = h({}, {**models, **data})
                 assertRequiresGrad(self, outputs)
                 self.assertTrue(
                     outputs.keys()
@@ -191,7 +187,7 @@ class TestMCD(unittest.TestCase):
                 self.assertTrue(C.models[0].count == model_counts["C"])
                 self.assertTrue(C.models[1].count == model_counts["C"])
 
-                opts = get_opts({"G": originalG, "C": originalC})
+                opts = get_opts(originalG, originalC)
 
                 torch.manual_seed(seed)
                 ## x ##
@@ -211,9 +207,9 @@ class TestMCD(unittest.TestCase):
                     )
                 )
 
-                [x.zero_grad() for x in opts.values()]
+                [x.zero_grad() for x in opts]
                 total_loss.backward()
-                [x.step() for x in opts.values()]
+                [x.step() for x in opts]
 
                 ## y ##
                 src_features = originalG(src_imgs)
@@ -236,9 +232,9 @@ class TestMCD(unittest.TestCase):
                     )
                 )
 
-                opts["C_opt"].zero_grad()
+                opts[1].zero_grad()
                 total_loss.backward()
-                opts["C_opt"].step()
+                opts[1].step()
 
                 ## z ##
                 for _ in range(repeat):
@@ -251,9 +247,9 @@ class TestMCD(unittest.TestCase):
                         losses["z_loss"][k] for k in ["discrepancy_loss", "total"]
                     ]
 
-                    opts["G_opt"].zero_grad()
+                    opts[0].zero_grad()
                     total_loss.backward()
-                    opts["G_opt"].step()
+                    opts[0].step()
 
                 self.assertTrue(
                     all(x == y for x, y in zip(correct_losses, computed_losses))

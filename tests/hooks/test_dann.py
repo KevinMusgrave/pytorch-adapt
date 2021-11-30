@@ -55,17 +55,17 @@ class TestDANN(unittest.TestCase):
                     originalC = copy.deepcopy(C)
                     originalD = copy.deepcopy(D)
 
-                    models = {"G": G, "D": D, "C": C}
-                    opts = get_opts(models)
+                    opts = get_opts(G, C, D)
                     post_g_ = [post_g] if post_g is not None else post_g
                     hook_kwargs = {
-                        "opts": list(opts.keys()),
+                        "opts": opts,
                         "post_g": post_g_,
                     }
                     if hook_cls in [DANNEHook, CDANNEHook]:
                         hook_kwargs["detach_entropy_reducer"] = detach_reducer
                     h = hook_cls(**hook_kwargs)
 
+                    models = {"G": G, "D": D, "C": C}
                     if hook_cls is CDANNEHook:
                         feature_combiner = RandomizedDotProduct([16, 10], 16)
                         originalFeatureCombiner = copy.deepcopy(feature_combiner)
@@ -80,7 +80,7 @@ class TestDANN(unittest.TestCase):
                     }
                     model_counts = validate_hook(h, list(data.keys()))
 
-                    losses, outputs = h({}, {**models, **opts, **data})
+                    losses, outputs = h({}, {**models, **data})
                     assertRequiresGrad(self, outputs)
 
                     output_keys = {
@@ -164,7 +164,7 @@ class TestDANN(unittest.TestCase):
                         == 2
                     )
 
-                    opts = get_opts({"G": originalG, "D": originalD, "C": originalC})
+                    opts = get_opts(originalD, originalG, originalC)
 
                     grl = GradientReversal()
                     src_features = originalG(src_imgs)
@@ -250,9 +250,9 @@ class TestDANN(unittest.TestCase):
                     self.assertTrue(
                         np.isclose(total_loss.item(), losses["total_loss"]["total"])
                     )
-                    [x.zero_grad() for x in opts.values()]
+                    [x.zero_grad() for x in opts]
                     total_loss.backward()
-                    [x.step() for x in opts.values()]
+                    [x.step() for x in opts]
 
                     for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
                         self.assertTrue(
