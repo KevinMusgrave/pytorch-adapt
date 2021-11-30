@@ -3,7 +3,7 @@ import unittest
 
 import torch
 
-from pytorch_adapt.validators import BaseValidator, WithHistory
+from pytorch_adapt.validators import BaseValidator, ScoreHistory
 
 from .. import TEST_FOLDER
 from .get_dann import get_dann
@@ -42,7 +42,7 @@ class TestCustomInference(unittest.TestCase):
             dann, datasets = get_dann(inference)
             dataset_size = len(datasets["src_val"])
 
-            validator = WithHistory(
+            validator = ScoreHistory(
                 CustomAccuracyValidator(self, torch.Size([dataset_size, dim_size]))
             )
             dann.validator = validator

@@ -56,25 +56,25 @@ from .utils import get_gcd
 
 def common_log_files():
     return {
-        "validator_WithHistory": {
+        "validator_ScoreHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_WithHistories": {
+        "stat_getter_ScoreHistories": {
             "latest_score",
             "best_score",
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_WithHistories_histories_src_train_WithHistory": {
+        "stat_getter_ScoreHistories_histories_src_train_ScoreHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_WithHistories_histories_src_val_WithHistory": {
+        "stat_getter_ScoreHistories_histories_src_val_ScoreHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",

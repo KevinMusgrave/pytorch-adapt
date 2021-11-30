@@ -243,6 +243,6 @@ class Saver:
 
 def is_multiple_histories(validator):
     # to avoid circular import
-    from ..validators.with_history import WithHistories
+    from ..validators.score_history import ScoreHistories
 
-    return isinstance(validator, WithHistories)
+    return isinstance(validator, ScoreHistories)

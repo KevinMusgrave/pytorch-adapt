@@ -9,7 +9,7 @@ from pytorch_adapt.validators import (
     EntropyValidator,
     IMValidator,
     MultipleValidators,
-    WithHistory,
+    ScoreHistory,
 )
 
 
@@ -48,8 +48,8 @@ class TestEntropyDiversity(unittest.TestCase):
                     },
                     key_map={"target_val": "target_train"},
                 )
-                validator = WithHistory(validator, ignore_epoch=ignore_epoch)
-                validator2 = WithHistory(
+                validator = ScoreHistory(validator, ignore_epoch=ignore_epoch)
+                validator2 = ScoreHistory(
                     IMValidator(layer=layer, key_map={"target_val": "target_train"}),
                     ignore_epoch=ignore_epoch,
                 )

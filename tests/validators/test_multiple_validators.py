@@ -6,8 +6,8 @@ from pytorch_adapt.validators import (
     AccuracyValidator,
     IMValidator,
     MultipleValidators,
-    WithHistories,
-    WithHistory,
+    ScoreHistories,
+    ScoreHistory,
 )
 
 
@@ -19,7 +19,7 @@ class TestMultipleValidators(unittest.TestCase):
 
         for i, weights in enumerate([None, [1, 5]]):
             validator_ = MultipleValidators([v1, v2], weights)
-            for wh in [WithHistory, WithHistories]:
+            for wh in [ScoreHistory, ScoreHistories]:
                 validator = wh(validator_)
                 required_data = validator.required_data
                 self.assertTrue(set(required_data) == {"target_train", "src_val"})

@@ -13,7 +13,7 @@ from pytorch_adapt.datasets import (
     TargetDataset,
 )
 from pytorch_adapt.frameworks.ignite import Ignite, IgnitePredsAsFeatures
-from pytorch_adapt.validators import SNDValidator, WithHistory
+from pytorch_adapt.validators import ScoreHistory, SNDValidator
 
 from .. import TEST_DEVICE
 
@@ -38,7 +38,7 @@ class TestSNDValidator(unittest.TestCase):
                 for dataset_size in [10, 100, 1000, 10000]:
                     for num_classes in [13, 23, 98]:
                         validator = SNDValidator(T=T, batch_size=batch_size)
-                        validator = WithHistory(validator, ignore_epoch=ignore_epoch)
+                        validator = ScoreHistory(validator, ignore_epoch=ignore_epoch)
                         all_scores = []
                         for epoch in [0, 1, 2]:
                             logits = torch.randn(
@@ -81,7 +81,7 @@ class TestSNDValidator(unittest.TestCase):
             optimizers = Optimizers((torch.optim.Adam, {"lr": 0}))
             adapter = wrapper_type(
                 Classifier(models=models, optimizers=optimizers),
-                validator=WithHistory(SNDValidator()),
+                validator=ScoreHistory(SNDValidator()),
             )
             score, _ = adapter.run(
                 {"train": train_dataset, "target_train": target_train},

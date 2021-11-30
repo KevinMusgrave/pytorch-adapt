@@ -9,7 +9,7 @@ from ..utils import common_functions as c_f
 from .multiple_validators import MultipleValidators
 
 
-class WithHistory(ABC):
+class ScoreHistory(ABC):
     """
     The parent class of all validators.
 
@@ -165,13 +165,13 @@ class WithHistory(ABC):
         )
 
 
-class WithHistories(WithHistory):
+class ScoreHistories(ScoreHistory):
     def __init__(self, validator, **kwargs):
         super().__init__(validator=validator, **kwargs)
         if not isinstance(validator, MultipleValidators):
             raise TypeError("validator must be of type MultipleValidators")
         validator.return_sub_scores = True
-        self.histories = {k: WithHistory(v) for k, v in validator.validators.items()}
+        self.histories = {k: ScoreHistory(v) for k, v in validator.validators.items()}
         pml_cf.add_to_recordable_attributes(self, list_of_names=["histories"])
 
     def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:

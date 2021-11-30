@@ -10,8 +10,8 @@ from pytorch_adapt.validators import (
     AccuracyValidator,
     EntropyValidator,
     MultipleValidators,
-    WithHistories,
-    WithHistory,
+    ScoreHistories,
+    ScoreHistory,
 )
 
 from .utils import get_datasets
@@ -21,14 +21,14 @@ from .utils import get_datasets
 def run_adapter(cls, test_folder, adapter, log_files=None):
     saver = savers.Saver(folder=test_folder)
     datasets = get_datasets()
-    validator = WithHistory(EntropyValidator())
+    validator = ScoreHistory(EntropyValidator())
     stat_getter = MultipleValidators(
         {
             "src_train": AccuracyValidator(key_map={"src_train": "src_val"}),
             "src_val": AccuracyValidator(),
         },
     )
-    stat_getter = WithHistories(stat_getter)
+    stat_getter = ScoreHistories(stat_getter)
     logger = IgniteRecordKeeperLogger(folder=test_folder)
     adapter = Ignite(
         adapter,

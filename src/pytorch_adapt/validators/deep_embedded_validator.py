@@ -16,7 +16,7 @@ from ..utils import common_functions as c_f
 from ..utils.savers import Saver
 from .accuracy_validator import AccuracyValidator
 from .base_validator import BaseValidator
-from .with_history import WithHistory
+from .score_history import ScoreHistory
 
 
 class DeepEmbeddedValidator(BaseValidator):
@@ -167,7 +167,7 @@ def get_weights(
         validator = AccuracyValidator(
             torchmetric_kwargs={"average": "macro", "num_classes": 2}
         )
-        validator = WithHistory(validator)
+        validator = ScoreHistory(validator)
         saver = Saver(folder=curr_folder)
         trainer = framework_cls(
             trainer, validator=validator, saver=saver, with_pbars=False

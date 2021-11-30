@@ -8,6 +8,6 @@ from .im_validator import IMValidator
 
 # from .knn_validator import ClusterValidator, KNNValidator
 from .multiple_validators import MultipleValidators
+from .score_history import ScoreHistories, ScoreHistory
 from .silhouette_score_validator import SilhouetteScoreValidator
 from .snd_validator import SNDValidator
-from .with_history import WithHistories, WithHistory

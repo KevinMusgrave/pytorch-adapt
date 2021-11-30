@@ -3,13 +3,13 @@ import unittest
 import numpy as np
 import torch
 
-from pytorch_adapt.validators import ErrorValidator, WithHistory
+from pytorch_adapt.validators import ErrorValidator, ScoreHistory
 from pytorch_adapt.validators.utils import max_normalizer
 
 
 class TestMaxNormalizer(unittest.TestCase):
     def test_max_normalizer(self):
-        se = WithHistory(ErrorValidator(), normalizer=max_normalizer)
+        se = ScoreHistory(ErrorValidator(), normalizer=max_normalizer)
         labels = torch.ones(10, dtype=int)
         logits = torch.randn(10, 2)
         logits[0, 1] -= 2000
