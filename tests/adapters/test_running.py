@@ -56,13 +56,13 @@ from .utils import get_gcd
 
 def common_log_files():
     return {
-        "validator_EntropyValidator": {
+        "validator_WithHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_AccuracyValidator": {
+        "stat_getter_WithHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",

@@ -5,27 +5,31 @@ import numpy as np
 
 from pytorch_adapt.containers.base_container import containers_are_equal
 from pytorch_adapt.utils import exceptions, savers
-from pytorch_adapt.validators import AccuracyValidator, MultipleValidators
+from pytorch_adapt.validators import AccuracyValidator, MultipleValidators, WithHistory
 
 from .. import TEST_FOLDER
 from .get_dann import get_dann
 
 
 def get_stat_getter():
-    return MultipleValidators(
-        [
-            AccuracyValidator(key_map={"src_train": "src_val"}),
-            AccuracyValidator(),
-        ]
+    return WithHistory(
+        MultipleValidators(
+            [
+                AccuracyValidator(key_map={"src_train": "src_val"}),
+                AccuracyValidator(),
+            ]
+        )
     )
 
 
 def get_validator():
-    return MultipleValidators(
-        [
-            AccuracyValidator(),
-            AccuracyValidator(),
-        ]
+    return WithHistory(
+        MultipleValidators(
+            [
+                AccuracyValidator(),
+                AccuracyValidator(),
+            ]
+        )
     )
 
 

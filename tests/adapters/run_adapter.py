@@ -6,7 +6,7 @@ from pathlib import Path
 
 from pytorch_adapt.frameworks.ignite import Ignite, IgniteRecordKeeperLogger
 from pytorch_adapt.utils import savers
-from pytorch_adapt.validators import AccuracyValidator, EntropyValidator
+from pytorch_adapt.validators import AccuracyValidator, EntropyValidator, WithHistory
 
 from .utils import get_datasets
 
@@ -15,8 +15,8 @@ from .utils import get_datasets
 def run_adapter(cls, test_folder, adapter, log_files=None):
     saver = savers.Saver(folder=test_folder)
     datasets = get_datasets()
-    validator = EntropyValidator()
-    stat_getter = AccuracyValidator()
+    validator = WithHistory(EntropyValidator())
+    stat_getter = WithHistory(AccuracyValidator())
     logger = IgniteRecordKeeperLogger(folder=test_folder)
     adapter = Ignite(
         adapter,

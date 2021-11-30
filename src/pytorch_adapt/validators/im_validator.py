@@ -10,8 +10,10 @@ class IMValidator(MultipleValidators):
     """
 
     def __init__(self, weights=None, **kwargs):
+        layer = kwargs.pop("layer", None)
+        inner_kwargs = {} if not layer else {"layer": layer}
         validators = {
-            "entropy": EntropyValidator(**kwargs),
-            "diversity": DiversityValidator(**kwargs),
+            "entropy": EntropyValidator(**inner_kwargs),
+            "diversity": DiversityValidator(**inner_kwargs),
         }
         super().__init__(validators=validators, weights=weights, **kwargs)

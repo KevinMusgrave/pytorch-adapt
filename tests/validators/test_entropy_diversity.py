@@ -7,6 +7,7 @@ from pytorch_adapt.layers import DiversityLoss, EntropyLoss
 from pytorch_adapt.validators import (
     DiversityValidator,
     EntropyValidator,
+    IMValidator,
     MultipleValidators,
     WithHistory,
 )
@@ -45,8 +46,13 @@ class TestEntropyDiversity(unittest.TestCase):
                         "entropy": EntropyValidator(layer=layer),
                         "diversity": DiversityValidator(layer=layer),
                     },
+                    key_map={"target_val": "target_train"},
                 )
                 validator = WithHistory(validator, ignore_epoch=ignore_epoch)
+                validator2 = WithHistory(
+                    IMValidator(layer=layer, key_map={"target_val": "target_train"}),
+                    ignore_epoch=ignore_epoch,
+                )
 
                 if layer == "preds":
                     [logits1, logits2, logits3] = [
@@ -54,23 +60,31 @@ class TestEntropyDiversity(unittest.TestCase):
                     ]
                 else:
                     [logits1, logits2, logits3] = [_logits1, _logits2, _logits3]
-                score1 = validator.score(epoch=0, target_train={layer: logits1})
-                score2 = validator.score(epoch=1, target_train={layer: logits2})
-                score3 = validator.score(epoch=2, target_train={layer: logits3})
-                results.append([score1, score2, score3])
-                self.assertTrue(score3 > score2 > score1)
+
+                score1, score2, score3 = [], [], []
+                for v in [validator, validator2]:
+                    score1.append(v.score(epoch=0, target_val={layer: logits1}))
+                    score2.append(v.score(epoch=1, target_val={layer: logits2}))
+                    score3.append(v.score(epoch=2, target_val={layer: logits3}))
+
+                v1_scores, v2_scores = list(zip(score1, score2, score3))
+
+                results.append(v1_scores)
+                self.assertTrue(v1_scores[2] > v1_scores[1] > v1_scores[0])
                 if ignore_epoch is None:
                     self.assertTrue(validator.best_epoch == 2)
-                    self.assertTrue(validator.best_score == score3)
+                    self.assertTrue(validator.best_score == v1_scores[2])
                 else:
                     self.assertTrue(validator.best_epoch == 1)
-                    self.assertTrue(validator.best_score == score2)
+                    self.assertTrue(validator.best_score == v1_scores[1])
+
+                self.assertTrue(all(v1 == v2 for v1, v2 in zip(v1_scores, v2_scores)))
 
                 for idx, (score, logits) in enumerate(
                     [
-                        (score1, logits1),
-                        (score2, logits2),
-                        (score3, logits3),
+                        (v1_scores[0], logits1),
+                        (v1_scores[1], logits2),
+                        (v1_scores[2], logits3),
                     ]
                 ):
                     after_softmax = layer == "preds"

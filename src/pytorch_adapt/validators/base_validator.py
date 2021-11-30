@@ -56,6 +56,9 @@ class BaseValidator(ABC):
             )
         return c_f.map_keys(kwargs, self.key_map)
 
+    def __repr__(self):
+        return c_f.nice_repr(self, self.extra_repr(), {})
+
     def extra_repr(self):
         return c_f.extra_repr(self, ["required_data"])
 
