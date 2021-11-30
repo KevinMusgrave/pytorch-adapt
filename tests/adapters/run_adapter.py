@@ -27,7 +27,6 @@ def run_adapter(cls, test_folder, adapter, log_files=None):
             "src_train": AccuracyValidator(key_map={"src_train": "src_val"}),
             "src_val": AccuracyValidator(),
         },
-        return_sub_scores=True,
     )
     stat_getter = WithHistories(stat_getter)
     logger = IgniteRecordKeeperLogger(folder=test_folder)

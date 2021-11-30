@@ -170,8 +170,7 @@ class WithHistories(WithHistory):
         super().__init__(validator=validator, **kwargs)
         if not isinstance(validator, MultipleValidators):
             raise TypeError("validator must be of type MultipleValidators")
-        if not validator.return_sub_scores:
-            raise ValueError("validator.return_sub_scores must be True")
+        validator.return_sub_scores = True
         self.histories = {k: WithHistory(v) for k, v in validator.validators.items()}
         pml_cf.add_to_recordable_attributes(self, list_of_names=["histories"])
 

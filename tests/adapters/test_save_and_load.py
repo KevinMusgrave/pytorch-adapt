@@ -23,7 +23,6 @@ def get_stat_getter():
                 AccuracyValidator(key_map={"src_train": "src_val"}),
                 AccuracyValidator(),
             ],
-            return_sub_scores=True,
         )
     )
 
@@ -35,7 +34,6 @@ def get_validator():
                 AccuracyValidator(),
                 AccuracyValidator(),
             ],
-            return_sub_scores=True,
         )
     )
 
@@ -115,7 +113,6 @@ class TestSaveAndLoad(unittest.TestCase):
                     AccuracyValidator(),
                     AccuracyValidator(),
                 ],
-                return_sub_scores=True,
             )
         )
 
