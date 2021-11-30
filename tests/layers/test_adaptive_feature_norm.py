@@ -41,6 +41,7 @@ class TestAdaptiveFeatureNorm(unittest.TestCase):
             self.assertTrue(torch.allclose(grad1, grad2))
 
     def test_l2_preserved_dropout(self):
+        torch.manual_seed(5435)
         for p in np.linspace(0.1, 0.9, 9):
             regular = torch.nn.Dropout(p=p)
             l2_preserved = L2PreservedDropout(p=p)
