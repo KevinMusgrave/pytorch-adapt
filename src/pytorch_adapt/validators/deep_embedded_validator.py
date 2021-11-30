@@ -15,7 +15,8 @@ from ..models import Discriminator
 from ..utils import common_functions as c_f
 from ..utils.savers import Saver
 from .accuracy_validator import AccuracyValidator
-from .base_validator import BaseValidator, WithHistory
+from .base_validator import BaseValidator
+from .with_history import WithHistory
 
 
 class DeepEmbeddedValidator(BaseValidator):
