@@ -1,5 +1,5 @@
 from .accuracy_validator import AccuracyValidator
-from .base_validator import BaseValidator
+from .base_validator import BaseValidator, WithHistory
 from .deep_embedded_validator import DeepEmbeddedValidator
 from .diversity_validator import DiversityValidator
 from .entropy_validator import EntropyValidator

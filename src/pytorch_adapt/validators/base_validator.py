@@ -10,26 +10,9 @@ from ..utils import common_functions as c_f
 
 
 class BaseValidator(ABC):
-    """
-    The parent class of all validators.
-
-    The main purpose of validators is to give an estimate
-    of target domain accuracy, without having access to
-    class labels.
-    """
-
-    def __init__(
-        self,
-        normalizer: Callable[[np.ndarray], np.ndarray] = None,
-        key_map: Dict[str, str] = None,
-        ignore_epoch: int = 0,
-    ):
+    def __init__(self, key_map: Dict[str, str] = None):
         """
         Arguments:
-            normalizer: A function that receives the current unnormalized
-                score history, and returns a normalized version of the
-                score history. If ```None```, then it defaults to
-                no normalization.
             key_map: A mapping from ```<new_split_names>``` to
                 ```<original_split_names>```. For example,
                 [```AccuracyValidator```][pytorch_adapt.validators.AccuracyValidator]
@@ -38,20 +21,8 @@ class BaseValidator(ABC):
                 indicates that data related to the ```src_val``` split should be retrieved.
                 If you instead want to compute accuracy for the ```src_train``` split,
                 you would set the ```key_map``` to ```{"src_train": "src_val"}```.
-            ignore_epoch: This epoch will ignored when determining
-                the best scoring epoch. The default of 0 is meant to be
-                reserved for the initial model (before training has begun).
         """
-        self.normalizer = c_f.default(normalizer, return_raw)
-        self.score_history = np.array([])
-        self.raw_score_history = np.array([])
-        self.epochs = np.array([], dtype=int)
         self.key_map = c_f.default(key_map, {})
-        self.ignore_epoch = ignore_epoch
-        pml_cf.add_to_recordable_attributes(
-            self,
-            list_of_names=["latest_score", "best_score", "latest_epoch", "best_epoch"],
-        )
 
     def _required_data(self):
         args = inspect.getfullargspec(self.compute_score).args
@@ -74,6 +45,61 @@ class BaseValidator(ABC):
     def compute_score(self):
         pass
 
+    def score(self, **kwargs):
+        kwargs = self.kwargs_check(kwargs)
+        return self.compute_score(**kwargs)
+
+    def kwargs_check(self, kwargs):
+        if kwargs.keys() != set(self.required_data):
+            raise ValueError(
+                f"Input to compute_score has keys = {kwargs.keys()} but should have keys {self.required_data}"
+            )
+        return c_f.map_keys(kwargs, self.key_map)
+
+    def extra_repr(self):
+        return c_f.extra_repr(
+            self, ["required_data"]
+        )
+
+
+
+
+class WithHistory(ABC):
+    """
+    The parent class of all validators.
+
+    The main purpose of validators is to give an estimate
+    of target domain accuracy, without having access to
+    class labels.
+    """
+
+    def __init__(
+        self,
+        fn,
+        normalizer: Callable[[np.ndarray], np.ndarray] = None,
+        ignore_epoch: int = 0,
+    ):
+        """
+        Arguments:
+            normalizer: A function that receives the current unnormalized
+                score history, and returns a normalized version of the
+                score history. If ```None```, then it defaults to
+                no normalization.
+            ignore_epoch: This epoch will ignored when determining
+                the best scoring epoch. The default of 0 is meant to be
+                reserved for the initial model (before training has begun).
+        """
+        self.fn = fn
+        self.normalizer = c_f.default(normalizer, return_raw)
+        self.score_history = np.array([])
+        self.raw_score_history = np.array([])
+        self.epochs = np.array([], dtype=int)
+        self.ignore_epoch = ignore_epoch
+        pml_cf.add_to_recordable_attributes(
+            self,
+            list_of_names=["latest_score", "best_score", "latest_epoch", "best_epoch"],
+        )
+
     def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
         """
         Arguments:
@@ -87,19 +113,11 @@ class BaseValidator(ABC):
                 - ```"domain"```
                 - ```"src_labels"``` (if available)
         """
-        kwargs = self.kwargs_check(epoch, kwargs)
-        score = self.compute_score(**kwargs)
-        self.append_to_history_and_normalize(score, epoch)
-        return self.latest_score
-
-    def kwargs_check(self, epoch, kwargs):
         if epoch in self.epochs:
             raise ValueError(f"Epoch {epoch} has already been evaluated")
-        if kwargs.keys() != set(self.required_data):
-            raise ValueError(
-                f"Input to compute_score has keys = {kwargs.keys()} but should have keys {self.required_data}"
-            )
-        return c_f.map_keys(kwargs, self.key_map)
+        score = self.fn.score(**kwargs)
+        self.append_to_history_and_normalize(score, epoch)
+        return self.latest_score
 
     def append_to_history_and_normalize(self, score, epoch):
         self.raw_score_history = np.append(self.raw_score_history, score)
@@ -202,7 +220,7 @@ class BaseValidator(ABC):
 
     def extra_repr(self):
         return c_f.extra_repr(
-            self, ["latest_score", "best_score", "best_epoch", "required_data"]
+            self, ["fn", "latest_score", "best_score", "best_epoch"]
         )
 
 

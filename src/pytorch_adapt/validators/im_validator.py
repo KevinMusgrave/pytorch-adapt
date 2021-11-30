@@ -9,6 +9,9 @@ class IMValidator(MultipleValidators):
     and [DiversityValidator][pytorch_adapt.validators.diversity_validator]
     """
 
-    def __init__(self, **kwargs):
-        validators = {"entropy": EntropyValidator(), "diversity": DiversityValidator()}
-        super().__init__(validators=validators, **kwargs)
+    def __init__(self, weights=None, **kwargs):
+        validators = {
+            "entropy": EntropyValidator(**kwargs),
+            "diversity": DiversityValidator(**kwargs),
+        }
+        super().__init__(validators=validators, weights=weights, **kwargs)
