@@ -488,10 +488,13 @@ def dicts_are_overlapping(x, y, return_overlap=False):
 
 
 def assert_dicts_are_disjoint(*x):
-    for a, b in itertools.combinations(x, 2):
-        is_overlap, overlap = dicts_are_overlapping(a, b, True)
-        if is_overlap:
-            raise KeyError(f"dicts have overlapping keys {overlap}")
+    output, total_len = {}, 0
+    for y in x:
+        output.update(y)
+        total_len += len(y)
+    if len(output) != total_len:
+        raise KeyError(f"dicts have overlapping keys {overlap}")
+    return output
 
 
 def extract_progress(compressed_obj):

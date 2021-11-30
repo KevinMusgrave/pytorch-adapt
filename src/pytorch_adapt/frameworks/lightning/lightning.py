@@ -19,7 +19,9 @@ class Lightning(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         optimizers = {k: v for k, v in zip(self.optimizer_keys, self.optimizers())}
-        losses = self.adapter.training_step(batch, models=self.models, misc=self.misc)
+        losses = self.adapter.training_step(
+            batch, models=self.models, optimizers=optimizers, misc=self.misc
+        )
 
     def configure_optimizers(self):
         return [self.adapter.optimizers[k] for k in self.optimizer_keys]
