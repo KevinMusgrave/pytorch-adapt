@@ -62,7 +62,19 @@ def common_log_files():
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_WithHistory": {
+        "stat_getter_WithHistories": {
+            "latest_score",
+            "best_score",
+            "latest_epoch",
+            "best_epoch",
+        },
+        "stat_getter_WithHistories_histories_src_train_WithHistory": {
+            "latest_score",
+            "best_score",
+            "latest_epoch",
+            "best_epoch",
+        },
+        "stat_getter_WithHistories_histories_src_val_WithHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",
