@@ -61,7 +61,12 @@ class WithHistory(ABC):
         if epoch in self.epochs:
             raise ValueError(f"Epoch {epoch} has already been evaluated")
         score = self.validator.score(**kwargs)
+        sub_scores = None
+        if isinstance(score, (list, tuple)):
+            score, sub_scores = score
         self.append_to_history_and_normalize(score, epoch)
+        if sub_scores:
+            return self.latest_score, sub_scores
         return self.latest_score
 
     def append_to_history_and_normalize(self, score, epoch):
@@ -165,23 +170,20 @@ class WithHistories(WithHistory):
         super().__init__(validator=validator, **kwargs)
         if not isinstance(validator, MultipleValidators):
             raise TypeError("validator must be of type MultipleValidators")
-
-        for_history = validator.validators
-        if "MultipleValidators" in for_history:
-            raise KeyError(
-                "'MultipleValidators' is a reserved key when using WithHistories"
-            )
-        for_history["MultipleValidators"] = validator
-
-        self.histories = {k: WithHistory(v) for k, v in for_history}
+        if not validator.return_sub_scores:
+            raise ValueError("validator.return_sub_scores must be True")
+        self.histories = {k: WithHistory(v) for k, v in validator.validators.items()}
 
     def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
-        super().score(epoch, **kwargs)
-        for v in self.histories.items():
-            v.score(epoch, **kwargs)
+        score, sub_scores = super().score(epoch, **kwargs)
+        for k, v in self.histories.items():
+            v.append_to_history_and_normalize(sub_scores[k], epoch)
+        return score
 
     def extra_repr(self):
-        return c_f.extra_repr(self, ["histories"])
+        x = super().extra_repr()
+        x += f"\n{c_f.extra_repr(self, ['histories'])}"
+        return x
 
 
 def remove_ignore_epoch(x, epochs, ignore_epoch):
