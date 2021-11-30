@@ -100,7 +100,6 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
             target_train = {"features": features}
 
             score = validator.score(
-                epoch=epoch,
                 src_train=src_train,
                 src_val=src_val,
                 target_train=target_train,

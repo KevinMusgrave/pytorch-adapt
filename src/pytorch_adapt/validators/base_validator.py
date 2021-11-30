@@ -57,11 +57,7 @@ class BaseValidator(ABC):
         return c_f.map_keys(kwargs, self.key_map)
 
     def extra_repr(self):
-        return c_f.extra_repr(
-            self, ["required_data"]
-        )
-
-
+        return c_f.extra_repr(self, ["required_data"])
 
 
 class WithHistory(ABC):
@@ -75,7 +71,7 @@ class WithHistory(ABC):
 
     def __init__(
         self,
-        fn,
+        validator,
         normalizer: Callable[[np.ndarray], np.ndarray] = None,
         ignore_epoch: int = 0,
     ):
@@ -89,7 +85,7 @@ class WithHistory(ABC):
                 the best scoring epoch. The default of 0 is meant to be
                 reserved for the initial model (before training has begun).
         """
-        self.fn = fn
+        self.validator = validator
         self.normalizer = c_f.default(normalizer, return_raw)
         self.score_history = np.array([])
         self.raw_score_history = np.array([])
@@ -115,7 +111,7 @@ class WithHistory(ABC):
         """
         if epoch in self.epochs:
             raise ValueError(f"Epoch {epoch} has already been evaluated")
-        score = self.fn.score(**kwargs)
+        score = self.validator.score(**kwargs)
         self.append_to_history_and_normalize(score, epoch)
         return self.latest_score
 
@@ -168,11 +164,7 @@ class WithHistory(ABC):
             Returns ```None``` if no valid epochs are available.
         """
         if self.has_valid_history():
-            return (
-                np.nanargmax(self.score_history_ignore_epoch)
-                if self.maximize
-                else np.nanargmin(self.score_history_ignore_epoch)
-            )
+            return np.nanargmax(self.score_history_ignore_epoch)
 
     @property
     def latest_epoch(self) -> int:
@@ -207,20 +199,15 @@ class WithHistory(ABC):
         return False
 
     @property
-    def maximize(self) -> bool:
-        """
-        Returns:
-            ```True``` if a higher validation score indicates a better model.
-            The default is ```True```.
-        """
-        return True
+    def required_data(self):
+        return self.validator.required_data
 
     def __repr__(self):
         return c_f.nice_repr(self, self.extra_repr(), {})
 
     def extra_repr(self):
         return c_f.extra_repr(
-            self, ["fn", "latest_score", "best_score", "best_epoch"]
+            self, ["validator", "latest_score", "best_score", "best_epoch"]
         )
 
 

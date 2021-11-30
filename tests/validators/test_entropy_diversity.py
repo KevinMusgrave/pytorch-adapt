@@ -8,6 +8,7 @@ from pytorch_adapt.validators import (
     DiversityValidator,
     EntropyValidator,
     MultipleValidators,
+    WithHistory,
 )
 
 
@@ -44,8 +45,8 @@ class TestEntropyDiversity(unittest.TestCase):
                         "entropy": EntropyValidator(layer=layer),
                         "diversity": DiversityValidator(layer=layer),
                     },
-                    ignore_epoch=ignore_epoch,
                 )
+                validator = WithHistory(validator, ignore_epoch=ignore_epoch)
 
                 if layer == "preds":
                     [logits1, logits2, logits3] = [
