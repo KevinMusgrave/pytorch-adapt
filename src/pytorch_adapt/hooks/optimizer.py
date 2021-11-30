@@ -51,7 +51,10 @@ class OptimizerHook(BaseHook):
         losses, new_outputs = self.reducer(losses, {**inputs, **outputs})
         outputs.update(new_outputs)
         loss, self.loss_components = self.weighter(losses)
-        c_f.zero_back_step(loss, self.optimizers)
+        optimizers = self.optimizers
+        if isinstance(self.optimizers[0], str):
+            optimizers = c_f.extract(inputs, optimizers)
+        c_f.zero_back_step(loss, optimizers)
         return {}, outputs
 
     def _loss_keys(self):
