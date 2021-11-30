@@ -9,6 +9,7 @@ class Lightning(pl.LightningModule):
         self.misc = torch.nn.ModuleDict(adapter.misc)
         del adapter.models
         del adapter.misc
+        self.optimizer_keys = sorted(adapter.optimizers.keys())
         self.validator = validator
         self.adapter = adapter
         self.automatic_optimization = False
@@ -17,10 +18,8 @@ class Lightning(pl.LightningModule):
         return self.adapter.inference(x, domain=domain)
 
     def training_step(self, batch, batch_idx):
-        optimizers = self.optimizers()
-        print(self.adapter.hook)
+        optimizers = {k: v for k, v in zip(self.optimizer_keys, self.optimizers())}
         losses = self.adapter.training_step(batch, models=self.models, misc=self.misc)
 
     def configure_optimizers(self):
-        keys = sorted(self.adapter.optimizers.keys())
-        return [self.adapter.optimizers[k] for k in keys]
+        return [self.adapter.optimizers[k] for k in self.optimizer_keys]

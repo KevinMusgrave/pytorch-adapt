@@ -43,10 +43,6 @@ class OptimizerHook(BaseHook):
         self.weighter = c_f.default(weighter, MeanWeighter, {})
         self.reducer = c_f.default(reducer, MeanReducer, {})
         self.loss_components = {}
-        if not isinstance(optimizer_names, (list, tuple)):
-            raise TypeError("optimizer_names must be a list of strings")
-        if not all(isinstance(x, str) for x in optimizer_names):
-            raise TypeError("optimizer_names must be strings")
 
     def call(self, losses, inputs):
         """"""
@@ -55,7 +51,9 @@ class OptimizerHook(BaseHook):
         losses, new_outputs = self.reducer(losses, {**inputs, **outputs})
         outputs.update(new_outputs)
         loss, self.loss_components = self.weighter(losses)
-        optimizers = c_f.extract(inputs, self.optimizer_names)
+        optimizers = self.optimizers
+        if isinstance(self.optimizers[0], str):
+            optimizers = c_f.extract(inputs, optimizers)
         c_f.zero_back_step(loss, optimizers)
         return {}, outputs
 
