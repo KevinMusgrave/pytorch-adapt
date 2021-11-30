@@ -17,10 +17,15 @@ class TestLightning(unittest.TestCase):
         models = get_gcd()
         adapter = DANN(models)
         validator = IMValidator()
+        datasets = {
+            k: v
+            for k, v in datasets.items()
+            if k in ["train"] + validator.required_data
+        }
         adapter = Lightning(adapter, validator=validator)
-        trainer = pl.Trainer(gpus=1, max_epochs=1, max_steps=5, log_every_n_steps=1)
+        trainer = pl.Trainer(gpus=1, max_epochs=1, log_every_n_steps=1)
 
         dataloaders = DataloaderCreator(num_workers=2)(**datasets)
-        trainer.fit(adapter, dataloaders["train"])
+        trainer.fit(adapter, dataloaders["train"], dataloaders["target_train"])
 
         shutil.rmtree("lightning_logs")

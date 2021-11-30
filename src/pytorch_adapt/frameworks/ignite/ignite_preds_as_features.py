@@ -1,5 +1,3 @@
-import torch
-
 from ...utils import common_functions as c_f
 from .. import utils as f_utils
 from .ignite import Ignite

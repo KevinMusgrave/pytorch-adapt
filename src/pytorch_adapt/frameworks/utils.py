@@ -1,7 +1,5 @@
 import torch
 
-from ..utils import common_functions as c_f
-
 
 def create_output_dict(features, logits):
     return {
@@ -13,9 +11,7 @@ def create_output_dict(features, logits):
 
 def create_output_dict_preds_as_features(features, logits):
     if not torch.allclose(features, logits):
-        raise ValueError(
-            f"features and logits should be equal when using {c_f.cls_name(self)}"
-        )
+        raise ValueError(f"features and logits should be equal")
     return {
         "features": features,
         "preds": features,

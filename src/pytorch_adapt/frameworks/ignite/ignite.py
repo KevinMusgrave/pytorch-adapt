@@ -1,5 +1,4 @@
 import ignite.distributed as idist
-import torch
 from ignite.engine import Engine, Events
 from ignite.handlers import TerminateOnNan
 

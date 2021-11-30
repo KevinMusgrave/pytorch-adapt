@@ -59,13 +59,11 @@ class BaseAdapter(ABC):
         self.init_hook(hook_kwargs)
         self.inference = c_f.class_default(self, inference, self.inference_default)
 
-    def training_step(self, batch, models=None, optimizers=None, misc=None, **kwargs):
-        models = c_f.default(models, getattr, [self, "models"])
+    def training_step(self, batch, optimizers=None, **kwargs):
         optimizers = c_f.default(optimizers, getattr, [self, "optimizers"])
-        misc = c_f.default(misc, getattr, [self, "misc"])
         optimizers = with_opt(optimizers)
         combined = c_f.assert_dicts_are_disjoint(
-            models, misc, optimizers, batch, kwargs
+            self.models, self.misc, optimizers, batch, kwargs
         )
         losses, _ = self.hook({}, combined)
         return losses

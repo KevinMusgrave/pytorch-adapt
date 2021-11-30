@@ -8,7 +8,6 @@ from ..hooks import (
     GANHook,
     VADAHook,
 )
-from ..utils import common_functions as c_f
 from .base_adapter import BaseGCDAdapter
 from .utils import with_opt
 
