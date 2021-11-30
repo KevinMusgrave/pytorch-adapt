@@ -25,14 +25,14 @@ class TestReducers(unittest.TestCase):
             target_domain,
         ) = get_models_and_data()
 
-        models = {"G": G, "C": C, "D": D}
-        opts = get_opts(models)
+        opts = get_opts(G, D, C)
 
         originalG = copy.deepcopy(G)
         originalD = copy.deepcopy(D)
         originalC = copy.deepcopy(C)
-        original_opts = get_opts({"G": originalG, "D": originalD, "C": originalC})
+        original_opts = get_opts(originalG, originalD, originalC)
 
+        models = {"G": G, "C": C, "D": D}
         data = {
             "src_imgs": src_imgs,
             "target_imgs": target_imgs,
@@ -54,9 +54,9 @@ class TestReducers(unittest.TestCase):
                 losses, outputs = h1({}, {**models, **data})
                 losses, outputs = h2(losses, {**models, **outputs})
 
-                [x.zero_grad() for x in opts.values()]
+                [x.zero_grad() for x in opts]
                 losses["target_domain_loss"].backward()
-                [x.step() for x in opts.values()]
+                [x.step() for x in opts]
 
                 context = torch.no_grad() if detach_weights else nullcontext()
 
@@ -88,9 +88,9 @@ class TestReducers(unittest.TestCase):
                     torch.isclose(correct_loss, losses["target_domain_loss"], rtol=1e-3)
                 )
 
-                [x.zero_grad() for x in original_opts.values()]
+                [x.zero_grad() for x in original_opts]
                 correct_loss.backward()
-                [x.step() for x in original_opts.values()]
+                [x.step() for x in original_opts]
 
                 for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
                     self.assertTrue(

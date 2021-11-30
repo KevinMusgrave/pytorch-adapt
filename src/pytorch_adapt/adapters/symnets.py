@@ -1,7 +1,6 @@
 from ..hooks import SymNetsHook
 from ..utils.common_functions import check_domain
 from .base_adapter import BaseGCAdapter
-from .utils import with_opt
 
 
 class SymNets(BaseGCAdapter):
@@ -19,5 +18,5 @@ class SymNets(BaseGCAdapter):
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(
-            g_opts=with_opt(["G"]), c_opts=with_opt(["C"]), **hook_kwargs
+            g_opts=[self.optimizers["G"]], c_opts=[self.optimizers["C"]], **hook_kwargs
         )

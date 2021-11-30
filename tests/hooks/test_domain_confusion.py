@@ -19,12 +19,12 @@ class TestDomainConfusion(unittest.TestCase):
             src_domain,
             target_domain,
         ) = get_models_and_data(d_out=2)
-        d_opts = {"D_opt": torch.optim.SGD(D.parameters(), lr=0.1)}
-        g_opts = {
-            "G_opt": torch.optim.SGD(G.parameters(), lr=0.1),
-            "C_opt": torch.optim.SGD(C.parameters(), lr=0.1),
-        }
-        h = DomainConfusionHook(d_opts=list(d_opts.keys()), g_opts=list(g_opts.keys()))
+        d_opts = [torch.optim.SGD(D.parameters(), lr=0.1)]
+        g_opts = [
+            torch.optim.SGD(G.parameters(), lr=0.1),
+            torch.optim.SGD(C.parameters(), lr=0.1),
+        ]
+        h = DomainConfusionHook(d_opts=d_opts, g_opts=g_opts)
         models = {"G": G, "D": D, "C": C}
         data = {
             "src_imgs": src_imgs,
@@ -36,7 +36,7 @@ class TestDomainConfusion(unittest.TestCase):
         model_counts = validate_hook(h, list(data.keys()))
 
         for _ in range(10):
-            losses, outputs = h({}, {**models, **d_opts, **g_opts, **data})
+            losses, outputs = h({}, {**models, **data})
             assertRequiresGrad(self, outputs)
             self.assertTrue(
                 outputs.keys()

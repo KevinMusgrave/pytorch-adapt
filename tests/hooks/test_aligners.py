@@ -31,11 +31,9 @@ class TestAligners(unittest.TestCase):
                 originalG = copy.deepcopy(G)
                 originalC = copy.deepcopy(C)
 
-                opts = get_opts({"G": G, "C": C})
+                opts = get_opts(G, C)
                 aligner_hook = JointAlignerHook() if joint else None
-                h = AlignerPlusCHook(
-                    list(opts.keys()), aligner_hook=aligner_hook, loss_fn=loss_fn()
-                )
+                h = AlignerPlusCHook(opts, aligner_hook=aligner_hook, loss_fn=loss_fn())
                 models = {"G": G, "D": D, "C": C}
                 data = {
                     "src_imgs": src_imgs,
@@ -44,7 +42,7 @@ class TestAligners(unittest.TestCase):
                 }
                 model_counts = validate_hook(h, list(data.keys()))
 
-                losses, outputs = h({}, {**models, **opts, **data})
+                losses, outputs = h({}, {**models, **data})
                 assertRequiresGrad(self, outputs)
                 self.assertTrue(
                     outputs.keys()
@@ -76,7 +74,7 @@ class TestAligners(unittest.TestCase):
                     G.count == model_counts["G"] == C.count == model_counts["C"] == 2
                 )
 
-                opts = get_opts({"G": originalG, "C": originalC})
+                opts = get_opts(originalG, originalC)
 
                 src_features = originalG(src_imgs)
                 target_features = originalG(target_imgs)
@@ -118,9 +116,9 @@ class TestAligners(unittest.TestCase):
                     )
                 )
 
-                [x.zero_grad() for x in opts.values()]
+                [x.zero_grad() for x in opts]
                 total_loss.backward()
-                [x.step() for x in opts.values()]
+                [x.step() for x in opts]
 
                 for x, y in [(G, originalG), (C, originalC)]:
                     self.assertTrue(

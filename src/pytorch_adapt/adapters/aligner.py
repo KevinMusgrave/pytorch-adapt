@@ -1,7 +1,6 @@
 from ..hooks import AlignerPlusCHook, RTNHook
 from ..utils.common_functions import check_domain
 from .base_adapter import BaseGCAdapter
-from .utils import with_opt
 
 
 class Aligner(BaseGCAdapter):
@@ -12,8 +11,7 @@ class Aligner(BaseGCAdapter):
     hook_cls = AlignerPlusCHook
 
     def init_hook(self, hook_kwargs):
-        opts = with_opt(list(self.optimizers.keys()))
-        self.hook = self.hook_cls(opts, **hook_kwargs)
+        self.hook = self.hook_cls(opts=list(self.optimizers.values()), **hook_kwargs)
 
 
 class RTN(Aligner):

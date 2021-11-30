@@ -10,7 +10,6 @@ from ..hooks import (
 )
 from ..utils import common_functions as c_f
 from .base_adapter import BaseGCDAdapter
-from .utils import with_opt
 
 
 class GAN(BaseGCDAdapter):
@@ -21,8 +20,8 @@ class GAN(BaseGCDAdapter):
     hook_cls = GANHook
 
     def init_hook(self, hook_kwargs):
-        g_opts = with_opt(["G", "C"])
-        d_opts = with_opt(["D"])
+        g_opts = c_f.extract(self.optimizers, ["G", "C"])
+        d_opts = [self.optimizers["D"]]
         self.hook = self.hook_cls(d_opts=d_opts, g_opts=g_opts, **hook_kwargs)
 
 

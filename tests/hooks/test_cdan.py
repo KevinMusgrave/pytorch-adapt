@@ -172,8 +172,8 @@ class TestCDAN(unittest.TestCase):
                     src_domain,
                     target_domain,
                 ) = get_models_and_data()
-                d_opts = get_opts({"D": D})
-                g_opts = get_opts({"G": G, "C": C})
+                d_opts = get_opts(D)
+                g_opts = get_opts(G, C)
                 feature_combiner = RandomizedDotProduct([16, 10], fc_out_size)
 
                 originalG = copy.deepcopy(G)
@@ -192,13 +192,13 @@ class TestCDAN(unittest.TestCase):
                 post_g_ = [post_g] if post_g is not None else post_g
                 hook = CDANEHook(
                     detach_entropy_reducer=detach_reducer,
-                    d_opts=list(d_opts.keys()),
-                    g_opts=list(g_opts.keys()),
+                    d_opts=d_opts,
+                    g_opts=g_opts,
                     softmax=softmax,
                     post_g=post_g_,
                 )
                 model_counts = validate_hook(hook, list(data.keys()))
-                losses, outputs = hook({}, {**models, **d_opts, **g_opts, **data})
+                losses, outputs = hook({}, {**models, **data})
                 assertRequiresGrad(self, outputs)
 
                 output_keys = {
@@ -236,8 +236,8 @@ class TestCDAN(unittest.TestCase):
                 )
                 self.assertTrue(D.count == model_counts["D"] == 4)
 
-                d_opts = get_opts({"D": originalD})["D_opt"]
-                g_opts = get_opts({"G": originalG, "C": originalC})
+                d_opts = get_opts(originalD)
+                g_opts = get_opts(originalG, originalC)
 
                 bs = 100
                 (
@@ -277,9 +277,9 @@ class TestCDAN(unittest.TestCase):
                     )
                 )
                 total_loss = sum(v for v in d_losses.values()) / len(d_losses)
-                d_opts.zero_grad()
+                d_opts[0].zero_grad()
                 total_loss.backward()
-                d_opts.step()
+                d_opts[0].step()
 
                 (
                     features,
@@ -334,9 +334,9 @@ class TestCDAN(unittest.TestCase):
                 self.assertTrue(
                     np.isclose(total_loss.item(), losses["g_loss"]["total"])
                 )
-                [x.zero_grad() for x in g_opts.values()]
+                [x.zero_grad() for x in g_opts]
                 total_loss.backward()
-                [x.step() for x in g_opts.values()]
+                [x.step() for x in g_opts]
 
                 for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
                     self.assertTrue(

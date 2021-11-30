@@ -71,10 +71,8 @@ def get_models_and_data(with_batch_norm=False, d_out=1, d_uses_logits=False):
     return G, C, D, src_imgs, src_labels, target_imgs, src_domain, target_domain
 
 
-def get_opts(models):
-    return {
-        f"{k}_opt": torch.optim.SGD(v.parameters(), lr=0.1) for k, v in models.items()
-    }
+def get_opts(*models):
+    return [torch.optim.SGD(m.parameters(), lr=0.1) for m in models]
 
 
 def post_g_hook_update_keys(post_g, loss_keys, output_keys):
