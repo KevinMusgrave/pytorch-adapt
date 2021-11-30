@@ -29,6 +29,18 @@ class Lightning(pl.LightningModule):
         for k, v in losses.items():
             self.log(k, v)
 
+    # def validation_step(self, batch, batch_idx, dataloader_idx):
+    #     # batch is 1/num_gpus big
+    #     dataset = curr_dataloader.dataset
+    #     domain = f_utils.get_domain(dataset)
+    #     f_utils.collector_step(inference, batch, name)
+
+    #     return collector_step
+
+    # def get_collector(self, dataset):
+
+    #     return self.get_collector_step(inference, domain)
+
     def configure_optimizers(self):
         optimizers = [self.adapter.optimizers[k] for k in self.optimizer_keys]
         lr_schedulers = []

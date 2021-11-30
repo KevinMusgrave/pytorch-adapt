@@ -5,6 +5,7 @@ from ignite.handlers import TerminateOnNan
 
 from ...datasets import DataloaderCreator
 from ...utils import common_functions as c_f
+from .. import utils as f_utils
 from . import utils as i_g
 from .loggers import IgniteEmptyLogger
 
@@ -86,20 +87,10 @@ class Ignite:
         )
 
     def collector_init(self):
-        self.labeled_collector = Engine(
-            self.get_labeled_collector_step(self.adapter.inference)
-        )
-        self.unlabeled_collector = Engine(
-            self.get_unlabeled_collector_step(self.adapter.inference)
-        )
-        i_g.set_loggers_and_pbars(self, ["labeled_collector", "unlabeled_collector"])
+        self.collector = Engine(self.get_collector_step(self.adapter.inference))
+        i_g.set_loggers_and_pbars(self, ["collector"])
         i_g.register(
-            self.labeled_collector,
-            Events.EPOCH_STARTED,
-            self.set_to_eval(self.adapter.models),
-        )
-        i_g.register(
-            self.unlabeled_collector,
+            self.collector,
             Events.EPOCH_STARTED,
             self.set_to_eval(self.adapter.models),
         )
@@ -223,42 +214,12 @@ class Ignite:
         )
         return i_g.get_validation_score(collected_data, validator, epoch)
 
-    def create_output_dict(self, features, logits):
-        return {
-            "features": features,
-            "logits": logits,
-            "preds": torch.softmax(logits, dim=1),
-        }
-
-    def get_x_collector_step(self, inference, name):
+    def get_collector_step(self, inference):
         def collector_step(engine, batch):
-            with torch.no_grad():
-                batch = c_f.batch_to_device(batch, self.device)
-                features, logits = inference(
-                    batch[f"{name}_imgs"], domain=batch[f"{name}_domain"]
-                )
-            output = self.create_output_dict(features, logits)
-            output["domain"] = batch[f"{name}_domain"]
-            labels_key = f"{name}_labels"
-            if labels_key in batch:
-                output["labels"] = batch[labels_key]
-            return output
+            batch = c_f.batch_to_device(batch, self.device)
+            return f_utils.collector_step(inference, batch, f_utils.create_output_dict)
 
         return collector_step
-
-    def get_labeled_collector_step(self, inference):
-        return self.get_x_collector_step(inference, "src")
-
-    def get_unlabeled_collector_step(self, inference):
-        return self.get_x_collector_step(inference, "target")
-
-    def get_collector(self, dataset):
-        dataset_output = dataset[0]
-        return (
-            self.labeled_collector
-            if len(dataset_output) == 4
-            else self.unlabeled_collector
-        )
 
     def set_to_train(self, models):
         def handler(engine):
