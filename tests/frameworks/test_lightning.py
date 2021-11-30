@@ -23,9 +23,9 @@ class TestLightning(unittest.TestCase):
             if k in ["train"] + validator.required_data
         }
         adapter = Lightning(adapter, validator=validator)
-        trainer = pl.Trainer(gpus=1, max_epochs=1, log_every_n_steps=1)
+        trainer = pl.Trainer(gpus=1, max_epochs=2, log_every_n_steps=1)
 
         dataloaders = DataloaderCreator(num_workers=2)(**datasets)
         trainer.fit(adapter, dataloaders["train"], dataloaders["target_train"])
 
-        shutil.rmtree("lightning_logs")
+        # shutil.rmtree("lightning_logs")
