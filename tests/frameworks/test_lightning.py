@@ -28,4 +28,4 @@ class TestLightning(unittest.TestCase):
         dataloaders = DataloaderCreator(num_workers=2)(**datasets)
         trainer.fit(adapter, dataloaders["train"], dataloaders["target_train"])
 
-        # shutil.rmtree("lightning_logs")
+        shutil.rmtree("lightning_logs")

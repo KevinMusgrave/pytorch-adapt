@@ -115,13 +115,13 @@ class AdapterSaver(BaseSaver):
 
 class ValidatorSaver(BaseSaver):
     def save(self, validator, prefix=""):
-        if is_multiple_validator(validator):
+        if is_multiple_histories(validator):
             self.save_multiple(validator, prefix)
         else:
             self.save_single(validator, prefix)
 
     def load(self, validator, prefix=""):
-        if is_multiple_validator(validator):
+        if is_multiple_histories(validator):
             self.load_multiple(validator, prefix)
         else:
             self.load_single(validator, prefix)
@@ -147,13 +147,13 @@ class ValidatorSaver(BaseSaver):
             setattr(validator, name, c_f.load_npy(self.folder, f"{filename}.npy"))
 
     def save_multiple(self, validator, prefix=""):
-        for k, v in validator.validators.items():
+        for k, v in validator.histories.items():
             child_prefix = c_f.class_as_prefix(validator, k, prefix=prefix)
             self.save_single(v, child_prefix)
         self.save_single(validator, prefix)
 
     def load_multiple(self, validator, prefix=""):
-        for k, v in validator.validators.items():
+        for k, v in validator.histories.items():
             child_prefix = c_f.class_as_prefix(validator, k, prefix=prefix)
             self.load_single(v, child_prefix)
         self.load_single(validator, prefix)
@@ -241,8 +241,8 @@ class Saver:
                 self.load_ignite(framework.trainer)
 
 
-def is_multiple_validator(validator):
-    # must do this shit to avoid circular import -_-
-    from ..validators.multiple_validators import MultipleValidators
+def is_multiple_histories(validator):
+    # to avoid circular import
+    from ..validators.score_history import ScoreHistories
 
-    return isinstance(validator, MultipleValidators)
+    return isinstance(validator, ScoreHistories)

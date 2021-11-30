@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from sklearn.metrics import accuracy_score
 
-from pytorch_adapt.validators import AccuracyValidator
+from pytorch_adapt.validators import AccuracyValidator, ScoreHistory
 
 
 class TestAccuracyValidator(unittest.TestCase):
@@ -14,7 +14,8 @@ class TestAccuracyValidator(unittest.TestCase):
 
         for start in [-1, 0, 1]:
             for step in [1, 2]:
-                validator = AccuracyValidator(ignore_epoch=ignore_epoch)
+                validator = AccuracyValidator()
+                validator = ScoreHistory(validator, ignore_epoch=ignore_epoch)
                 correct_scores = []
                 for i, epoch in enumerate(range(start, 5, step)):
                     labels = torch.randint(0, 10, (dataset_size,))

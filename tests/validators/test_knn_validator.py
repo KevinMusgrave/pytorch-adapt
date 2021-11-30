@@ -2,6 +2,7 @@ import unittest
 
 import torch
 
+from pytorch_adapt.validators import ScoreHistory
 from pytorch_adapt.validators.knn_validator import ClusterValidator, KNNValidator
 
 from .. import TEST_DEVICE
@@ -10,8 +11,8 @@ from .. import TEST_DEVICE
 class TestKNNValidator(unittest.TestCase):
     def test_knn_validator(self):
         torch.cuda.empty_cache()
-        knn_validator = KNNValidator()
-        cluster_validator = ClusterValidator()
+        knn_validator = ScoreHistory(KNNValidator())
+        cluster_validator = ScoreHistory(ClusterValidator())
         for epoch in [1, 2]:
             for validator in [knn_validator, cluster_validator]:
                 dataset_size = 10000
