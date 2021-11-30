@@ -1,7 +1,7 @@
 from ..containers import MultipleContainers, Optimizers
 from ..hooks import ClassifierHook, FinetunerHook
 from .base_adapter import BaseGCAdapter
-from .utils import default_optimizer_tuple
+from .utils import default_optimizer_tuple, with_opt
 
 
 class Classifier(BaseGCAdapter):
@@ -12,7 +12,8 @@ class Classifier(BaseGCAdapter):
     hook_cls = ClassifierHook
 
     def init_hook(self, hook_kwargs):
-        self.hook = self.hook_cls(opts=list(self.optimizers.values()), **hook_kwargs)
+        opts = with_opt(list(self.optimizers.keys()))
+        self.hook = self.hook_cls(opts=opts, **hook_kwargs)
 
 
 class Finetuner(Classifier):

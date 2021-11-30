@@ -59,12 +59,12 @@ class TestGAN(unittest.TestCase):
                     originalC = copy.deepcopy(C)
                     originalD = copy.deepcopy(D)
 
-                    d_opts = get_opts(D)
-                    g_opts = get_opts(G, C)
+                    d_opts = get_opts({"D": D})
+                    g_opts = get_opts({"G": G, "C": C})
                     post_g_ = [post_g] if post_g is not None else post_g
                     hook_kwargs = {
-                        "d_opts": d_opts,
-                        "g_opts": g_opts,
+                        "d_opts": list(d_opts.keys()),
+                        "g_opts": list(g_opts.keys()),
                         "post_g": post_g_,
                     }
                     if hook_cls is GANEHook:
@@ -81,7 +81,7 @@ class TestGAN(unittest.TestCase):
                     model_counts = validate_hook(h, list(data.keys()))
 
                     torch.manual_seed(seed)
-                    losses, outputs = h({}, {**models, **data})
+                    losses, outputs = h({}, {**models, **d_opts, **g_opts, **data})
                     assertRequiresGrad(self, outputs)
 
                     output_keys = {
@@ -147,8 +147,8 @@ class TestGAN(unittest.TestCase):
                     self.assertTrue(G.count == model_counts["G"])
                     self.assertTrue(D.count == model_counts["D"])
 
-                    d_opts = get_opts(originalD)
-                    g_opts = get_opts(originalG, originalC)
+                    d_opts = get_opts({"D": originalD})["D_opt"]
+                    g_opts = get_opts({"G": originalG, "C": originalC})
 
                     torch.manual_seed(seed)
                     src_features = originalG(src_imgs)
@@ -194,9 +194,9 @@ class TestGAN(unittest.TestCase):
                     )
                     total_loss = (d_src_domain_loss + d_target_domain_loss) / 2
                     self.assertTrue(total_loss == losses["d_loss"]["total"])
-                    d_opts[0].zero_grad()
+                    d_opts.zero_grad()
                     total_loss.backward()
-                    d_opts[0].step()
+                    d_opts.step()
 
                     src_dlogits = originalD(src_features)
                     target_dlogits = originalD(target_features)
@@ -267,11 +267,9 @@ class TestGAN(unittest.TestCase):
                     self.assertTrue(
                         np.isclose(total_loss.item(), losses["g_loss"]["total"])
                     )
-                    g_opts[0].zero_grad()
-                    g_opts[1].zero_grad()
+                    [x.zero_grad() for x in g_opts.values()]
                     total_loss.backward()
-                    g_opts[0].step()
-                    g_opts[1].step()
+                    [x.step() for x in g_opts.values()]
 
                     for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
                         self.assertTrue(

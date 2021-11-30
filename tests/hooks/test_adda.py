@@ -44,11 +44,14 @@ class TestADDA(unittest.TestCase):
                 originalG = copy.deepcopy(G)
                 originalD = copy.deepcopy(D)
                 originalT = copy.deepcopy(T)
-                d_opts = get_opts(D)
-                g_opts = get_opts(T)
+                d_opts = get_opts({"D": D})
+                g_opts = get_opts({"T": T})
                 post_g_ = [post_g] if post_g is not None else post_g
                 h = ADDAHook(
-                    d_opts=d_opts, g_opts=g_opts, threshold=threshold, post_g=post_g_
+                    d_opts=list(d_opts.keys()),
+                    g_opts=list(g_opts.keys()),
+                    threshold=threshold,
+                    post_g=post_g_,
                 )
                 models = {"G": G, "D": D, "T": T}
                 data = {
@@ -58,7 +61,7 @@ class TestADDA(unittest.TestCase):
                     "target_domain": target_domain,
                 }
                 model_counts = validate_hook(h, list(data.keys()))
-                losses, outputs = h({}, {**models, **data})
+                losses, outputs = h({}, {**models, **d_opts, **g_opts, **data})
                 assertRequiresGrad(self, outputs)
                 output_keys = {
                     "src_imgs_features_detached",
@@ -78,8 +81,8 @@ class TestADDA(unittest.TestCase):
                 )
                 self.assertTrue(losses["g_loss"].keys() == g_loss_keys)
 
-                d_opts = get_opts(originalD)[0]
-                g_opts = get_opts(originalT)[0]
+                d_opts = get_opts({"D": originalD})["D_opt"]
+                g_opts = get_opts({"T": originalT})["T_opt"]
                 originalG.eval()
                 with torch.no_grad():
                     src_features = originalG(src_imgs)
