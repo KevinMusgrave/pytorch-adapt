@@ -128,7 +128,7 @@ train_loader = dataloaders.pop("train")
 
 L_adapter = Lightning(adapter, validator=validator)
 trainer = pl.Trainer(gpus=1, max_epochs=1)
-trainer.fit(L_adapter, train_loader, *dataloaders.values())
+trainer.fit(L_adapter, train_loader, list(dataloaders.values()))
 ```
 
 #### Ignite
