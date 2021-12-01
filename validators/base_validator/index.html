@@ -2316,55 +2316,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_epoch" class="md-nav__link">
-    best_epoch
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_idx" class="md-nav__link">
-    best_idx
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_score" class="md-nav__link">
-    best_score
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_epoch" class="md-nav__link">
-    latest_epoch
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_is_best" class="md-nav__link">
-    latest_is_best
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_score" class="md-nav__link">
-    latest_score
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.maximize" class="md-nav__link">
-    maximize
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pytorch_adapt.validators.base_validator.BaseValidator.required_data" class="md-nav__link">
     required_data
   </a>
@@ -2374,13 +2325,6 @@
           <li class="md-nav__item">
   <a href="#pytorch_adapt.validators.base_validator.BaseValidator.__init__" class="md-nav__link">
     __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.score" class="md-nav__link">
-    score()
   </a>
   
 </li>
@@ -2597,55 +2541,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_epoch" class="md-nav__link">
-    best_epoch
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_idx" class="md-nav__link">
-    best_idx
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_score" class="md-nav__link">
-    best_score
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_epoch" class="md-nav__link">
-    latest_epoch
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_is_best" class="md-nav__link">
-    latest_is_best
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_score" class="md-nav__link">
-    latest_score
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.maximize" class="md-nav__link">
-    maximize
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pytorch_adapt.validators.base_validator.BaseValidator.required_data" class="md-nav__link">
     required_data
   </a>
@@ -2655,13 +2550,6 @@
           <li class="md-nav__item">
   <a href="#pytorch_adapt.validators.base_validator.BaseValidator.__init__" class="md-nav__link">
     __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.base_validator.BaseValidator.score" class="md-nav__link">
-    score()
   </a>
   
 </li>
@@ -2732,10 +2620,6 @@
 
     <div class="doc doc-contents ">
 
-      <p>The parent class of all validators.</p>
-<p>The main purpose of validators is to give an estimate
-of target domain accuracy, without having access to
-class labels.</p>
 
 
 
@@ -2744,274 +2628,6 @@ class labels.</p>
 
 
 
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.best_epoch" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">best_epoch</span><span class="p">:</span> <span class="nb">int</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_epoch" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>The best epoch, ignoring <code>self.ignore_epoch</code>.
-Returns <code>None</code> if no valid epochs are available.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.best_idx" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">best_idx</span><span class="p">:</span> <span class="nb">int</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_idx" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>The index of the best score in <code>self.score_history_ignore_epoch</code>.
-Returns <code>None</code> if no valid epochs are available.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.best_score" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">best_score</span><span class="p">:</span> <span class="nb">float</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.best_score" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>float</code></td>
-      <td><p>The best score, ignoring <code>self.ignore_epoch</code>.
-Returns <code>None</code> if no valid scores are available.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.latest_epoch" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">latest_epoch</span><span class="p">:</span> <span class="nb">int</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_epoch" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>The latest epoch, including <code>self.ignore_epoch</code>.
-Returns <code>None</code> if no epochs have been scored.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.latest_is_best" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">latest_is_best</span><span class="p">:</span> <span class="nb">bool</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_is_best" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>bool</code></td>
-      <td><p><code>False</code> if the latest epoch was not the best
-scoring epoch, or if the latest epoch is <code>ignore_epoch</code>.
-<code>True</code> otherwise.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.latest_score" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">latest_score</span><span class="p">:</span> <span class="nb">float</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.latest_score" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>float</code></td>
-      <td><p>The latest score, including <code>self.ignore_epoch</code>.
-Returns <code>None</code> if no epochs have been scored.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.maximize" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">maximize</span><span class="p">:</span> <span class="nb">bool</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.maximize" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>bool</code></td>
-      <td><p><code>True</code> if a higher validation score indicates a better model.
-The default is <code>True</code>.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
 
 
 
@@ -3055,13 +2671,12 @@ The default is <code>True</code>.</p></td>
 
 
 
-
   <div class="doc doc-object doc-method">
 
 
 
 <h5 id="pytorch_adapt.validators.base_validator.BaseValidator.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_map</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -3084,15 +2699,6 @@ The default is <code>True</code>.</p></td>
   </thead>
   <tbody>
       <tr>
-        <td><code>normalizer</code></td>
-        <td><code>Callable[[numpy.ndarray], numpy.ndarray]</code></td>
-        <td><p>A function that receives the current unnormalized
-score history, and returns a normalized version of the
-score history. If <code>None</code>, then it defaults to
-no normalization.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
         <td><code>key_map</code></td>
         <td><code>Dict[str, str]</code></td>
         <td><p>A mapping from <code>&lt;new_split_names&gt;</code> to
@@ -3105,30 +2711,13 @@ If you instead want to compute accuracy for the <code>src_train</code> split,
 you would set the <code>key_map</code> to <code>{"src_train": "src_val"}</code>.</p></td>
         <td><code>None</code></td>
       </tr>
-      <tr>
-        <td><code>ignore_epoch</code></td>
-        <td><code>int</code></td>
-        <td><p>This epoch will ignored when determining
-the best scoring epoch. The default of 0 is meant to be
-reserved for the initial model (before training has begun).</p></td>
-        <td><code>0</code></td>
-      </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\validators\base_validator.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">normalizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">key_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">ignore_epoch</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-<span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        normalizer: A function that receives the current unnormalized</span>
-<span class="sd">            score history, and returns a normalized version of the</span>
-<span class="sd">            score history. If ```None```, then it defaults to</span>
-<span class="sd">            no normalization.</span>
 <span class="sd">        key_map: A mapping from ```&lt;new_split_names&gt;``` to</span>
 <span class="sd">            ```&lt;original_split_names&gt;```. For example,</span>
 <span class="sd">            [```AccuracyValidator```][pytorch_adapt.validators.AccuracyValidator]</span>
@@ -3137,20 +2726,8 @@ reserved for the initial model (before training has begun).</p></td>
 <span class="sd">            indicates that data related to the ```src_val``` split should be retrieved.</span>
 <span class="sd">            If you instead want to compute accuracy for the ```src_train``` split,</span>
 <span class="sd">            you would set the ```key_map``` to ```{&quot;src_train&quot;: &quot;src_val&quot;}```.</span>
-<span class="sd">        ignore_epoch: This epoch will ignored when determining</span>
-<span class="sd">            the best scoring epoch. The default of 0 is meant to be</span>
-<span class="sd">            reserved for the initial model (before training has begun).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">normalizer</span><span class="p">,</span> <span class="n">return_raw</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">score_history</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">raw_score_history</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">key_map</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">key_map</span><span class="p">,</span> <span class="p">{})</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">ignore_epoch</span> <span class="o">=</span> <span class="n">ignore_epoch</span>
-    <span class="n">pml_cf</span><span class="o">.</span><span class="n">add_to_recordable_attributes</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">list_of_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;latest_score&quot;</span><span class="p">,</span> <span class="s2">&quot;best_score&quot;</span><span class="p">,</span> <span class="s2">&quot;latest_epoch&quot;</span><span class="p">,</span> <span class="s2">&quot;best_epoch&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -3166,89 +2743,12 @@ reserved for the initial model (before training has begun).</p></td>
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.validators.base_validator.BaseValidator.score" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.validators.base_validator.BaseValidator.score" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>epoch</code></td>
-        <td><code>int</code></td>
-        <td><p>The epoch to be scored.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>**kwargs</code></td>
-        <td><code>Dict[str, torch.Tensor]</code></td>
-        <td><p>A mapping from dataset split name to
-dictionaries containing:</p>
-<ul>
-<li><code>"features"</code></li>
-<li><code>"logits"</code></li>
-<li><code>"preds"</code></li>
-<li><code>"domain"</code></li>
-<li><code>"src_labels"</code> (if available)</li>
-</ul></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\validators\base_validator.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Arguments:</span>
-<span class="sd">        epoch: The epoch to be scored.</span>
-<span class="sd">        **kwargs: A mapping from dataset split name to</span>
-<span class="sd">            dictionaries containing:</span>
-
-<span class="sd">            - ```&quot;features&quot;```</span>
-<span class="sd">            - ```&quot;logits&quot;```</span>
-<span class="sd">            - ```&quot;preds&quot;```</span>
-<span class="sd">            - ```&quot;domain&quot;```</span>
-<span class="sd">            - ```&quot;src_labels&quot;``` (if available)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs_check</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_score</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_history_and_normalize</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_score</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
 
   </div>
 
     </div>
 
   </div>
-
-
-
 
 
 

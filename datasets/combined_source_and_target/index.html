@@ -2712,8 +2712,7 @@ The source keys start with "src", and the target keys start with "target".</p></
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">target_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_src_idx</span><span class="p">()]</span>
-    <span class="n">c_f</span><span class="o">.</span><span class="n">assert_dicts_are_disjoint</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">src_data</span><span class="p">,</span> <span class="o">**</span><span class="n">target_data</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">c_f</span><span class="o">.</span><span class="n">assert_dicts_are_disjoint</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
