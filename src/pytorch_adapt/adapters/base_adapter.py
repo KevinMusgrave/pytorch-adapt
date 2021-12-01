@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..utils import common_functions as c_f
-from .utils import default_optimizer_tuple
+from .utils import default_optimizer_tuple, with_opt
 
 
 class BaseAdapter(ABC):
@@ -59,9 +59,11 @@ class BaseAdapter(ABC):
         self.init_hook(hook_kwargs)
         self.inference = c_f.class_default(self, inference, self.inference_default)
 
-    def training_step(self, batch, framework=None):
-        c_f.assert_dicts_are_disjoint(self.models, self.misc, batch)
-        losses, _ = self.hook({}, {**self.models, **self.misc, **batch})
+    def training_step(self, batch, **kwargs):
+        combined = c_f.assert_dicts_are_disjoint(
+            self.models, self.misc, with_opt(self.optimizers), batch, kwargs
+        )
+        losses, _ = self.hook({}, combined)
         return losses
 
     def inference_default(self, x, domain=None):

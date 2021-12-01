@@ -6,7 +6,7 @@ import torch
 from pytorch_adapt.datasets import DataloaderCreator
 from pytorch_adapt.meta_validators import ReverseValidator
 from pytorch_adapt.utils.savers import Saver
-from pytorch_adapt.validators import AccuracyValidator
+from pytorch_adapt.validators import AccuracyValidator, ScoreHistory
 
 from .. import TEST_FOLDER
 from ..adapters.get_dann import get_dann
@@ -20,7 +20,7 @@ def assert_perfect_forward(cls, forward_adapter, mv):
             dataset_name
         ]
         validator = AccuracyValidator()
-        score = validator.score(epoch=0, src_val=dataset_outputs)
+        score = validator.score(src_val=dataset_outputs)
         cls.assertTrue(score == 1)
 
 
@@ -29,12 +29,12 @@ class TestReverseValidator(unittest.TestCase):
         for forward_with_validator in [True, False]:
             mv = ReverseValidator()
             if forward_with_validator:
-                validator = AccuracyValidator()
+                validator = ScoreHistory(AccuracyValidator())
                 saver = Saver(folder=TEST_FOLDER)
             else:
                 validator, saver = None, None
             forward_adapter, datasets = get_dann(validator=validator, saver=saver)
-            reverse_adapter, _ = get_dann(validator=AccuracyValidator())
+            reverse_adapter, _ = get_dann(validator=ScoreHistory(AccuracyValidator()))
             pl_dataloader_creator = DataloaderCreator(
                 all_val=True, val_kwargs={"batch_size": 32, "num_workers": 4}
             )

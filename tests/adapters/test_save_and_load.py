@@ -5,27 +5,36 @@ import numpy as np
 
 from pytorch_adapt.containers.base_container import containers_are_equal
 from pytorch_adapt.utils import exceptions, savers
-from pytorch_adapt.validators import AccuracyValidator, MultipleValidators
+from pytorch_adapt.validators import (
+    AccuracyValidator,
+    MultipleValidators,
+    ScoreHistories,
+    ScoreHistory,
+)
 
 from .. import TEST_FOLDER
 from .get_dann import get_dann
 
 
 def get_stat_getter():
-    return MultipleValidators(
-        [
-            AccuracyValidator(key_map={"src_train": "src_val"}),
-            AccuracyValidator(),
-        ]
+    return ScoreHistories(
+        MultipleValidators(
+            [
+                AccuracyValidator(key_map={"src_train": "src_val"}),
+                AccuracyValidator(),
+            ],
+        )
     )
 
 
 def get_validator():
-    return MultipleValidators(
-        [
-            AccuracyValidator(),
-            AccuracyValidator(),
-        ]
+    return ScoreHistories(
+        MultipleValidators(
+            [
+                AccuracyValidator(),
+                AccuracyValidator(),
+            ],
+        )
     )
 
 
@@ -97,15 +106,17 @@ class TestSaveAndLoad(unittest.TestCase):
                 resume="latest",
             )
 
-        validator3 = MultipleValidators(
-            [
-                AccuracyValidator(),
-                AccuracyValidator(),
-                AccuracyValidator(),
-            ]
+        validator3 = ScoreHistories(
+            MultipleValidators(
+                [
+                    AccuracyValidator(),
+                    AccuracyValidator(),
+                    AccuracyValidator(),
+                ],
+            )
         )
 
-        validator4 = AccuracyValidator()
+        validator4 = ScoreHistory(AccuracyValidator())
 
         self.assertRaises(FileNotFoundError, lambda: saver.load_validator(validator3))
         self.assertRaises(FileNotFoundError, lambda: saver.load_validator(validator4))

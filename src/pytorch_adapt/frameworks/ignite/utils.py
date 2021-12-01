@@ -51,11 +51,11 @@ def get_validation_runner(
     return run_validation
 
 
-def get_validation_score(collected_data, validator, epoch):
-    return validator.score(
-        epoch,
-        **c_f.filter_kwargs(collected_data, validator.required_data),
-    )
+def get_validation_score(collected_data, validator, epoch=None):
+    kwargs = c_f.filter_kwargs(collected_data, validator.required_data)
+    if epoch is None:
+        return validator.score(**kwargs)
+    return validator.score(epoch, **kwargs)
 
 
 def collect_from_dataloaders(cls, dataloaders, required_data):
@@ -66,9 +66,8 @@ def collect_from_dataloaders(cls, dataloaders, required_data):
         curr_dataloader = dataloaders[k]
         c_f.val_dataloader_checks(curr_dataloader)
         curr_dataset = curr_dataloader.dataset
-        collector = cls.get_collector(curr_dataset)
         iterable = curr_dataloader.__iter__()
-        curr_collected = accumulate_collector_output(collector, iterable, k)
+        curr_collected = accumulate_collector_output(cls.collector, iterable, k)
         c_f.val_collected_data_checks(curr_collected, curr_dataset)
         collected_data[k] = curr_collected
         del iterable

@@ -10,6 +10,7 @@ with open("README.md", "r") as fh:
 
 
 extras_require_ignite = ["pytorch-ignite"]
+extras_require_lightning = ["pytorch-lightning"]
 extras_require_record_keeper = ["record-keeper >= 0.9.31.dev6"]
 
 
@@ -38,6 +39,7 @@ setuptools.setup(
     ],
     extras_require={
         "ignite": extras_require_ignite,
+        "lightning": extras_require_lightning,
         "record-keeper": extras_require_record_keeper,
     },
 )

@@ -66,9 +66,7 @@ class TestSilhouetteScoreValidator(unittest.TestCase):
         logits = torch.zeros(dataset_size, num_classes, device=TEST_DEVICE)
         logits[:half, 0] = 1
         logits[half:, 1] = 1
-        score = validator.score(
-            epoch=0, target_train={"features": features, "logits": logits}
-        )
+        score = validator.score(target_train={"features": features, "logits": logits})
         correct_score = get_clustering_performance(
             features.cpu(), torch.argmax(logits, dim=1).cpu(), num_classes=num_classes
         )
@@ -79,9 +77,7 @@ class TestSilhouetteScoreValidator(unittest.TestCase):
         num_classes = 100
         features = torch.randn(dataset_size, 64, device=TEST_DEVICE)
         logits = torch.randn(dataset_size, num_classes, device=TEST_DEVICE)
-        score = validator.score(
-            epoch=1, target_train={"features": features, "logits": logits}
-        )
+        score = validator.score(target_train={"features": features, "logits": logits})
         correct_score = get_clustering_performance(
             features.cpu(), torch.argmax(logits, dim=1).cpu(), num_classes=num_classes
         )

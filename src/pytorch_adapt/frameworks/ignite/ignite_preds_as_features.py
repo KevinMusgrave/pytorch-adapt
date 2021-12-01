@@ -1,6 +1,5 @@
-import torch
-
 from ...utils import common_functions as c_f
+from .. import utils as f_utils
 from .ignite import Ignite
 
 
@@ -9,12 +8,11 @@ from .ignite import Ignite
 # C is Identity()
 # In other words, the "features" are softmaxed logits
 class IgnitePredsAsFeatures(Ignite):
-    def create_output_dict(self, features, logits):
-        if not torch.allclose(features, logits):
-            raise ValueError(
-                f"features and logits should be equal when using {c_f.cls_name(self)}"
+    def get_collector_step(self, inference):
+        def collector_step(engine, batch):
+            batch = c_f.batch_to_device(batch, self.device)
+            return f_utils.collector_step(
+                inference, batch, f_utils.create_output_dict_preds_as_features
             )
-        return {
-            "features": features,
-            "preds": features,
-        }
+
+        return collector_step
