@@ -152,6 +152,7 @@ Coming soon...
 
 ### Dependencies
 Required dependencies: 
+
 - numpy
 - torch >= 1.6
 - torchvision
