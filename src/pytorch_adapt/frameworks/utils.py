@@ -36,3 +36,9 @@ def collector_step(inference, batch, output_dict_fn):
     if labels_key in data:
         output[labels_key] = data[labels_key]
     return output
+
+
+def filter_datasets(datasets, validator):
+    return {
+        k: v for k, v in datasets.items() if k in ["train"] + validator.required_data
+    }

@@ -26,6 +26,7 @@ class Ignite:
         log_freq=50,
         with_pbars=True,
         device=None,
+        auto_dist=True,
     ):
         """
         Arguments:
@@ -46,7 +47,7 @@ class Ignite:
         self.trainer_init()
         self.collector_init()
         self.dist_init_done = False
-        if device is None:
+        if device is None and auto_dist:
             self.dist_init()
         self.temp_events = []
 
@@ -201,9 +202,7 @@ class Ignite:
             ),
         )
 
-    def evaluate_best_model(
-        self, datasets, validator, saver, epoch, dataloader_creator=None
-    ):
+    def evaluate_best_model(self, datasets, validator, saver, dataloader_creator=None):
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
         dataloaders = dataloader_creator(**datasets)
@@ -211,7 +210,7 @@ class Ignite:
         collected_data = i_g.collect_from_dataloaders(
             self, dataloaders, validator.required_data
         )
-        return i_g.get_validation_score(collected_data, validator, epoch)
+        return i_g.get_validation_score(collected_data, validator)
 
     def get_collector_step(self, inference):
         def collector_step(engine, batch):
