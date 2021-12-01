@@ -1,7 +1,7 @@
 # PyTorch Adapt
 
 ## Google Colab Examples
-See the [examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md) for notebooks you can download or run on Google Colab.
+See the **[examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md)** for notebooks you can download or run on Google Colab.
   
 ## Overview
 This library consists of 11 modules:
@@ -39,42 +39,52 @@ for data in tqdm(dataloader):
 ### Build complex algorithms
 Let's customize ```DANNHook``` with:
 
+- minimum class confusion
 - virtual adversarial training
-- entropy conditioning
 
 ```python
-from pytorch_adapt.hooks import EntropyReducer, MeanReducer, VATHook
+from pytorch_adapt.hooks import MCCHook, VATHook
 
 # G and C are the Generator and Classifier models
+G, C = models["G"], models["C"]
 misc = {"combined_model": torch.nn.Sequential(G, C)}
-reducer = EntropyReducer(
-    apply_to=["src_domain_loss", "target_domain_loss"], default_reducer=MeanReducer()
-)
-hook = DANNHook(optimizers, reducer=reducer, post_g=[VATHook()])
+hook = DANNHook(optimizers, post_g=[MCCHook(), VATHook()])
 for data in tqdm(dataloader):
     data = batch_to_device(data, device)
     loss, _ = hook({}, {**models, **data, **misc})
 ```
 
 ### Wrap with your favorite PyTorch framework
-For additional functionality, adapters can be wrapped with a framework (currently just PyTorch Ignite). 
+First, set up the adapter and dataloaders:
+
 ```python
 from pytorch_adapt.adapters import DANN
-from pytorch_adapt.containers import Models, Optimizers
+from pytorch_adapt.containers import Models
 from pytorch_adapt.datasets import DataloaderCreator
-from pytorch_adapt.frameworks.ignite import Ignite
 
-# Assume G, C and D are existing models
 models_cont = Models(models)
-# Override the default optimizer for G and C
-optimizers_cont = Optimizers((torch.optim.Adam, {"lr": 0.123}), keys=["G", "C"])
-adapter = DANN(models=models_cont, optimizers=optimizers_cont)
-
+adapter = DANN(models=models_cont)
 dc = DataloaderCreator(num_workers=2)
+dataloaders = dc(**datasets)
+```
+
+Then use a framework wrapper:
+
+#### PyTorch Lightning
+```python
+import pytorch_lightning as pl
+from pytorch_adapt.frameworks.lightning import Lightning
+
+L_adapter = Lightning(adapter)
+trainer = pl.Trainer(gpus=1, max_epochs=1)
+trainer.fit(L_adapter, dataloaders["train"])
+```
+
+#### PyTorch Ignite
+```python
 trainer = Ignite(adapter)
 trainer.run(datasets, dataloader_creator=dc)
 ```
-Wrappers for other frameworks (e.g. PyTorch Lightning and Catalyst) are planned to be added.
 
 ### Check your model's performance
 You can do this in vanilla PyTorch:
@@ -84,12 +94,29 @@ from pytorch_adapt.validators import SNDValidator
 # Assuming predictions have been collected
 target_train = {"preds": preds}
 validator = SNDValidator()
-score = validator.score(epoch=1, target_train=target_train)
+score = validator.score(target_train=target_train)
 ```
 
-You can also do this using a framework wrapper:
+You can also do this during training with a framework wrapper:
+
+#### Lightning
 ```python
+from pytorch_adapt.frameworks.utils import filter_datasets
+
 validator = SNDValidator()
+dataloaders = dc(**filter_datasets(datasets, validator))
+train_loader = dataloaders.pop("train")
+
+L_adapter = Lightning(adapter, validator=validator)
+trainer = pl.Trainer(gpus=1, max_epochs=1)
+trainer.fit(L_adapter, train_loader, list(dataloaders.values()))
+```
+
+#### Ignite
+```python
+from pytorch_adapt.validators import ScoreHistory
+
+validator = ScoreHistory(SNDValidator())
 trainer = Ignite(adapter, validator=validator)
 trainer.run(datasets, dataloader_creator=dc)
 ```
@@ -109,10 +136,16 @@ pip install pytorch-adapt
 pip install pytorch-adapt --pre
 ```
 
+**To use ```pytorch_adapt.frameworks.lightning```**:
+```
+pip install pytorch-adapt[lightning]
+```
+
 **To use ```pytorch_adapt.frameworks.ignite```**:
 ```
 pip install pytorch-adapt[ignite]
 ```
+
 
 ### Conda
 Coming soon...
