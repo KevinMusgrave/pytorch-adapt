@@ -116,13 +116,16 @@ validator = SNDValidator()
 score = validator.score(target_train=target_train)
 ```
 
-You can also do this using a framework wrapper:
+You can also do this during training with a framework wrapper:
 
 #### Lightning
 ```python
-from pytorch_adapt.validators import ScoreHistory
+from pytorch_adapt.frameworks.utils import filter_datasets
 
 validator = SNDValidator()
+dataloaders = dc(**filter_datasets(datasets, validator))
+train_loader = dataloaders.pop("train")
+
 L_adapter = Lightning(adapter, validator=validator)
 trainer = pl.Trainer(gpus=1, max_epochs=1)
 trainer.fit(L_adapter, train_loader, *dataloaders.values())
