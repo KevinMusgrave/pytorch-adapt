@@ -14,7 +14,7 @@
 Build a complete train/val domain adaptation pipeline in a few lines of code.
 ### 2. **Modular**
 Use just the parts that suit your needs, whether it's the algorithms, loss functions, or validation methods.
-### 3. **Flexible**
+### 3. **Highly customizable**
 Customize and combine complex algorithms with ease.
 ### 4. **Compatible with frameworks**
 Add additional functionality to your code by using one of the framework wrappers. Converting an algorithm into a PyTorch Lightning module is as simple as wrapping it with ```Lightning```.
