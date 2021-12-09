@@ -9,6 +9,9 @@
  </a> 
 </p>
 
+## What is it?
+This library provides tools for **domain adaptation**, i.e. adapting a model to work in a domain that it wasn't originally trained for.
+
 ## Benefits of this library
 ### 1. **Fully featured**
 Build a complete train/val domain adaptation pipeline in a few lines of code.
