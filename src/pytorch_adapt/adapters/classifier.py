@@ -6,7 +6,13 @@ from .utils import default_optimizer_tuple, with_opt
 
 class Classifier(BaseGCAdapter):
     """
-    Wraps [ClassifierHook][pytorch_adapt.hooks.classification.ClassifierHook].
+    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]
+    and wraps [ClassifierHook][pytorch_adapt.hooks.classification.ClassifierHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C"]```|
+    |optimizers|```["G", "C"]```|
     """
 
     hook_cls = ClassifierHook
@@ -18,16 +24,24 @@ class Classifier(BaseGCAdapter):
 
 class Finetuner(Classifier):
     """
-    Wraps [FinetunerHook][pytorch_adapt.hooks.classification.FinetunerHook].
+    Extends [Classifier][pytorch_adapt.adapters.classifier.Classifier]
+    and wraps [FinetunerHook][pytorch_adapt.hooks.classification.FinetunerHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C"]```|
+    |optimizers|```["C"]```|
     """
 
     hook_cls = FinetunerHook
 
     def get_default_containers(self):
+        """ """
         optimizers = Optimizers(default_optimizer_tuple(), keys=["C"])
         return MultipleContainers(optimizers=optimizers)
 
     def get_key_enforcer(self):
+        """ """
         ke = super().get_key_enforcer()
         ke.requirements["optimizers"].remove("G")
         return ke
