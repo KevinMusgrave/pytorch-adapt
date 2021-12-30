@@ -1,4 +1,4 @@
 ::: pytorch_adapt.adapters.gan
     selection:
       members:
-        - GAN
+        - DomainConfusion

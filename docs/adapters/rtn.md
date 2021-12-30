@@ -1,4 +1,4 @@
 ::: pytorch_adapt.adapters.aligner
     selection:
       members:
-        - Aligner
+        - RTN

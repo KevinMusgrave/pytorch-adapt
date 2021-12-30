@@ -24,18 +24,10 @@ class DANN(BaseGCDAdapter):
 
 
 class DANNE(DANN):
-    """
-    Wraps DANNEHook
-    """
-
     hook_cls = DANNEHook
 
 
 class CDANNE(DANN, CDAN):
-    """
-    Wraps CDANNEHook
-    """
-
     hook_cls = CDANNEHook
 
 
@@ -43,6 +35,11 @@ class GVB(DANN):
     """
     Extends [DANN][pytorch_adapt.adapters.DANN]
     and wraps [GVBHook][pytorch_adapt.hooks.GVBHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C", "D"]```|
+    |optimizers|```["G", "C", "D"]```|
 
     Models D and C must be of type [```ModelWithBridge```][pytorch_adapt.layers.ModelWithBridge].
     If not, they will be converted into instances of ```ModelWithBridge```,
@@ -60,8 +57,4 @@ class GVB(DANN):
 
 
 class GVBE(GVB):
-    """
-    Wraps GVBEHook
-    """
-
     hook_cls = GVBEHook

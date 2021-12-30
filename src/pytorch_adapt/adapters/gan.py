@@ -1,5 +1,6 @@
 import torch
 
+from ..containers import KeyEnforcer
 from ..hooks import (
     CDANEHook,
     CDANHook,
@@ -14,7 +15,13 @@ from .utils import with_opt
 
 class GAN(BaseGCDAdapter):
     """
-    Wraps [GANHook][pytorch_adapt.hooks.gan].
+    Extends [BaseGCDAdapter][pytorch_adapt.adapters.base_adapter.BaseGCDAdapter]
+    and wraps [GANHook][pytorch_adapt.hooks.GANHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C", "D"]```|
+    |optimizers|```["G", "C", "D"]```|
     """
 
     hook_cls = GANHook
@@ -31,12 +38,19 @@ class GANE(GAN):
 
 class CDAN(GAN):
     """
-    Wraps [CDANHook][pytorch_adapt.hooks.cdan].
+    Extends [GAN][pytorch_adapt.adapters.GAN]
+    and wraps [CDANHook][pytorch_adapt.hooks.CDANHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C", "D"]```|
+    |optimizers|```["G", "C", "D"]```|
+    |misc|```["feature_combiner"]```|
     """
 
     hook_cls = CDANHook
 
-    def get_key_enforcer(self):
+    def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()
         ke.requirements["misc"] = ["feature_combiner"]
         return ke
@@ -48,7 +62,13 @@ class CDANE(CDAN):
 
 class DomainConfusion(GAN):
     """
-    Wraps [DomainConfusionHook][pytorch_adapt.hooks.domain_confusion].
+    Extends [GAN][pytorch_adapt.adapters.GAN]
+    and wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C", "D"]```|
+    |optimizers|```["G", "C", "D"]```|
     """
 
     hook_cls = DomainConfusionHook
@@ -56,7 +76,18 @@ class DomainConfusion(GAN):
 
 class VADA(GAN):
     """
-    Wraps [VADAHook][pytorch_adapt.hooks.vada].
+    Extends [GAN][pytorch_adapt.adapters.GAN]
+    and wraps [VADAHook][pytorch_adapt.hooks.VADAHook].
+
+    |Container|Required keys|
+    |---|---|
+    |models|```["G", "C", "D"]```|
+    |optimizers|```["G", "C", "D"]```|
+    |misc|```["combined_model"]```|
+
+    The ```"combined_model"``` key does not need to be passed in.
+    It is simply ```torch.nn.Sequential(G, C)```, and is set
+    automatically during initialization.
     """
 
     hook_cls = VADAHook
@@ -67,7 +98,7 @@ class VADA(GAN):
         misc["combined_model"] = torch.nn.Sequential(models["G"], models["C"])
         super().init_containers_and_check_keys()
 
-    def get_key_enforcer(self):
+    def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()
         ke.requirements["misc"] = ["combined_model"]
         return ke
