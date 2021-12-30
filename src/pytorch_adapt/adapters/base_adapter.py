@@ -122,7 +122,9 @@ class BaseAdapter(ABC):
     def get_default_containers(self) -> MultipleContainers:
         """
         Returns:
-            The default set of containers.
+            The default set of containers. This particular default
+            will create an Adam optimizer with lr 0.0001 for
+            each model that is passed into ```__init__```.
         """
         optimizers = Optimizers(default_optimizer_tuple())
         return MultipleContainers(optimizers=optimizers)
@@ -137,6 +139,9 @@ class BaseAdapter(ABC):
 
     @abstractmethod
     def init_hook(self):
+        """
+        self.hook is initialized here. Must be implemented by child classes.
+        """
         pass
 
     def init_containers_and_check_keys(self):

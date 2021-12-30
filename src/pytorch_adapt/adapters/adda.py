@@ -9,23 +9,43 @@ from .utils import default_optimizer_tuple, with_opt
 
 class ADDA(BaseAdapter):
     """
-    Wraps [ADDAHook][pytorch_adapt.hooks.adda].
+    Extends [BaseAdapter][pytorch_adapt.adapters.base_adapter]
+    and wraps [ADDAHook][pytorch_adapt.hooks.adda].
+
+    |Container|Required keys|
+    |---|---|
+    |models|["G", "C", "D"]|
+    |optimizers|["D", "T"]|
+
+    The target model ("T") is created during initialization by deep-copying the G model.
     """
 
     hook_cls = ADDAHook
 
     def inference_default(self, x, domain):
+        """
+        Arguments:
+            x: The input to the model
+            domain: If 0, then the G model is used.
+                Otherwise the T model is used.
+        """
         domain = check_domain(self, domain)
         fe = "G" if domain == 0 else "T"
         features = self.models[fe](x)
         logits = self.models["C"](features)
         return features, logits
 
-    def get_default_containers(self):
+    def get_default_containers(self) -> MultipleContainers:
+        """
+        Returns:
+            The default set of containers. This particular default
+            will create an Adam optimizer with lr 0.0001 for
+            the T and D models.
+        """
         optimizers = Optimizers(default_optimizer_tuple(), keys=["T", "D"])
         return MultipleContainers(optimizers=optimizers)
 
-    def get_key_enforcer(self):
+    def get_key_enforcer(self) -> KeyEnforcer:
         return KeyEnforcer(
             models=["G", "C", "D", "T"],
             optimizers=["D", "T"],
