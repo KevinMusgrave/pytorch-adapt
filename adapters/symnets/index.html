@@ -2718,7 +2718,27 @@
 
     <div class="doc doc-contents ">
 
-      <p>Wraps <a href="../../hooks/symnets/#pytorch_adapt.hooks.symnets">SymNetsHook</a>.</p>
+      <p>Extends <a href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>
+and wraps <a href="../../hooks/symnets/#pytorch_adapt.hooks.symnets.SymNetsHook">SymNetsHook</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Required keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>models</td>
+<td><code>["G", "C"]</code></td>
+</tr>
+<tr>
+<td>optimizers</td>
+<td><code>["G", "C"]</code></td>
+</tr>
+</tbody>
+</table>
+<p>The C model must output a list of logits: <code>[logits1, logits2]</code>.</p>
 
 
 
@@ -2806,7 +2826,7 @@
       <tr>
         <td><code>domain</code></td>
         <td><code></code></td>
-        <td><p>An optional integer indicating the domain.</p></td>
+        <td><p>0 for the source domain, 1 for the target domain.</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -2821,14 +2841,21 @@
   </thead>
   <tbody>
     <tr>
-      <td><code></code></td>
-      <td><p>Features and logits</p></td>
+      <td><code>Tuple[torch.Tensor, torch.Tensor]</code></td>
+      <td><p>Features and logits, where <code>logits = C(features)[domain]</code>.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\symnets.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        x: The input to the model</span>
+<span class="sd">        domain: 0 for the source domain, 1 for the target domain.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Features and logits, where ```logits = C(features)[domain]```.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
     <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)[</span><span class="n">domain</span><span class="p">]</span>
