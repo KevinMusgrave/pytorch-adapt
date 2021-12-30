@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import Any, Dict, Tuple
+
+import torch
 
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..utils import common_functions as c_f
@@ -59,14 +62,41 @@ class BaseAdapter(ABC):
         self.init_hook(hook_kwargs)
         self.inference = c_f.class_default(self, inference, self.inference_default)
 
-    def training_step(self, batch, **kwargs):
+    def training_step(
+        self, batch: Dict[str, Any], **kwargs
+    ) -> Dict[str, Dict[str, float]]:
+        """
+        Calls the wrapped hook at each iteration during training.
+        Arguments:
+            batch: A dictionary containing training data.
+        Returns:
+            A two-level dictionary:
+
+            - the outer level is associated with a particular optimization step
+                (relevant for GAN architectures),
+
+            - the inner level contains the loss components.
+        """
         combined = c_f.assert_dicts_are_disjoint(
             self.models, self.misc, with_opt(self.optimizers), batch, kwargs
         )
         losses, _ = self.hook({}, combined)
         return losses
 
-    def inference_default(self, x, domain=None):
+    def inference_default(
+        self, x: torch.Tensor, domain: int = None
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Arguments:
+            x: The input to the model
+            domain: An optional integer indicating the domain.
+
+        Returns:
+
+            - features: the output of the G (feature generator) model.
+
+            - logits: The output of the C (classifier) model.
+        """
         features = self.models["G"](x)
         logits = self.models["C"](features)
         return features, logits
