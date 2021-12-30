@@ -140,11 +140,14 @@ class BaseAdapter(ABC):
     @abstractmethod
     def init_hook(self):
         """
-        self.hook is initialized here. Must be implemented by child classes.
+        ```self.hook``` is initialized here.
         """
         pass
 
     def init_containers_and_check_keys(self):
+        """
+        Called in ```__init__```.
+        """
         self.containers.create()
         self.key_enforcer.check(self.containers)
         for k, v in self.containers.items():

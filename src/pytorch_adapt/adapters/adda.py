@@ -9,13 +9,13 @@ from .utils import default_optimizer_tuple, with_opt
 
 class ADDA(BaseAdapter):
     """
-    Extends [BaseAdapter][pytorch_adapt.adapters.base_adapter]
+    Extends [BaseAdapter][pytorch_adapt.adapters.base_adapter.BaseAdapter]
     and wraps [ADDAHook][pytorch_adapt.hooks.adda].
 
     |Container|Required keys|
     |---|---|
-    |models|["G", "C", "D"]|
-    |optimizers|["D", "T"]|
+    |models|```["G", "C", "D"]```|
+    |optimizers|```["D", "T"]```|
 
     The target model ("T") is created during initialization by deep-copying the G model.
     """
@@ -26,8 +26,8 @@ class ADDA(BaseAdapter):
         """
         Arguments:
             x: The input to the model
-            domain: If 0, then the G model is used.
-                Otherwise the T model is used.
+            domain: If 0, then ```features = G(x)```
+                Otherwise ```features = T(x)```.
         """
         domain = check_domain(self, domain)
         fe = "G" if domain == 0 else "T"
