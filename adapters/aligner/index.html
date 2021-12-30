@@ -439,6 +439,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="md-nav__link">
+    get_key_enforcer()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.aligner.RTN.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -592,18 +599,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../containers/misc/" class="md-nav__link">
-        Misc
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../containers/lr_schedulers/" class="md-nav__link">
         LRSchedulers
       </a>
@@ -616,8 +611,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../../containers/misc/" class="md-nav__link">
+        Misc
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../containers/models/" class="md-nav__link">
         Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../containers/multiple_containers/" class="md-nav__link">
+        MultipleContainers
       </a>
     </li>
   
@@ -2588,6 +2607,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="md-nav__link">
+    get_key_enforcer()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.aligner.RTN.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -2792,6 +2818,50 @@ and then optimizes the models.</p>
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code></code></td>
+      <td><p>A KeyEnforcer that requires the models and optimizers
+containers to have <code>["G", "C"]</code> as keys.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
+    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
+    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
+    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ke</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

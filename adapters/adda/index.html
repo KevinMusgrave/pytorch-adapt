@@ -420,6 +420,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.adda.ADDA.get_default_containers" class="md-nav__link">
+    get_default_containers()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.adda.ADDA.get_key_enforcer" class="md-nav__link">
+    get_key_enforcer()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.adda.ADDA.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -585,18 +599,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../containers/misc/" class="md-nav__link">
-        Misc
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../containers/lr_schedulers/" class="md-nav__link">
         LRSchedulers
       </a>
@@ -609,8 +611,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../../containers/misc/" class="md-nav__link">
+        Misc
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../containers/models/" class="md-nav__link">
         Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../containers/multiple_containers/" class="md-nav__link">
+        MultipleContainers
       </a>
     </li>
   
@@ -2574,6 +2600,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.adda.ADDA.get_default_containers" class="md-nav__link">
+    get_default_containers()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.adda.ADDA.get_key_enforcer" class="md-nav__link">
+    get_key_enforcer()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.adda.ADDA.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -2772,6 +2812,88 @@ if the discriminator's accuracy is greater than <code>threshold</code>.</p></td>
 
 
 
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.adda.ADDA.get_default_containers" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.adda.ADDA.get_default_containers" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code></code></td>
+      <td><p>The default set of containers.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.adda.ADDA.get_key_enforcer" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.adda.ADDA.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code></code></td>
+      <td><p>The default KeyEnforcer.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">KeyEnforcer</span><span class="p">(</span>
+        <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">],</span>
+        <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
