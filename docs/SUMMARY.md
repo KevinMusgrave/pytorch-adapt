@@ -1,6 +1,6 @@
 - [Overview](index.md)
 - [Getting started](getting_started.md)
-- Algorithms Overview
+- Papers implemented
     - [Unsupervised Domain Adaptation](algorithms/uda.md)
     - [Validators](algorithms/validators.md)
 - [Adapters](adapters/index.md)

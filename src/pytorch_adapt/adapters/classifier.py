@@ -1,4 +1,4 @@
-from ..containers import MultipleContainers, Optimizers
+from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..hooks import ClassifierHook, FinetunerHook
 from .base_adapter import BaseGCAdapter
 from .utils import default_optimizer_tuple, with_opt
@@ -35,13 +35,11 @@ class Finetuner(Classifier):
 
     hook_cls = FinetunerHook
 
-    def get_default_containers(self):
-        """ """
+    def get_default_containers(self) -> MultipleContainers:
         optimizers = Optimizers(default_optimizer_tuple(), keys=["C"])
         return MultipleContainers(optimizers=optimizers)
 
-    def get_key_enforcer(self):
-        """ """
+    def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()
         ke.requirements["optimizers"].remove("G")
         return ke

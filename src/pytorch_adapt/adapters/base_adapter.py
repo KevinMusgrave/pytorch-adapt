@@ -122,8 +122,8 @@ class BaseAdapter(ABC):
     def get_default_containers(self) -> MultipleContainers:
         """
         Returns:
-            The default set of containers. This particular default
-            will create an Adam optimizer with lr 0.0001 for
+            The default set of containers. This will create
+            an Adam optimizer with lr 0.0001 for
             each model that is passed into ```__init__```.
         """
         optimizers = Optimizers(default_optimizer_tuple())
@@ -167,11 +167,6 @@ class BaseGCDAdapter(BaseAdapter):
     """
 
     def get_key_enforcer(self) -> KeyEnforcer:
-        """
-        Returns:
-            A KeyEnforcer that requires the models and optimizers
-            containers to have ```["G", "C", "D"]``` as keys.
-        """
         return KeyEnforcer(
             models=["G", "C", "D"],
             optimizers=["G", "C", "D"],
@@ -184,11 +179,6 @@ class BaseGCAdapter(BaseAdapter):
     """
 
     def get_key_enforcer(self) -> KeyEnforcer:
-        """
-        Returns:
-            A KeyEnforcer that requires the models and optimizers
-            containers to have ```["G", "C"]``` as keys.
-        """
         return KeyEnforcer(
             models=["G", "C"],
             optimizers=["G", "C"],

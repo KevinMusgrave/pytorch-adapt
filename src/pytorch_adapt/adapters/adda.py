@@ -38,7 +38,7 @@ class ADDA(BaseAdapter):
     def get_default_containers(self) -> MultipleContainers:
         """
         Returns:
-            The default set of containers. This particular default
+            The default set of containers. This
             will create an Adam optimizer with lr 0.0001 for
             the T and D models.
         """

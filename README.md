@@ -31,7 +31,7 @@ Add additional functionality to your code by using one of the framework wrappers
 ## Documentation
 - [**Documentation**](https://kevinmusgrave.github.io/pytorch-adapt/)
 - [**Installation instructions**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
-- [**List of algorithms/papers implemented**](https://kevinmusgrave.github.io/pytorch-adapt/algorithms/uda)
+- [**List of papers implemented**](https://kevinmusgrave.github.io/pytorch-adapt/algorithms/uda)
 - [**Overview of modules**](https://github.com/KevinMusgrave/pytorch-adapt/blob/master/CONTENTS.md)
 
 ## Getting started

@@ -55,7 +55,6 @@ class RTN(Aligner):
         return features, logits
 
     def get_key_enforcer(self) -> KeyEnforcer:
-        """ """
         ke = super().get_key_enforcer()
         ke.requirements["models"].append("residual_model")
         ke.requirements["optimizers"].append("residual_model")
