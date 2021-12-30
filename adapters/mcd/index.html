@@ -2718,7 +2718,29 @@
 
     <div class="doc doc-contents ">
 
-      <p>Wraps <a href="../../hooks/mcd/#pytorch_adapt.hooks.mcd">MCDHook</a>.</p>
+      <p>Extends <a href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>
+and wraps <a href="../../hooks/mcd/#pytorch_adapt.hooks.mcd.MCDHook">MCDHook</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Required keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>models</td>
+<td><code>["G", "C"]</code></td>
+</tr>
+<tr>
+<td>optimizers</td>
+<td><code>["G", "C"]</code></td>
+</tr>
+</tbody>
+</table>
+<p>The C model must output a list of logits, where each list element
+corresponds with a separate classifier. Usually the number of
+classifiers is 2, so C should output <code>[logits1, logits2]</code>.</p>
 
 
 
@@ -2786,31 +2808,6 @@
     <div class="doc doc-contents ">
 
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>x</code></td>
-        <td><code></code></td>
-        <td><p>The input to the model</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>domain</code></td>
-        <td><code></code></td>
-        <td><p>An optional integer indicating the domain.</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
 <p><strong>Returns:</strong></p>
 <table>
   <thead>
@@ -2821,17 +2818,18 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>- features</code></td>
-      <td><p>the output of the G (feature generator) model.</p>
-<ul>
-<li>logits: The output of the C (classifier) model.</li>
-</ul></td>
+      <td><code>Tuple[torch.Tensor, torch.Tensor]</code></td>
+      <td><p>Features and logits, where <code>logits = sum(C(features))</code>.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\mcd.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Features and logits, where ```logits = sum(C(features))```.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
     <span class="n">logits_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)</span>
     <span class="n">logits</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">logits_list</span><span class="p">)</span>

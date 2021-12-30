@@ -3064,14 +3064,31 @@ Otherwise <code>features = T(x)</code>.</p></td>
       </tr>
   </tbody>
 </table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Tuple[torch.Tensor, torch.Tensor]</code></td>
+      <td><p>Features and logits</p></td>
+    </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        x: The input to the model</span>
 <span class="sd">        domain: If 0, then ```features = G(x)```</span>
 <span class="sd">            Otherwise ```features = T(x)```.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Features and logits</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="n">fe</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span> <span class="k">if</span> <span class="n">domain</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;T&quot;</span>

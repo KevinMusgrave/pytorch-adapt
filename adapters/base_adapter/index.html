@@ -3181,14 +3181,7 @@ each model that is passed into <code>__init__</code>.</p></td>
   <tbody>
     <tr>
       <td><code>Tuple[torch.Tensor, torch.Tensor]</code></td>
-      <td><ul>
-<li>
-<p>features: the output of the G (feature generator) model.</p>
-</li>
-<li>
-<p>logits: The output of the C (classifier) model.</p>
-</li>
-</ul></td>
+      <td><p>Features and logits</p></td>
     </tr>
   </tbody>
 </table>
@@ -3203,10 +3196,7 @@ each model that is passed into <code>__init__</code>.</p></td>
 <span class="sd">        domain: An optional integer indicating the domain.</span>
 
 <span class="sd">    Returns:</span>
-
-<span class="sd">        - features: the output of the G (feature generator) model.</span>
-
-<span class="sd">        - logits: The output of the C (classifier) model.</span>
+<span class="sd">        Features and logits</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
     <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)</span>
