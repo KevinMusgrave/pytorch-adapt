@@ -441,6 +441,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.adda.ADDA.init_containers_and_check_keys" class="md-nav__link">
+    init_containers_and_check_keys()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.adda.ADDA.init_hook" class="md-nav__link">
     init_hook()
   </a>
@@ -2628,6 +2635,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.adda.ADDA.init_containers_and_check_keys" class="md-nav__link">
+    init_containers_and_check_keys()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.adda.ADDA.init_hook" class="md-nav__link">
     init_hook()
   </a>
@@ -2700,7 +2714,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a href="../base_adapter/#pytorch_adapt.adapters.base_adapter">BaseAdapter</a>
+      <p>Extends <a href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a>
 and wraps <a href="../../hooks/adda/#pytorch_adapt.hooks.adda">ADDAHook</a>.</p>
 <table>
 <thead>
@@ -2712,11 +2726,11 @@ and wraps <a href="../../hooks/adda/#pytorch_adapt.hooks.adda">ADDAHook</a>.</p>
 <tbody>
 <tr>
 <td>models</td>
-<td>["G", "C", "D"]</td>
+<td><code>["G", "C", "D"]</code></td>
 </tr>
 <tr>
 <td>optimizers</td>
-<td>["D", "T"]</td>
+<td><code>["D", "T"]</code></td>
 </tr>
 </tbody>
 </table>
@@ -2972,8 +2986,8 @@ the T and D models.</p></td>
       <tr>
         <td><code>domain</code></td>
         <td><code></code></td>
-        <td><p>If 0, then the G model is used.
-Otherwise the T model is used.</p></td>
+        <td><p>If 0, then <code>features = G(x)</code>
+Otherwise <code>features = T(x)</code>.</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -2984,8 +2998,8 @@ Otherwise the T model is used.</p></td>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        x: The input to the model</span>
-<span class="sd">        domain: If 0, then the G model is used.</span>
-<span class="sd">            Otherwise the T model is used.</span>
+<span class="sd">        domain: If 0, then ```features = G(x)```</span>
+<span class="sd">            Otherwise ```features = T(x)```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="n">fe</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span> <span class="k">if</span> <span class="n">domain</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;T&quot;</span>
@@ -2998,6 +3012,32 @@ Otherwise the T model is used.</p></td>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.adda.ADDA.init_containers_and_check_keys" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.adda.ADDA.init_containers_and_check_keys" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Called in <code>__init__</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">][</span><span class="s2">&quot;T&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">][</span><span class="s2">&quot;G&quot;</span><span class="p">])</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_containers_and_check_keys</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -3013,7 +3053,7 @@ Otherwise the T model is used.</p></td>
 
     <div class="doc doc-contents ">
 
-      <p>self.hook is initialized here. Must be implemented by child classes.</p>
+      <p><code>self.hook</code> is initialized here.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>

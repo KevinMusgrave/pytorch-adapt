@@ -446,13 +446,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="md-nav__link">
-    get_key_enforcer()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.aligner.RTN.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -2621,13 +2614,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="md-nav__link">
-    get_key_enforcer()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.aligner.RTN.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -2700,7 +2686,26 @@
 
     <div class="doc doc-contents ">
 
-      <p>Wraps <a href="../../hooks/aligners/aligner_plus_c_hook/#pytorch_adapt.hooks.aligners.AlignerPlusCHook">AlignerPlusCHook</a>.</p>
+      <p>Extends <a href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>
+and wraps <a href="../../hooks/aligners/aligner_plus_c_hook/#pytorch_adapt.hooks.aligners.AlignerPlusCHook">AlignerPlusCHook</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Required keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>models</td>
+<td><code>["G", "C"]</code></td>
+</tr>
+<tr>
+<td>optimizers</td>
+<td><code>["G", "C"]</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -2767,7 +2772,7 @@ and then optimizes the models.</p>
 
     <div class="doc doc-contents ">
 
-      <p>self.hook is initialized here. Must be implemented by child classes.</p>
+      <p><code>self.hook</code> is initialized here.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
@@ -2805,7 +2810,30 @@ and then optimizes the models.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Wraps <a href="../../hooks/rtn/#pytorch_adapt.hooks.rtn">RTNHook</a>.</p>
+      <p>Extends <a href="#pytorch_adapt.adapters.aligner.Aligner">Aligner</a>
+and wraps <a href="../../hooks/rtn/#pytorch_adapt.hooks.rtn">RTNHook</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Required keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>models</td>
+<td><code>["G", "C", "residual_model"]</code></td>
+</tr>
+<tr>
+<td>optimizers</td>
+<td><code>["G", "C", "residual_model"]</code></td>
+</tr>
+<tr>
+<td>misc</td>
+<td><code>["feature_combiner"]</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -2860,50 +2888,6 @@ and then optimizes the models.</p>
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code></code></td>
-      <td><p>A KeyEnforcer that requires the models and optimizers
-containers to have <code>["G", "C"]</code> as keys.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
 
   <div class="doc doc-object doc-method">
 
@@ -2938,32 +2922,21 @@ containers to have <code>["G", "C"]</code> as keys.</p></td>
       <tr>
         <td><code>domain</code></td>
         <td><code></code></td>
-        <td><p>An optional integer indicating the domain.</p></td>
+        <td><p>If 0, <code>logits = residual_model(C(G(x)))</code>.
+Otherwise, <code>logits = C(G(x))</code>.</p></td>
         <td><code>None</code></td>
       </tr>
   </tbody>
 </table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>- features</code></td>
-      <td><p>the output of the G (feature generator) model.</p>
-<ul>
-<li>logits: The output of the C (classifier) model.</li>
-</ul></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        x: The input to the model</span>
+<span class="sd">        domain: If 0, ```logits = residual_model(C(G(x)))```.</span>
+<span class="sd">            Otherwise, ```logits = C(G(x))```.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="n">features</span><span class="p">,</span> <span class="n">logits</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">inference_default</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">domain</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>

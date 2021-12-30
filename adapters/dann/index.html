@@ -494,6 +494,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.GVB.init_containers_and_check_keys" class="md-nav__link">
+    init_containers_and_check_keys()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2632,6 +2639,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.GVB.init_containers_and_check_keys" class="md-nav__link">
+    init_containers_and_check_keys()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3010,7 +3024,7 @@ output names of the discriminator block.</p></td>
 
     <div class="doc doc-contents ">
 
-      <p>self.hook is initialized here. Must be implemented by child classes.</p>
+      <p><code>self.hook</code> is initialized here.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\dann.py</code></summary>
@@ -3102,6 +3116,35 @@ output names of the discriminator block.</p></td>
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.dann.GVB.init_containers_and_check_keys" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.dann.GVB.init_containers_and_check_keys" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Called in <code>__init__</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\dann.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">ModelWithBridge</span><span class="p">):</span>
+            <span class="n">models</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">ModelWithBridge</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_containers_and_check_keys</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

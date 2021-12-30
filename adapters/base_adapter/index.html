@@ -452,6 +452,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_containers_and_check_keys" class="md-nav__link">
+    init_containers_and_check_keys()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="md-nav__link">
     init_hook()
   </a>
@@ -2649,6 +2656,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_containers_and_check_keys" class="md-nav__link">
+    init_containers_and_check_keys()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="md-nav__link">
     init_hook()
   </a>
@@ -3133,6 +3147,37 @@ each model that is passed into <code>__init__</code>.</p></td>
 
 
 
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.init_containers_and_check_keys" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_containers_and_check_keys" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Called in <code>__init__</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called in ```__init__```.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">key_enforcer</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-method">
 
@@ -3146,14 +3191,14 @@ each model that is passed into <code>__init__</code>.</p></td>
 
     <div class="doc doc-contents ">
 
-      <p>self.hook is initialized here. Must be implemented by child classes.</p>
+      <p><code>self.hook</code> is initialized here.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    self.hook is initialized here. Must be implemented by child classes.</span>
+<span class="sd">    ```self.hook``` is initialized here.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </code></pre></div>
