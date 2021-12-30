@@ -430,6 +430,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.inference_default" class="md-nav__link">
+    inference_default()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="md-nav__link">
+    training_step()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2540,6 +2554,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.inference_default" class="md-nav__link">
+    inference_default()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="md-nav__link">
+    training_step()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2750,7 +2778,179 @@ passed into the wrapped hook during initialization.</p></td>
 
 
 
+  <div class="doc doc-object doc-method">
 
+
+
+<h5 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.inference_default" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.inference_default" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>x</code></td>
+        <td><code>Tensor</code></td>
+        <td><p>The input to the model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>domain</code></td>
+        <td><code>int</code></td>
+        <td><p>An optional integer indicating the domain.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Tuple[torch.Tensor, torch.Tensor]</code></td>
+      <td><ul>
+<li>
+<p>features: the output of the G (feature generator) model.</p>
+</li>
+<li>
+<p>logits: The output of the C (classifier) model.</p>
+</li>
+</ul></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        x: The input to the model</span>
+<span class="sd">        domain: An optional integer indicating the domain.</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">        - features: the output of the G (feature generator) model.</span>
+
+<span class="sd">        - logits: The output of the C (classifier) model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">features</span><span class="p">,</span> <span class="n">logits</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Calls the wrapped hook at each iteration during training.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>batch</code></td>
+        <td><code>Dict[str, Any]</code></td>
+        <td><p>A dictionary containing training data.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, Dict[str, float]]</code></td>
+      <td><p>A two-level dictionary:</p>
+<ul>
+<li>
+<p>the outer level is associated with a particular optimization step
+    (relevant for GAN architectures),</p>
+</li>
+<li>
+<p>the inner level contains the loss components.</p>
+</li>
+</ul></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calls the wrapped hook at each iteration during training.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        batch: A dictionary containing training data.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A two-level dictionary:</span>
+
+<span class="sd">        - the outer level is associated with a particular optimization step</span>
+<span class="sd">            (relevant for GAN architectures),</span>
+
+<span class="sd">        - the inner level contains the loss components.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">assert_dicts_are_disjoint</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">misc</span><span class="p">,</span> <span class="n">with_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">),</span> <span class="n">batch</span><span class="p">,</span> <span class="n">kwargs</span>
+    <span class="p">)</span>
+    <span class="n">losses</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">({},</span> <span class="n">combined</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">losses</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

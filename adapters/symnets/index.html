@@ -490,6 +490,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.symnets.SymNets.inference_default" class="md-nav__link">
+    inference_default()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2540,6 +2547,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.symnets.SymNets.inference_default" class="md-nav__link">
+    inference_default()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2659,6 +2673,76 @@
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.symnets.SymNets.inference_default" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.symnets.SymNets.inference_default" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>x</code></td>
+        <td><code></code></td>
+        <td><p>The input to the model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>domain</code></td>
+        <td><code></code></td>
+        <td><p>An optional integer indicating the domain.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>- features</code></td>
+      <td><p>the output of the G (feature generator) model.</p>
+<ul>
+<li>logits: The output of the C (classifier) model.</li>
+</ul></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\symnets.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)[</span><span class="n">domain</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">features</span><span class="p">,</span> <span class="n">logits</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
