@@ -267,14 +267,14 @@
       <label class="md-nav__link" for="__nav_3">
         <span class="md-nav__icon md-icon"></span>
         
-          Algorithms Overview
+          Papers implemented
         
       </label>
-      <nav class="md-nav" aria-label="Algorithms Overview" data-md-level="1">
+      <nav class="md-nav" aria-label="Papers implemented" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            Algorithms Overview
+            Papers implemented
           
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
@@ -441,6 +441,13 @@
           <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.aligner.RTN.hook_cls" class="md-nav__link">
     hook_cls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="md-nav__link">
+    get_key_enforcer()
   </a>
   
 </li>
@@ -2614,6 +2621,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="md-nav__link">
+    get_key_enforcer()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.aligner.RTN.inference_default" class="md-nav__link">
     inference_default()
   </a>
@@ -2886,6 +2900,49 @@ and wraps <a href="../../hooks/rtn/#pytorch_adapt.hooks.rtn">RTNHook</a>.</p>
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>KeyEnforcer</code></td>
+      <td><p>The default KeyEnforcer.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
+    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
+    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
+    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
+    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ke</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

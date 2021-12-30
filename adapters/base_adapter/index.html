@@ -267,14 +267,14 @@
       <label class="md-nav__link" for="__nav_3">
         <span class="md-nav__icon md-icon"></span>
         
-          Algorithms Overview
+          Papers implemented
         
       </label>
-      <nav class="md-nav" aria-label="Algorithms Overview" data-md-level="1">
+      <nav class="md-nav" aria-label="Papers implemented" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            Algorithms Overview
+            Papers implemented
           
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
@@ -2990,8 +2990,8 @@ passed into the wrapped hook during initialization.</p></td>
   <tbody>
     <tr>
       <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. This particular default
-will create an Adam optimizer with lr 0.0001 for
+      <td><p>The default set of containers. This will create
+an Adam optimizer with lr 0.0001 for
 each model that is passed into <code>__init__</code>.</p></td>
     </tr>
   </tbody>
@@ -3001,8 +3001,8 @@ each model that is passed into <code>__init__</code>.</p></td>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        The default set of containers. This particular default</span>
-<span class="sd">        will create an Adam optimizer with lr 0.0001 for</span>
+<span class="sd">        The default set of containers. This will create</span>
+<span class="sd">        an Adam optimizer with lr 0.0001 for</span>
 <span class="sd">        each model that is passed into ```__init__```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
@@ -3358,19 +3358,13 @@ each model that is passed into <code>__init__</code>.</p></td>
   <tbody>
     <tr>
       <td><code>KeyEnforcer</code></td>
-      <td><p>A KeyEnforcer that requires the models and optimizers
-containers to have <code>["G", "C"]</code> as keys.</p></td>
+      <td><p>The default KeyEnforcer.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        A KeyEnforcer that requires the models and optimizers</span>
-<span class="sd">        containers to have ```[&quot;G&quot;, &quot;C&quot;]``` as keys.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">KeyEnforcer</span><span class="p">(</span>
         <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
         <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
@@ -3445,19 +3439,13 @@ containers to have <code>["G", "C"]</code> as keys.</p></td>
   <tbody>
     <tr>
       <td><code>KeyEnforcer</code></td>
-      <td><p>A KeyEnforcer that requires the models and optimizers
-containers to have <code>["G", "C", "D"]</code> as keys.</p></td>
+      <td><p>The default KeyEnforcer.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        A KeyEnforcer that requires the models and optimizers</span>
-<span class="sd">        containers to have ```[&quot;G&quot;, &quot;C&quot;, &quot;D&quot;]``` as keys.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">KeyEnforcer</span><span class="p">(</span>
         <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span>
         <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span>
