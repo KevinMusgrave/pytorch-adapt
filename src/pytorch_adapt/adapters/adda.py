@@ -1,4 +1,7 @@
 import copy
+from typing import Tuple
+
+import torch
 
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..hooks import ADDAHook
@@ -22,12 +25,14 @@ class ADDA(BaseAdapter):
 
     hook_cls = ADDAHook
 
-    def inference_default(self, x, domain):
+    def inference_default(self, x, domain) -> Tuple[torch.Tensor, torch.Tensor]:
         """
         Arguments:
             x: The input to the model
             domain: If 0, then ```features = G(x)```
                 Otherwise ```features = T(x)```.
+        Returns:
+            Features and logits
         """
         domain = check_domain(self, domain)
         fe = "G" if domain == 0 else "T"

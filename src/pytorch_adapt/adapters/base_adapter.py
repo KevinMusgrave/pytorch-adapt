@@ -110,10 +110,7 @@ class BaseAdapter(ABC):
             domain: An optional integer indicating the domain.
 
         Returns:
-
-            - features: the output of the G (feature generator) model.
-
-            - logits: The output of the C (classifier) model.
+            Features and logits
         """
         features = self.models["G"](x)
         logits = self.models["C"](features)

@@ -47,6 +47,8 @@ class RTN(Aligner):
             x: The input to the model
             domain: If 0, ```logits = residual_model(C(G(x)))```.
                 Otherwise, ```logits = C(G(x))```.
+        Returns:
+            Features and logits
         """
         domain = check_domain(self, domain)
         features, logits = super().inference_default(x, domain)
