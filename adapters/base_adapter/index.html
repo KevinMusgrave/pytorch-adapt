@@ -452,6 +452,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="md-nav__link">
+    init_hook()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="md-nav__link">
     training_step()
   </a>
@@ -2642,6 +2649,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="md-nav__link">
+    init_hook()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="md-nav__link">
     training_step()
   </a>
@@ -2962,7 +2976,9 @@ passed into the wrapped hook during initialization.</p></td>
   <tbody>
     <tr>
       <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers.</p></td>
+      <td><p>The default set of containers. This particular default
+will create an Adam optimizer with lr 0.0001 for
+each model that is passed into <code>__init__</code>.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2971,7 +2987,9 @@ passed into the wrapped hook during initialization.</p></td>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        The default set of containers.</span>
+<span class="sd">        The default set of containers. This particular default</span>
+<span class="sd">        will create an Adam optimizer with lr 0.0001 for</span>
+<span class="sd">        each model that is passed into ```__init__```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -3114,6 +3132,35 @@ passed into the wrapped hook during initialization.</p></td>
   </div>
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>self.hook is initialized here. Must be implemented by child classes.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    self.hook is initialized here. Must be implemented by child classes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
