@@ -384,6 +384,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../cdan/" class="md-nav__link">
+        CDAN
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -454,40 +466,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner" class="md-nav__link">
-    Finetuner
-  </a>
-  
-    <nav class="md-nav" aria-label="Finetuner">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner.hook_cls" class="md-nav__link">
-    hook_cls
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner.get_default_containers" class="md-nav__link">
-    get_default_containers()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner.get_key_enforcer" class="md-nav__link">
-    get_key_enforcer()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -518,8 +496,44 @@
   
   
     <li class="md-nav__item">
+      <a href="../domain_confusion/" class="md-nav__link">
+        DomainConfusion
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../finetuner/" class="md-nav__link">
+        Finetuner
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../gan/" class="md-nav__link">
         GAN
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gvb/" class="md-nav__link">
+        GVB
       </a>
     </li>
   
@@ -542,8 +556,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../rtn/" class="md-nav__link">
+        RTN
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../symnets/" class="md-nav__link">
         SymNets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vada/" class="md-nav__link">
+        VADA
       </a>
     </li>
   
@@ -2605,40 +2643,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner" class="md-nav__link">
-    Finetuner
-  </a>
-  
-    <nav class="md-nav" aria-label="Finetuner">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner.hook_cls" class="md-nav__link">
-    hook_cls
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner.get_default_containers" class="md-nav__link">
-    get_default_containers()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.adapters.classifier.Finetuner.get_key_enforcer" class="md-nav__link">
-    get_key_enforcer()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2811,189 +2815,6 @@ optimizes the models.</p>
 
 
 
-  <div class="doc doc-object doc-class">
-
-
-
-<h4 id="pytorch_adapt.adapters.classifier.Finetuner" class="doc doc-heading">
-        <code>Finetuner</code>
-
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner" class="headerlink" title="Permanent link">&para;</a></h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Extends <a href="#pytorch_adapt.adapters.classifier.Classifier">Classifier</a>
-and wraps <a href="../../hooks/classification/finetuner_hook/#pytorch_adapt.hooks.classification.FinetunerHook">FinetunerHook</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Container</th>
-<th>Required keys</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>models</td>
-<td><code>["G", "C"]</code></td>
-</tr>
-<tr>
-<td>optimizers</td>
-<td><code>["C"]</code></td>
-</tr>
-</tbody>
-</table>
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h5 id="pytorch_adapt.adapters.classifier.Finetuner.hook_cls" class="doc doc-heading">
-        <code>hook_cls</code>
-
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner.hook_cls" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-      <p>This is the same as
-<a href="../../hooks/classification/classifier_hook/#pytorch_adapt.hooks.classification.ClassifierHook"><code>ClassifierHook</code></a>,
-but it freezes the generator model ("G").</p>
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.adapters.classifier.Finetuner.get_default_containers" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner.get_default_containers" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. This will create
-an Adam optimizer with lr 0.0001 for
-each model that is passed into <code>__init__</code>.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
-    <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.adapters.classifier.Finetuner.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
 
 
 
@@ -3022,7 +2843,7 @@ each model that is passed into <code>__init__</code>.</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../base_adapter/" class="md-footer__link md-footer__link--prev" aria-label="Previous: BaseAdapter" rel="prev">
+        <a href="../cdan/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CDAN" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -3031,7 +2852,7 @@ each model that is passed into <code>__init__</code>.</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              BaseAdapter
+              CDAN
             </div>
           </div>
         </a>
