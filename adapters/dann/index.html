@@ -440,6 +440,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.CDANNE" class="md-nav__link">
+    CDANNE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.dann.DANN" class="md-nav__link">
     DANN
   </a>
@@ -480,6 +487,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.DANNE" class="md-nav__link">
+    DANNE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.dann.GVB" class="md-nav__link">
     GVB
   </a>
@@ -503,6 +517,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.GVBE" class="md-nav__link">
+    GVBE
+  </a>
   
 </li>
         
@@ -2585,6 +2606,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.CDANNE" class="md-nav__link">
+    CDANNE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.dann.DANN" class="md-nav__link">
     DANN
   </a>
@@ -2625,6 +2653,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.DANNE" class="md-nav__link">
+    DANNE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pytorch_adapt.adapters.dann.GVB" class="md-nav__link">
     GVB
   </a>
@@ -2648,6 +2683,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.adapters.dann.GVBE" class="md-nav__link">
+    GVBE
+  </a>
   
 </li>
         
@@ -2699,6 +2741,44 @@
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.adapters.dann.CDANNE" class="doc doc-heading">
+        <code>CDANNE</code>
+
+
+
+<a href="#pytorch_adapt.adapters.dann.CDANNE" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Wraps CDANNEHook</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -2713,7 +2793,26 @@
 
     <div class="doc doc-contents ">
 
-      <p>Wraps <a href="../../hooks/dann/#pytorch_adapt.hooks.dann">DANNHook</a>.</p>
+      <p>Extends <a href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter">BaseGCDAdapter</a>
+and wraps <a href="../../hooks/dann/#pytorch_adapt.hooks.dann.DANNHook">DANNHook</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Required keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>models</td>
+<td><code>["G", "C", "D"]</code></td>
+</tr>
+<tr>
+<td>optimizers</td>
+<td><code>["G", "C", "D"]</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -3049,6 +3148,44 @@ output names of the discriminator block.</p></td>
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.adapters.dann.DANNE" class="doc doc-heading">
+        <code>DANNE</code>
+
+
+
+<a href="#pytorch_adapt.adapters.dann.DANNE" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Wraps DANNEHook</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -3063,7 +3200,11 @@ output names of the discriminator block.</p></td>
 
     <div class="doc doc-contents ">
 
-      <p>Wraps <a href="../../hooks/gvb/#pytorch_adapt.hooks.gvb">GVBHook</a>.</p>
+      <p>Extends <a href="#pytorch_adapt.adapters.dann.DANN">DANN</a>
+and wraps <a href="../../hooks/gvb/#pytorch_adapt.hooks.gvb.GVBHook">GVBHook</a>.</p>
+<p>Models D and C must be of type <a href="../../layers/model_with_bridge/#pytorch_adapt.layers.model_with_bridge.ModelWithBridge"><code>ModelWithBridge</code></a>.
+If not, they will be converted into instances of <code>ModelWithBridge</code>,
+with each bridge being a re-initialized copy of each model.</p>
 
 
 
@@ -3156,6 +3297,44 @@ output names of the discriminator block.</p></td>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="pytorch_adapt.adapters.dann.GVBE" class="doc doc-heading">
+        <code>GVBE</code>
+
+
+
+<a href="#pytorch_adapt.adapters.dann.GVBE" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Wraps GVBEHook</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 

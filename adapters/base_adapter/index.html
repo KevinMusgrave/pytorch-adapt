@@ -2827,7 +2827,7 @@
       <tr>
         <td><code>models</code></td>
         <td><code>Models</code></td>
-        <td><p>A <a href="../../containers/models/#pytorch_adapt.containers.models"><code>Models</code></a> container.
+        <td><p>A <a href="../../containers/models/#pytorch_adapt.containers.models.Models"><code>Models</code></a> container.
 The models will be passed to the wrapped hook at each
 training iteration.</p></td>
         <td><code>None</code></td>
@@ -2835,7 +2835,7 @@ training iteration.</p></td>
       <tr>
         <td><code>optimizers</code></td>
         <td><code>Optimizers</code></td>
-        <td><p>An <a href="../../containers/optimizers/#pytorch_adapt.containers.optimizers"><code>Optimizers</code></a> container.
+        <td><p>An <a href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers"><code>Optimizers</code></a> container.
 The optimizers will be passed into the wrapped hook during
 initialization. The hook uses the optimizers at each training iteration.</p></td>
         <td><code>None</code></td>
@@ -2843,7 +2843,7 @@ initialization. The hook uses the optimizers at each training iteration.</p></td
       <tr>
         <td><code>lr_schedulers</code></td>
         <td><code>LRSchedulers</code></td>
-        <td><p>An <a href="../../containers/lr_schedulers/#pytorch_adapt.containers.lr_schedulers"><code>LRSchedulers</code></a> container.
+        <td><p>An <a href="../../containers/lr_schedulers/#pytorch_adapt.containers.lr_schedulers.LRSchedulers"><code>LRSchedulers</code></a> container.
 The lr schedulers are called automatically by the
 <a href="../../frameworks/"><code>framework</code></a> that wrap this adapter.</p></td>
         <td><code>None</code></td>
@@ -2860,7 +2860,7 @@ These are passed into the wrapped hook at each training iteration.</p></td>
         <td><code>default_containers</code></td>
         <td><code>MultipleContainers</code></td>
         <td><p>The default set of containers to use, wrapped in a
-<a href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers"><code>MultipleContainers</code></a> object.
+<a href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers"><code>MultipleContainers</code></a> object.
 If <code>None</code> then the default containers are defined in
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers"><code>self.get_default_containers</code></a></p></td>
         <td><code>None</code></td>
@@ -2912,24 +2912,24 @@ passed into the wrapped hook during initialization.</p></td>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        models: A [```Models```][pytorch_adapt.containers.models] container.</span>
+<span class="sd">        models: A [```Models```][pytorch_adapt.containers.Models] container.</span>
 <span class="sd">            The models will be passed to the wrapped hook at each</span>
 <span class="sd">            training iteration.</span>
-<span class="sd">        optimizers: An [```Optimizers```][pytorch_adapt.containers.optimizers] container.</span>
+<span class="sd">        optimizers: An [```Optimizers```][pytorch_adapt.containers.Optimizers] container.</span>
 <span class="sd">            The optimizers will be passed into the wrapped hook during</span>
 <span class="sd">            initialization. The hook uses the optimizers at each training iteration.</span>
-<span class="sd">        lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.lr_schedulers] container.</span>
+<span class="sd">        lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.LRSchedulers] container.</span>
 <span class="sd">            The lr schedulers are called automatically by the</span>
 <span class="sd">            [```framework```](../frameworks/index.md) that wrap this adapter.</span>
 <span class="sd">        misc: A [```Misc```][pytorch_adapt.containers.misc] container for models</span>
 <span class="sd">            that don&#39;t require optimizers and other miscellaneous objects.</span>
 <span class="sd">            These are passed into the wrapped hook at each training iteration.</span>
 <span class="sd">        default_containers: The default set of containers to use, wrapped in a</span>
-<span class="sd">            [```MultipleContainers```][pytorch_adapt.containers.multiple_containers] object.</span>
+<span class="sd">            [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.</span>
 <span class="sd">            If ```None``` then the default containers are defined in</span>
-<span class="sd">            [```self.get_default_containers```][pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers]</span>
+<span class="sd">            [```self.get_default_containers```][pytorch_adapt.adapters.BaseAdapter.get_default_containers]</span>
 <span class="sd">        key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.base_container.KeyEnforcer] object.</span>
-<span class="sd">            If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer]</span>
+<span class="sd">            If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]</span>
 <span class="sd">            is used.</span>
 <span class="sd">        inference: A function that takes in this adapter and returns another function</span>
 <span class="sd">            that will be used for inference (i.e. during testing).</span>
