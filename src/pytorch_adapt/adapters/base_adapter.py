@@ -3,7 +3,14 @@ from typing import Any, Dict, Tuple
 
 import torch
 
-from ..containers import KeyEnforcer, MultipleContainers, Optimizers
+from ..containers import (
+    KeyEnforcer,
+    LRSchedulers,
+    Misc,
+    Models,
+    MultipleContainers,
+    Optimizers,
+)
 from ..utils import common_functions as c_f
 from .utils import default_optimizer_tuple, with_opt
 
@@ -15,15 +22,15 @@ class BaseAdapter(ABC):
 
     def __init__(
         self,
-        models=None,
-        optimizers=None,
-        lr_schedulers=None,
-        misc=None,
-        default_containers=None,
-        key_enforcer=None,
+        models: Models = None,
+        optimizers: Optimizers = None,
+        lr_schedulers: LRSchedulers = None,
+        misc: Misc = None,
+        default_containers: MultipleContainers = None,
+        key_enforcer: KeyEnforcer = None,
         inference=None,
         before_training_starts=None,
-        hook_kwargs=None,
+        hook_kwargs: Dict[str, Any] = None,
     ):
         """
         Arguments:
@@ -36,9 +43,20 @@ class BaseAdapter(ABC):
             lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.lr_schedulers] container.
                 The lr schedulers are called automatically by the
                 [```framework```](../frameworks/index.md) that wrap this adapter.
-            misc: A [```Misc```][pytorch_adapt.containers.misc] container for any
-                miscellaneous objects. These are passed into the wrapped hook
-                at each training iteration.
+            misc: A [```Misc```][pytorch_adapt.containers.misc] container for models
+                that don't require optimizers and other miscellaneous objects.
+                These are passed into the wrapped hook at each training iteration.
+            default_containers: The default set of containers to use, wrapped in a
+                [```MultipleContainers```][pytorch_adapt.containers.multiple_containers] object.
+                If ```None``` then the default containers are defined in
+                [```self.get_default_containers```][pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers]
+            key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.base_container.KeyEnforcer] object.
+                If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer]
+                is used.
+            inference: A function that takes in this adapter and returns another function
+                that will be used for inference (i.e. during testing).
+            before_training_starts: A function that takes in this adapter and returns another
+                function that is optionally called by a framework wrapper before training starts.
             hook_kwargs: A dictionary of key word arguments that will be
                 passed into the wrapped hook during initialization.
         """
@@ -101,12 +119,20 @@ class BaseAdapter(ABC):
         logits = self.models["C"](features)
         return features, logits
 
-    def get_default_containers(self):
+    def get_default_containers(self) -> MultipleContainers:
+        """
+        Returns:
+            The default set of containers.
+        """
         optimizers = Optimizers(default_optimizer_tuple())
         return MultipleContainers(optimizers=optimizers)
 
     @abstractmethod
-    def get_key_enforcer(self):
+    def get_key_enforcer(self) -> KeyEnforcer:
+        """
+        Returns:
+            The default KeyEnforcer.
+        """
         pass
 
     @abstractmethod
@@ -128,7 +154,16 @@ class BaseAdapter(ABC):
 
 
 class BaseGCDAdapter(BaseAdapter):
-    def get_key_enforcer(self):
+    """
+    Base class for adapters that use a Generator, Classifier, and Discriminator.
+    """
+
+    def get_key_enforcer(self) -> KeyEnforcer:
+        """
+        Returns:
+            A KeyEnforcer that requires the models and optimizers
+            containers to have ```["G", "C", "D"]``` as keys.
+        """
         return KeyEnforcer(
             models=["G", "C", "D"],
             optimizers=["G", "C", "D"],
@@ -136,7 +171,16 @@ class BaseGCDAdapter(BaseAdapter):
 
 
 class BaseGCAdapter(BaseAdapter):
-    def get_key_enforcer(self):
+    """
+    Base class for adapters that use a Generator and Classifier.
+    """
+
+    def get_key_enforcer(self) -> KeyEnforcer:
+        """
+        Returns:
+            A KeyEnforcer that requires the models and optimizers
+            containers to have ```["G", "C"]``` as keys.
+        """
         return KeyEnforcer(
             models=["G", "C"],
             optimizers=["G", "C"],

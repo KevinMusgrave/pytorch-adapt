@@ -20,6 +20,10 @@ def get_container(k):
 
 
 class MultipleContainers(BaseContainer):
+    """
+    Contains other containers and initializes them.
+    """
+
     def __init__(self, **kwargs):
         self.store = kwargs
 

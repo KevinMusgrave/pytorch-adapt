@@ -145,6 +145,10 @@ class BaseContainer(MutableMapping):
 
 
 class KeyEnforcer:
+    """
+    Makes sure containers have the specified keys.
+    """
+
     def __init__(self, **kwargs):
         self.requirements = kwargs
 
