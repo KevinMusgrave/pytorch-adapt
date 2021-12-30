@@ -34,24 +34,24 @@ class BaseAdapter(ABC):
     ):
         """
         Arguments:
-            models: A [```Models```][pytorch_adapt.containers.models] container.
+            models: A [```Models```][pytorch_adapt.containers.Models] container.
                 The models will be passed to the wrapped hook at each
                 training iteration.
-            optimizers: An [```Optimizers```][pytorch_adapt.containers.optimizers] container.
+            optimizers: An [```Optimizers```][pytorch_adapt.containers.Optimizers] container.
                 The optimizers will be passed into the wrapped hook during
                 initialization. The hook uses the optimizers at each training iteration.
-            lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.lr_schedulers] container.
+            lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.LRSchedulers] container.
                 The lr schedulers are called automatically by the
                 [```framework```](../frameworks/index.md) that wrap this adapter.
             misc: A [```Misc```][pytorch_adapt.containers.misc] container for models
                 that don't require optimizers and other miscellaneous objects.
                 These are passed into the wrapped hook at each training iteration.
             default_containers: The default set of containers to use, wrapped in a
-                [```MultipleContainers```][pytorch_adapt.containers.multiple_containers] object.
+                [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.
                 If ```None``` then the default containers are defined in
-                [```self.get_default_containers```][pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers]
+                [```self.get_default_containers```][pytorch_adapt.adapters.BaseAdapter.get_default_containers]
             key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.base_container.KeyEnforcer] object.
-                If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer]
+                If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]
                 is used.
             inference: A function that takes in this adapter and returns another function
                 that will be used for inference (i.e. during testing).

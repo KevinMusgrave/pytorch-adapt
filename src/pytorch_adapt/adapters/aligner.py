@@ -12,7 +12,7 @@ from .utils import with_opt
 class Aligner(BaseGCAdapter):
     """
     Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]
-    and wraps [AlignerPlusCHook][pytorch_adapt.hooks.aligners.AlignerPlusCHook].
+    and wraps [AlignerPlusCHook][pytorch_adapt.hooks.AlignerPlusCHook].
 
     |Container|Required keys|
     |---|---|
@@ -29,8 +29,8 @@ class Aligner(BaseGCAdapter):
 
 class RTN(Aligner):
     """
-    Extends [Aligner][pytorch_adapt.adapters.aligner.Aligner]
-    and wraps [RTNHook][pytorch_adapt.hooks.rtn].
+    Extends [Aligner][pytorch_adapt.adapters.Aligner]
+    and wraps [RTNHook][pytorch_adapt.hooks.RTNHook].
 
     |Container|Required keys|
     |---|---|

@@ -9,8 +9,8 @@ from .utils import default_optimizer_tuple, with_opt
 
 class ADDA(BaseAdapter):
     """
-    Extends [BaseAdapter][pytorch_adapt.adapters.base_adapter.BaseAdapter]
-    and wraps [ADDAHook][pytorch_adapt.hooks.adda].
+    Extends [BaseAdapter][pytorch_adapt.adapters.BaseAdapter]
+    and wraps [ADDAHook][pytorch_adapt.hooks.ADDAHook].
 
     |Container|Required keys|
     |---|---|
