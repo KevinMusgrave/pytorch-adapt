@@ -20,6 +20,7 @@
     - [VADA](adapters/vada.md)
 - [Containers](containers/index.md)
     - [BaseContainer](containers/base_container.md)
+    - [KeyEnforcer](containers/key_enforcer.md)
     - [LRSchedulers](containers/lr_schedulers.md)
     - [Misc](containers/misc.md)
     - [Models](containers/models.md)

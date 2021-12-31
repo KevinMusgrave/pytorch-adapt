@@ -66,7 +66,7 @@ class BaseContainer(MutableMapping):
             return output
         return str(self.store)
 
-    def merge(self, other):
+    def merge(self, other: "BaseContainer"):
         """
         Merges another container into this one.
         Arguments:
@@ -103,6 +103,9 @@ class BaseContainer(MutableMapping):
         self.delete_unwanted_keys()
 
     def create_with(self, other):
+        """
+        Initializes objects conditioned on the input container.
+        """
         self.store_as_tuple = self.type_check(self.store_as_tuple, other)
         self.store = self.type_check(self.store, other)
         self.store_as_tuple.update(self.store)
@@ -142,34 +145,6 @@ class BaseContainer(MutableMapping):
                 del_list.append(k)
         for k in del_list:
             del self[k]
-
-
-class KeyEnforcer:
-    """
-    Makes sure containers have the specified keys.
-    """
-
-    def __init__(self, **kwargs):
-        self.requirements = kwargs
-
-    def check(self, containers):
-        for k, required_keys in self.requirements.items():
-            container_keys = list(containers[k].keys())
-            r_c_diff = c_f.list_diff(required_keys, container_keys)
-            c_r_diff = c_f.list_diff(container_keys, required_keys)
-            error_msg = ""
-            if len(r_c_diff) > 0:
-                error_msg += (
-                    f"The {k} container is missing the following keys: {r_c_diff}. "
-                )
-
-            if len(c_r_diff) > 0:
-                error_msg += (
-                    f"The {k} container has the following unallowed keys: {c_r_diff}."
-                )
-
-            if error_msg != "":
-                raise KeyError(error_msg)
 
 
 class DeleteKey:
