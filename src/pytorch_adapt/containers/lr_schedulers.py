@@ -15,6 +15,8 @@ class LRSchedulers(BaseContainer):
                 scheduler type (```"per_step"``` or ```"per_epoch"```)
                 to a list of object names. If ```None```, then all
                 schedulers are assumed to be ```"per_step"```
+            **kwargs: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]
+                keyword arguments.
         """
         self.scheduler_types = scheduler_types
         super().__init__(store, **kwargs)
@@ -35,7 +37,7 @@ class LRSchedulers(BaseContainer):
         for k in to_be_deleted:
             del self[k]
 
-    def step(self, scheduler_type):
+    def step(self, scheduler_type: str):
         """
         Step the lr schedulers of the specified type.
         Arguments:

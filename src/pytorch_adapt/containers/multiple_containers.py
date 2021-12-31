@@ -1,3 +1,5 @@
+from typing import Union
+
 from ..utils import common_functions as c_f
 from .base_container import BaseContainer
 from .lr_schedulers import LRSchedulers
@@ -27,7 +29,10 @@ class MultipleContainers(BaseContainer):
     def __init__(self, **kwargs):
         self.store = kwargs
 
-    def merge(self, **kwargs):
+    def merge(self, **kwargs: Union[BaseContainer, None]):
+        """
+        Merges the input containers into any existing sub-containers.
+        """
         for k, v in kwargs.items():
             if isinstance(v, BaseContainer):
                 if k in self:
@@ -43,6 +48,14 @@ class MultipleContainers(BaseContainer):
                 )
 
     def create(self):
+        """
+        Calls [```.create()```][pytorch_adapt.containers.BaseContainer.create]
+        or [```.create_with()```][pytorch_adapt.containers.BaseContainer.create_with]
+        on sub-containers.
+
+        - Optimizers are created with models as input.
+        - LR schedulers are created with optimizers as input.
+        """
         self["models"].create()
         self["optimizers"].create_with(self["models"])
         self["lr_schedulers"].create_with(self["optimizers"])

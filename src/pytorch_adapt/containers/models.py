@@ -29,5 +29,8 @@ class Models(BaseContainer):
             v.zero_grad()
 
     def to(self, device):
+        """
+        Moves all models to ```device```.
+        """
         for v in self.values():
             v.to(device)

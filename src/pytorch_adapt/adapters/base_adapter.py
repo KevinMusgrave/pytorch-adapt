@@ -50,14 +50,14 @@ class BaseAdapter(ABC):
                 [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.
                 If ```None``` then the default containers are defined in
                 [```self.get_default_containers```][pytorch_adapt.adapters.BaseAdapter.get_default_containers]
-            key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.base_container.KeyEnforcer] object.
+            key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.KeyEnforcer] object.
                 If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]
                 is used.
             inference: A function that takes in this adapter and returns another function
                 that will be used for inference (i.e. during testing).
             before_training_starts: A function that takes in this adapter and returns another
                 function that is optionally called by a framework wrapper before training starts.
-            hook_kwargs: A dictionary of key word arguments that will be
+            hook_kwargs: A dictionary of keyword arguments that will be
                 passed into the wrapped hook during initialization.
         """
         self.containers = c_f.default(
