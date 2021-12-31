@@ -2744,12 +2744,25 @@
 
     <div class="doc doc-contents ">
 
-      <p>Initializes objects by converting all
-tuples in the store into objects.</p>
+      <p>Calls <a href="../base_container/#pytorch_adapt.containers.base_container.BaseContainer.create"><code>.create()</code></a>
+or <a href="../base_container/#pytorch_adapt.containers.base_container.BaseContainer.create_with"><code>.create_with()</code></a>
+on sub-containers.</p>
+<ul>
+<li>Optimizers are created with models as input.</li>
+<li>LR schedulers are created with optimizers as input.</li>
+</ul>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\containers\multiple_containers.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calls [```.create()```][pytorch_adapt.containers.BaseContainer.create]</span>
+<span class="sd">    or [```.create_with()```][pytorch_adapt.containers.BaseContainer.create_with]</span>
+<span class="sd">    on sub-containers.</span>
+
+<span class="sd">    - Optimizers are created with models as input.</span>
+<span class="sd">    - LR schedulers are created with optimizers as input.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
     <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">create_with</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">])</span>
     <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;lr_schedulers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">create_with</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">])</span>
@@ -2774,30 +2787,14 @@ tuples in the store into objects.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Merges another container into this one.</p>
+      <p>Merges the input containers into any existing sub-containers.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>other</code></td>
-        <td><code></code></td>
-        <td><p>The container that will be merged into this container.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\containers\multiple_containers.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merges the input containers into any existing sub-containers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">BaseContainer</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>

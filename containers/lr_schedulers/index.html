@@ -2787,6 +2787,13 @@ to a list of object names. If <code>None</code>, then all
 schedulers are assumed to be <code>"per_step"</code></p></td>
         <td><code>None</code></td>
       </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code></code></td>
+        <td><p><a href="../base_container/#pytorch_adapt.containers.base_container.BaseContainer"><code>BaseContainer</code></a>
+keyword arguments.</p></td>
+        <td><code>{}</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -2799,6 +2806,8 @@ schedulers are assumed to be <code>"per_step"</code></p></td>
 <span class="sd">            scheduler type (```&quot;per_step&quot;``` or ```&quot;per_epoch&quot;```)</span>
 <span class="sd">            to a list of object names. If ```None```, then all</span>
 <span class="sd">            schedulers are assumed to be ```&quot;per_step&quot;```</span>
+<span class="sd">        **kwargs: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]</span>
+<span class="sd">            keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_types</span> <span class="o">=</span> <span class="n">scheduler_types</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2892,7 +2901,7 @@ schedulers are assumed to be <code>"per_step"</code></p></td>
   <tbody>
       <tr>
         <td><code>scheduler_type</code></td>
-        <td><code></code></td>
+        <td><code>str</code></td>
         <td><p><code>"per_step"</code> or <code>"per_epoch"</code></p></td>
         <td><em>required</em></td>
       </tr>
@@ -2900,7 +2909,7 @@ schedulers are assumed to be <code>"per_step"</code></p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\containers\lr_schedulers.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler_type</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Step the lr schedulers of the specified type.</span>
 <span class="sd">    Arguments:</span>

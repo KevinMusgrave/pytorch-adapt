@@ -2952,7 +2952,7 @@ If <code>None</code> then the default containers are defined in
       <tr>
         <td><code>key_enforcer</code></td>
         <td><code>KeyEnforcer</code></td>
-        <td><p>A [<code>KeyEnforcer</code>][pytorch_adapt.containers.base_container.KeyEnforcer] object.
+        <td><p>A <a href="../../containers/key_enforcer/#pytorch_adapt.containers.key_enforcer.KeyEnforcer"><code>KeyEnforcer</code></a> object.
 If <code>None</code>, then <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer"><code>self.get_key_enforcer</code></a>
 is used.</p></td>
         <td><code>None</code></td>
@@ -2974,7 +2974,7 @@ function that is optionally called by a framework wrapper before training starts
       <tr>
         <td><code>hook_kwargs</code></td>
         <td><code>Dict[str, Any]</code></td>
-        <td><p>A dictionary of key word arguments that will be
+        <td><p>A dictionary of keyword arguments that will be
 passed into the wrapped hook during initialization.</p></td>
         <td><code>None</code></td>
       </tr>
@@ -3012,14 +3012,14 @@ passed into the wrapped hook during initialization.</p></td>
 <span class="sd">            [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.</span>
 <span class="sd">            If ```None``` then the default containers are defined in</span>
 <span class="sd">            [```self.get_default_containers```][pytorch_adapt.adapters.BaseAdapter.get_default_containers]</span>
-<span class="sd">        key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.base_container.KeyEnforcer] object.</span>
+<span class="sd">        key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.KeyEnforcer] object.</span>
 <span class="sd">            If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]</span>
 <span class="sd">            is used.</span>
 <span class="sd">        inference: A function that takes in this adapter and returns another function</span>
 <span class="sd">            that will be used for inference (i.e. during testing).</span>
 <span class="sd">        before_training_starts: A function that takes in this adapter and returns another</span>
 <span class="sd">            function that is optionally called by a framework wrapper before training starts.</span>
-<span class="sd">        hook_kwargs: A dictionary of key word arguments that will be</span>
+<span class="sd">        hook_kwargs: A dictionary of keyword arguments that will be</span>
 <span class="sd">            passed into the wrapped hook during initialization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">containers</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>

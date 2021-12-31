@@ -693,6 +693,27 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.step" class="md-nav__link">
+    step()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.zero_back_step" class="md-nav__link">
+    zero_back_step()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.zero_grad" class="md-nav__link">
+    zero_grad()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2650,6 +2671,27 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.step" class="md-nav__link">
+    step()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.zero_back_step" class="md-nav__link">
+    zero_back_step()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.optimizers.Optimizers.zero_grad" class="md-nav__link">
+    zero_grad()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2759,6 +2801,12 @@
   </thead>
   <tbody>
       <tr>
+        <td><code>*args</code></td>
+        <td><code></code></td>
+        <td><p><a href="../base_container/#pytorch_adapt.containers.base_container.BaseContainer"><code>BaseContainer</code></a> arguments.</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
         <td><code>multipliers</code></td>
         <td><code></code></td>
         <td><p>A dictionary mapping from
@@ -2768,6 +2816,13 @@ upon initialization. If <code>None</code>,
 then multiplier is 1.</p></td>
         <td><code>None</code></td>
       </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code></code></td>
+        <td><p><a href="../base_container/#pytorch_adapt.containers.base_container.BaseContainer"><code>BaseContainer</code></a>
+keyword arguments.</p></td>
+        <td><code>{}</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -2775,11 +2830,14 @@ then multiplier is 1.</p></td>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">multipliers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
+<span class="sd">        *args: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer] arguments.</span>
 <span class="sd">        multipliers: A dictionary mapping from</span>
 <span class="sd">            optimizer name to lr multiplier. Each</span>
 <span class="sd">            optimizer will have ```lr = lr * multiplier```</span>
 <span class="sd">            upon initialization. If ```None```,</span>
 <span class="sd">            then multiplier is 1.</span>
+<span class="sd">        **kwargs:  [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]</span>
+<span class="sd">            keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">multipliers</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">multipliers</span><span class="p">,</span> <span class="p">{})</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2838,6 +2896,126 @@ then multiplier is 1.</p></td>
 
 
 
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.optimizers.Optimizers.step" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.optimizers.Optimizers.step" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Calls <code>.step()</code> on all optimizers.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\optimizers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calls ```.step()``` on all optimizers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.optimizers.Optimizers.zero_back_step" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">zero_back_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.optimizers.Optimizers.zero_back_step" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Zeros gradients, computes gradients, and updates model weights.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>loss</code></td>
+        <td><code></code></td>
+        <td><p>The loss on which <code>.backward()</code> is called.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>keys</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>The subset of optimizers on which to call
+<code>.zero_grad()</code> and <code>.step()</code>.
+If <code>None</code>, then all optimizers are used.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\optimizers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">zero_back_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zeros gradients, computes gradients, and updates model weights.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        loss: The loss on which ```.backward()``` is called.</span>
+<span class="sd">        keys: The subset of optimizers on which to call</span>
+<span class="sd">            ```.zero_grad()``` and ```.step()```.</span>
+<span class="sd">            If ```None```, then all optimizers are used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+    <span class="n">c_f</span><span class="o">.</span><span class="n">zero_back_step</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">optimizers</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.optimizers.Optimizers.zero_grad" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">zero_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.optimizers.Optimizers.zero_grad" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Calls <code>.zero_grad()</code> on all optimizers.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\optimizers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">zero_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calls ```.zero_grad()``` on all optimizers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
