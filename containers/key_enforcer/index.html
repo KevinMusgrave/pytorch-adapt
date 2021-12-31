@@ -9,19 +9,19 @@
       
       
       
-      <link rel="icon" href="../../../imgs/Favicon.png">
+      <link rel="icon" href="../../imgs/Favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
     
     
       
-        <title>AlignerHook - PyTorch Adapt</title>
+        <title>KeyEnforcer - PyTorch Adapt</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.802231af.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.802231af.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -36,9 +36,9 @@
     
     
     
-      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../../css/style.css">
+      <link rel="stylesheet" href="../../css/style.css">
     
     
       
@@ -59,7 +59,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
   
     
-    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.hooks.aligners" class="md-skip">
+        <a href="#pytorch_adapt.containers.key_enforcer" class="md-skip">
           Skip to content
         </a>
       
@@ -80,9 +80,9 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="PyTorch Adapt" class="md-header__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
+    <a href="../.." title="PyTorch Adapt" class="md-header__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
       
-  <img src="../../../imgs/TinyLogo.png" alt="logo">
+  <img src="../../imgs/TinyLogo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AlignerHook
+              KeyEnforcer
             
           </span>
         </div>
@@ -198,9 +198,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="PyTorch Adapt" class="md-nav__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
+    <a href="../.." title="PyTorch Adapt" class="md-nav__button md-logo" aria-label="PyTorch Adapt" data-md-component="logo">
       
-  <img src="../../../imgs/TinyLogo.png" alt="logo">
+  <img src="../../imgs/TinyLogo.png" alt="logo">
 
     </a>
     PyTorch Adapt
@@ -229,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Overview
       </a>
     </li>
@@ -244,7 +244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../getting_started/" class="md-nav__link">
+      <a href="../../getting_started/" class="md-nav__link">
         Getting started
       </a>
     </li>
@@ -284,7 +284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../algorithms/uda/" class="md-nav__link">
+      <a href="../../algorithms/uda/" class="md-nav__link">
         Unsupervised Domain Adaptation
       </a>
     </li>
@@ -296,7 +296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../algorithms/validators/" class="md-nav__link">
+      <a href="../../algorithms/validators/" class="md-nav__link">
         Validators
       </a>
     </li>
@@ -325,7 +325,7 @@
       <label class="md-nav__link" for="__nav_4">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../adapters/" class="md-nav__link"
+          <a href="../../adapters/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Adapters
@@ -335,7 +335,7 @@
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../adapters/" class="md-nav__link"
+            <a href="../../adapters/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Adapters
@@ -348,7 +348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/adda/" class="md-nav__link">
+      <a href="../../adapters/adda/" class="md-nav__link">
         ADDA
       </a>
     </li>
@@ -360,7 +360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/aligner/" class="md-nav__link">
+      <a href="../../adapters/aligner/" class="md-nav__link">
         Aligner
       </a>
     </li>
@@ -372,7 +372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/base_adapter/" class="md-nav__link">
+      <a href="../../adapters/base_adapter/" class="md-nav__link">
         BaseAdapter
       </a>
     </li>
@@ -384,7 +384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/cdan/" class="md-nav__link">
+      <a href="../../adapters/cdan/" class="md-nav__link">
         CDAN
       </a>
     </li>
@@ -396,7 +396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/classifier/" class="md-nav__link">
+      <a href="../../adapters/classifier/" class="md-nav__link">
         Classifier
       </a>
     </li>
@@ -408,7 +408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/dann/" class="md-nav__link">
+      <a href="../../adapters/dann/" class="md-nav__link">
         DANN
       </a>
     </li>
@@ -420,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/domain_confusion/" class="md-nav__link">
+      <a href="../../adapters/domain_confusion/" class="md-nav__link">
         DomainConfusion
       </a>
     </li>
@@ -432,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/finetuner/" class="md-nav__link">
+      <a href="../../adapters/finetuner/" class="md-nav__link">
         Finetuner
       </a>
     </li>
@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/gan/" class="md-nav__link">
+      <a href="../../adapters/gan/" class="md-nav__link">
         GAN
       </a>
     </li>
@@ -456,7 +456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/gvb/" class="md-nav__link">
+      <a href="../../adapters/gvb/" class="md-nav__link">
         GVB
       </a>
     </li>
@@ -468,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/mcd/" class="md-nav__link">
+      <a href="../../adapters/mcd/" class="md-nav__link">
         MCD
       </a>
     </li>
@@ -480,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/rtn/" class="md-nav__link">
+      <a href="../../adapters/rtn/" class="md-nav__link">
         RTN
       </a>
     </li>
@@ -492,7 +492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/symnets/" class="md-nav__link">
+      <a href="../../adapters/symnets/" class="md-nav__link">
         SymNets
       </a>
     </li>
@@ -504,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adapters/vada/" class="md-nav__link">
+      <a href="../../adapters/vada/" class="md-nav__link">
         VADA
       </a>
     </li>
@@ -523,17 +523,19 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
       <label class="md-nav__link" for="__nav_5">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../containers/" class="md-nav__link"
+          <a href="../" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Containers
@@ -543,7 +545,7 @@
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../containers/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Containers
@@ -556,7 +558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/base_container/" class="md-nav__link">
+      <a href="../base_container/" class="md-nav__link">
         BaseContainer
       </a>
     </li>
@@ -566,11 +568,85 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../containers/key_enforcer/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            KeyEnforcer
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         KeyEnforcer
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.key_enforcer" class="md-nav__link">
+    key_enforcer
+  </a>
+  
+    <nav class="md-nav" aria-label="key_enforcer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer" class="md-nav__link">
+    KeyEnforcer
+  </a>
+  
+    <nav class="md-nav" aria-label="KeyEnforcer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer.check" class="md-nav__link">
+    check()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -580,7 +656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/lr_schedulers/" class="md-nav__link">
+      <a href="../lr_schedulers/" class="md-nav__link">
         LRSchedulers
       </a>
     </li>
@@ -592,7 +668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/misc/" class="md-nav__link">
+      <a href="../misc/" class="md-nav__link">
         Misc
       </a>
     </li>
@@ -604,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/models/" class="md-nav__link">
+      <a href="../models/" class="md-nav__link">
         Models
       </a>
     </li>
@@ -616,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/multiple_containers/" class="md-nav__link">
+      <a href="../multiple_containers/" class="md-nav__link">
         MultipleContainers
       </a>
     </li>
@@ -628,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../containers/optimizers/" class="md-nav__link">
+      <a href="../optimizers/" class="md-nav__link">
         Optimizers
       </a>
     </li>
@@ -657,7 +733,7 @@
       <label class="md-nav__link" for="__nav_6">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../datasets/" class="md-nav__link"
+          <a href="../../datasets/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Datasets
@@ -667,7 +743,7 @@
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../datasets/" class="md-nav__link"
+            <a href="../../datasets/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Datasets
@@ -680,7 +756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/combined_source_and_target/" class="md-nav__link">
+      <a href="../../datasets/combined_source_and_target/" class="md-nav__link">
         CombinedSourceAndTarget
       </a>
     </li>
@@ -692,7 +768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/concat_dataset/" class="md-nav__link">
+      <a href="../../datasets/concat_dataset/" class="md-nav__link">
         ConcatDataset
       </a>
     </li>
@@ -704,7 +780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/dataloader_creator/" class="md-nav__link">
+      <a href="../../datasets/dataloader_creator/" class="md-nav__link">
         DataloaderCreator
       </a>
     </li>
@@ -716,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/domainnet/" class="md-nav__link">
+      <a href="../../datasets/domainnet/" class="md-nav__link">
         DomainNet
       </a>
     </li>
@@ -728,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/mnistm/" class="md-nav__link">
+      <a href="../../datasets/mnistm/" class="md-nav__link">
         MNISTM
       </a>
     </li>
@@ -740,7 +816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/office31/" class="md-nav__link">
+      <a href="../../datasets/office31/" class="md-nav__link">
         Office31
       </a>
     </li>
@@ -752,7 +828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/pseudo_labeled_dataset/" class="md-nav__link">
+      <a href="../../datasets/pseudo_labeled_dataset/" class="md-nav__link">
         PseudoLabeledDataset
       </a>
     </li>
@@ -764,7 +840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/source_dataset/" class="md-nav__link">
+      <a href="../../datasets/source_dataset/" class="md-nav__link">
         SourceDataset
       </a>
     </li>
@@ -776,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/target_dataset/" class="md-nav__link">
+      <a href="../../datasets/target_dataset/" class="md-nav__link">
         TargetDataset
       </a>
     </li>
@@ -805,7 +881,7 @@
       <label class="md-nav__link" for="__nav_7">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../frameworks/" class="md-nav__link"
+          <a href="../../frameworks/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Frameworks
@@ -815,7 +891,7 @@
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../frameworks/" class="md-nav__link"
+            <a href="../../frameworks/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Frameworks
@@ -836,7 +912,7 @@
       <label class="md-nav__link" for="__nav_7_1">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../frameworks/ignite/" class="md-nav__link"
+          <a href="../../frameworks/ignite/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Ignite
@@ -846,7 +922,7 @@
         <label class="md-nav__title" for="__nav_7_1">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../frameworks/ignite/" class="md-nav__link"
+            <a href="../../frameworks/ignite/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Ignite
@@ -859,7 +935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frameworks/ignite/ignite/" class="md-nav__link">
+      <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         Ignite
       </a>
     </li>
@@ -871,7 +947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frameworks/ignite/loggers/" class="md-nav__link">
+      <a href="../../frameworks/ignite/loggers/" class="md-nav__link">
         Loggers
       </a>
     </li>
@@ -896,19 +972,17 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
       <label class="md-nav__link" for="__nav_8">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../" class="md-nav__link"
+          <a href="../../hooks/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Hooks
@@ -918,7 +992,7 @@
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../" class="md-nav__link"
+            <a href="../../hooks/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Hooks
@@ -931,7 +1005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adda/" class="md-nav__link">
+      <a href="../../hooks/adda/" class="md-nav__link">
         ADDAHook
       </a>
     </li>
@@ -943,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../atdoc/" class="md-nav__link">
+      <a href="../../hooks/atdoc/" class="md-nav__link">
         ATDOCHook
       </a>
     </li>
@@ -953,14 +1027,12 @@
             
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8_3" type="checkbox" id="__nav_8_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8_3" type="checkbox" id="__nav_8_3" >
       
       <label class="md-nav__link" for="__nav_8_3">
         <span class="md-nav__icon md-icon"></span>
@@ -980,78 +1052,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-nav__icon md-icon"></span>
-          
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
-            AlignerHook
-          </a>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../hooks/aligners/aligner_hook/" class="md-nav__link">
         AlignerHook
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.aligners" class="md-nav__link">
-    aligners
-  </a>
-  
-    <nav class="md-nav" aria-label="aligners">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.aligners.AlignerHook" class="md-nav__link">
-    AlignerHook
-  </a>
-  
-    <nav class="md-nav" aria-label="AlignerHook">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.aligners.AlignerHook.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1061,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../aligner_plus_c_hook/" class="md-nav__link">
+      <a href="../../hooks/aligners/aligner_plus_c_hook/" class="md-nav__link">
         AlignerPlusCHook
       </a>
     </li>
@@ -1073,7 +1078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features_logits_aligner_hook/" class="md-nav__link">
+      <a href="../../hooks/aligners/features_logits_aligner_hook/" class="md-nav__link">
         FeaturesLogitsAlignerHook
       </a>
     </li>
@@ -1085,7 +1090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../joint_aligner_hook/" class="md-nav__link">
+      <a href="../../hooks/aligners/joint_aligner_hook/" class="md-nav__link">
         JointAlignerHook
       </a>
     </li>
@@ -1128,7 +1133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/base_condition_hook/" class="md-nav__link">
+      <a href="../../hooks/base/base_condition_hook/" class="md-nav__link">
         BaseConditionHook
       </a>
     </li>
@@ -1140,7 +1145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/base_hook/" class="md-nav__link">
+      <a href="../../hooks/base/base_hook/" class="md-nav__link">
         BaseHook
       </a>
     </li>
@@ -1152,7 +1157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/base_wrapper_hook/" class="md-nav__link">
+      <a href="../../hooks/base/base_wrapper_hook/" class="md-nav__link">
         BaseWrapperHook
       </a>
     </li>
@@ -1170,7 +1175,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cdan/" class="md-nav__link">
+      <a href="../../hooks/cdan/" class="md-nav__link">
         CDANHook
       </a>
     </li>
@@ -1207,7 +1212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/classifier_hook/" class="md-nav__link">
+      <a href="../../hooks/classification/classifier_hook/" class="md-nav__link">
         ClassifierHook
       </a>
     </li>
@@ -1219,7 +1224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/closs_hook/" class="md-nav__link">
+      <a href="../../hooks/classification/closs_hook/" class="md-nav__link">
         CLossHook
       </a>
     </li>
@@ -1231,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/finetuner_hook/" class="md-nav__link">
+      <a href="../../hooks/classification/finetuner_hook/" class="md-nav__link">
         FinetunerHook
       </a>
     </li>
@@ -1243,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/softmax_hook/" class="md-nav__link">
+      <a href="../../hooks/classification/softmax_hook/" class="md-nav__link">
         SoftmaxHook
       </a>
     </li>
@@ -1255,7 +1260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/softmax_locally_hook/" class="md-nav__link">
+      <a href="../../hooks/classification/softmax_locally_hook/" class="md-nav__link">
         SoftmaxLocallyHook
       </a>
     </li>
@@ -1298,7 +1303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../conditions/strong_d_hook/" class="md-nav__link">
+      <a href="../../hooks/conditions/strong_d_hook/" class="md-nav__link">
         StrongDHook
       </a>
     </li>
@@ -1316,7 +1321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dann/" class="md-nav__link">
+      <a href="../../hooks/dann/" class="md-nav__link">
         DANNHook
       </a>
     </li>
@@ -1353,7 +1358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../domain/domain_loss_hook/" class="md-nav__link">
+      <a href="../../hooks/domain/domain_loss_hook/" class="md-nav__link">
         DomainLossHook
       </a>
     </li>
@@ -1365,7 +1370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../domain/features_for_domain_loss_hook/" class="md-nav__link">
+      <a href="../../hooks/domain/features_for_domain_loss_hook/" class="md-nav__link">
         FeaturesForDomainLossHook
       </a>
     </li>
@@ -1383,7 +1388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../domain_confusion/" class="md-nav__link">
+      <a href="../../hooks/domain_confusion/" class="md-nav__link">
         DomainConfusionHook
       </a>
     </li>
@@ -1395,7 +1400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gan/" class="md-nav__link">
+      <a href="../../hooks/gan/" class="md-nav__link">
         GANHook
       </a>
     </li>
@@ -1407,7 +1412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gvb/" class="md-nav__link">
+      <a href="../../hooks/gvb/" class="md-nav__link">
         GVBHook
       </a>
     </li>
@@ -1444,7 +1449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/base_features_hook/" class="md-nav__link">
+      <a href="../../hooks/features/base_features_hook/" class="md-nav__link">
         BaseFeaturesHook
       </a>
     </li>
@@ -1456,7 +1461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/combined_features_hook/" class="md-nav__link">
+      <a href="../../hooks/features/combined_features_hook/" class="md-nav__link">
         CombinedFeaturesHook
       </a>
     </li>
@@ -1468,7 +1473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/dlogits_hook/" class="md-nav__link">
+      <a href="../../hooks/features/dlogits_hook/" class="md-nav__link">
         DLogitsHook
       </a>
     </li>
@@ -1480,7 +1485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_and_logits_hook/" class="md-nav__link">
+      <a href="../../hooks/features/features_and_logits_hook/" class="md-nav__link">
         FeaturesAndLogitsHook
       </a>
     </li>
@@ -1492,7 +1497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_chain_hook/" class="md-nav__link">
+      <a href="../../hooks/features/features_chain_hook/" class="md-nav__link">
         FeaturesChainHook
       </a>
     </li>
@@ -1504,7 +1509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_hook/" class="md-nav__link">
+      <a href="../../hooks/features/features_hook/" class="md-nav__link">
         FeaturesHook
       </a>
     </li>
@@ -1516,7 +1521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/features_with_grad_and_detached_hook/" class="md-nav__link">
+      <a href="../../hooks/features/features_with_grad_and_detached_hook/" class="md-nav__link">
         FeaturesWithGradAndDetachedHook
       </a>
     </li>
@@ -1528,7 +1533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/frozen_model_hook/" class="md-nav__link">
+      <a href="../../hooks/features/frozen_model_hook/" class="md-nav__link">
         FrozenModelHook
       </a>
     </li>
@@ -1540,7 +1545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/logits_hook/" class="md-nav__link">
+      <a href="../../hooks/features/logits_hook/" class="md-nav__link">
         LogitsHook
       </a>
     </li>
@@ -1558,7 +1563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mcd/" class="md-nav__link">
+      <a href="../../hooks/mcd/" class="md-nav__link">
         MCDHook
       </a>
     </li>
@@ -1570,7 +1575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../optimizer/" class="md-nav__link">
+      <a href="../../hooks/optimizer/" class="md-nav__link">
         OptimizerHook
       </a>
     </li>
@@ -1607,7 +1612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/base_reducer/" class="md-nav__link">
+      <a href="../../hooks/reducers/base_reducer/" class="md-nav__link">
         BaseReducer
       </a>
     </li>
@@ -1619,7 +1624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/entropy_reducer/" class="md-nav__link">
+      <a href="../../hooks/reducers/entropy_reducer/" class="md-nav__link">
         EntropyReducer
       </a>
     </li>
@@ -1631,7 +1636,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reducers/mean_reducer/" class="md-nav__link">
+      <a href="../../hooks/reducers/mean_reducer/" class="md-nav__link">
         MeanReducer
       </a>
     </li>
@@ -1649,7 +1654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rtn/" class="md-nav__link">
+      <a href="../../hooks/rtn/" class="md-nav__link">
         RTNHook
       </a>
     </li>
@@ -1661,7 +1666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../symnets/" class="md-nav__link">
+      <a href="../../hooks/symnets/" class="md-nav__link">
         SymNetsHook
       </a>
     </li>
@@ -1698,7 +1703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/apply_fn_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/apply_fn_hook/" class="md-nav__link">
         ApplyFnHook
       </a>
     </li>
@@ -1710,7 +1715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/assert_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/assert_hook/" class="md-nav__link">
         AssertHook
       </a>
     </li>
@@ -1722,7 +1727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/chain_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/chain_hook/" class="md-nav__link">
         ChainHook
       </a>
     </li>
@@ -1734,7 +1739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/empty_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/empty_hook/" class="md-nav__link">
         EmptyHook
       </a>
     </li>
@@ -1746,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/false_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/false_hook/" class="md-nav__link">
         FalseHook
       </a>
     </li>
@@ -1758,7 +1763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/multiplier_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/multiplier_hook/" class="md-nav__link">
         MultiplierHook
       </a>
     </li>
@@ -1770,7 +1775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/not_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/not_hook/" class="md-nav__link">
         NotHook
       </a>
     </li>
@@ -1782,7 +1787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/only_new_outputs_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/only_new_outputs_hook/" class="md-nav__link">
         OnlyNewOutputsHook
       </a>
     </li>
@@ -1794,7 +1799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/parallel_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/parallel_hook/" class="md-nav__link">
         ParallelHook
       </a>
     </li>
@@ -1806,7 +1811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/repeat_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/repeat_hook/" class="md-nav__link">
         RepeatHook
       </a>
     </li>
@@ -1818,7 +1823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/true_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/true_hook/" class="md-nav__link">
         TrueHook
       </a>
     </li>
@@ -1830,7 +1835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../utils/zero_loss_hook/" class="md-nav__link">
+      <a href="../../hooks/utils/zero_loss_hook/" class="md-nav__link">
         ZeroLossHook
       </a>
     </li>
@@ -1848,7 +1853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vada/" class="md-nav__link">
+      <a href="../../hooks/vada/" class="md-nav__link">
         VADAHook
       </a>
     </li>
@@ -1860,7 +1865,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validate/" class="md-nav__link">
+      <a href="../../hooks/validate/" class="md-nav__link">
         Validate
       </a>
     </li>
@@ -1889,7 +1894,7 @@
       <label class="md-nav__link" for="__nav_9">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../layers/" class="md-nav__link"
+          <a href="../../layers/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Layers
@@ -1899,7 +1904,7 @@
         <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../layers/" class="md-nav__link"
+            <a href="../../layers/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Layers
@@ -1912,7 +1917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/abs_loss/" class="md-nav__link">
+      <a href="../../layers/abs_loss/" class="md-nav__link">
         AbsLoss
       </a>
     </li>
@@ -1924,7 +1929,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/adaptive_feature_norm/" class="md-nav__link">
+      <a href="../../layers/adaptive_feature_norm/" class="md-nav__link">
         AdaptiveFeatureNorm
       </a>
     </li>
@@ -1936,7 +1941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/batch_spectral_loss/" class="md-nav__link">
+      <a href="../../layers/batch_spectral_loss/" class="md-nav__link">
         BatchSpectralLoss
       </a>
     </li>
@@ -1948,7 +1953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/bnm_loss/" class="md-nav__link">
+      <a href="../../layers/bnm_loss/" class="md-nav__link">
         BNMLoss
       </a>
     </li>
@@ -1960,7 +1965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/concat_softmax/" class="md-nav__link">
+      <a href="../../layers/concat_softmax/" class="md-nav__link">
         ConcatSoftmax
       </a>
     </li>
@@ -1972,7 +1977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/confidence_weights/" class="md-nav__link">
+      <a href="../../layers/confidence_weights/" class="md-nav__link">
         ConfidenceWeights
       </a>
     </li>
@@ -1984,7 +1989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/coral_loss/" class="md-nav__link">
+      <a href="../../layers/coral_loss/" class="md-nav__link">
         CORALLoss
       </a>
     </li>
@@ -1996,7 +2001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/diversity_loss/" class="md-nav__link">
+      <a href="../../layers/diversity_loss/" class="md-nav__link">
         DiversityLoss
       </a>
     </li>
@@ -2008,7 +2013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/do_nothing_optimizer/" class="md-nav__link">
+      <a href="../../layers/do_nothing_optimizer/" class="md-nav__link">
         DoNothingOptimizer
       </a>
     </li>
@@ -2020,7 +2025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/entropy_loss/" class="md-nav__link">
+      <a href="../../layers/entropy_loss/" class="md-nav__link">
         EntropyLoss
       </a>
     </li>
@@ -2032,7 +2037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/entropy_weights/" class="md-nav__link">
+      <a href="../../layers/entropy_weights/" class="md-nav__link">
         EntropyWeights
       </a>
     </li>
@@ -2044,7 +2049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/gradient_reversal/" class="md-nav__link">
+      <a href="../../layers/gradient_reversal/" class="md-nav__link">
         GradientReversal
       </a>
     </li>
@@ -2056,7 +2061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/mcc_loss/" class="md-nav__link">
+      <a href="../../layers/mcc_loss/" class="md-nav__link">
         MCCLoss
       </a>
     </li>
@@ -2068,7 +2073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/mcd_loss/" class="md-nav__link">
+      <a href="../../layers/mcd_loss/" class="md-nav__link">
         MCDLoss
       </a>
     </li>
@@ -2080,7 +2085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/mmd_loss/" class="md-nav__link">
+      <a href="../../layers/mmd_loss/" class="md-nav__link">
         MMDLoss
       </a>
     </li>
@@ -2092,7 +2097,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/model_with_bridge/" class="md-nav__link">
+      <a href="../../layers/model_with_bridge/" class="md-nav__link">
         ModelWithBridge
       </a>
     </li>
@@ -2104,7 +2109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/multiple_models/" class="md-nav__link">
+      <a href="../../layers/multiple_models/" class="md-nav__link">
         MultipleModels
       </a>
     </li>
@@ -2116,7 +2121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/neighborhood_aggregation/" class="md-nav__link">
+      <a href="../../layers/neighborhood_aggregation/" class="md-nav__link">
         NeighborhoodAggregation
       </a>
     </li>
@@ -2128,7 +2133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/plus_residual/" class="md-nav__link">
+      <a href="../../layers/plus_residual/" class="md-nav__link">
         PlusResidual
       </a>
     </li>
@@ -2140,7 +2145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/randomized_dot_product/" class="md-nav__link">
+      <a href="../../layers/randomized_dot_product/" class="md-nav__link">
         RandomizedDotProduct
       </a>
     </li>
@@ -2152,7 +2157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/silhouette_score/" class="md-nav__link">
+      <a href="../../layers/silhouette_score/" class="md-nav__link">
         SilhouetteScore
       </a>
     </li>
@@ -2164,7 +2169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/sliced_wasserstein/" class="md-nav__link">
+      <a href="../../layers/sliced_wasserstein/" class="md-nav__link">
         SlicedWasserstein
       </a>
     </li>
@@ -2176,7 +2181,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/stochastic_linear/" class="md-nav__link">
+      <a href="../../layers/stochastic_linear/" class="md-nav__link">
         StochasticLinear
       </a>
     </li>
@@ -2188,7 +2193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/sufficient_accuracy/" class="md-nav__link">
+      <a href="../../layers/sufficient_accuracy/" class="md-nav__link">
         SufficientAccuracy
       </a>
     </li>
@@ -2200,7 +2205,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/uniform_distribution_loss/" class="md-nav__link">
+      <a href="../../layers/uniform_distribution_loss/" class="md-nav__link">
         UniformDistributionLoss
       </a>
     </li>
@@ -2212,7 +2217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../layers/vat_loss/" class="md-nav__link">
+      <a href="../../layers/vat_loss/" class="md-nav__link">
         VATLoss
       </a>
     </li>
@@ -2241,7 +2246,7 @@
       <label class="md-nav__link" for="__nav_10">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../meta_validators/" class="md-nav__link"
+          <a href="../../meta_validators/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Meta Validators
@@ -2251,7 +2256,7 @@
         <label class="md-nav__title" for="__nav_10">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../meta_validators/" class="md-nav__link"
+            <a href="../../meta_validators/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Meta Validators
@@ -2264,7 +2269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../meta_validators/forward_only_validator/" class="md-nav__link">
+      <a href="../../meta_validators/forward_only_validator/" class="md-nav__link">
         ForwardOnlyValidator
       </a>
     </li>
@@ -2276,7 +2281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../meta_validators/reverse_validator/" class="md-nav__link">
+      <a href="../../meta_validators/reverse_validator/" class="md-nav__link">
         ReverseValidator
       </a>
     </li>
@@ -2305,7 +2310,7 @@
       <label class="md-nav__link" for="__nav_11">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../models/" class="md-nav__link"
+          <a href="../../models/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Models
@@ -2315,7 +2320,7 @@
         <label class="md-nav__title" for="__nav_11">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../models/" class="md-nav__link"
+            <a href="../../models/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Models
@@ -2328,7 +2333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../models/classifier/" class="md-nav__link">
+      <a href="../../models/classifier/" class="md-nav__link">
         Classifier
       </a>
     </li>
@@ -2340,7 +2345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../models/discriminator/" class="md-nav__link">
+      <a href="../../models/discriminator/" class="md-nav__link">
         Discriminator
       </a>
     </li>
@@ -2352,7 +2357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../models/mnist/" class="md-nav__link">
+      <a href="../../models/mnist/" class="md-nav__link">
         MNISTFeatures
       </a>
     </li>
@@ -2373,7 +2378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../utils/" class="md-nav__link">
+      <a href="../../utils/" class="md-nav__link">
         Utils
       </a>
     </li>
@@ -2396,7 +2401,7 @@
       <label class="md-nav__link" for="__nav_13">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../validators/" class="md-nav__link"
+          <a href="../../validators/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Validators
@@ -2406,7 +2411,7 @@
         <label class="md-nav__title" for="__nav_13">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../validators/" class="md-nav__link"
+            <a href="../../validators/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Validators
@@ -2419,7 +2424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/accuracy_validator/" class="md-nav__link">
+      <a href="../../validators/accuracy_validator/" class="md-nav__link">
         AccuracyValidator
       </a>
     </li>
@@ -2431,7 +2436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/base_validator/" class="md-nav__link">
+      <a href="../../validators/base_validator/" class="md-nav__link">
         BaseValidator
       </a>
     </li>
@@ -2443,7 +2448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/deep_embedded_validator/" class="md-nav__link">
+      <a href="../../validators/deep_embedded_validator/" class="md-nav__link">
         DeepEmbeddedValidator
       </a>
     </li>
@@ -2455,7 +2460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/diversity_validator/" class="md-nav__link">
+      <a href="../../validators/diversity_validator/" class="md-nav__link">
         DiversityValidator
       </a>
     </li>
@@ -2467,7 +2472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/entropy_validator/" class="md-nav__link">
+      <a href="../../validators/entropy_validator/" class="md-nav__link">
         EntropyValidator
       </a>
     </li>
@@ -2479,7 +2484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/error_validator/" class="md-nav__link">
+      <a href="../../validators/error_validator/" class="md-nav__link">
         ErrorValidator
       </a>
     </li>
@@ -2491,7 +2496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/im_validator/" class="md-nav__link">
+      <a href="../../validators/im_validator/" class="md-nav__link">
         IMValidator
       </a>
     </li>
@@ -2503,7 +2508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validators/snd_validator/" class="md-nav__link">
+      <a href="../../validators/snd_validator/" class="md-nav__link">
         SNDValidator
       </a>
     </li>
@@ -2532,7 +2537,7 @@
       <label class="md-nav__link" for="__nav_14">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../../weighters/" class="md-nav__link"
+          <a href="../../weighters/" class="md-nav__link"
             style="margin: initial; padding: initial; pointer-events: initial">
         
           Weighters
@@ -2542,7 +2547,7 @@
         <label class="md-nav__title" for="__nav_14">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../../weighters/" class="md-nav__link"
+            <a href="../../weighters/" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             Weighters
@@ -2555,7 +2560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../weighters/base_weighter/" class="md-nav__link">
+      <a href="../../weighters/base_weighter/" class="md-nav__link">
         BaseWeighter
       </a>
     </li>
@@ -2567,7 +2572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../weighters/mean_weighter/" class="md-nav__link">
+      <a href="../../weighters/mean_weighter/" class="md-nav__link">
         MeanWeighter
       </a>
     </li>
@@ -2579,7 +2584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../weighters/sum_weighter/" class="md-nav__link">
+      <a href="../../weighters/sum_weighter/" class="md-nav__link">
         SumWeighter
       </a>
     </li>
@@ -2616,24 +2621,31 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.aligners" class="md-nav__link">
-    aligners
+  <a href="#pytorch_adapt.containers.key_enforcer" class="md-nav__link">
+    key_enforcer
   </a>
   
-    <nav class="md-nav" aria-label="aligners">
+    <nav class="md-nav" aria-label="key_enforcer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.aligners.AlignerHook" class="md-nav__link">
-    AlignerHook
+  <a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer" class="md-nav__link">
+    KeyEnforcer
   </a>
   
-    <nav class="md-nav" aria-label="AlignerHook">
+    <nav class="md-nav" aria-label="KeyEnforcer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pytorch_adapt.hooks.aligners.AlignerHook.__init__" class="md-nav__link">
+  <a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer.__init__" class="md-nav__link">
     __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer.check" class="md-nav__link">
+    check()
   </a>
   
 </li>
@@ -2660,23 +2672,23 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/hooks/aligners/aligner_hook.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/KevinMusgrave/pytorch-adapt/edit/master/docs/containers/key_enforcer.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>AlignerHook</h1>
+                  <h1>KeyEnforcer</h1>
                 
                 <div class="doc doc-object doc-module">
 
 
 
-<h3 id="pytorch_adapt.hooks.aligners" class="doc doc-heading">
-        <code>pytorch_adapt.hooks.aligners</code>
+<h3 id="pytorch_adapt.containers.key_enforcer" class="doc doc-heading">
+        <code>pytorch_adapt.containers.key_enforcer</code>
 
 
 
-<a href="#pytorch_adapt.hooks.aligners" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#pytorch_adapt.containers.key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -2695,17 +2707,16 @@
 
 
 
-<h4 id="pytorch_adapt.hooks.aligners.AlignerHook" class="doc doc-heading">
-        <code>AlignerHook</code>
+<h4 id="pytorch_adapt.containers.key_enforcer.KeyEnforcer" class="doc doc-heading">
+        <code>KeyEnforcer</code>
 
 
 
-<a href="#pytorch_adapt.hooks.aligners.AlignerHook" class="headerlink" title="Permanent link">&para;</a></h4>
+<a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
-      <p>Computes an alignment loss (e.g MMD) based on features
-from two domains.</p>
+      <p>Makes sure containers have the specified keys.</p>
 
 
 
@@ -2724,14 +2735,14 @@ from two domains.</p>
 
 
 
-<h5 id="pytorch_adapt.hooks.aligners.AlignerHook.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h5 id="pytorch_adapt.containers.key_enforcer.KeyEnforcer.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
   </span>
 
-<a href="#pytorch_adapt.hooks.aligners.AlignerHook.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
+<a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
 
     <div class="doc doc-contents ">
 
@@ -2748,57 +2759,23 @@ from two domains.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>loss_fn</code></td>
-        <td><code>Callable[[torch.Tensor, torch.Tensor], torch.Tensor]</code></td>
-        <td><p>a function that computes a distance
-between two tensors. If <code>None</code>,
-it defaults to <a href="../../../layers/mmd_loss/#pytorch_adapt.layers.mmd_loss.MMDLoss"><code>MMDLoss</code></a>.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>hook</code></td>
-        <td><code>BaseHook</code></td>
-        <td><p>the hook for computing features</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>layer</code></td>
-        <td><code>str</code></td>
-        <td><p>the layer for which the loss is computed. Must be
-either <code>"features"</code> or <code>"logits"</code>.</p></td>
-        <td><code>&#39;features&#39;</code></td>
+        <td><code>**kwargs</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>A mapping from container name to a list of required
+keys for that container.</p></td>
+        <td><code>{}</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\hooks\aligners.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">loss_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">hook</span><span class="p">:</span> <span class="n">BaseHook</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;features&quot;</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">):</span>
+          <summary>Source code in <code>pytorch_adapt\containers\key_enforcer.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        loss_fn: a function that computes a distance</span>
-<span class="sd">            between two tensors. If ```None```,</span>
-<span class="sd">            it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].</span>
-<span class="sd">        hook: the hook for computing features</span>
-<span class="sd">        layer: the layer for which the loss is computed. Must be</span>
-<span class="sd">            either ```&quot;features&quot;``` or ```&quot;logits&quot;```.</span>
+<span class="sd">        **kwargs: A mapping from container name to a list of required</span>
+<span class="sd">            keys for that container.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">MMDLoss</span><span class="p">,</span> <span class="p">{})</span>
-    <span class="k">if</span> <span class="n">layer</span> <span class="o">==</span> <span class="s2">&quot;features&quot;</span><span class="p">:</span>
-        <span class="n">default_hook</span> <span class="o">=</span> <span class="n">FeaturesHook</span>
-    <span class="k">elif</span> <span class="n">layer</span> <span class="o">==</span> <span class="s2">&quot;logits&quot;</span><span class="p">:</span>
-        <span class="n">default_hook</span> <span class="o">=</span> <span class="n">FeaturesAndLogitsHook</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;AlignerHook layer must be &#39;features&#39; or &#39;logits&#39;&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">default_hook</span><span class="p">,</span> <span class="p">{})</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">requirements</span> <span class="o">=</span> <span class="n">kwargs</span>
 </code></pre></div>
         </details>
     </div>
@@ -2806,6 +2783,72 @@ either <code>"features"</code> or <code>"logits"</code>.</p></td>
   </div>
 
 
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.containers.key_enforcer.KeyEnforcer.check" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.containers.key_enforcer.KeyEnforcer.check" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Compares the input containers' keys to <code>self.requirements</code>.
+Raises <code>KeyError</code> if there is a mismatch.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>containers</code></td>
+        <td><code>MultipleContainers</code></td>
+        <td><p>The containers to check.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\containers\key_enforcer.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">:</span> <span class="n">MultipleContainers</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compares the input containers&#39; keys to ```self.requirements```.</span>
+<span class="sd">    Raises ```KeyError``` if there is a mismatch.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        containers: The containers to check.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">required_keys</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">requirements</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">container_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">containers</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">r_c_diff</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">list_diff</span><span class="p">(</span><span class="n">required_keys</span><span class="p">,</span> <span class="n">container_keys</span><span class="p">)</span>
+        <span class="n">c_r_diff</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">list_diff</span><span class="p">(</span><span class="n">container_keys</span><span class="p">,</span> <span class="n">required_keys</span><span class="p">)</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r_c_diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">error_msg</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> container is missing the following keys: </span><span class="si">{</span><span class="n">r_c_diff</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_r_diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">error_msg</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> container has the following unallowed keys: </span><span class="si">{</span><span class="n">c_r_diff</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">error_msg</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -2847,7 +2890,7 @@ either <code>"features"</code> or <code>"logits"</code>.</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../atdoc/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ATDOCHook" rel="prev">
+        <a href="../base_container/" class="md-footer__link md-footer__link--prev" aria-label="Previous: BaseContainer" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2856,20 +2899,20 @@ either <code>"features"</code> or <code>"logits"</code>.</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              ATDOCHook
+              BaseContainer
             </div>
           </div>
         </a>
       
       
         
-        <a href="../aligner_plus_c_hook/" class="md-footer__link md-footer__link--next" aria-label="Next: AlignerPlusCHook" rel="next">
+        <a href="../lr_schedulers/" class="md-footer__link md-footer__link--next" aria-label="Next: LRSchedulers" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              AlignerPlusCHook
+              LRSchedulers
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -2898,10 +2941,10 @@ either <code>"features"</code> or <code>"logits"</code>.</p></td>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.756773cc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.756773cc.min.js"></script>
       
     
   </body>
