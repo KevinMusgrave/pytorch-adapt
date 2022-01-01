@@ -361,18 +361,16 @@ def len_one_tensor(x):
     return x.dim() == 0 or len(x) == 1
 
 
-def reinit_layer(layer):
-    if hasattr(layer, "reset_parameters"):
-        layer.reset_parameters()
+# https://discuss.pytorch.org/t/how-to-re-set-alll-parameters-in-a-network/20819/8
+def reinit_layer(m):
+    reset_parameters = getattr(m, "reset_parameters", None)
+    if callable(reset_parameters):
+        m.reset_parameters()
 
 
+# https://discuss.pytorch.org/t/how-to-re-set-alll-parameters-in-a-network/20819/8
 def reinit(model):
-    for L in model.children():
-        try:
-            for layer in L:
-                reinit_layer(layer)
-        except TypeError:
-            reinit_layer(L)
+    model.apply(reinit_layer)
     return model
 
 
