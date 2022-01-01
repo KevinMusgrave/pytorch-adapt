@@ -23,11 +23,6 @@ Customize and combine complex algorithms with ease.
 Add additional functionality to your code by using one of the framework wrappers. Converting an algorithm into a PyTorch Lightning module is as simple as wrapping it with ```Lightning```.
 
 
-## News
-**November 30**: Added PyTorch Lightning wrapper. See [example notebook](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNLightning.ipynb).
-
-**November 19**: Git repo is now public
-
 ## Documentation
 - [**Documentation**](https://kevinmusgrave.github.io/pytorch-adapt/)
 - [**Installation instructions**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
