@@ -1,5 +1,12 @@
 # Unsupervised Domain Adaptation
 
+## Notebooks
+These notebooks contain runnable paper implementations:
+
+- [Paper Implementations (as hooks)](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/PaperImplementationsAsHooks.ipynb)
+
+
+## Papers
 
 ### AdaBN
 [Revisiting Batch Normalization For Practical Domain Adaptation](https://arxiv.org/abs/1603.04779)
