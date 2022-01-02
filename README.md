@@ -9,10 +9,9 @@
  </a> 
 </p>
 
-## What does it do?
-PyTorch Adapt provides tools for **domain adaptation**. This is a type of machine learning algorithm used for repurposing existing models to work in new domains.
+## Why use PyTorch Adapt?
+PyTorch Adapt provides tools for **domain adaptation**, a type of machine learning algorithm that repurposes existing models to work in new domains. This library is:
 
-## Benefits
 ### 1. **Fully featured**
 Build a complete train/val domain adaptation pipeline in a few lines of code.
 ### 2. **Modular**
