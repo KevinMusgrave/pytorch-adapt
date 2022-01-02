@@ -23,6 +23,7 @@ class Ignite:
         stat_getter=None,
         saver=None,
         logger=None,
+        val_data_hook=None,
         log_freq=50,
         with_pbars=True,
         device=None,
@@ -41,6 +42,7 @@ class Ignite:
         self.stat_getter = stat_getter
         self.saver = saver
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
+        self.val_data_hook = val_data_hook
         self.log_freq = log_freq
         self.with_pbars = with_pbars
         self.device = c_f.default(device, idist.device, {})
@@ -199,6 +201,7 @@ class Ignite:
                 self.stat_getter,
                 self.saver,
                 self.logger,
+                self.val_data_hook,
             ),
         )
 

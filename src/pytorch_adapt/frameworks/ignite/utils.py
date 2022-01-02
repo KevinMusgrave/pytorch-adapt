@@ -17,6 +17,7 @@ def get_validation_runner(
     stat_getter,
     saver,
     logger,
+    val_data_hook,
 ):
     required_data = validator.required_data
     if stat_getter:
@@ -47,6 +48,9 @@ def get_validation_runner(
         c_f.LOGGER.info(log_str)
         if logger:
             logger.write(engine)
+
+        if val_data_hook:
+            val_data_hook(engine, collected_data)
 
     return run_validation
 
