@@ -12,7 +12,8 @@ from pytorch_adapt.datasets import (
     get_officehome,
 )
 
-from .. import DATASET_FOLDER
+from .. import DATASET_FOLDER, RUN_DATASET_TESTS
+from .utils import skip_reason
 
 
 class TestGetters(unittest.TestCase):
@@ -24,6 +25,7 @@ class TestGetters(unittest.TestCase):
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
             self.assertTrue(len(datasets[k]) == sizes[k])
 
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_get_mnist_mnistm(self):
         datasets = get_mnist_mnistm(
             ["mnist"], ["mnistm"], folder=DATASET_FOLDER, download=True
@@ -41,6 +43,7 @@ class TestGetters(unittest.TestCase):
         )
         shutil.rmtree(DATASET_FOLDER)
 
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_officehome(self):
         datasets = get_officehome(
             ["art"], ["product"], folder=DATASET_FOLDER, download=True
@@ -58,6 +61,7 @@ class TestGetters(unittest.TestCase):
         )
         shutil.rmtree(DATASET_FOLDER)
 
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_office31(self):
         datasets = get_office31(
             ["amazon"], ["webcam"], folder=DATASET_FOLDER, download=True
