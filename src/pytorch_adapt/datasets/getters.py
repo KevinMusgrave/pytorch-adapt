@@ -7,6 +7,8 @@ from ..utils.transforms import GrayscaleToRGB
 from .combined_source_and_target import CombinedSourceAndTargetDataset
 from .concat_dataset import ConcatDataset
 from .mnistm import MNISTM
+from .office31 import Office31
+from .officehome import OfficeHome
 from .source_dataset import SourceDataset
 from .target_dataset import TargetDataset
 
@@ -73,16 +75,56 @@ def get_mnist_transform(domain, *_):
         )
 
 
-def get_mnist(domain, train, is_training, folder, download, transform_getter):
-    get_transform = c_f.default(transform_getter, get_mnist_transform)
-    transform = get_mnist_transform(domain)
+def _get_mnist_mnistm(domain, train, is_training, folder, download, transform_getter):
+    transform_getter = c_f.default(transform_getter, get_mnist_transform)
+    transform = transform_getter(domain, train, is_training)
     if domain == "mnist":
         return datasets.MNIST(
-            folder, train=train, download=download, transform=transform
+            folder, train=train, transform=transform, download=download
         )
     elif domain == "mnistm":
         return MNISTM(folder, train, transform, download=download)
 
 
 def get_mnist_mnistm(*args, **kwargs):
-    return get_datasets(get_mnist, *args, **kwargs)
+    return get_datasets(_get_mnist_mnistm, *args, **kwargs)
+
+
+def get_resnet_transform(domain, train, is_training):
+    transform = [T.Resize(256)]
+    if is_training:
+        transform += [
+            T.RandomCrop(224),
+            T.RandomHorizontalFlip(),
+        ]
+    else:
+        transform += [T.CenterCrop(224)]
+
+    transform += [
+        T.ToTensor(),
+        T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+    ]
+    return T.Compose(transform)
+
+
+def standard_dataset(cls):
+    def fn(domain, train, is_training, folder, download, transform_getter):
+        transform_getter = c_f.default(transform_getter, get_resnet_transform)
+        transform = transform_getter(domain, train, is_training)
+        return cls(
+            root=folder,
+            domain=domain,
+            train=train,
+            transform=transform,
+            download=download,
+        )
+
+    return fn
+
+
+def get_office31(*args, **kwargs):
+    return get_datasets(standard_dataset(Office31), *args, **kwargs)
+
+
+def get_officehome(*args, **kwargs):
+    return get_datasets(standard_dataset(OfficeHome), *args, **kwargs)
