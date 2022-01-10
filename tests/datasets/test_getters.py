@@ -3,7 +3,14 @@ import unittest
 
 from torchvision.datasets import MNIST
 
-from pytorch_adapt.datasets import MNISTM, OfficeHome, get_mnist_mnistm, get_officehome
+from pytorch_adapt.datasets import (
+    MNISTM,
+    Office31,
+    OfficeHome,
+    get_mnist_mnistm,
+    get_office31,
+    get_officehome,
+)
 
 from .. import DATASET_FOLDER
 
@@ -49,4 +56,37 @@ class TestGetters(unittest.TestCase):
                 "target_val": 888,
             },
         )
+        shutil.rmtree(DATASET_FOLDER)
+
+    def test_office31(self):
+        datasets = get_office31(
+            ["amazon"], ["webcam"], folder=DATASET_FOLDER, download=True
+        )
+        self.helper(
+            datasets,
+            Office31,
+            Office31,
+            {
+                "src_train": 2253,
+                "src_val": 564,
+                "target_train": 636,
+                "target_val": 159,
+            },
+        )
+
+        datasets = get_office31(
+            ["amazon", "dslr"], ["webcam"], folder=DATASET_FOLDER, download=True
+        )
+        self.helper(
+            datasets,
+            Office31,
+            Office31,
+            {
+                "src_train": 2253 + 398,
+                "src_val": 564 + 100,
+                "target_train": 636,
+                "target_val": 159,
+            },
+        )
+
         shutil.rmtree(DATASET_FOLDER)
