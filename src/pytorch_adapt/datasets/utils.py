@@ -14,3 +14,9 @@ def check_length(cls, correct_length):
     x = len(cls)
     if x != correct_length:
         raise ValueError(f"len(self)={x} but should be {correct_length}")
+
+
+def check_train(train):
+    if not isinstance(train, bool):
+        raise TypeError("train should be True or False")
+    return train

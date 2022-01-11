@@ -32,9 +32,9 @@ def collector_step(inference, batch, output_dict_fn):
     with torch.no_grad():
         features, logits = inference(data["imgs"], domain=data["domain"])
     output = output_dict_fn(features, logits)
-    labels_key = "labels"
-    if labels_key in data:
-        output[labels_key] = data[labels_key]
+    if len(output.keys() & data.keys()) > 0:
+        raise ValueError("output and data should have no overlap at this point")
+    output.update(data)
     return output
 
 
