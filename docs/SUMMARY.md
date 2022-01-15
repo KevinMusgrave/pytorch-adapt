@@ -35,6 +35,8 @@
     - [MNISTM](datasets/mnistm.md)
     - [Office31](datasets/office31.md)
     - [Office31Full](datasets/office31full.md)
+    - [OfficeHome](datasets/officehome.md)
+    - [OfficeHomeFull](datasets/officehomefull.md)
     - [PseudoLabeledDataset](datasets/pseudo_labeled_dataset.md)
     - [SourceDataset](datasets/source_dataset.md)
     - [TargetDataset](datasets/target_dataset.md)
