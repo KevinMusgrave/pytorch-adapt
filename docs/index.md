@@ -82,7 +82,7 @@ score = validator.score(target_train=target_train)
 
 You can also do this during training with a framework wrapper:
 
-#### Lightning
+#### PyTorch Lightning
 ```python
 from pytorch_adapt.frameworks.utils import filter_datasets
 
@@ -95,7 +95,7 @@ trainer = pl.Trainer(gpus=1, max_epochs=1)
 trainer.fit(L_adapter, train_loader, list(dataloaders.values()))
 ```
 
-#### Ignite
+#### Pytorch Ignite
 ```python
 from pytorch_adapt.validators import ScoreHistory
 

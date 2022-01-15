@@ -8,6 +8,10 @@ class MNISTM(BaseDownloadableDataset):
     """
     The dataset used in "Domain-Adversarial Training of Neural Networks".
     It consists of colored MNIST digits.
+
+    Extends [BaseDownloadableDataset][pytorch_adapt.datasets.BaseDownloadableDataset],
+    so the dataset can be downloaded by setting ```download=True``` when
+    initializing.
     """
 
     url = "https://cornell.box.com/shared/static/jado7quprg6hzzdubvwzh9umr75damwi"

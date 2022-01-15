@@ -16,7 +16,7 @@ class Office31Full(BaseDataset):
         """
         Arguments:
             root: The dataset must be located at ```<root>/office31```
-            domain: One of the 3 domains
+            domain: One of ```"amazon", "dslr", "webcam"```.
             transform: The image transform applied to each sample.
         """
 
@@ -36,7 +36,11 @@ class Office31Full(BaseDataset):
 
 class Office31(BaseDownloadableDataset):
     """
-    A custom train/test split of Office31Full.
+    A custom train/test split of [Office31Full][pytorch_adapt.datasets.Office31Full].
+
+    Extends [BaseDownloadableDataset][pytorch_adapt.datasets.BaseDownloadableDataset],
+    so the dataset can be downloaded by setting ```download=True``` when
+    initializing.
     """
 
     url = "https://cornell.box.com/shared/static/3v2ftdkdhpz1lbbr4uhu0135w7m79p7q"
@@ -47,7 +51,7 @@ class Office31(BaseDownloadableDataset):
         """
         Arguments:
             root: The dataset must be located at ```<root>/office31```
-            domain: One of the 3 domains
+            domain: One of ```"amazon", "dslr", "webcam"```.
             train: Whether or not to use the training set.
             transform: The image transform applied to each sample.
         """
