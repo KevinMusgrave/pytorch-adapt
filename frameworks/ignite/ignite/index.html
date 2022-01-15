@@ -680,6 +680,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../datasets/base_downloadable_dataset/" class="md-nav__link">
+        BaseDownloadableDataset
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../datasets/combined_source_and_target/" class="md-nav__link">
         CombinedSourceAndTarget
       </a>
@@ -742,6 +754,18 @@
     <li class="md-nav__item">
       <a href="../../../datasets/office31/" class="md-nav__link">
         Office31
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasets/office31full/" class="md-nav__link">
+        Office31Full
       </a>
     </li>
   
@@ -2726,7 +2750,7 @@ the event handler system of PyTorch Ignite.</p>
 
 
 <h5 id="pytorch_adapt.frameworks.ignite.ignite.Ignite.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stat_getter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">saver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auto_dist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stat_getter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">saver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_data_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auto_dist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -2784,6 +2808,7 @@ each epoch.</p></td>
     <span class="n">stat_getter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">saver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">val_data_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">log_freq</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
     <span class="n">with_pbars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2802,6 +2827,7 @@ each epoch.</p></td>
     <span class="bp">self</span><span class="o">.</span><span class="n">stat_getter</span> <span class="o">=</span> <span class="n">stat_getter</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">saver</span> <span class="o">=</span> <span class="n">saver</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">IgniteEmptyLogger</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">val_data_hook</span> <span class="o">=</span> <span class="n">val_data_hook</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">=</span> <span class="n">log_freq</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">with_pbars</span> <span class="o">=</span> <span class="n">with_pbars</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">idist</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="p">{})</span>

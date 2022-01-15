@@ -682,6 +682,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../base_downloadable_dataset/" class="md-nav__link">
+        BaseDownloadableDataset
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../combined_source_and_target/" class="md-nav__link">
         CombinedSourceAndTarget
       </a>
@@ -803,26 +815,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.datasets.office31.Office31Full" class="md-nav__link">
-    Office31Full
-  </a>
-  
-    <nav class="md-nav" aria-label="Office31Full">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.datasets.office31.Office31Full.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -832,6 +824,18 @@
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../office31full/" class="md-nav__link">
+        Office31Full
+      </a>
     </li>
   
 
@@ -2661,26 +2665,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.datasets.office31.Office31Full" class="md-nav__link">
-    Office31Full
-  </a>
-  
-    <nav class="md-nav" aria-label="Office31Full">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pytorch_adapt.datasets.office31.Office31Full.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2742,7 +2726,10 @@
 
     <div class="doc doc-contents ">
 
-      <p>A custom train/test split of Office31Full.</p>
+      <p>A custom train/test split of <a href="../office31full/#pytorch_adapt.datasets.office31.Office31Full">Office31Full</a>.</p>
+<p>Extends <a href="../base_downloadable_dataset/#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset">BaseDownloadableDataset</a>,
+so the dataset can be downloaded by setting <code>download=True</code> when
+initializing.</p>
 
 
 
@@ -2757,12 +2744,15 @@
 
 
 
+
+
+
   <div class="doc doc-object doc-method">
 
 
 
 <h5 id="pytorch_adapt.datasets.office31.Office31.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -2793,7 +2783,7 @@
       <tr>
         <td><code>domain</code></td>
         <td><code>str</code></td>
-        <td><p>One of the 3 domains</p></td>
+        <td><p>One of <code>"amazon", "dslr", "webcam"</code>.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
@@ -2806,153 +2796,23 @@
         <td><code>transform</code></td>
         <td><code></code></td>
         <td><p>The image transform applied to each sample.</p></td>
-        <td><em>required</em></td>
+        <td><code>None</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\datasets\office31.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        root: The dataset must be located at ```&lt;root&gt;/office31```</span>
-<span class="sd">        domain: One of the 3 domains</span>
+<span class="sd">        domain: One of ```&quot;amazon&quot;, &quot;dslr&quot;, &quot;webcam&quot;```.</span>
 <span class="sd">        train: Whether or not to use the training set.</span>
 <span class="sd">        transform: The image transform applied to each sample.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;train should be True or False&quot;</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="s2">&quot;test&quot;</span>
-    <span class="n">labels_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;office31&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">)</span>
-    <span class="n">img_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;office31&quot;</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">labels_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]</span>
-    <span class="n">check_img_paths</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_paths</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
-    <span class="n">check_length</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;amazon&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="mi">2253</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="mi">564</span><span class="p">}[</span><span class="n">name</span><span class="p">],</span>
-            <span class="s2">&quot;dslr&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="mi">398</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}[</span><span class="n">name</span><span class="p">],</span>
-            <span class="s2">&quot;webcam&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="mi">636</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="mi">159</span><span class="p">}[</span><span class="n">name</span><span class="p">],</span>
-        <span class="p">}[</span><span class="n">domain</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">check_train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h4 id="pytorch_adapt.datasets.office31.Office31Full" class="doc doc-heading">
-        <code>Office31Full</code>
-
-
-
-<a href="#pytorch_adapt.datasets.office31.Office31Full" class="headerlink" title="Permanent link">&para;</a></h4>
-
-    <div class="doc doc-contents ">
-
-      <p>A small dataset consisting of 31 classes in 3 domains:
-amazon, dslr, webcam.</p>
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="pytorch_adapt.datasets.office31.Office31Full.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#pytorch_adapt.datasets.office31.Office31Full.__init__" class="headerlink" title="Permanent link">&para;</a></h5>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>root</code></td>
-        <td><code>str</code></td>
-        <td><p>The dataset must be located at <code>&lt;root&gt;/office31</code></p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>domain</code></td>
-        <td><code>str</code></td>
-        <td><p>One of the 3 domains</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>transform</code></td>
-        <td><code></code></td>
-        <td><p>The image transform applied to each sample.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\datasets\office31.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Arguments:</span>
-<span class="sd">        root: The dataset must be located at ```&lt;root&gt;/office31```</span>
-<span class="sd">        domain: One of the 3 domains</span>
-<span class="sd">        transform: The image transform applied to each sample.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">torch_datasets</span><span class="o">.</span><span class="n">ImageFolder</span><span class="p">(</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;office31&quot;</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">),</span> <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span>
-    <span class="p">)</span>
-    <span class="n">check_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;amazon&quot;</span><span class="p">:</span> <span class="mi">2817</span><span class="p">,</span> <span class="s2">&quot;dslr&quot;</span><span class="p">:</span> <span class="mi">498</span><span class="p">,</span> <span class="s2">&quot;webcam&quot;</span><span class="p">:</span> <span class="mi">795</span><span class="p">}[</span><span class="n">domain</span><span class="p">])</span>
 </code></pre></div>
         </details>
     </div>
@@ -3016,13 +2876,13 @@ amazon, dslr, webcam.</p>
       
       
         
-        <a href="../pseudo_labeled_dataset/" class="md-footer__link md-footer__link--next" aria-label="Next: PseudoLabeledDataset" rel="next">
+        <a href="../office31full/" class="md-footer__link md-footer__link--next" aria-label="Next: Office31Full" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              PseudoLabeledDataset
+              Office31Full
             </div>
           </div>
           <div class="md-footer__button md-icon">

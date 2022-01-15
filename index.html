@@ -328,15 +328,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#lightning" class="md-nav__link">
-    Lightning
+  <a href="#pytorch-lightning_1" class="md-nav__link">
+    PyTorch Lightning
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ignite" class="md-nav__link">
-    Ignite
+  <a href="#pytorch-ignite_1" class="md-nav__link">
+    Pytorch Ignite
   </a>
   
 </li>
@@ -844,6 +844,18 @@
   
   
     <li class="md-nav__item">
+      <a href="datasets/base_downloadable_dataset/" class="md-nav__link">
+        BaseDownloadableDataset
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="datasets/combined_source_and_target/" class="md-nav__link">
         CombinedSourceAndTarget
       </a>
@@ -906,6 +918,18 @@
     <li class="md-nav__item">
       <a href="datasets/office31/" class="md-nav__link">
         Office31
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="datasets/office31full/" class="md-nav__link">
+        Office31Full
       </a>
     </li>
   
@@ -2775,15 +2799,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#lightning" class="md-nav__link">
-    Lightning
+  <a href="#pytorch-lightning_1" class="md-nav__link">
+    PyTorch Lightning
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ignite" class="md-nav__link">
-    Ignite
+  <a href="#pytorch-ignite_1" class="md-nav__link">
+    Pytorch Ignite
   </a>
   
 </li>
@@ -2922,7 +2946,7 @@
 <span class="n">score</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">target_train</span><span class="o">=</span><span class="n">target_train</span><span class="p">)</span>
 </code></pre></div></p>
 <p>You can also do this during training with a framework wrapper:</p>
-<h4 id="lightning">Lightning<a class="headerlink" href="#lightning" title="Permanent link">&para;</a></h4>
+<h4 id="pytorch-lightning_1">PyTorch Lightning<a class="headerlink" href="#pytorch-lightning_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.frameworks.utils</span> <span class="kn">import</span> <span class="n">filter_datasets</span>
 
 <span class="n">validator</span> <span class="o">=</span> <span class="n">SNDValidator</span><span class="p">()</span>
@@ -2933,7 +2957,7 @@
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">gpus</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">L_adapter</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataloaders</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 </code></pre></div>
-<h4 id="ignite">Ignite<a class="headerlink" href="#ignite" title="Permanent link">&para;</a></h4>
+<h4 id="pytorch-ignite_1">Pytorch Ignite<a class="headerlink" href="#pytorch-ignite_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pytorch_adapt.validators</span> <span class="kn">import</span> <span class="n">ScoreHistory</span>
 
 <span class="n">validator</span> <span class="o">=</span> <span class="n">ScoreHistory</span><span class="p">(</span><span class="n">SNDValidator</span><span class="p">())</span>
