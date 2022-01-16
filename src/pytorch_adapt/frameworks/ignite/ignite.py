@@ -124,16 +124,18 @@ class Ignite:
 
     def run(
         self,
-        datasets,
+        datasets=None,
         dataloader_creator=None,
+        dataloaders=None,
         validation_interval=1,
         patience=10,
         resume=None,
         check_initial_score=False,
         **trainer_kwargs,
     ):
-        dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
-        dataloaders = dataloader_creator(**datasets)
+        if dataloaders is None:
+            dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
+            dataloaders = dataloader_creator(**datasets)
 
         self.remove_temp_events()
 

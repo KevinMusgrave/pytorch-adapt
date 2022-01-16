@@ -22,7 +22,7 @@ class ScoreHistory(ABC):
         self,
         validator,
         normalizer: Callable[[np.ndarray], np.ndarray] = None,
-        ignore_epoch: int = 0,
+        ignore_epoch: int = None,
     ):
         """
         Arguments:
