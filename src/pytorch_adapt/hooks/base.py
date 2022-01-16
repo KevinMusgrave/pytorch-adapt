@@ -5,6 +5,7 @@ import numpy as np
 import torch
 
 from ..utils import common_functions as c_f
+from .logger import HookLogger
 
 
 class BaseHook(ABC):
@@ -41,6 +42,7 @@ class BaseHook(ABC):
         self.out_suffix = out_suffix
         self.key_map = c_f.default(key_map, {})
         self.in_keys = []
+        self.logger = HookLogger(c_f.cls_name(self))
 
     def __call__(self, losses, inputs):
         try:
