@@ -29,7 +29,12 @@ class BaseDataset(torch.utils.data.Dataset):
 
 
 class BaseDownloadableDataset(BaseDataset):
-    def __init__(self, root, download=False, **kwargs):
+    def __init__(self, root: str, download: bool = False, **kwargs):
+        """
+        Arguments:
+            root: Folder where dataset will be downloaded to.
+            download: If True, will download the dataset if it hasn't already been downloaded.
+        """
         super().__init__(**kwargs)
         if download:
             try:

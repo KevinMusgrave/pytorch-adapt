@@ -1,4 +1,4 @@
-from .base_dataset import BaseDataset
+from .base_dataset import BaseDataset, BaseDownloadableDataset
 from .combined_source_and_target import CombinedSourceAndTargetDataset
 from .concat_dataset import ConcatDataset
 from .dataloader_creator import DataloaderCreator
