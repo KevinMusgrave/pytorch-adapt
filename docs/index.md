@@ -134,7 +134,8 @@ pip install pytorch-adapt[ignite]
 Coming soon...
 
 ### Dependencies
-Required dependencies: 
+Required dependencies:
+
 - numpy
 - torch >= 1.6
 - torchvision
