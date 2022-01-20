@@ -888,21 +888,15 @@
       <label class="md-nav__link" for="__nav_7_1">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../" class="md-nav__link"
-            style="margin: initial; padding: initial; pointer-events: initial">
-        
           Ignite
-        </a>
+        
       </label>
       <nav class="md-nav" aria-label="Ignite" data-md-level="2">
         <label class="md-nav__title" for="__nav_7_1">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../" class="md-nav__link"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
             Ignite
-          </a>
+          
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -967,6 +961,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.run" class="md-nav__link">
+    run()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -992,6 +993,49 @@
     <li class="md-nav__item">
       <a href="../loggers/" class="md-nav__link">
         Loggers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        <span class="md-nav__icon md-icon"></span>
+        
+          Lightning
+        
+      </label>
+      <nav class="md-nav" aria-label="Lightning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          
+            Lightning
+          
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lightning/lightning/" class="md-nav__link">
+        Lightning
       </a>
     </li>
   
@@ -1059,32 +1103,20 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../../hooks/atdoc/" class="md-nav__link">
-        ATDOCHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8_3" type="checkbox" id="__nav_8_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8_2" type="checkbox" id="__nav_8_2" >
       
-      <label class="md-nav__link" for="__nav_8_3">
+      <label class="md-nav__link" for="__nav_8_2">
         <span class="md-nav__icon md-icon"></span>
         
           Aligners
         
       </label>
       <nav class="md-nav" aria-label="Aligners" data-md-level="2">
-        <label class="md-nav__title" for="__nav_8_3">
+        <label class="md-nav__title" for="__nav_8_2">
           <span class="md-nav__icon md-icon"></span>
           
             Aligners
@@ -1142,6 +1174,18 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hooks/atdoc/" class="md-nav__link">
+        ATDOCHook
+      </a>
     </li>
   
 
@@ -2686,6 +2730,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.run" class="md-nav__link">
+    run()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2799,11 +2850,36 @@ the event handler system of PyTorch Ignite.</p>
       <tr>
         <td><code>adapter</code></td>
         <td><code></code></td>
-        <td><p>An <a href="../../../adapters/">Adapter</a> object</p></td>
+        <td><p>An <a href="../../../adapters/">adapter</a> object, which contains
+the training and inference steps.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
+        <td><code>validator</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>stat_getter</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>saver</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
         <td><code>logger</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>val_data_hook</code></td>
         <td><code></code></td>
         <td></td>
         <td><code>None</code></td>
@@ -2819,6 +2895,18 @@ the event handler system of PyTorch Ignite.</p>
         <td><code></code></td>
         <td><p>If <code>True</code>, progress bars are shown during
 each epoch.</p></td>
+        <td><code>True</code></td>
+      </tr>
+      <tr>
+        <td><code>device</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>auto_dist</code></td>
+        <td><code></code></td>
+        <td></td>
         <td><code>True</code></td>
       </tr>
   </tbody>
@@ -2840,11 +2928,18 @@ each epoch.</p></td>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        adapter: An [Adapter](../../adapters/index.md) object</span>
+<span class="sd">        adapter: An [adapter](../../adapters/index.md) object, which contains</span>
+<span class="sd">            the training and inference steps.</span>
+<span class="sd">        validator:</span>
+<span class="sd">        stat_getter:</span>
+<span class="sd">        saver:</span>
 <span class="sd">        logger:</span>
+<span class="sd">        val_data_hook:</span>
 <span class="sd">        log_freq: The number of iterations between logging</span>
 <span class="sd">        with_pbars: If ```True```, progress bars are shown during</span>
 <span class="sd">            each epoch.</span>
+<span class="sd">        device:</span>
+<span class="sd">        auto_dist:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">adapter</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">validator</span>
@@ -2880,6 +2975,181 @@ each epoch.</p></td>
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="pytorch_adapt.frameworks.ignite.ignite.Ignite.run" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">resume</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check_initial_score</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">trainer_kwargs</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.run" class="headerlink" title="Permanent link">&para;</a></h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Trains and validates on the input datasets.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>datasets</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>dataloader_creator</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>dataloaders</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>validation_interval</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>1</code></td>
+      </tr>
+      <tr>
+        <td><code>patience</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>10</code></td>
+      </tr>
+      <tr>
+        <td><code>resume</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>check_initial_score</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>**trainer_kwargs</code></td>
+        <td><code></code></td>
+        <td></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[Tuple[float, int], Tuple[NoneType]]</code></td>
+      <td><p>A tuple of <code>(best_score, best_epoch)</code> or <code>(None, None)</code>
+if no validator is used.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\frameworks\ignite\ignite.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">datasets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">dataloader_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">dataloaders</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">validation_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">resume</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">check_initial_score</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">trainer_kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Trains and validates on the input datasets.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        datasets:</span>
+<span class="sd">        dataloader_creator:</span>
+<span class="sd">        dataloaders:</span>
+<span class="sd">        validation_interval:</span>
+<span class="sd">        patience:</span>
+<span class="sd">        resume:</span>
+<span class="sd">        check_initial_score:</span>
+<span class="sd">        **trainer_kwargs:</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple of ```(best_score, best_epoch)``` or ```(None, None)```</span>
+<span class="sd">        if no validator is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dataloaders</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dataloader_creator</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">dataloader_creator</span><span class="p">,</span> <span class="n">DataloaderCreator</span><span class="p">())</span>
+        <span class="n">dataloaders</span> <span class="o">=</span> <span class="n">dataloader_creator</span><span class="p">(</span><span class="o">**</span><span class="n">datasets</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">remove_temp_events</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+        <span class="n">max_epochs</span> <span class="o">=</span> <span class="n">trainer_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_epochs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_validation_runner</span><span class="p">(</span>
+            <span class="n">dataloaders</span><span class="p">,</span>
+            <span class="n">validation_interval</span><span class="p">,</span>
+            <span class="n">max_epochs</span><span class="p">,</span>
+            <span class="n">check_initial_score</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_temp_event_handler</span><span class="p">(</span>
+            <span class="n">Events</span><span class="o">.</span><span class="n">EPOCH_STARTED</span><span class="p">,</span> <span class="n">i_g</span><span class="o">.</span><span class="n">early_stopper</span><span class="p">(</span><span class="n">patience</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">saver</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_temp_event_handler</span><span class="p">(</span>
+                <span class="n">Events</span><span class="o">.</span><span class="n">EPOCH_COMPLETED</span><span class="p">,</span>
+                <span class="n">i_g</span><span class="o">.</span><span class="n">save_adapter_without_validator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saver</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_temp_event_handler</span><span class="p">(</span><span class="n">Events</span><span class="o">.</span><span class="n">EPOCH_COMPLETED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saver</span><span class="o">.</span><span class="n">save_ignite</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">resume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">resume</span> <span class="o">!=</span> <span class="s2">&quot;latest&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only &#39;latest&#39; resume is currently supported&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">saver</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;To resume, a Saver must be provided&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saver</span><span class="o">.</span><span class="n">load_all</span><span class="p">(</span>
+            <span class="n">adapter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">adapter</span><span class="p">,</span>
+            <span class="n">validator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">,</span>
+            <span class="n">stat_getter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stat_getter</span><span class="p">,</span>
+            <span class="n">framework</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="n">resume</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">i_g</span><span class="o">.</span><span class="n">resume_checks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_getter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">i_g</span><span class="o">.</span><span class="n">is_done</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="p">,</span> <span class="o">**</span><span class="n">trainer_kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">dataloaders</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">trainer_kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">best_score</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">best_epoch</span>
+
+    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -2925,7 +3195,7 @@ each epoch.</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Ignite" rel="prev">
+        <a href="../../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Frameworks" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2934,7 +3204,7 @@ each epoch.</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Ignite
+              Frameworks
             </div>
           </div>
         </a>

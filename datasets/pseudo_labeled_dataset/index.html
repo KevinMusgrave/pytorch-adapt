@@ -960,21 +960,15 @@
       <label class="md-nav__link" for="__nav_7_1">
         <span class="md-nav__icon md-icon"></span>
         
-          <a href="../../frameworks/ignite/" class="md-nav__link"
-            style="margin: initial; padding: initial; pointer-events: initial">
-        
           Ignite
-        </a>
+        
       </label>
       <nav class="md-nav" aria-label="Ignite" data-md-level="2">
         <label class="md-nav__title" for="__nav_7_1">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../frameworks/ignite/" class="md-nav__link"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
             Ignite
-          </a>
+          
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -997,6 +991,49 @@
     <li class="md-nav__item">
       <a href="../../frameworks/ignite/loggers/" class="md-nav__link">
         Loggers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        <span class="md-nav__icon md-icon"></span>
+        
+          Lightning
+        
+      </label>
+      <nav class="md-nav" aria-label="Lightning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          
+            Lightning
+          
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frameworks/lightning/lightning/" class="md-nav__link">
+        Lightning
       </a>
     </li>
   
@@ -1064,32 +1101,20 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../hooks/atdoc/" class="md-nav__link">
-        ATDOCHook
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8_3" type="checkbox" id="__nav_8_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8_2" type="checkbox" id="__nav_8_2" >
       
-      <label class="md-nav__link" for="__nav_8_3">
+      <label class="md-nav__link" for="__nav_8_2">
         <span class="md-nav__icon md-icon"></span>
         
           Aligners
         
       </label>
       <nav class="md-nav" aria-label="Aligners" data-md-level="2">
-        <label class="md-nav__title" for="__nav_8_3">
+        <label class="md-nav__title" for="__nav_8_2">
           <span class="md-nav__icon md-icon"></span>
           
             Aligners
@@ -1147,6 +1172,18 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hooks/atdoc/" class="md-nav__link">
+        ATDOCHook
+      </a>
     </li>
   
 
@@ -2808,8 +2845,9 @@ and the pseudo label is returned instead.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>A dictionary with keys</code></td>
-      <td><ul>
+      <td><code>Dict[str, Any]</code></td>
+      <td><p>A dictionary with keys:</p>
+<ul>
 <li>
 <p>"src_imgs" (the data)</p>
 </li>
@@ -2828,7 +2866,7 @@ and the pseudo label is returned instead.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\datasets\pseudo_labeled_dataset.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A dictionary with keys:</span>
