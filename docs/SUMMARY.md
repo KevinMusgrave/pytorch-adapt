@@ -41,17 +41,19 @@
     - [SourceDataset](datasets/source_dataset.md)
     - [TargetDataset](datasets/target_dataset.md)
 - [Frameworks](frameworks/index.md)
-    - [Ignite](frameworks/ignite/index.md)
+    - Ignite
         - [Ignite](frameworks/ignite/ignite.md)
         - [Loggers](frameworks/ignite/loggers.md)
+    - Lightning
+        - [Lightning](frameworks/lightning/lightning.md)
 - [Hooks](hooks/index.md)
     - [ADDAHook](hooks/adda.md)
-    - [ATDOCHook](hooks/atdoc.md)
     - Aligners
         - [AlignerHook](hooks/aligners/aligner_hook.md)
         - [AlignerPlusCHook](hooks/aligners/aligner_plus_c_hook.md)
         - [FeaturesLogitsAlignerHook](hooks/aligners/features_logits_aligner_hook.md)
         - [JointAlignerHook](hooks/aligners/joint_aligner_hook.md)
+    - [ATDOCHook](hooks/atdoc.md)
     - Base
         - [BaseConditionHook](hooks/base/base_condition_hook.md)
         - [BaseHook](hooks/base/base_hook.md)

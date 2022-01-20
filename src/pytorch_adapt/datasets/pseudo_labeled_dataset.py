@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, Dict, List
 
 from torch.utils.data import Dataset
 
@@ -30,7 +30,7 @@ class PseudoLabeledDataset(DomainDataset):
     def __len__(self):
         return len(self.dataset)
 
-    def __getitem__(self, idx: int):
+    def __getitem__(self, idx: int) -> Dict[str, Any]:
         """
         Returns:
             A dictionary with keys:
