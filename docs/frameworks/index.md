@@ -8,5 +8,6 @@ The purpose of the ```frameworks``` module is to eliminate that setup.
 
 Check out these notebooks for examples:
 
+- **[DANN with PyTorch Lightning](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/getting_started/DANNLightning.ipynb)**
 - **[DANN with PyTorch Ignite](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/getting_started/DANNIgnite.ipynb)**
 - **[DANN with PyTorch Ignite + Visualizations](https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples/getting_started/DANNIgniteWithViz.ipynb)**

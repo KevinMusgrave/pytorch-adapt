@@ -1,3 +1,5 @@
+from typing import Tuple, Union
+
 import ignite.distributed as idist
 from ignite.engine import Engine, Events
 from ignite.handlers import TerminateOnNan
@@ -31,11 +33,18 @@ class Ignite:
     ):
         """
         Arguments:
-            adapter: An [Adapter](../../adapters/index.md) object
+            adapter: An [adapter](../../adapters/index.md) object, which contains
+                the training and inference steps.
+            validator:
+            stat_getter:
+            saver:
             logger:
+            val_data_hook:
             log_freq: The number of iterations between logging
             with_pbars: If ```True```, progress bars are shown during
                 each epoch.
+            device:
+            auto_dist:
         """
         self.adapter = adapter
         self.validator = validator
@@ -132,7 +141,23 @@ class Ignite:
         resume=None,
         check_initial_score=False,
         **trainer_kwargs,
-    ):
+    ) -> Union[Tuple[float, int], Tuple[None, None]]:
+        """
+        Trains and validates on the input datasets.
+
+        Arguments:
+            datasets:
+            dataloader_creator:
+            dataloaders:
+            validation_interval:
+            patience:
+            resume:
+            check_initial_score:
+            **trainer_kwargs:
+        Returns:
+            A tuple of ```(best_score, best_epoch)``` or ```(None, None)```
+            if no validator is used.
+        """
         if dataloaders is None:
             dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
             dataloaders = dataloader_creator(**datasets)
