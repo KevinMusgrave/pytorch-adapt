@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from pytorch_metric_learning.utils import common_functions as pml_cf
+from tqdm import tqdm
 
 from pytorch_adapt.adapters import Classifier
 from pytorch_adapt.containers import Models, Optimizers
@@ -33,9 +34,9 @@ def simple_compute_snd(logits, T):
 class TestSNDValidator(unittest.TestCase):
     def test_snd_validator(self):
         ignore_epoch = 0
-        for T in [0.01, 0.05, 0.5, 1]:
+        for T in tqdm([0.01, 0.05, 0.5, 1]):
             for batch_size in [33, 257, 999, 1000, 1001]:
-                for dataset_size in [10, 100, 1000, 10000]:
+                for dataset_size in [10, 100, 1000, 2000]:
                     for num_classes in [13, 23, 98]:
                         validator = SNDValidator(T=T, batch_size=batch_size)
                         validator = ScoreHistory(validator, ignore_epoch=ignore_epoch)

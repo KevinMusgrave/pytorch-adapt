@@ -13,10 +13,17 @@ from ..containers import Models, Optimizers
 from ..datasets import DataloaderCreator, SourceDataset
 from ..models import Discriminator
 from ..utils import common_functions as c_f
-from ..utils.savers import Saver
 from .accuracy_validator import AccuracyValidator
 from .base_validator import BaseValidator
 from .score_history import ScoreHistory
+
+
+def default_framework_fn(adapter, validator, folder):
+    from ..frameworks.ignite import Ignite, savers
+
+    validator = ScoreHistory(validator)
+    saver = savers.Saver(folder=folder)
+    return Ignite(adapter, validator=validator, saver=saver, with_pbars=False)
 
 
 class DeepEmbeddedValidator(BaseValidator):
@@ -33,7 +40,7 @@ class DeepEmbeddedValidator(BaseValidator):
         batch_size=32,
         error_fn=None,
         error_layer="logits",
-        framework_cls=None,
+        framework_fn=None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -45,11 +52,7 @@ class DeepEmbeddedValidator(BaseValidator):
             error_fn, torch.nn.CrossEntropyLoss(reduction="none")
         )
         self.error_layer = error_layer
-        self.framework_cls = framework_cls
-        if self.framework_cls is None:
-            from ..frameworks.ignite import Ignite
-
-            self.framework_cls = Ignite
+        self.framework_fn = c_f.default(framework_fn, default_framework_fn)
         self.D_accuracy_val = None
         self.D_accuracy_test = None
         self.mean_error = None
@@ -66,7 +69,7 @@ class DeepEmbeddedValidator(BaseValidator):
             self.num_workers,
             self.batch_size,
             self.temp_folder,
-            self.framework_cls,
+            self.framework_fn,
         )
         error_per_sample = self.error_fn(src_val[self.error_layer], src_val["labels"])
         output = get_dev_risk(weights, error_per_sample[:, None])
@@ -114,7 +117,7 @@ def get_weights(
     num_workers,
     batch_size,
     temp_folder,
-    framework_cls,
+    framework_fn,
 ):
     """
     :param source_feature: shape [N_tr, d], features from training set
@@ -167,11 +170,7 @@ def get_weights(
         validator = AccuracyValidator(
             torchmetric_kwargs={"average": "macro", "num_classes": 2}
         )
-        validator = ScoreHistory(validator)
-        saver = Saver(folder=curr_folder)
-        trainer = framework_cls(
-            trainer, validator=validator, saver=saver, with_pbars=False
-        )
+        trainer = framework_fn(trainer, validator, curr_folder)
         datasets = {"train": train_set, "src_val": val_set}
         bs = int(np.min([len(train_set), len(val_set), batch_size]))
 
@@ -186,7 +185,7 @@ def get_weights(
         )
         val_acc.append(acc)
         trainers.append(trainer)
-        savers.append(saver)
+        savers.append(trainer.saver)
         folders.append(curr_folder)
 
     torch.cuda.empty_cache()
