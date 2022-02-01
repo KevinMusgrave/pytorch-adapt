@@ -4,8 +4,8 @@ import unittest
 import torch
 
 from pytorch_adapt.datasets import DataloaderCreator
+from pytorch_adapt.frameworks.ignite import savers
 from pytorch_adapt.meta_validators import ReverseValidator
-from pytorch_adapt.utils.savers import Saver
 from pytorch_adapt.validators import AccuracyValidator, ScoreHistory
 
 from .. import TEST_FOLDER
@@ -30,7 +30,7 @@ class TestReverseValidator(unittest.TestCase):
             mv = ReverseValidator()
             if forward_with_validator:
                 validator = ScoreHistory(AccuracyValidator())
-                saver = Saver(folder=TEST_FOLDER)
+                saver = savers.Saver(folder=TEST_FOLDER)
             else:
                 validator, saver = None, None
             forward_adapter, datasets = get_dann(validator=validator, saver=saver)

@@ -4,7 +4,8 @@ import unittest
 import numpy as np
 
 from pytorch_adapt.containers.base_container import containers_are_equal
-from pytorch_adapt.utils import exceptions, savers
+from pytorch_adapt.frameworks.ignite import savers
+from pytorch_adapt.utils import exceptions
 from pytorch_adapt.validators import (
     AccuracyValidator,
     MultipleValidators,

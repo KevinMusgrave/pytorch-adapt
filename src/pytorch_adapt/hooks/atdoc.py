@@ -1,3 +1,5 @@
+from typing import Any, Dict, Tuple
+
 import torch
 
 from ..layers import ConfidenceWeights, NeighborhoodAggregation
@@ -42,8 +44,7 @@ class ATDOCHook(BaseHook):
         )
         self.hook = FeaturesAndLogitsHook(domains=["target"])
 
-    def call(self, losses, inputs):
-        """"""
+    def call(self, losses, inputs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outputs = self.hook(losses, inputs)[1]
         [features, logits] = c_f.extract(
             [outputs, inputs],
