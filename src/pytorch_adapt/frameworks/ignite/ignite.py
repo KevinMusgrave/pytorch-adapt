@@ -174,7 +174,8 @@ class Ignite:
             )
 
             self.add_temp_event_handler(
-                Events.EPOCH_STARTED, i_g.early_stopper(patience, self.validator)
+                Events.EPOCH_COMPLETED(every=validation_interval),
+                i_g.EarlyStopper(patience, self.validator),
             )
 
         if self.saver:

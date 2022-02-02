@@ -100,21 +100,23 @@ def save_adapter_without_validator(saver, adapter):
     return handler
 
 
-def early_stopper(patience, validator):
-    def handler(engine):
-        if engine.state.epoch > 2:
-            # this runs at the beginning of a new epoch
-            # so engine.state.epoch has already incremented
-            # it's also 1-indexed
-            epochs_since_best_epoch = engine.state.epoch - 1
-            if validator.best_epoch is not None:
-                epochs_since_best_epoch -= validator.best_epoch
-            c_f.LOGGER.info(f"epochs_since_best_epoch = {epochs_since_best_epoch}")
-            if epochs_since_best_epoch > patience:
-                c_f.LOGGER.info("***Performance has plateaued. Exiting.***")
-                engine.terminate()
+class EarlyStopper:
+    def __init__(self, patience, validator):
+        self.patience = patience
+        self.validator = validator
+        self.count = 0
 
-    return handler
+    def __call__(self, engine):
+        epoch = engine.state.epoch
+        curr_best = self.validator.best_epoch
+        since_best = epoch
+        if curr_best is not None:
+            since_best -= curr_best
+        c_f.LOGGER.info(f"epochs_since_best_epoch = {since_best}")
+        self.count = 0 if since_best == 0 else self.count + 1
+        if self.count >= self.patience + 1:
+            c_f.LOGGER.info("***Performance has plateaued. Exiting.***")
+            engine.terminate()
 
 
 def pbar_print_losses(pbar):

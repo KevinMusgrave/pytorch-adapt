@@ -1,18 +1,66 @@
+import logging
 import unittest
 
-from pytorch_adapt.adapters import DANN
-from pytorch_adapt.datasets import DataloaderCreator
-from pytorch_adapt.frameworks.ignite import Ignite
+import torch
+import torch.nn as nn
+from pytorch_metric_learning.utils.common_functions import EmbeddingDataset
 
-from ..adapters.utils import get_datasets, get_gcd
+from pytorch_adapt.adapters import Finetuner
+from pytorch_adapt.containers import Models
+from pytorch_adapt.datasets import (
+    CombinedSourceAndTargetDataset,
+    DataloaderCreator,
+    SourceDataset,
+    TargetDataset,
+)
+from pytorch_adapt.frameworks.ignite import Ignite
+from pytorch_adapt.utils import common_functions as c_f
+from pytorch_adapt.validators import EntropyValidator, ScoreHistory
+
+
+def helper(with_validator=False, final_best_epoch=5, ignore_epoch=None):
+    device = torch.device("cuda")
+    datasets = {}
+    for k in ["src_train", "target_train"]:
+        datasets[k] = EmbeddingDataset(
+            torch.randn(128, 32), torch.randint(0, 10, size=(128,))
+        )
+        if k.startswith("src"):
+            datasets[k] = SourceDataset(datasets[k])
+        else:
+            datasets[k] = TargetDataset(datasets[k])
+
+    datasets["train"] = CombinedSourceAndTargetDataset(
+        datasets["src_train"], datasets["target_train"]
+    )
+
+    models = Models({"G": nn.Identity(), "C": nn.Linear(32, 16, device=device)})
+    adapter = Finetuner(models)
+    validator = None
+    if with_validator:
+        validator = EntropyValidator()
+        validator = DumbScoreHistory(
+            final_best_epoch=final_best_epoch,
+            validator=validator,
+            ignore_epoch=ignore_epoch,
+        )
+    adapter = Ignite(adapter, validator=validator, with_pbars=False, device=device)
+    return adapter, datasets
+
+
+class DumbScoreHistory(ScoreHistory):
+    def __init__(self, final_best_epoch, **kwargs):
+        super().__init__(**kwargs)
+        self.final_best_epoch = final_best_epoch
+
+    def append_to_history_and_normalize(self, score, epoch):
+        score = epoch if epoch <= self.final_best_epoch else -1
+        super().append_to_history_and_normalize(score, epoch)
 
 
 class TestIgnite(unittest.TestCase):
-    def test_ignite(self):
-        datasets = get_datasets()
-        models = get_gcd()
-        adapter = DANN(models)
-        adapter = Ignite(adapter)
+    def test_datasets_dataloaders(self):
+        adapter, datasets = helper()
 
         # passing in datasets
         dc = DataloaderCreator(num_workers=2)
@@ -21,3 +69,42 @@ class TestIgnite(unittest.TestCase):
         # passing in dataloaders
         dataloaders = DataloaderCreator(num_workers=2)(**datasets)
         adapter.run(dataloaders=dataloaders, epoch_length=10)
+
+    def test_early_stopping(self):
+        logging.getLogger(c_f.LOGGER_NAME).setLevel(logging.CRITICAL)
+        for final_best_epoch in [1, 4]:
+            for validation_interval in [1, 2, 3]:
+                for patience in [1, 5, 9]:
+                    for ignore_epoch in [None, 0]:
+                        for check_initial_score in [False, True]:
+                            adapter, datasets = helper(
+                                with_validator=True,
+                                final_best_epoch=final_best_epoch,
+                                ignore_epoch=ignore_epoch,
+                            )
+                            dataloaders = DataloaderCreator(num_workers=0)(**datasets)
+                            adapter.run(
+                                dataloaders=dataloaders,
+                                epoch_length=1,
+                                patience=patience,
+                                max_epochs=100,
+                                validation_interval=validation_interval,
+                                check_initial_score=check_initial_score,
+                            )
+
+                            num_best_check = final_best_epoch // validation_interval
+                            if num_best_check == 0:
+                                # with patience == 1
+                                # the scores will be [-1, -1, -1]
+                                correct_len = patience + 2
+                            else:
+                                correct_len = num_best_check + patience + 1
+                            if check_initial_score and (
+                                num_best_check > 0 or ignore_epoch is not None
+                            ):
+                                correct_len += 1
+                            self.assertTrue(
+                                len(adapter.validator.score_history) == correct_len
+                            )
+
+        logging.getLogger(c_f.LOGGER_NAME).setLevel(logging.INFO)
