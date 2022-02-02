@@ -129,7 +129,7 @@ class Ignite:
 
     def get_all_outputs(self, dataloader, split_name):
         dataloaders = {split_name: dataloader}
-        return i_g.collect_from_dataloaders(self, dataloaders, [split_name])
+        return i_g.collect_from_dataloaders(self.collector, dataloaders, [split_name])
 
     def run(
         self,
@@ -223,8 +223,9 @@ class Ignite:
         self.add_temp_event_handler(
             validation_condition,
             i_g.get_validation_runner(
-                self,
+                self.collector,
                 dataloaders,
+                self.adapter,
                 self.validator,
                 self.stat_getter,
                 self.saver,
@@ -239,7 +240,7 @@ class Ignite:
         dataloaders = dataloader_creator(**datasets)
         saver.load_adapter(self.adapter, "best")
         collected_data = i_g.collect_from_dataloaders(
-            self, dataloaders, validator.required_data
+            self.collector, dataloaders, validator.required_data
         )
         return i_g.get_validation_score(collected_data, validator)
 

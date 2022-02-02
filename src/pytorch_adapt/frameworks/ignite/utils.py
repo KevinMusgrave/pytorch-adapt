@@ -11,8 +11,9 @@ from .dictionary_accumulator import DictionaryAccumulator
 
 
 def get_validation_runner(
-    cls,
+    collector,
     dataloaders,
+    adapter,
     validator,
     stat_getter,
     saver,
@@ -27,12 +28,12 @@ def get_validation_runner(
 
         epoch = engine.state.epoch
 
-        collected_data = collect_from_dataloaders(cls, dataloaders, required_data)
+        collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
         get_validation_score(collected_data, validator, epoch)
 
         if saver:
             saver.save_validator(validator)
-            saver.save_adapter(cls.adapter, epoch, validator.best_epoch)
+            saver.save_adapter(adapter, epoch, validator.best_epoch)
         if logger:
             logger.add_validation({"validator": validator}, epoch)
         log_str = f"VALIDATION SCORES:\n{validator}\n"
@@ -62,7 +63,7 @@ def get_validation_score(collected_data, validator, epoch=None):
     return validator.score(epoch, **kwargs)
 
 
-def collect_from_dataloaders(cls, dataloaders, required_data):
+def collect_from_dataloaders(collector, dataloaders, required_data):
     collected_data = {}
 
     for k in required_data:
@@ -71,7 +72,7 @@ def collect_from_dataloaders(cls, dataloaders, required_data):
         c_f.val_dataloader_checks(curr_dataloader)
         curr_dataset = curr_dataloader.dataset
         iterable = curr_dataloader.__iter__()
-        curr_collected = accumulate_collector_output(cls.collector, iterable, k)
+        curr_collected = accumulate_collector_output(collector, iterable, k)
         c_f.val_collected_data_checks(curr_collected, curr_dataset)
         collected_data[k] = curr_collected
         del iterable
