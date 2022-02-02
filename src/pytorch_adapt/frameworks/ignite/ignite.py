@@ -137,7 +137,7 @@ class Ignite:
         dataloader_creator=None,
         dataloaders=None,
         validation_interval=1,
-        patience=10,
+        patience=None,
         resume=None,
         check_initial_score=False,
         **trainer_kwargs,
@@ -173,10 +173,11 @@ class Ignite:
                 check_initial_score,
             )
 
-            self.add_temp_event_handler(
-                Events.EPOCH_COMPLETED(every=validation_interval),
-                i_g.EarlyStopper(patience, self.validator),
-            )
+            if patience is not None:
+                self.add_temp_event_handler(
+                    Events.EPOCH_COMPLETED(every=validation_interval),
+                    i_g.EarlyStopper(patience, self.validator),
+                )
 
         if self.saver:
             if not self.validator:

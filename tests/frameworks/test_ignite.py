@@ -74,7 +74,7 @@ class TestIgnite(unittest.TestCase):
         logging.getLogger(c_f.LOGGER_NAME).setLevel(logging.CRITICAL)
         for final_best_epoch in [1, 4]:
             for validation_interval in [1, 2, 3]:
-                for patience in [1, 5, 9]:
+                for patience in [0, 1, 5, 9]:
                     for ignore_epoch in [None, 0]:
                         for check_initial_score in [False, True]:
                             adapter, datasets = helper(
