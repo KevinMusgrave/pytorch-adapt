@@ -34,7 +34,7 @@ class SymNets(BaseGCAdapter):
         domain = check_domain(self, domain)
         features = self.models["G"](x)
         logits = self.models["C"](features)[domain]
-        return features, logits
+        return {"features": features, "logits": logits}
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(

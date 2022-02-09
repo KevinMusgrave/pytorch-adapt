@@ -15,7 +15,7 @@ class TestCustomInference(unittest.TestCase):
             def func(x, domain):
                 features = cls.models["G"](x)
                 features = cls.models["C"](features)
-                return features, features
+                return {"features": features, "logits": features}
 
             return func
 

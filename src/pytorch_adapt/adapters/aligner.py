@@ -51,10 +51,11 @@ class RTN(Aligner):
             Features and logits
         """
         domain = check_domain(self, domain)
-        features, logits = super().inference_default(x, domain)
+        f_dict = super().inference_default(x, domain)
+        logits = f_dict["logits"]
         if domain == 0:
-            return features, self.models["residual_model"](logits)
-        return features, logits
+            logits = self.models["residual_model"](logits)
+        return {**f_dict, "logits": logits}
 
     def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()

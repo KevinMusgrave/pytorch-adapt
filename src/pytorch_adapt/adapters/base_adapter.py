@@ -114,7 +114,7 @@ class BaseAdapter(ABC):
         """
         features = self.models["G"](x)
         logits = self.models["C"](features)
-        return features, logits
+        return {"features": features, "logits": logits}
 
     def get_default_containers(self) -> MultipleContainers:
         """

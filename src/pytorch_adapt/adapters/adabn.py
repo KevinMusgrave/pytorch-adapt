@@ -11,7 +11,7 @@ class AdaBN(BaseAdapter):
         domain = check_domain(self, domain, keep_len=True)
         features = self.models["G"](x, domain)
         logits = self.models["C"](features, domain)
-        return features, logits
+        return {"features": features, "logits": logits}
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(**hook_kwargs)

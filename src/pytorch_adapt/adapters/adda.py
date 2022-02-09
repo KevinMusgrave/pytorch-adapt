@@ -38,7 +38,7 @@ class ADDA(BaseAdapter):
         fe = "G" if domain == 0 else "T"
         features = self.models[fe](x)
         logits = self.models["C"](features)
-        return features, logits
+        return {"features": features, "logits": logits}
 
     def get_default_containers(self) -> MultipleContainers:
         """
