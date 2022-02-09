@@ -108,3 +108,16 @@ class TestIgnite(unittest.TestCase):
                             )
 
         logging.getLogger(c_f.LOGGER_NAME).setLevel(logging.INFO)
+
+    def test_get_all_outputs(self):
+        adapter, datasets = helper()
+
+        # passing in dataloaders
+        dataloaders = DataloaderCreator(num_workers=2)(**datasets)
+        split = "target_train"
+        data = adapter.get_all_outputs(dataloaders[split], split)
+        self.assertTrue(data.keys() == {split})
+        self.assertTrue(
+            data[split].keys()
+            == {"features", "logits", "preds", "domain", "sample_idx"}
+        )

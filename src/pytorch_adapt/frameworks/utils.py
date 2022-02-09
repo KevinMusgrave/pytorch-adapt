@@ -27,6 +27,7 @@ def collector_step(inference, batch, output_dict_fn):
     data = extract_data(batch)
     with torch.no_grad():
         f_dict = inference(data["imgs"], domain=data["domain"])
+    data.pop("imgs")  # we don't want to collect imgs
     f_dict = output_dict_fn(f_dict)
     if len(f_dict.keys() & data.keys()) > 0:
         raise ValueError("f_dict and data should have no overlap at this point")
