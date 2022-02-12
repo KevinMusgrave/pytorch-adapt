@@ -79,10 +79,11 @@ class MultipleContainersSaver(BaseSaver):
         for v in container.values():
             self.container_saver.save(v, epoch, best_epoch, prefix)
 
-    def load(self, container, suffix, prefix=""):
+    def load(self, container, suffix, prefix="", container_subset=None):
         # load each child container
-        for v in container.values():
-            self.container_saver.load(v, suffix, prefix)
+        containers_to_load = c_f.default(container_subset, container.keys())
+        for k in containers_to_load:
+            self.container_saver.load(container[k], suffix, prefix)
 
     def delete(self, container, keep, prefix=""):
         for v in container.values():
@@ -110,8 +111,10 @@ class AdapterSaver(BaseSaver):
                 adapter.containers, best_epoch, "best", prefix=prefix
             )
 
-    def load(self, adapter, suffix, prefix=""):
-        self.container_saver.load(adapter.containers, suffix, prefix=prefix)
+    def load(self, adapter, suffix, prefix="", container_subset=None):
+        self.container_saver.load(
+            adapter.containers, suffix, prefix=prefix, container_subset=container_subset
+        )
 
 
 class ValidatorSaver(BaseSaver):

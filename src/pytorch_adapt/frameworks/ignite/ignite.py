@@ -235,11 +235,15 @@ class Ignite:
             ),
         )
 
-    def evaluate_best_model(self, datasets, validator, saver, dataloader_creator=None):
+    def evaluate_best_model(
+        self, datasets, validator=None, saver=None, dataloader_creator=None
+    ):
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
-        dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())
+        validator = c_f.default(validator, self.validator)
+        saver = c_f.default(saver, self.saver)
+        dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)
-        saver.load_adapter(self.adapter, "best")
+        saver.load_adapter(self.adapter, "best", container_subset=["models"])
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )
