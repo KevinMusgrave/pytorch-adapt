@@ -196,9 +196,9 @@ class Saver:
         c_f.LOGGER.info(f"Saving adapter to {self.adapter_saver.folder}")
         self.adapter_saver.save(adapter, epoch, best_epoch, "adapter")
 
-    def load_adapter(self, adapter, suffix):
+    def load_adapter(self, adapter, suffix, container_subset=None):
         c_f.LOGGER.info(f"Loading adapter from {self.adapter_saver.folder}")
-        self.adapter_saver.load(adapter, suffix, "adapter")
+        self.adapter_saver.load(adapter, suffix, "adapter", container_subset)
 
     def save_validator(self, validator):
         c_f.LOGGER.info(f"Saving validator to {self.validator_saver.folder}")
