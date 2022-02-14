@@ -20,3 +20,10 @@ class TestPretrainedDownload(unittest.TestCase):
 
         for domain in ["art", "clipart", "product", "real"]:
             officehomeC(domain=domain, pretrained=True)
+
+    def test_not_pretrained(self):
+        office31C(pretrained=False)
+        officehomeC(pretrained=False)
+        with self.assertRaises(ValueError):
+            office31C(pretrained=True)
+            officehomeC(pretrained=True)
