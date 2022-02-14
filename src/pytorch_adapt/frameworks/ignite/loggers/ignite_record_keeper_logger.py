@@ -25,9 +25,6 @@ class IgniteRecordKeeperLogger:
             tensorboard_writer:
             record_writer: a ```RecordWriter``` object (see record-keeper)
         """
-        import record_keeper
-
-        c_f.LOGGER.info(f"record_keeper version {record_keeper.__version__}")
         from record_keeper import RecordKeeper, RecordWriter
         from torch.utils.tensorboard import SummaryWriter
 
