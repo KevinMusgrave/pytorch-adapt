@@ -1,23 +1,9 @@
 import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
-from ...hooks.base import BaseHook
-from ...utils import common_functions as c_f
-from ...weighters.base_weighter import BaseWeighter
-
-
-class IgniteEmptyLogger:
-    def add_training(self, *args, **kwargs):
-        def fn(*args, **kwargs):
-            pass
-
-        return fn
-
-    def add_validation(self, *args, **kwargs):
-        pass
-
-    def write(self, *args, **kwargs):
-        pass
+from ....hooks.base import BaseHook
+from ....utils import common_functions as c_f
+from ....weighters.base_weighter import BaseWeighter
 
 
 class IgniteRecordKeeperLogger:

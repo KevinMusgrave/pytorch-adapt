@@ -1,5 +1,6 @@
 from pytorch_adapt.adapters import DANN
-from pytorch_adapt.frameworks.ignite import Ignite, IgniteRecordKeeperLogger
+from pytorch_adapt.frameworks.ignite import Ignite
+from pytorch_adapt.frameworks.ignite.loggers import IgniteRecordKeeperLogger
 
 from .. import TEST_FOLDER
 from .utils import get_datasets, get_gcd
