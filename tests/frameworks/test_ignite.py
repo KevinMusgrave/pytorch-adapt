@@ -14,7 +14,7 @@ from pytorch_adapt.datasets import (
     TargetDataset,
 )
 from pytorch_adapt.frameworks.ignite import Ignite
-from pytorch_adapt.frameworks.ignite.loggers.basic_loss_logger import BasicLossLogger
+from pytorch_adapt.frameworks.ignite.loggers import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import EntropyValidator, ScoreHistory
 
