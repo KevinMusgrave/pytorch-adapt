@@ -145,7 +145,10 @@ def accumulate_collector_output(collector, iterable, output_name):
     accumulator.attach(collector, output_name)
     collector.run(iterable)
     accumulator.detach(collector)
-    return collector.state.metrics[output_name]
+    output = collector.state.metrics[output_name]
+    collector.state.output = {}
+    collector.state.metrics = {}
+    return output
 
 
 def set_engine_logger(engine, name, level=logging.CRITICAL):

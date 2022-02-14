@@ -71,7 +71,6 @@ class Ignite:
 
     def trainer_init(self):
         self.trainer = Engine(self.training_step)
-        self.trainer.state.adapter = self.adapter
         i_g.register(self.trainer, Events.STARTED, self.before_training_starts)
         i_g.register(
             self.trainer, Events.EPOCH_STARTED, self.set_to_train(self.adapter.models)
@@ -87,7 +86,7 @@ class Ignite:
         i_g.register(
             self.trainer,
             Events.ITERATION_COMPLETED(every=self.log_freq),
-            self.logger.add_training,
+            self.logger.add_training(self.adapter),
         )
         i_g.register(
             self.trainer,
