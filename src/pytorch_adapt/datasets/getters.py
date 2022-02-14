@@ -37,22 +37,34 @@ def get_datasets(
             transform_getter,
         )
 
+    if not src_domains and not target_domains:
+        raise ValueError(
+            "At least one of src_domains and target_domains must be provided"
+        )
+
     output = {}
-    output["src_train"] = SourceDataset(getter(src_domains, True, False))
-    output["src_val"] = SourceDataset(getter(src_domains, False, False))
-    output["target_train"] = TargetDataset(getter(target_domains, True, False))
-    output["target_val"] = TargetDataset(getter(target_domains, False, False))
-    if return_target_with_labels:
-        output["target_train_with_labels"] = SourceDataset(
-            getter(target_domains, True, False), domain=1
+    if src_domains:
+        output["src_train"] = SourceDataset(getter(src_domains, True, False))
+        output["src_val"] = SourceDataset(getter(src_domains, False, False))
+    if target_domains:
+        output["target_train"] = TargetDataset(getter(target_domains, True, False))
+        output["target_val"] = TargetDataset(getter(target_domains, False, False))
+        if return_target_with_labels:
+            output["target_train_with_labels"] = SourceDataset(
+                getter(target_domains, True, False), domain=1
+            )
+            output["target_val_with_labels"] = SourceDataset(
+                getter(target_domains, False, False), domain=1
+            )
+    if src_domains and target_domains:
+        output["train"] = CombinedSourceAndTargetDataset(
+            SourceDataset(getter(src_domains, True, True)),
+            TargetDataset(getter(target_domains, True, True)),
         )
-        output["target_val_with_labels"] = SourceDataset(
-            getter(target_domains, False, False), domain=1
-        )
-    output["train"] = CombinedSourceAndTargetDataset(
-        SourceDataset(getter(src_domains, True, True)),
-        TargetDataset(getter(target_domains, True, True)),
-    )
+    elif src_domains:
+        output["train"] = SourceDataset(getter(src_domains, True, True))
+    elif target_domains:
+        output["train"] = TargetDataset(getter(target_domains, True, True))
     return output
 
 
