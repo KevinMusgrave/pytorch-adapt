@@ -14,11 +14,12 @@ from pytorch_adapt.datasets import (
     TargetDataset,
 )
 from pytorch_adapt.frameworks.ignite import Ignite
+from pytorch_adapt.frameworks.ignite.loggers.basic_loss_logger import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import EntropyValidator, ScoreHistory
 
 
-def helper(with_validator=False, final_best_epoch=5, ignore_epoch=None):
+def helper(with_validator=False, final_best_epoch=5, ignore_epoch=None, logger=None):
     device = torch.device("cuda")
     datasets = {}
     for k in ["src_train", "target_train"]:
@@ -44,7 +45,14 @@ def helper(with_validator=False, final_best_epoch=5, ignore_epoch=None):
             validator=validator,
             ignore_epoch=ignore_epoch,
         )
-    adapter = Ignite(adapter, validator=validator, with_pbars=False, device=device)
+    adapter = Ignite(
+        adapter,
+        validator=validator,
+        logger=logger,
+        log_freq=1,
+        with_pbars=False,
+        device=device,
+    )
     return adapter, datasets
 
 
@@ -121,3 +129,20 @@ class TestIgnite(unittest.TestCase):
             data[split].keys()
             == {"features", "logits", "preds", "domain", "sample_idx"}
         )
+
+    def test_basic_loss_logger(self):
+        logger = BasicLossLogger()
+        adapter, datasets = helper(logger=logger)
+        dataloaders = DataloaderCreator(num_workers=2)(**datasets)
+        epoch_length = 10
+        adapter.run(dataloaders=dataloaders, epoch_length=epoch_length)
+        losses = logger.get_losses()
+        self.assertTrue(len(losses) == 1)
+        losses = losses["total_loss"]
+        self.assertTrue(len(losses) == 2)
+        for v in losses.values():
+            self.assertTrue(len(v) == epoch_length)
+
+        # should be cleared in previous get_losses call
+        losses = logger.get_losses()
+        self.assertTrue(len(losses) == 0)
