@@ -11,5 +11,9 @@ venv/
 examples/**/MNIST
 examples/**/mnist_m
 examples/**/mnist_m.tar.gz
+examples/**/office31.tar.gz
+examples/**/office31
+examples/**/officehome_resized.tar.gz
+examples/**/officehome
 examples/**/saved_models
 examples/**/lightning_logs
