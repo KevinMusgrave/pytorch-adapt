@@ -22,18 +22,18 @@ def run_adapter(cls, test_folder, adapter, log_files=None):
     saver = savers.Saver(folder=test_folder)
     datasets = get_datasets()
     validator = ScoreHistory(EntropyValidator())
-    stat_getter = MultipleValidators(
+    val_hook = MultipleValidators(
         {
             "src_train": AccuracyValidator(key_map={"src_train": "src_val"}),
             "src_val": AccuracyValidator(),
         },
     )
-    stat_getter = ScoreHistories(stat_getter)
+    val_hook = ScoreHistories(val_hook)
     logger = IgniteRecordKeeperLogger(folder=test_folder)
     adapter = Ignite(
         adapter,
         validator=validator,
-        stat_getter=stat_getter,
+        val_hook=val_hook,
         saver=saver,
         logger=logger,
         log_freq=1,

@@ -22,10 +22,9 @@ class Ignite:
         self,
         adapter,
         validator=None,
-        stat_getter=None,
+        val_hook=None,
         saver=None,
         logger=None,
-        val_data_hook=None,
         log_freq=50,
         with_pbars=True,
         device=None,
@@ -36,10 +35,9 @@ class Ignite:
             adapter: An [adapter](../../adapters/index.md) object, which contains
                 the training and inference steps.
             validator:
-            stat_getter:
+            val_hook:
             saver:
             logger:
-            val_data_hook:
             log_freq: The number of iterations between logging
             with_pbars: If ```True```, progress bars are shown during
                 each epoch.
@@ -48,10 +46,9 @@ class Ignite:
         """
         self.adapter = adapter
         self.validator = validator
-        self.stat_getter = stat_getter
+        self.val_hook = val_hook
         self.saver = saver
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
-        self.val_data_hook = val_data_hook
         self.log_freq = log_freq
         self.with_pbars = with_pbars
         self.device = c_f.default(device, idist.device, {})
@@ -194,11 +191,11 @@ class Ignite:
             self.saver.load_all(
                 adapter=self.adapter,
                 validator=self.validator,
-                stat_getter=self.stat_getter,
+                val_hook=self.val_hook,
                 framework=self,
                 suffix=resume,
             )
-            i_g.resume_checks(self.validator, self.stat_getter, self)
+            i_g.resume_checks(self.validator, self.val_hook, self)
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
@@ -227,10 +224,9 @@ class Ignite:
                 dataloaders,
                 self.adapter,
                 self.validator,
-                self.stat_getter,
+                self.val_hook,
                 self.saver,
                 self.logger,
-                self.val_data_hook,
             ),
         )
 

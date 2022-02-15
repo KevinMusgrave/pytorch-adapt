@@ -15,14 +15,13 @@ def get_validation_runner(
     dataloaders,
     adapter,
     validator,
-    stat_getter,
+    val_hook,
     saver,
     logger,
-    val_data_hook,
 ):
     required_data = validator.required_data
-    if stat_getter:
-        required_data = list(set(required_data + stat_getter.required_data))
+    if val_hook:
+        required_data = list(set(required_data + val_hook.required_data))
 
     def run_validation(engine):
 
@@ -38,20 +37,17 @@ def get_validation_runner(
             logger.add_validation({"validator": validator}, epoch)
         log_str = f"VALIDATION SCORES:\n{validator}\n"
 
-        if stat_getter:
-            get_validation_score(collected_data, stat_getter, epoch)
+        if val_hook:
+            get_validation_score(collected_data, val_hook, epoch)
             if saver:
-                saver.save_stat_getter(stat_getter)
+                saver.save_val_hook(val_hook)
             if logger:
-                logger.add_validation({"stat_getter": stat_getter}, epoch)
-            log_str += f"OTHER STATS:\n{stat_getter}\n"
+                logger.add_validation({"val_hook": val_hook}, epoch)
+            log_str += f"OTHER STATS:\n{val_hook}\n"
 
         c_f.LOGGER.info(log_str)
         if logger:
             logger.write(engine)
-
-        if val_data_hook:
-            val_data_hook(engine, collected_data)
 
     return run_validation
 
@@ -174,9 +170,9 @@ def set_loggers_and_pbars(cls, keys):
         return do_for_all_engines(cls, attach_pbar, keys)
 
 
-def resume_checks(validator, stat_getter, framework):
+def resume_checks(validator, val_hook, framework):
     last_trainer_epoch = framework.trainer.state.epoch
-    for name, v in {"validator": validator, "stat_getter": stat_getter}.items():
+    for name, v in {"validator": validator, "val_hook": val_hook}.items():
         if not v:
             continue
         last_validator_epoch = v.epochs[-1]

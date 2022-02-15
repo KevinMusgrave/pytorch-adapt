@@ -183,13 +183,13 @@ class Saver:
         self,
         adapter_saver=None,
         validator_saver=None,
-        stat_getter_saver=None,
+        val_hook_saver=None,
         ignite_saver=None,
         **kwargs,
     ):
         self.adapter_saver = c_f.default(adapter_saver, AdapterSaver, kwargs)
         self.validator_saver = c_f.default(validator_saver, ValidatorSaver, kwargs)
-        self.stat_getter_saver = c_f.default(stat_getter_saver, ValidatorSaver, kwargs)
+        self.val_hook_saver = c_f.default(val_hook_saver, ValidatorSaver, kwargs)
         self.ignite_saver = c_f.default(ignite_saver, IgniteSaver, kwargs)
 
     def save_adapter(self, adapter, epoch, best_epoch):
@@ -208,13 +208,13 @@ class Saver:
         c_f.LOGGER.info(f"Loading validator from {self.validator_saver.folder}")
         self.validator_saver.load(validator, "validator")
 
-    def save_stat_getter(self, stat_getter):
-        c_f.LOGGER.info(f"Saving stat_getter to {self.stat_getter_saver.folder}")
-        self.stat_getter_saver.save(stat_getter, "stat_getter")
+    def save_val_hook(self, val_hook):
+        c_f.LOGGER.info(f"Saving val_hook to {self.val_hook_saver.folder}")
+        self.val_hook_saver.save(val_hook, "val_hook")
 
-    def load_stat_getter(self, stat_getter):
-        c_f.LOGGER.info(f"Loading stat_getter from {self.stat_getter_saver.folder}")
-        self.stat_getter_saver.load(stat_getter, "stat_getter")
+    def load_val_hook(self, val_hook):
+        c_f.LOGGER.info(f"Loading val_hook from {self.val_hook_saver.folder}")
+        self.val_hook_saver.load(val_hook, "val_hook")
 
     def save_ignite(self, engine):
         c_f.LOGGER.info(f"Saving Ignite engine to {self.ignite_saver.folder}")
@@ -228,7 +228,7 @@ class Saver:
         self,
         adapter=None,
         validator=None,
-        stat_getter=None,
+        val_hook=None,
         framework=None,
         suffix="latest",
     ):
@@ -236,8 +236,8 @@ class Saver:
             self.load_adapter(adapter, suffix)
         if validator:
             self.load_validator(validator)
-        if stat_getter:
-            self.load_stat_getter(stat_getter)
+        if val_hook:
+            self.load_val_hook(val_hook)
         if framework:
             self.load_ignite(framework.trainer)
 
