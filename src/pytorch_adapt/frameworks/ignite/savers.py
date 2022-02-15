@@ -198,13 +198,13 @@ class Saver:
         c_f.LOGGER.info(f"Loading adapter from {self.adapter_saver.folder}")
         self.adapter_saver.load(adapter, suffix, "adapter", container_subset)
 
-    def save_validator(self, validator):
+    def save_validator(self, validator, prefix="validator"):
         c_f.LOGGER.info(f"Saving validator to {self.validator_saver.folder}")
-        self.validator_saver.save(validator, "validator")
+        self.validator_saver.save(validator, prefix)
 
-    def load_validator(self, validator):
+    def load_validator(self, validator, prefix="validator"):
         c_f.LOGGER.info(f"Loading validator from {self.validator_saver.folder}")
-        self.validator_saver.load(validator, "validator")
+        self.validator_saver.load(validator, prefix)
 
     def save_ignite(self, engine):
         c_f.LOGGER.info(f"Saving Ignite engine to {self.ignite_saver.folder}")

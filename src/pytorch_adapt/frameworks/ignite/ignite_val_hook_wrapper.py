@@ -10,7 +10,7 @@ class IgniteValHookWrapper:
     def __call__(self, epoch, **kwargs):
         score = val_utils.get_validation_score(self.validator, kwargs, epoch)
         if self.saver:
-            self.saver.save(self.validator, "val_hook")
+            self.saver.save_validator(self.validator, "val_hook")
         if self.logger:
             self.logger.add_validation({"val_hook": self.validator}, epoch)
 

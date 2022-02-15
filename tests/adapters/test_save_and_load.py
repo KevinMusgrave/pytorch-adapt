@@ -26,7 +26,7 @@ def get_val_hook(saver):
             ],
         )
     )
-    return IgniteValHookWrapper(validator, saver=saver.validator_saver)
+    return IgniteValHookWrapper(validator, saver=saver)
 
 
 def get_validator():
@@ -66,7 +66,7 @@ class TestSaveAndLoad(unittest.TestCase):
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
 
-            saver.validator_saver.load(val_hook2.validator, "val_hook")
+            saver.load_validator(val_hook2.validator, "val_hook")
             if load_all_at_once:
                 saver.load_all(dann2.adapter, validator2, dann2)
             else:
@@ -87,7 +87,7 @@ class TestSaveAndLoad(unittest.TestCase):
         )
         # this should load and then not run
         # because it has already run for max_epochs
-        saver.validator_saver.load(val_hook3.validator, "val_hook")
+        saver.load_validator(val_hook3.validator, "val_hook")
         dann3.run(
             datasets=datasets,
             epoch_length=2,
