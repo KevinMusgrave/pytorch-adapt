@@ -35,7 +35,6 @@ class TestCustomInference(unittest.TestCase):
 
                 def compute_score(self, src_val):
                     features = src_val["features"]
-                    print("features.shape", features.shape, self.correct_shape)
                     self.unittester.assertTrue(features.shape == self.correct_shape)
                     return 0
 

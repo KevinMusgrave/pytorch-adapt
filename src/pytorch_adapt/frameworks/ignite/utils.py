@@ -6,6 +6,7 @@ from ignite.utils import setup_logger
 
 from ...utils import common_functions as c_f
 from ...utils import exceptions
+from ...validators import utils as val_utils
 from ...weighters import get_multiple_loss_totals
 from .dictionary_accumulator import DictionaryAccumulator
 
@@ -20,7 +21,7 @@ def get_validation_runner(
     logger,
 ):
     required_data = validator.required_data
-    if val_hook:
+    if val_hook and hasattr(val_hook, "required_data"):
         required_data = list(set(required_data + val_hook.required_data))
 
     def run_validation(engine):
@@ -28,35 +29,18 @@ def get_validation_runner(
         epoch = engine.state.epoch
 
         collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
-        get_validation_score(collected_data, validator, epoch)
+        val_utils.get_validation_score(validator, collected_data, epoch)
 
+        if val_hook:
+            val_hook(epoch, **collected_data)
         if saver:
             saver.save_validator(validator)
             saver.save_adapter(adapter, epoch, validator.best_epoch)
         if logger:
             logger.add_validation({"validator": validator}, epoch)
-        log_str = f"VALIDATION SCORES:\n{validator}\n"
-
-        if val_hook:
-            get_validation_score(collected_data, val_hook, epoch)
-            if saver:
-                saver.save_val_hook(val_hook)
-            if logger:
-                logger.add_validation({"val_hook": val_hook}, epoch)
-            log_str += f"OTHER STATS:\n{val_hook}\n"
-
-        c_f.LOGGER.info(log_str)
-        if logger:
             logger.write(engine)
 
     return run_validation
-
-
-def get_validation_score(collected_data, validator, epoch=None):
-    kwargs = c_f.filter_kwargs(collected_data, validator.required_data)
-    if epoch is None:
-        return validator(**kwargs)
-    return validator(epoch, **kwargs)
 
 
 def collect_from_dataloaders(collector, dataloaders, required_data):
@@ -170,16 +154,15 @@ def set_loggers_and_pbars(cls, keys):
         return do_for_all_engines(cls, attach_pbar, keys)
 
 
-def resume_checks(validator, val_hook, framework):
+def resume_checks(validator, framework):
     last_trainer_epoch = framework.trainer.state.epoch
-    for name, v in {"validator": validator, "val_hook": val_hook}.items():
-        if not v:
-            continue
-        last_validator_epoch = v.epochs[-1]
-        if last_trainer_epoch != last_validator_epoch:
-            raise exceptions.ResumeCheckError(
-                f"Last trainer epoch ({last_trainer_epoch}) does not equal last {name} epoch ({last_validator_epoch})"
-            )
+    if not validator:
+        return
+    last_validator_epoch = validator.epochs[-1]
+    if last_trainer_epoch != last_validator_epoch:
+        raise exceptions.ResumeCheckError(
+            f"Last trainer epoch ({last_trainer_epoch}) does not equal last validator epoch ({last_validator_epoch})"
+        )
 
 
 def is_done(trainer, max_epochs=None, **kwargs):

@@ -6,6 +6,7 @@ from ignite.handlers import TerminateOnNan
 
 from ...datasets import DataloaderCreator
 from ...utils import common_functions as c_f
+from ...validators import utils as val_utils
 from .. import utils as f_utils
 from . import utils as i_g
 from .loggers import IgniteEmptyLogger
@@ -191,11 +192,10 @@ class Ignite:
             self.saver.load_all(
                 adapter=self.adapter,
                 validator=self.validator,
-                val_hook=self.val_hook,
                 framework=self,
                 suffix=resume,
             )
-            i_g.resume_checks(self.validator, self.val_hook, self)
+            i_g.resume_checks(self.validator, self)
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
@@ -239,7 +239,7 @@ class Ignite:
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )
-        return i_g.get_validation_score(collected_data, validator)
+        return val_utils.get_validation_score(validator, collected_data)
 
     def get_collector_step(self, inference):
         def collector_step(engine, batch):

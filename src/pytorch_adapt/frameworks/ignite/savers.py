@@ -5,7 +5,7 @@ import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ...utils import common_functions as c_f
-from ...validators.score_history import ScoreHistories
+from ...validators import ScoreHistories
 
 
 class BaseSaver(ABC):
@@ -183,13 +183,11 @@ class Saver:
         self,
         adapter_saver=None,
         validator_saver=None,
-        val_hook_saver=None,
         ignite_saver=None,
         **kwargs,
     ):
         self.adapter_saver = c_f.default(adapter_saver, AdapterSaver, kwargs)
         self.validator_saver = c_f.default(validator_saver, ValidatorSaver, kwargs)
-        self.val_hook_saver = c_f.default(val_hook_saver, ValidatorSaver, kwargs)
         self.ignite_saver = c_f.default(ignite_saver, IgniteSaver, kwargs)
 
     def save_adapter(self, adapter, epoch, best_epoch):
@@ -208,14 +206,6 @@ class Saver:
         c_f.LOGGER.info(f"Loading validator from {self.validator_saver.folder}")
         self.validator_saver.load(validator, "validator")
 
-    def save_val_hook(self, val_hook):
-        c_f.LOGGER.info(f"Saving val_hook to {self.val_hook_saver.folder}")
-        self.val_hook_saver.save(val_hook, "val_hook")
-
-    def load_val_hook(self, val_hook):
-        c_f.LOGGER.info(f"Loading val_hook from {self.val_hook_saver.folder}")
-        self.val_hook_saver.load(val_hook, "val_hook")
-
     def save_ignite(self, engine):
         c_f.LOGGER.info(f"Saving Ignite engine to {self.ignite_saver.folder}")
         self.ignite_saver.save(engine)
@@ -228,7 +218,6 @@ class Saver:
         self,
         adapter=None,
         validator=None,
-        val_hook=None,
         framework=None,
         suffix="latest",
     ):
@@ -236,8 +225,6 @@ class Saver:
             self.load_adapter(adapter, suffix)
         if validator:
             self.load_validator(validator)
-        if val_hook:
-            self.load_val_hook(val_hook)
         if framework:
             self.load_ignite(framework.trainer)
 
