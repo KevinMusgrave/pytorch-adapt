@@ -120,7 +120,7 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
             features = torch.randn(dataset_size, 512, device=TEST_DEVICE) + shift_by
             target_train = {"features": features}
 
-            score = validator.score(
+            score = validator(
                 src_train=src_train,
                 src_val=src_val,
                 target_train=target_train,

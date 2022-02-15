@@ -105,7 +105,7 @@ from pytorch_adapt.validators import SNDValidator
 # Assuming predictions have been collected
 target_train = {"preds": preds}
 validator = SNDValidator()
-score = validator.score(target_train=target_train)
+score = validator(target_train=target_train)
 ```
 
 You can also do this during training with a framework wrapper:

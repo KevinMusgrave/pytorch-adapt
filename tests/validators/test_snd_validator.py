@@ -46,9 +46,7 @@ class TestSNDValidator(unittest.TestCase):
                                 dataset_size, num_classes, device=TEST_DEVICE
                             )
                             target_train = {"preds": F.softmax(logits, dim=1)}
-                            score = validator.score(
-                                epoch=epoch, target_train=target_train
-                            )
+                            score = validator(epoch=epoch, target_train=target_train)
                             correct_score = simple_compute_snd(logits, T)
                             self.assertTrue(np.isclose(score, correct_score))
 

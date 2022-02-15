@@ -17,7 +17,7 @@ class TestMaxNormalizer(unittest.TestCase):
         for i in range(1, 10):
             preds = torch.softmax(logits, dim=1)
             kwargs = {"src_val": {"labels": labels, "preds": preds}}
-            score2 = se.score(epoch=i, **kwargs)
+            score2 = se(epoch=i, **kwargs)
             self.assertTrue(np.isclose(se.raw_score_history[-1], -i / 10.0))
             self.assertTrue(np.isclose(se.score_history[-1], -i))
             self.assertTrue(np.isclose(score2, -i))

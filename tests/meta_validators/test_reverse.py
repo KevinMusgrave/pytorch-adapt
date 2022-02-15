@@ -20,7 +20,7 @@ def assert_perfect_forward(cls, forward_adapter, mv):
             dataset_name
         ]
         validator = AccuracyValidator()
-        score = validator.score(src_val=dataset_outputs)
+        score = validator(src_val=dataset_outputs)
         cls.assertTrue(score == 1)
 
 

@@ -59,8 +59,8 @@ def get_validation_runner(
 def get_validation_score(collected_data, validator, epoch=None):
     kwargs = c_f.filter_kwargs(collected_data, validator.required_data)
     if epoch is None:
-        return validator.score(**kwargs)
-    return validator.score(epoch, **kwargs)
+        return validator(**kwargs)
+    return validator(epoch, **kwargs)
 
 
 def collect_from_dataloaders(collector, dataloaders, required_data):

@@ -25,11 +25,11 @@ class MultipleValidators(BaseValidator):
     def compute_score(self):
         pass
 
-    def score(self, **kwargs):
+    def __call__(self, **kwargs):
         kwargs = self.kwargs_check(kwargs)
         outputs = {}
         for k, v in self.validators.items():
-            score = v.score(**c_f.filter_kwargs(kwargs, v.required_data))
+            score = v(**c_f.filter_kwargs(kwargs, v.required_data))
             outputs[k] = score * self.weights[k]
         final = sum(outputs.values())
         if self.return_sub_scores:

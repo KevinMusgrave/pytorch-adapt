@@ -31,10 +31,10 @@ class TestKeyMap(unittest.TestCase):
         )
         self.assertTrue(validator.required_data == ["baaa"])
 
-        validator.score(baaa={"logits": torch.randn(100, 100)})
+        validator(baaa={"logits": torch.randn(100, 100)})
 
         with self.assertRaises(ValueError):
-            validator.score(target_train={"logits": torch.randn(100, 100)})
+            validator(target_train={"logits": torch.randn(100, 100)})
 
         validator = MultipleValidators(
             validators={
@@ -44,13 +44,13 @@ class TestKeyMap(unittest.TestCase):
             key_map={"baaa": "target_train"},
         )
         self.assertTrue(validator.required_data == ["goo", "baaa"])
-        validator.score(
+        validator(
             baaa={"logits": torch.randn(100, 100)},
             goo={"logits": torch.randn(100, 100)},
         )
 
         with self.assertRaises(ValueError):
-            validator.score(baaa={"logits": torch.randn(100, 100)})
+            validator(baaa={"logits": torch.randn(100, 100)})
 
         validator = MultipleValidators(
             validators={

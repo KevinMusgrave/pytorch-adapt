@@ -45,7 +45,7 @@ class ScoreHistory(ABC):
             list_of_names=["latest_score", "best_score", "latest_epoch", "best_epoch"],
         )
 
-    def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
+    def __call__(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
         """
         Arguments:
             epoch: The epoch to be scored.
@@ -60,7 +60,7 @@ class ScoreHistory(ABC):
         """
         if epoch in self.epochs:
             raise ValueError(f"Epoch {epoch} has already been evaluated")
-        score = self.validator.score(**kwargs)
+        score = self.validator(**kwargs)
         sub_scores = None
         if isinstance(score, (list, tuple)):
             score, sub_scores = score
@@ -174,8 +174,8 @@ class ScoreHistories(ScoreHistory):
         self.histories = {k: ScoreHistory(v) for k, v in validator.validators.items()}
         pml_cf.add_to_recordable_attributes(self, list_of_names=["histories"])
 
-    def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
-        score, sub_scores = super().score(epoch, **kwargs)
+    def __call__(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
+        score, sub_scores = super().__call__(epoch, **kwargs)
         for k, v in self.histories.items():
             v.append_to_history_and_normalize(sub_scores[k], epoch)
         return score

@@ -41,7 +41,7 @@ class BaseValidator(ABC):
     def compute_score(self):
         pass
 
-    def score(self, **kwargs):
+    def __call__(self, **kwargs):
         kwargs = self.kwargs_check(kwargs)
         return self.compute_score(**kwargs)
 
