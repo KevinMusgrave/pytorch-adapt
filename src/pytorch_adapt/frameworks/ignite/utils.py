@@ -16,12 +16,12 @@ def get_validation_runner(
     dataloaders,
     adapter,
     validator,
-    val_hook,
+    val_hooks,
     saver,
     logger,
 ):
     required_data = []
-    for v in [validator, val_hook]:
+    for v in [validator, *val_hooks]:
         if v and hasattr(v, "required_data"):
             required_data = list(set(required_data + v.required_data))
 
@@ -30,8 +30,8 @@ def get_validation_runner(
         collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
         val_utils.get_validation_score(validator, collected_data, epoch)
 
-        if val_hook:
-            val_hook(epoch, **collected_data)
+        for hook in val_hooks:
+            hook(epoch, **collected_data)
         if saver:
             saver.save_validator(validator)
             saver.save_adapter(adapter, epoch, validator.best_epoch)

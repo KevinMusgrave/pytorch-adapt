@@ -34,7 +34,7 @@ def run_adapter(cls, test_folder, adapter, log_files=None):
     adapter = Ignite(
         adapter,
         validator=validator,
-        val_hook=val_hook,
+        val_hooks=[val_hook],
         saver=saver,
         logger=logger,
         log_freq=1,

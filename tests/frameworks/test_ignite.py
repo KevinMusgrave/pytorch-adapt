@@ -68,7 +68,7 @@ def helper(
     adapter = Ignite(
         adapter,
         validator=validator,
-        val_hook=val_hook,
+        val_hooks=[val_hook],
         logger=logger,
         log_freq=1,
         with_pbars=False,

@@ -23,7 +23,7 @@ class Ignite:
         self,
         adapter,
         validator=None,
-        val_hook=None,
+        val_hooks=None,
         saver=None,
         logger=None,
         log_freq=50,
@@ -36,7 +36,7 @@ class Ignite:
             adapter: An [adapter](../../adapters/index.md) object, which contains
                 the training and inference steps.
             validator:
-            val_hook:
+            val_hooks:
             saver:
             logger:
             log_freq: The number of iterations between logging
@@ -47,7 +47,7 @@ class Ignite:
         """
         self.adapter = adapter
         self.validator = validator
-        self.val_hook = val_hook
+        self.val_hooks = c_f.default(val_hooks, [])
         self.saver = saver
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
@@ -161,7 +161,7 @@ class Ignite:
 
         self.remove_temp_events()
 
-        if self.validator or self.val_hook:
+        if self.validator or self.val_hooks:
             max_epochs = trainer_kwargs.get("max_epochs", 1)
             self.add_validation_runner(
                 dataloaders,
@@ -224,7 +224,7 @@ class Ignite:
                 dataloaders,
                 self.adapter,
                 self.validator,
-                self.val_hook,
+                self.val_hooks,
                 self.saver,
                 self.logger,
             ),

@@ -49,7 +49,7 @@ class TestSaveAndLoad(unittest.TestCase):
         validator1 = get_validator()
 
         dann1, datasets = get_dann(
-            validator=validator1, val_hook=val_hook1, saver=saver
+            validator=validator1, val_hooks=[val_hook1], saver=saver
         )
         dann1.run(
             datasets=datasets,
@@ -81,7 +81,7 @@ class TestSaveAndLoad(unittest.TestCase):
         saver = savers.Saver(folder=TEST_FOLDER)
         val_hook3 = get_val_hook(saver)
         validator3 = get_validator()
-        dann3, _ = get_dann(validator=validator3, val_hook=val_hook3, saver=saver)
+        dann3, _ = get_dann(validator=validator3, val_hooks=[val_hook3], saver=saver)
         self.assert_not_equal(
             dann1, validator1, val_hook1, dann3, validator3, val_hook3
         )
