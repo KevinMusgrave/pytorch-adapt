@@ -161,7 +161,7 @@ class Ignite:
 
         self.remove_temp_events()
 
-        if self.validator:
+        if self.validator or self.val_hook:
             max_epochs = trainer_kwargs.get("max_epochs", 1)
             self.add_validation_runner(
                 dataloaders,
@@ -170,11 +170,11 @@ class Ignite:
                 check_initial_score,
             )
 
-            if patience is not None:
-                self.add_temp_event_handler(
-                    Events.EPOCH_COMPLETED(every=validation_interval),
-                    i_g.EarlyStopper(patience, self.validator),
-                )
+        if self.validator and patience is not None:
+            self.add_temp_event_handler(
+                Events.EPOCH_COMPLETED(every=validation_interval),
+                i_g.EarlyStopper(patience, self.validator),
+            )
 
         if self.saver:
             if not self.validator:

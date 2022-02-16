@@ -20,14 +20,13 @@ def get_validation_runner(
     saver,
     logger,
 ):
-    required_data = validator.required_data
-    if val_hook and hasattr(val_hook, "required_data"):
-        required_data = list(set(required_data + val_hook.required_data))
+    required_data = []
+    for v in [validator, val_hook]:
+        if v and hasattr(v, "required_data"):
+            required_data = list(set(required_data + v.required_data))
 
     def run_validation(engine):
-
         epoch = engine.state.epoch
-
         collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
         val_utils.get_validation_score(validator, collected_data, epoch)
 

@@ -19,7 +19,27 @@ from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import EntropyValidator, ScoreHistory
 
 
-def helper(with_validator=False, final_best_epoch=5, ignore_epoch=None, logger=None):
+class ValHook:
+    def __init__(self, unittester, val_hook_has_required_data):
+        self.unittester = unittester
+        self.num_calls = 0
+        self.val_hook_has_required_data = val_hook_has_required_data
+        if self.val_hook_has_required_data:
+            self.required_data = ["src_train"]
+
+    def __call__(self, epoch, **kwargs):
+        if self.val_hook_has_required_data:
+            self.unittester.assertTrue("src_train" in kwargs)
+        self.num_calls += 1
+
+
+def helper(
+    with_validator=False,
+    final_best_epoch=5,
+    ignore_epoch=None,
+    logger=None,
+    val_hook=None,
+):
     device = torch.device("cuda")
     datasets = {}
     for k in ["src_train", "target_train"]:
@@ -48,6 +68,7 @@ def helper(with_validator=False, final_best_epoch=5, ignore_epoch=None, logger=N
     adapter = Ignite(
         adapter,
         validator=validator,
+        val_hook=val_hook,
         logger=logger,
         log_freq=1,
         with_pbars=False,
@@ -71,11 +92,11 @@ class TestIgnite(unittest.TestCase):
         adapter, datasets = helper()
 
         # passing in datasets
-        dc = DataloaderCreator(num_workers=2)
+        dc = DataloaderCreator(num_workers=0)
         adapter.run(datasets=datasets, dataloader_creator=dc, epoch_length=10)
 
         # passing in dataloaders
-        dataloaders = DataloaderCreator(num_workers=2)(**datasets)
+        dataloaders = DataloaderCreator(num_workers=0)(**datasets)
         adapter.run(dataloaders=dataloaders, epoch_length=10)
 
     def test_early_stopping(self):
@@ -121,7 +142,7 @@ class TestIgnite(unittest.TestCase):
         adapter, datasets = helper()
 
         # passing in dataloaders
-        dataloaders = DataloaderCreator(num_workers=2)(**datasets)
+        dataloaders = DataloaderCreator(num_workers=0)(**datasets)
         split = "target_train"
         data = adapter.get_all_outputs(dataloaders[split], split)
         self.assertTrue(data.keys() == {split})
@@ -133,7 +154,7 @@ class TestIgnite(unittest.TestCase):
     def test_basic_loss_logger(self):
         logger = BasicLossLogger()
         adapter, datasets = helper(logger=logger)
-        dataloaders = DataloaderCreator(num_workers=2)(**datasets)
+        dataloaders = DataloaderCreator(num_workers=0)(**datasets)
         epoch_length = 10
         adapter.run(dataloaders=dataloaders, epoch_length=epoch_length)
         losses = logger.get_losses()
@@ -146,3 +167,20 @@ class TestIgnite(unittest.TestCase):
         # should be cleared in previous get_losses call
         losses = logger.get_losses()
         self.assertTrue(len(losses) == 0)
+
+    def test_validation_runner(self):
+        max_epochs = 6
+        for with_validator in [True, False]:
+            for validation_interval in [1, 3]:
+                for val_hook_has_required_data in [True, False]:
+                    val_hook = ValHook(self, val_hook_has_required_data)
+                    adapter, datasets = helper(with_validator=True, val_hook=val_hook)
+                    dataloaders = DataloaderCreator(num_workers=0)(**datasets)
+                    adapter.run(
+                        dataloaders=dataloaders,
+                        max_epochs=max_epochs,
+                        validation_interval=validation_interval,
+                    )
+                    self.assertTrue(
+                        val_hook.num_calls == max_epochs // validation_interval
+                    )
