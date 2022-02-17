@@ -173,7 +173,6 @@ def copy_file(src, dst):
 def save_torch_module(x, folder, filename):
     if isinstance(x, torch.nn.DataParallel):
         x = x.module
-    makedir_if_not_there(folder)
     filename = full_path(folder, filename)
     LOGGER.debug(f"Saving {filename}")
     pml_cf.save_model(x, filename)
@@ -188,7 +187,6 @@ def load_torch_module(x, folder, filename):
 
 
 def save_json(x, folder, filename):
-    makedir_if_not_there(folder)
     filename = full_path(folder, filename)
     with open(filename, "w") as fp:
         LOGGER.debug(f"Saving {filename}")
@@ -204,7 +202,6 @@ def load_json(folder, filename):
 
 
 def save_npy(x, folder, filename):
-    makedir_if_not_there(folder)
     filename = full_path(folder, filename)
     LOGGER.debug(f"Saving {filename}")
     np.save(filename, x, allow_pickle=False)

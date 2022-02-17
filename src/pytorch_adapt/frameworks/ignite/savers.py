@@ -11,6 +11,7 @@ from ...validators import ScoreHistories
 class BaseSaver(ABC):
     def __init__(self, folder):
         self.folder = folder
+        c_f.makedir_if_not_there(self.folder)
 
     @abstractmethod
     def save(self):
