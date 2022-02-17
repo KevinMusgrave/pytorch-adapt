@@ -28,8 +28,8 @@ def get_validation_runner(
     def run_validation(engine):
         epoch = engine.state.epoch
         collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
-        val_utils.get_validation_score(validator, collected_data, epoch)
-
+        if validator:
+            val_utils.get_validation_score(validator, collected_data, epoch)
         for hook in val_hooks:
             hook(epoch, **collected_data)
         if saver:
