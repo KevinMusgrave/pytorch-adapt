@@ -38,7 +38,7 @@ def helper(
     final_best_epoch=5,
     ignore_epoch=None,
     logger=None,
-    val_hook=None,
+    val_hooks=None,
 ):
     device = torch.device("cuda")
     datasets = {}
@@ -68,7 +68,7 @@ def helper(
     adapter = Ignite(
         adapter,
         validator=validator,
-        val_hooks=[val_hook],
+        val_hooks=val_hooks,
         logger=logger,
         log_freq=1,
         with_pbars=False,
@@ -174,7 +174,9 @@ class TestIgnite(unittest.TestCase):
             for validation_interval in [1, 3]:
                 for val_hook_has_required_data in [True, False]:
                     val_hook = ValHook(self, val_hook_has_required_data)
-                    adapter, datasets = helper(with_validator=True, val_hook=val_hook)
+                    adapter, datasets = helper(
+                        with_validator=True, val_hooks=[val_hook]
+                    )
                     dataloaders = DataloaderCreator(num_workers=0)(**datasets)
                     adapter.run(
                         dataloaders=dataloaders,
