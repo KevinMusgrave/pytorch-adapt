@@ -14,10 +14,8 @@ from .dictionary_accumulator import DictionaryAccumulator
 def get_validation_runner(
     collector,
     dataloaders,
-    adapter,
     validator,
     val_hooks,
-    saver,
     logger,
 ):
     required_data = []
@@ -28,17 +26,16 @@ def get_validation_runner(
     def run_validation(engine):
         epoch = engine.state.epoch
         collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
+        score = None
         if validator:
-            val_utils.get_validation_score(validator, collected_data, epoch)
+            score = val_utils.get_validation_score(validator, collected_data, epoch)
         for hook in val_hooks:
             hook(epoch, **collected_data)
-        if saver:
-            saver.save_validator(validator)
-            saver.save_adapter(adapter, epoch, validator.best_epoch)
         if logger:
             logger.add_validation({"validator": validator}, epoch)
             logger.write(engine)
-
+        return score
+        
     return run_validation
 
 
@@ -69,13 +66,6 @@ def step_lr_schedulers(lr_schedulers, scheduler_type):
 def auto_model(*args, **kwargs):
     def handler(model):
         return idist.auto_model(model, *args, **kwargs)
-
-    return handler
-
-
-def save_adapter_without_validator(saver, adapter):
-    def handler(engine):
-        saver.save_adapter(adapter, engine.state.epoch, None)
 
     return handler
 

@@ -24,7 +24,7 @@ class Ignite:
         adapter,
         validator=None,
         val_hooks=None,
-        saver=None,
+        checkpoint_fn=None,
         logger=None,
         log_freq=50,
         with_pbars=True,
@@ -37,7 +37,7 @@ class Ignite:
                 the training and inference steps.
             validator:
             val_hooks:
-            saver:
+            checkpoint_fn:
             logger:
             log_freq: The number of iterations between logging
             with_pbars: If ```True```, progress bars are shown during
@@ -48,7 +48,7 @@ class Ignite:
         self.adapter = adapter
         self.validator = validator
         self.val_hooks = c_f.default(val_hooks, [])
-        self.saver = saver
+        self.checkpoint_fn = checkpoint_fn
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
         self.with_pbars = with_pbars
