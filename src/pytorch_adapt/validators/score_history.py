@@ -164,6 +164,18 @@ class ScoreHistory(ABC):
             self, ["validator", "latest_score", "best_score", "best_epoch"]
         )
 
+    def state_dict(self):
+        return {
+            k: getattr(self, k)
+            for k in [
+                "best_score",
+                "best_epoch",
+                "raw_score_history",
+                "score_history",
+                "epochs",
+            ]
+        }
+
 
 class ScoreHistories(ScoreHistory):
     def __init__(self, validator, **kwargs):
@@ -184,6 +196,9 @@ class ScoreHistories(ScoreHistory):
         x = super().extra_repr()
         x += f"\n{c_f.extra_repr(self, ['histories'])}"
         return x
+
+    def state_dict(self):
+        return {k: v.state_dict() for k, v in self.histories.items()}
 
 
 def remove_ignore_epoch(x, epochs, ignore_epoch):

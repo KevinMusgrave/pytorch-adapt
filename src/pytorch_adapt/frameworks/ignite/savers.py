@@ -119,7 +119,12 @@ class CheckpointFn:
         adapter_kwargs=None,
         validator_kwargs=None,
     ):
-        [common_kwargs, engine_kwargs, adapter_kwargs, validator_kwargs] = c_f.default(
+        [
+            common_kwargs,
+            engine_kwargs,
+            adapter_kwargs,
+            validator_kwargs,
+        ] = c_f.many_default(
             [common_kwargs, engine_kwargs, adapter_kwargs, validator_kwargs],
             [{"filename_prefix": ""}, {}, {}, {}],
         )
