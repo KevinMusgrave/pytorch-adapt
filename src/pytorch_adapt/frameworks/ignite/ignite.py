@@ -214,20 +214,22 @@ class Ignite:
         self.add_temp_event_handler(condition, val_runner)
 
     def add_checkpoint_fns(self, condition, dataloaders):
+        score_function = (
+            self.get_validation_runner(dataloaders) if self.validator else None
+        )
+        self.add_temp_event_handler(
+            condition,
+            self.checkpoint_fn.adapter_fn(self.adapter, score_function),
+        )
         self.add_temp_event_handler(condition, self.checkpoint_fn.engine_fn)
-        score_function = None
+
         if self.validator:
-            score_function = self.get_validation_runner(dataloaders)
             self.add_temp_event_handler(
                 condition,
                 self.checkpoint_fn.validator_fn(self.validator),
             )
         elif self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
-        self.add_temp_event_handler(
-            condition,
-            self.checkpoint_fn.adapter_fn(self.adapter, score_function),
-        )
 
     def evaluate_best_model(self, datasets, validator=None, dataloader_creator=None):
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
