@@ -15,13 +15,20 @@ class CustomModelCheckpoint(ModelCheckpoint):
         self.filename_pattern = filename_pattern
 
 
-def get_engine_checkpoint_fn(**kwargs):
-    handler = CustomModelCheckpoint(**kwargs)
+class EngineFn:
+    def __init__(self, **kwargs):
+        self.handler = CustomModelCheckpoint(**kwargs)
+        self.dirname = kwargs["dirname"]
+        self.dict_to_save = {}
 
-    def fn(engine):
-        handler(engine, {"engine": engine})
+    def __call__(self, engine):
+        self.dict_to_save = {"engine": engine}
+        self.handler(engine, self.dict_to_save)
 
-    return fn
+    def load(self, engine, filename):
+        to_load = {"engine": engine}
+        checkpoint = os.path.join(self.dirname, filename)
+        self.handler.load_objects(to_load=to_load, checkpoint=checkpoint, strict=False)
 
 
 def get_adapter_checkpoint_fn(**kwargs):
@@ -85,14 +92,10 @@ class CheckpointFn:
             "filename_pattern": "{filename_prefix}{global_step}.pt",
             **adapter_kwargs,
         }
-        self.engine_fn = get_engine_checkpoint_fn(**{**common_kwargs, **engine_kwargs})
+        self.engine_fn = EngineFn(**{**common_kwargs, **engine_kwargs})
         self.adapter_fn = get_adapter_checkpoint_fn(
             **{**common_kwargs, **adapter_kwargs}
         )
         self.validator_fn = get_validator_checkpoint_fn(
             **{**common_kwargs, **validator_kwargs}
         )
-
-
-def is_multiple_histories(validator):
-    return isinstance(validator, ScoreHistories)

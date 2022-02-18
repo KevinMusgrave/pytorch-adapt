@@ -17,7 +17,7 @@ from .. import TEST_FOLDER
 from .get_dann import get_dann
 
 
-def get_val_hook(saver):
+def get_val_hook():
     validator = ScoreHistories(
         MultipleValidators(
             [
@@ -26,7 +26,7 @@ def get_val_hook(saver):
             ],
         )
     )
-    return IgniteValHookWrapper(validator, saver=saver)
+    return IgniteValHookWrapper(validator)
 
 
 def get_validator():
@@ -43,13 +43,13 @@ def get_validator():
 class TestSaveAndLoad(unittest.TestCase):
     def test_save_and_load(self):
         max_epochs = 3
-        saver = savers.Saver(folder=TEST_FOLDER)
+        checkpoint_fn = savers.CheckpointFn(common_kwargs={"dirname": TEST_FOLDER})
 
-        val_hook1 = get_val_hook(saver)
+        val_hook1 = get_val_hook()
         validator1 = get_validator()
 
         dann1, datasets = get_dann(
-            validator=validator1, val_hooks=[val_hook1], saver=saver
+            validator=validator1, val_hooks=[val_hook1], checkpoint_fn=checkpoint_fn
         )
         dann1.run(
             datasets=datasets,
@@ -58,7 +58,7 @@ class TestSaveAndLoad(unittest.TestCase):
         )
 
         for load_all_at_once in [True, False]:
-            val_hook2 = get_val_hook(saver)
+            val_hook2 = get_val_hook()
             validator2 = get_validator()
             dann2, _ = get_dann()
 
@@ -66,7 +66,7 @@ class TestSaveAndLoad(unittest.TestCase):
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
 
-            saver.load_validator(val_hook2.validator, "val_hook")
+            checkpoint_fn.engine_fn.load(dann2.trainer, "engine_3.pt")
             if load_all_at_once:
                 saver.load_all(dann2.adapter, validator2, dann2)
             else:
