@@ -2,11 +2,11 @@ import os
 from abc import ABC, abstractmethod
 
 import torch
+from ignite.handlers import ModelCheckpoint
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ...utils import common_functions as c_f
 from ...validators import ScoreHistories
-from ignite.handlers import ModelCheckpoint
 
 
 class BaseSaver(ABC):
@@ -73,19 +73,61 @@ class ValidatorSaver(BaseSaver):
         return ["raw_score_history", "score_history", "epochs"]
 
 
-def getAdapterCheckpointFn(adapter, **kwargs):
-    dirname = kwargs.pop("dirname")
-    dict_to_save = {}
-    for container in ["models", "optimizers", "lr_schedulers", "misc"]:
-        dict_to_save.update({f"{container}_{k}":v for k,v in getattr(adapter, container).items()})
-    
-    handler = ModelCheckpoint(dirname, "adapter", **kwargs)
+def get_engine_checkpoint_fn(**kwargs):
+    handler = ModelCheckpoint(**kwargs)
 
     def fn(engine):
-        handler(engine, dict_to_save)
+        handler(engine, {"engine": engine})
 
     return fn
 
+
+def get_adapter_checkpoint_fn(**kwargs):
+    def fn_creator(adapter, score_function):
+        dict_to_save = {}
+        for container in ["models", "optimizers", "lr_schedulers", "misc"]:
+            dict_to_save.update(
+                {f"{container}_{k}": v for k, v in getattr(adapter, container).items()}
+            )
+        handler = ModelCheckpoint(score_function=score_function, **kwargs)
+
+        def fn(engine):
+            handler(engine, dict_to_save)
+
+        return fn
+
+    return fn_creator
+
+
+def get_validator_checkpoint_fn(**kwargs):
+    def fn_creator(validator):
+        handler = ModelCheckpoint(**kwargs)
+
+        def fn(engine):
+            handler(engine, {"validator": validator})
+
+        return fn
+
+    return fn_creator
+
+
+class CheckpointFn:
+    def __init__(
+        self,
+        common_kwargs=None,
+        engine_kwargs=None,
+        adapter_kwargs=None,
+        validator_kwargs=None,
+    ):
+        [common_kwargs, engine_kwargs, adapter_kwargs, validator_kwargs] = c_f.default(
+            [common_kwargs, engine_kwargs, adapter_kwargs, validator_kwargs],
+            [{"filename_prefix": ""}, {}, {}, {}],
+        )
+        self.engine_fn = get_engine_checkpoint_fn(**common_kwargs, **engine_kwargs)
+        self.adapter_fn = get_adapter_checkpoint_fn(**common_kwargs, **adapter_kwargs)
+        self.validator_fn = get_validator_checkpoint_fn(
+            **common_kwargs, **validator_kwargs
+        )
 
 
 def is_multiple_histories(validator):

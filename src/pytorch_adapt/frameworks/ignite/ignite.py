@@ -160,9 +160,14 @@ class Ignite:
             dataloaders = dataloader_creator(**datasets)
 
         self.remove_temp_events()
+        max_epochs = trainer_kwargs.get("max_epochs", 1)
 
-        if self.validator or self.val_hooks:
-            max_epochs = trainer_kwargs.get("max_epochs", 1)
+        if self.checkpoint_fn:
+            self.add_checkpoint_fns(
+                dataloaders, validation_interval, max_epochs, check_initial_score
+            )
+
+        elif self.validator or self.val_hooks:
             self.add_validation_runner(
                 dataloaders,
                 validation_interval,
@@ -176,14 +181,6 @@ class Ignite:
                 i_g.EarlyStopper(patience, self.validator),
             )
 
-        if self.saver:
-            if not self.validator:
-                self.add_temp_event_handler(
-                    Events.EPOCH_COMPLETED,
-                    i_g.save_adapter_without_validator(self.saver, self.adapter),
-                )
-            self.add_temp_event_handler(Events.EPOCH_COMPLETED, self.saver.save_ignite)
-
         if resume is not None:
             if resume != "latest":
                 raise ValueError("Only 'latest' resume is currently supported")
@@ -195,7 +192,6 @@ class Ignite:
                 framework=self,
                 suffix=resume,
             )
-            i_g.resume_checks(self.validator, self)
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
@@ -205,29 +201,37 @@ class Ignite:
 
         return None, None
 
-    def add_validation_runner(
+    def get_validation_runner(
         self,
         dataloaders,
-        validation_interval,
-        max_epochs,
-        check_initial_score,
     ):
-        validation_condition = Events.EPOCH_COMPLETED(every=validation_interval)
-        if max_epochs % validation_interval != 0:
-            validation_condition |= Events.EPOCH_COMPLETED(once=max_epochs)
-        if check_initial_score:
-            validation_condition |= Events.STARTED
+        return i_g.get_validation_runner(
+            self.collector,
+            dataloaders,
+            self.validator,
+            self.val_hooks,
+            self.logger,
+        )
+
+    def add_validation_runner(self, dataloaders, interval, max_epochs, run_at_start):
+        condition = i_g.interval_condition(interval, max_epochs, run_at_start)
+        val_runner = self.get_validation_runner(dataloaders)
+        self.add_temp_event_handler(condition, val_runner)
+
+    def add_checkpoint_fns(self, dataloaders, interval, max_epochs, run_at_start):
+        condition = i_g.interval_condition(interval, max_epochs, run_at_start)
+        self.add_temp_event_handler(condition, self.checkpoint_fn.engine_fn)
+        if self.validator:
+            score_function = self.get_validation_runner(dataloaders)
+            self.add_temp_event_handler(
+                condition,
+                self.checkpoint_fn.validator_fn(self.validator),
+            )
+        else:
+            score_function = None
         self.add_temp_event_handler(
-            validation_condition,
-            i_g.get_validation_runner(
-                self.collector,
-                dataloaders,
-                self.adapter,
-                self.validator,
-                self.val_hooks,
-                self.saver,
-                self.logger,
-            ),
+            condition,
+            self.checkpoint_fn.adapter_fn(self.adapter, score_function),
         )
 
     def evaluate_best_model(self, datasets, validator=None, dataloader_creator=None):

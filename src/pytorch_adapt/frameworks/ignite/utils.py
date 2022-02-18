@@ -35,7 +35,7 @@ def get_validation_runner(
             logger.add_validation({"validator": validator}, epoch)
             logger.write(engine)
         return score
-        
+
     return run_validation
 
 
@@ -168,3 +168,12 @@ def zero_grad(adapter):
         adapter.optimizers.zero_grad()
 
     return handler
+
+
+def interval_condition(interval, max_epochs, check_initial_score):
+    condition = Events.EPOCH_COMPLETED(every=interval)
+    if max_epochs % interval != 0:
+        condition |= Events.EPOCH_COMPLETED(once=max_epochs)
+    if check_initial_score:
+        condition |= Events.STARTED
+    return condition
