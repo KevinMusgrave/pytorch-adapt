@@ -161,19 +161,15 @@ class Ignite:
 
         self.remove_temp_events()
         max_epochs = trainer_kwargs.get("max_epochs", 1)
+        condition = i_g.interval_condition(
+            validation_interval, max_epochs, check_initial_score
+        )
 
         if self.checkpoint_fn:
-            self.add_checkpoint_fns(
-                dataloaders, validation_interval, max_epochs, check_initial_score
-            )
+            self.add_checkpoint_fns(condition, dataloaders)
 
         elif self.validator or self.val_hooks:
-            self.add_validation_runner(
-                dataloaders,
-                validation_interval,
-                max_epochs,
-                check_initial_score,
-            )
+            self.add_validation_runner(condition, dataloaders)
 
         if self.validator and patience is not None:
             self.add_temp_event_handler(
@@ -213,22 +209,21 @@ class Ignite:
             self.logger,
         )
 
-    def add_validation_runner(self, dataloaders, interval, max_epochs, run_at_start):
-        condition = i_g.interval_condition(interval, max_epochs, run_at_start)
+    def add_validation_runner(self, condition, dataloaders):
         val_runner = self.get_validation_runner(dataloaders)
         self.add_temp_event_handler(condition, val_runner)
 
-    def add_checkpoint_fns(self, dataloaders, interval, max_epochs, run_at_start):
-        condition = i_g.interval_condition(interval, max_epochs, run_at_start)
+    def add_checkpoint_fns(self, condition, dataloaders):
         self.add_temp_event_handler(condition, self.checkpoint_fn.engine_fn)
+        score_function = None
         if self.validator:
             score_function = self.get_validation_runner(dataloaders)
             self.add_temp_event_handler(
                 condition,
                 self.checkpoint_fn.validator_fn(self.validator),
             )
-        else:
-            score_function = None
+        elif self.val_hooks:
+            self.add_validation_runner(condition, dataloaders)
         self.add_temp_event_handler(
             condition,
             self.checkpoint_fn.adapter_fn(self.adapter, score_function),
