@@ -15,3 +15,7 @@ def with_opt(x):
         return [with_opt(y) for y in x]
     if isinstance(x, MutableMapping):
         return {with_opt(k): v for k, v in x.items()}
+
+
+def container_names():
+    return ["models", "optimizers", "lr_schedulers", "misc"]

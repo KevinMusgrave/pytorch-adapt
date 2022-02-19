@@ -19,11 +19,13 @@ from .score_history import ScoreHistory
 
 
 def default_framework_fn(adapter, validator, folder):
-    from ..frameworks.ignite import Ignite, savers
+    from ..frameworks.ignite import CheckpointFnCreator, Ignite
 
     validator = ScoreHistory(validator)
-    saver = savers.Saver(folder=folder)
-    return Ignite(adapter, validator=validator, saver=saver, with_pbars=False)
+    checkpoint_fn = CheckpointFnCreator(dirname=folder)
+    return Ignite(
+        adapter, validator=validator, checkpoint_fn=checkpoint_fn, with_pbars=False
+    )
 
 
 class DeepEmbeddedValidator(BaseValidator):
@@ -150,7 +152,7 @@ def get_weights(
     val_set = SourceDataset(pml_cf.EmbeddingDataset(feature_for_test, label_for_test))
 
     decays = [1e-1, 3e-2, 1e-2, 3e-3, 1e-3, 3e-4, 1e-4, 3e-5, 1e-5]
-    val_acc, trainers, savers, folders = [], [], [], []
+    val_acc, trainers, checkpoint_fns, folders = [], [], [], []
     epochs = 100
     patience = 2
 
@@ -185,7 +187,7 @@ def get_weights(
         )
         val_acc.append(acc)
         trainers.append(trainer)
-        savers.append(trainer.saver)
+        checkpoint_fns.append(trainer.checkpoint_fn)
         folders.append(curr_folder)
 
     torch.cuda.empty_cache()
@@ -194,8 +196,11 @@ def get_weights(
 
     labels = torch.ones(len(validation_feature), dtype=int)
     validation_set = SourceDataset(pml_cf.EmbeddingDataset(validation_feature, labels))
-    trainer, saver = trainers[index], savers[index]
-    saver.load_adapter(trainer.adapter, "best")
+    trainer, checkpoint_fn = trainers[index], checkpoint_fns[index]
+    checkpoint_fn.load_objects(
+        {"adapter": trainer.adapter},
+        global_step=trainer.validator.best_epoch,
+    )
     bs = min(len(validation_set), batch_size)
     dataloader = torch.utils.data.DataLoader(
         validation_set, num_workers=num_workers, batch_size=bs

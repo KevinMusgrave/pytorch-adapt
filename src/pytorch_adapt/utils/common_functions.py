@@ -505,3 +505,10 @@ def extract_progress(compressed_obj):
         length = len(iterable)
     for member in tqdm.tqdm(iterable, total=length):
         yield member
+
+
+def assert_state_dict_keys(state_dict, keys):
+    if state_dict.keys() != keys:
+        raise KeyError(
+            f"state_dict.keys {state_dict.keys()} do not match expected keys {keys}"
+        )

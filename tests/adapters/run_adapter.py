@@ -4,7 +4,11 @@ import os
 import shutil
 from pathlib import Path
 
-from pytorch_adapt.frameworks.ignite import Ignite, IgniteValHookWrapper, savers
+from pytorch_adapt.frameworks.ignite import (
+    CheckpointFnCreator,
+    Ignite,
+    IgniteValHookWrapper,
+)
 from pytorch_adapt.frameworks.ignite.loggers import IgniteRecordKeeperLogger
 from pytorch_adapt.validators import (
     AccuracyValidator,
@@ -19,7 +23,7 @@ from .utils import get_datasets
 
 # log files should be a mapping from csv file name, to number of columns in file
 def run_adapter(cls, test_folder, adapter, log_files=None):
-    saver = savers.Saver(folder=test_folder)
+    checkpoint_fn = CheckpointFnCreator(dirname=test_folder)
     logger = IgniteRecordKeeperLogger(folder=test_folder)
     datasets = get_datasets()
     validator = ScoreHistory(EntropyValidator())
@@ -30,12 +34,12 @@ def run_adapter(cls, test_folder, adapter, log_files=None):
         },
     )
     val_hook = ScoreHistories(val_hook)
-    val_hook = IgniteValHookWrapper(val_hook, saver=saver, logger=logger)
+    val_hook = IgniteValHookWrapper(val_hook, logger=logger)
     adapter = Ignite(
         adapter,
         validator=validator,
         val_hooks=[val_hook],
-        saver=saver,
+        checkpoint_fn=checkpoint_fn,
         logger=logger,
         log_freq=1,
     )
@@ -55,7 +59,7 @@ def run_adapter(cls, test_folder, adapter, log_files=None):
             cls.assertTrue(set(row) == v)
 
     shutil.rmtree(test_folder)
-    del saver
+    del checkpoint_fn
     del datasets
     del logger
     del adapter

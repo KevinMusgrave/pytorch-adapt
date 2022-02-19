@@ -8,6 +8,7 @@ from ...datasets import DataloaderCreator
 from ...utils import common_functions as c_f
 from ...validators import utils as val_utils
 from .. import utils as f_utils
+from . import checkpoint_utils
 from . import utils as i_g
 from .loggers import IgniteEmptyLogger
 
@@ -24,7 +25,7 @@ class Ignite:
         adapter,
         validator=None,
         val_hooks=None,
-        saver=None,
+        checkpoint_fn=None,
         logger=None,
         log_freq=50,
         with_pbars=True,
@@ -37,7 +38,7 @@ class Ignite:
                 the training and inference steps.
             validator:
             val_hooks:
-            saver:
+            checkpoint_fn:
             logger:
             log_freq: The number of iterations between logging
             with_pbars: If ```True```, progress bars are shown during
@@ -48,7 +49,7 @@ class Ignite:
         self.adapter = adapter
         self.validator = validator
         self.val_hooks = c_f.default(val_hooks, [])
-        self.saver = saver
+        self.checkpoint_fn = checkpoint_fn
         self.logger = c_f.default(logger, IgniteEmptyLogger, {})
         self.log_freq = log_freq
         self.with_pbars = with_pbars
@@ -160,15 +161,16 @@ class Ignite:
             dataloaders = dataloader_creator(**datasets)
 
         self.remove_temp_events()
+        max_epochs = trainer_kwargs.get("max_epochs", 1)
+        condition = i_g.interval_condition(
+            validation_interval, max_epochs, check_initial_score
+        )
 
-        if self.validator or self.val_hooks:
-            max_epochs = trainer_kwargs.get("max_epochs", 1)
-            self.add_validation_runner(
-                dataloaders,
-                validation_interval,
-                max_epochs,
-                check_initial_score,
-            )
+        if self.checkpoint_fn:
+            self.add_checkpoint_fn(condition, dataloaders)
+
+        elif self.validator or self.val_hooks:
+            self.add_validation_runner(condition, dataloaders)
 
         if self.validator and patience is not None:
             self.add_temp_event_handler(
@@ -176,26 +178,8 @@ class Ignite:
                 i_g.EarlyStopper(patience, self.validator),
             )
 
-        if self.saver:
-            if not self.validator:
-                self.add_temp_event_handler(
-                    Events.EPOCH_COMPLETED,
-                    i_g.save_adapter_without_validator(self.saver, self.adapter),
-                )
-            self.add_temp_event_handler(Events.EPOCH_COMPLETED, self.saver.save_ignite)
-
         if resume is not None:
-            if resume != "latest":
-                raise ValueError("Only 'latest' resume is currently supported")
-            if not self.saver:
-                raise ValueError("To resume, a Saver must be provided")
-            self.saver.load_all(
-                adapter=self.adapter,
-                validator=self.validator,
-                framework=self,
-                suffix=resume,
-            )
-            i_g.resume_checks(self.validator, self)
+            self.load_checkpoint(resume)
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
@@ -205,37 +189,55 @@ class Ignite:
 
         return None, None
 
-    def add_validation_runner(
+    def get_validation_runner(
         self,
         dataloaders,
-        validation_interval,
-        max_epochs,
-        check_initial_score,
     ):
-        validation_condition = Events.EPOCH_COMPLETED(every=validation_interval)
-        if max_epochs % validation_interval != 0:
-            validation_condition |= Events.EPOCH_COMPLETED(once=max_epochs)
-        if check_initial_score:
-            validation_condition |= Events.STARTED
-        self.add_temp_event_handler(
-            validation_condition,
-            i_g.get_validation_runner(
-                self.collector,
-                dataloaders,
-                self.adapter,
-                self.validator,
-                self.val_hooks,
-                self.saver,
-                self.logger,
-            ),
+        return i_g.get_validation_runner(
+            self.collector,
+            dataloaders,
+            self.validator,
+            self.val_hooks,
+            self.logger,
         )
 
-    def evaluate_best_model(self, datasets, validator=None, dataloader_creator=None):
+    def add_validation_runner(self, condition, dataloaders):
+        val_runner = self.get_validation_runner(dataloaders)
+        self.add_temp_event_handler(condition, val_runner)
+
+    def add_checkpoint_fn(self, condition, dataloaders):
+        score_function = (
+            self.get_validation_runner(dataloaders) if self.validator else None
+        )
+        self.add_temp_event_handler(
+            condition,
+            self.checkpoint_fn(
+                adapter=self.adapter,
+                validator=self.validator,
+                val_hooks=self.val_hooks,
+                score_function=score_function,
+            ),
+        )
+        if not self.validator and self.val_hooks:
+            self.add_validation_runner(condition, dataloaders)
+
+    def load_checkpoint(self, checkpoint_path):
+        to_load = {
+            "engine": self.trainer,
+            "adapter": self.adapter,
+            "validator": self.validator,
+        }
+        to_load.update(checkpoint_utils.val_hooks_to_dict(self.val_hooks))
+        self.checkpoint_fn.load_objects(to_load, checkpoint_path)
+        i_g.resume_checks(self.trainer, self.validator)
+
+    def evaluate_best_model(self, datasets, validator, dataloader_creator=None):
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
-        validator = c_f.default(validator, self.validator)
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)
-        self.saver.load_adapter(self.adapter, "best", container_subset=["models"])
+        self.checkpoint_fn.load_objects(
+            {"adapter": self.adapter}, global_step=self.validator.best_epoch
+        )
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )

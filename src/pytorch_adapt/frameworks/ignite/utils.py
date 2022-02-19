@@ -2,6 +2,7 @@ import logging
 
 import ignite.distributed as idist
 from ignite.contrib.handlers import ProgressBar
+from ignite.engine import Events
 from ignite.utils import setup_logger
 
 from ...utils import common_functions as c_f
@@ -14,10 +15,8 @@ from .dictionary_accumulator import DictionaryAccumulator
 def get_validation_runner(
     collector,
     dataloaders,
-    adapter,
     validator,
     val_hooks,
-    saver,
     logger,
 ):
     required_data = []
@@ -28,16 +27,15 @@ def get_validation_runner(
     def run_validation(engine):
         epoch = engine.state.epoch
         collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
+        score = None
         if validator:
-            val_utils.get_validation_score(validator, collected_data, epoch)
+            score = val_utils.get_validation_score(validator, collected_data, epoch)
         for hook in val_hooks:
             hook(epoch, **collected_data)
-        if saver:
-            saver.save_validator(validator)
-            saver.save_adapter(adapter, epoch, validator.best_epoch)
         if logger:
             logger.add_validation({"validator": validator}, epoch)
             logger.write(engine)
+        return score
 
     return run_validation
 
@@ -69,13 +67,6 @@ def step_lr_schedulers(lr_schedulers, scheduler_type):
 def auto_model(*args, **kwargs):
     def handler(model):
         return idist.auto_model(model, *args, **kwargs)
-
-    return handler
-
-
-def save_adapter_without_validator(saver, adapter):
-    def handler(engine):
-        saver.save_adapter(adapter, engine.state.epoch, None)
 
     return handler
 
@@ -153,8 +144,8 @@ def set_loggers_and_pbars(cls, keys):
         return do_for_all_engines(cls, attach_pbar, keys)
 
 
-def resume_checks(validator, framework):
-    last_trainer_epoch = framework.trainer.state.epoch
+def resume_checks(trainer, validator):
+    last_trainer_epoch = trainer.state.epoch
     if not validator:
         return
     last_validator_epoch = validator.epochs[-1]
@@ -178,3 +169,12 @@ def zero_grad(adapter):
         adapter.optimizers.zero_grad()
 
     return handler
+
+
+def interval_condition(interval, max_epochs, check_initial_score):
+    condition = Events.EPOCH_COMPLETED(every=interval)
+    if max_epochs % interval != 0:
+        condition |= Events.EPOCH_COMPLETED(once=max_epochs)
+    if check_initial_score:
+        condition |= Events.STARTED
+    return condition

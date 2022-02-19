@@ -12,7 +12,7 @@ from ..containers import (
     Optimizers,
 )
 from ..utils import common_functions as c_f
-from .utils import default_optimizer_tuple, with_opt
+from .utils import container_names, default_optimizer_tuple, with_opt
 
 
 class BaseAdapter(ABC):
@@ -156,6 +156,14 @@ class BaseAdapter(ABC):
         c_f.LOGGER.debug(f"lr_schedulers\n{self.lr_schedulers}")
         c_f.LOGGER.debug(f"misc\n{self.misc}")
         c_f.LOGGER.debug(f"hook\n{self.hook}")
+
+    def state_dict(self):
+        return {k: getattr(self, k).state_dict() for k in container_names()}
+
+    def load_state_dict(self, state_dict):
+        c_f.assert_state_dict_keys(state_dict, set(container_names()))
+        for k, v in state_dict.items():
+            getattr(self, k).load_state_dict(v)
 
 
 class BaseGCDAdapter(BaseAdapter):
