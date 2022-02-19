@@ -5,7 +5,7 @@ import numpy as np
 
 from pytorch_adapt.containers.base_container import containers_are_equal
 from pytorch_adapt.datasets import DataloaderCreator
-from pytorch_adapt.frameworks.ignite import IgniteValHookWrapper, savers
+from pytorch_adapt.frameworks.ignite import CheckpointFnCreator, IgniteValHookWrapper
 from pytorch_adapt.utils import exceptions
 from pytorch_adapt.validators import (
     AccuracyValidator,
@@ -44,7 +44,7 @@ def get_validator():
 class TestSaveAndLoad(unittest.TestCase):
     def test_save_and_load(self):
         max_epochs = 3
-        checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
+        checkpoint_fn = CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
 
         val_hook1 = get_val_hook()
         validator1 = get_validator()
@@ -91,7 +91,7 @@ class TestSaveAndLoad(unittest.TestCase):
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
 
-        checkpoint_fn = savers.CheckpointFnCreator(
+        checkpoint_fn = CheckpointFnCreator(
             dirname=TEST_FOLDER, n_saved=None, require_empty=False
         )
         val_hook3 = get_val_hook()

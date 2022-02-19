@@ -8,7 +8,7 @@ from ...datasets import DataloaderCreator
 from ...utils import common_functions as c_f
 from ...validators import utils as val_utils
 from .. import utils as f_utils
-from . import savers
+from . import checkpoint_utils
 from . import utils as i_g
 from .loggers import IgniteEmptyLogger
 
@@ -227,7 +227,7 @@ class Ignite:
             "adapter": self.adapter,
             "validator": self.validator,
         }
-        to_load.update(savers.val_hooks_to_dict(self.val_hooks))
+        to_load.update(checkpoint_utils.val_hooks_to_dict(self.val_hooks))
         self.checkpoint_fn.load_objects(to_load, checkpoint_path)
         i_g.resume_checks(self.trainer, self.validator)
 

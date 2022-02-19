@@ -19,10 +19,10 @@ from .score_history import ScoreHistory
 
 
 def default_framework_fn(adapter, validator, folder):
-    from ..frameworks.ignite import Ignite, savers
+    from ..frameworks.ignite import CheckpointFnCreator, Ignite
 
     validator = ScoreHistory(validator)
-    checkpoint_fn = savers.CheckpointFnCreator(dirname=folder)
+    checkpoint_fn = CheckpointFnCreator(dirname=folder)
     return Ignite(
         adapter, validator=validator, checkpoint_fn=checkpoint_fn, with_pbars=False
     )

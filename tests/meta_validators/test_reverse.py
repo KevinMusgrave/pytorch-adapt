@@ -4,7 +4,7 @@ import unittest
 import torch
 
 from pytorch_adapt.datasets import DataloaderCreator
-from pytorch_adapt.frameworks.ignite import savers
+from pytorch_adapt.frameworks.ignite import CheckpointFnCreator
 from pytorch_adapt.meta_validators import ReverseValidator
 from pytorch_adapt.validators import AccuracyValidator, ScoreHistory
 
@@ -30,7 +30,7 @@ class TestReverseValidator(unittest.TestCase):
             mv = ReverseValidator()
             if forward_with_validator:
                 validator = ScoreHistory(AccuracyValidator())
-                checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER)
+                checkpoint_fn = CheckpointFnCreator(dirname=TEST_FOLDER)
             else:
                 validator, checkpoint_fn = None, None
             forward_adapter, datasets = get_dann(
