@@ -199,9 +199,7 @@ def get_weights(
     trainer, checkpoint_fn = trainers[index], checkpoint_fns[index]
     checkpoint_fn.load_objects(
         {"adapter": trainer.adapter},
-        filename_components={
-            "global_step": trainer.validator.best_epoch,
-        },
+        global_step=trainer.validator.best_epoch,
     )
     bs = min(len(validation_set), batch_size)
     dataloader = torch.utils.data.DataLoader(

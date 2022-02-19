@@ -45,7 +45,6 @@ def get_validator():
 class TestSaveAndLoad(unittest.TestCase):
     def test_save_and_load(self):
         max_epochs = 3
-        latest_filepath = os.path.join(TEST_FOLDER, f"checkpoint_{max_epochs}.pt")
         checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
 
         val_hook1 = get_val_hook()
@@ -87,7 +86,7 @@ class TestSaveAndLoad(unittest.TestCase):
                 ]
 
             for to_load in objs:
-                checkpoint_fn.load_objects(to_load, latest_filepath)
+                checkpoint_fn.load_objects(to_load, global_step=3)
 
             self.assert_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
@@ -110,7 +109,7 @@ class TestSaveAndLoad(unittest.TestCase):
             datasets=datasets,
             epoch_length=2,
             max_epochs=max_epochs,
-            resume=latest_filepath,
+            resume=dann1.checkpoint_fn.last_checkpoint,
         )
         self.assert_equal(dann1, validator1, val_hook1, dann3, validator3, val_hook3)
 
@@ -124,7 +123,7 @@ class TestSaveAndLoad(unittest.TestCase):
                 datasets=datasets,
                 epoch_length=2,
                 max_epochs=max_epochs,
-                resume=latest_filepath,
+                resume=dann1.checkpoint_fn.last_checkpoint,
             )
 
         validator4 = ScoreHistory(AccuracyValidator())
@@ -140,13 +139,13 @@ class TestSaveAndLoad(unittest.TestCase):
         )
 
         # should run without problems
-        checkpoint_fn.load_objects({"validator": validator3}, latest_filepath)
+        checkpoint_fn.load_objects({"validator": validator3}, global_step=3)
 
         with self.assertRaises(KeyError):
-            checkpoint_fn.load_objects({"validator": validator4}, latest_filepath)
+            checkpoint_fn.load_objects({"validator": validator4}, global_step=3)
 
         with self.assertRaises(KeyError):
-            checkpoint_fn.load_objects({"validator": validator5}, latest_filepath)
+            checkpoint_fn.load_objects({"validator": validator5}, global_step=3)
         shutil.rmtree(TEST_FOLDER)
 
     def assert_not_equal(

@@ -212,7 +212,7 @@ class Ignite:
         self.add_temp_event_handler(
             condition,
             self.checkpoint_fn(
-                self.adapter,
+                adapter=self.adapter,
                 validator=self.validator,
                 val_hooks=self.val_hooks,
                 score_function=score_function,

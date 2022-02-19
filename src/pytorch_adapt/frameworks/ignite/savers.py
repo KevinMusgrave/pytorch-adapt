@@ -55,10 +55,15 @@ class CheckpointFnCreator:
             "filename_pattern": "{filename_prefix}{name}_{global_step}.{ext}",
             **kwargs,
         }
+        # Create handler here in case needed by load_objects or last_checkpoint
+        # before __call__ is used
+        self.handler = CustomModelCheckpoint(**self.kwargs)
 
-    def __call__(self, adapter, validator=None, val_hooks=None, **kwargs):
+    def __call__(self, adapter=None, validator=None, val_hooks=None, **kwargs):
         self.handler = CustomModelCheckpoint(**{**self.kwargs, **kwargs})
-        dict_to_save = {"adapter": adapter}
+        dict_to_save = {}
+        if adapter:
+            dict_to_save["adapter"] = adapter
         if validator:
             dict_to_save["validator"] = validator
         if val_hooks:
@@ -69,21 +74,23 @@ class CheckpointFnCreator:
 
         return fn
 
-    def load_objects(
-        self, to_load, checkpoint=None, filename_components=None, **kwargs
-    ):
-        # remove this once this issue is resolved https://github.com/pytorch/ignite/issues/2480
-        if filename_components:
+    def load_objects(self, to_load, checkpoint=None, global_step=None, **kwargs):
+        # This can be simplified once this issue is resolved https://github.com/pytorch/ignite/issues/2480
+        if global_step is not None:
             dirname = self.handler.save_handler.dirname
             filename_dict = {
                 "filename_prefix": self.handler.filename_prefix,
                 "name": "checkpoint",
                 "ext": self.handler.ext,
                 "score_name": self.handler.score_name,
+                "global_step": global_step,
             }
-            filename_dict.update(filename_components)
             filename = self.handler.filename_pattern.format(**filename_dict)
             checkpoint = os.path.join(dirname, filename)
 
         to_load = {k: v for k, v in to_load.items() if v}
         self.handler.load_objects(to_load, checkpoint, **kwargs)
+
+    @property
+    def last_checkpoint(self):
+        return self.handler.last_checkpoint
