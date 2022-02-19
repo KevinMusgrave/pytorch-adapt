@@ -30,10 +30,12 @@ class TestReverseValidator(unittest.TestCase):
             mv = ReverseValidator()
             if forward_with_validator:
                 validator = ScoreHistory(AccuracyValidator())
-                saver = savers.Saver(folder=TEST_FOLDER)
+                checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER)
             else:
-                validator, saver = None, None
-            forward_adapter, datasets = get_dann(validator=validator, saver=saver)
+                validator, checkpoint_fn = None, None
+            forward_adapter, datasets = get_dann(
+                validator=validator, checkpoint_fn=checkpoint_fn
+            )
             reverse_adapter, _ = get_dann(validator=ScoreHistory(AccuracyValidator()))
             pl_dataloader_creator = DataloaderCreator(
                 all_val=True, val_kwargs={"batch_size": 32, "num_workers": 4}

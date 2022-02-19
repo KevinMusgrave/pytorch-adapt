@@ -69,6 +69,20 @@ class CheckpointFnCreator:
 
         return fn
 
-    def load_objects(self, to_load, checkpoint, **kwargs):
+    def load_objects(
+        self, to_load, checkpoint=None, filename_components=None, **kwargs
+    ):
+        # remove this once this issue is resolved https://github.com/pytorch/ignite/issues/2480
+        if filename_components:
+            dirname = self.handler.save_handler.dirname
+            filename_dict = {
+                "filename_prefix": self.handler.filename_prefix,
+                "ext": self.handler.ext,
+                "score_name": self.handler.score_name,
+            }
+            filename_dict.update(filename_components)
+            filename = self.handler.filename_pattern.format(**filename_dict)
+            checkpoint = os.path.join(dirname, filename)
+
         to_load = {k: v for k, v in to_load.items() if v}
-        self.handler.load_objects(to_load, checkpoint)
+        self.handler.load_objects(to_load, checkpoint, **kwargs)
