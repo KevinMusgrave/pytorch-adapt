@@ -77,6 +77,7 @@ class CheckpointFnCreator:
             dirname = self.handler.save_handler.dirname
             filename_dict = {
                 "filename_prefix": self.handler.filename_prefix,
+                "name": "checkpoint",
                 "ext": self.handler.ext,
                 "score_name": self.handler.score_name,
             }

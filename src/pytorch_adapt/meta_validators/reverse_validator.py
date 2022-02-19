@@ -75,7 +75,6 @@ class ReverseValidator:
             forward_adapter.checkpoint_fn.load_objects(
                 {"adapter": forward_adapter.adapter},
                 filename_components={
-                    "name": "checkpoint",
                     "global_step": forward_adapter.validator.best_epoch,
                 },
             )
