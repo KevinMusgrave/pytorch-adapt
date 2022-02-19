@@ -1,34 +1,14 @@
 import os
-from abc import ABC, abstractmethod
 
-import torch
 from ignite.handlers import ModelCheckpoint
-from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ...utils import common_functions as c_f
-from ...validators import ScoreHistories
 
 
 class CustomModelCheckpoint(ModelCheckpoint):
     def __init__(self, filename_pattern=None, **kwargs):
         super().__init__(**kwargs)
         self.filename_pattern = filename_pattern
-
-
-class EngineFn:
-    def __init__(self, **kwargs):
-        self.handler = CustomModelCheckpoint(**kwargs)
-        self.dirname = kwargs["dirname"]
-        self.dict_to_save = {}
-
-    def __call__(self, engine):
-        self.dict_to_save = {"engine": engine}
-        self.handler(engine, self.dict_to_save)
-
-    def load(self, engine, filename):
-        to_load = {"engine": engine}
-        checkpoint = os.path.join(self.dirname, filename)
-        self.handler.load_objects(to_load=to_load, checkpoint=checkpoint, strict=False)
 
 
 def global_step_transform(engine, _):
