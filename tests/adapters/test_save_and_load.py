@@ -171,26 +171,20 @@ class TestSaveAndLoad(unittest.TestCase):
             c2 = getattr(dann2.adapter, k)
             self.assertTrue(containers_are_equal(c1, c2))
 
-        print(val_hook1.validator)
-        print(val_hook2.validator)
-        for attrname in ["best_epoch", "best_score", "latest_score"]:
-            self.assertTrue(
-                getattr(val_hook1.validator, attrname)
-                == getattr(val_hook2.validator, attrname)
-            )
-            self.assertTrue(
-                getattr(validator1, attrname) == getattr(validator2, attrname)
+        self.assert_validator_equal(validator1, validator2)
+        self.assert_validator_equal(val_hook1.validator, val_hook2.validator)
+        for k in val_hook1.validator.histories.keys():
+            self.assert_validator_equal(
+                val_hook1.validator.histories[k], val_hook2.validator.histories[k]
             )
 
+    def assert_validator_equal(self, v1, v2):
+        for attrname in ["best_epoch", "best_score", "latest_score"]:
+            self.assertTrue(getattr(v1, attrname) == getattr(v2, attrname))
         for attrname in ["score_history", "epochs"]:
             self.assertTrue(
                 np.array_equal(
-                    getattr(val_hook1.validator, attrname),
-                    getattr(val_hook2.validator, attrname),
-                )
-            )
-            self.assertTrue(
-                np.array_equal(
-                    getattr(validator1, attrname), getattr(validator2, attrname)
+                    getattr(v1, attrname),
+                    getattr(v2, attrname),
                 )
             )
