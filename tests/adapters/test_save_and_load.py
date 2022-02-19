@@ -65,7 +65,7 @@ class TestSaveAndLoad(unittest.TestCase):
         for load_all_at_once in [True, False]:
             val_hook2 = get_val_hook()
             validator2 = get_validator()
-            dann2, _ = get_dann(validator=validator2)
+            dann2, _ = get_dann(validator=validator2, val_hooks=[val_hook2])
 
             self.assert_not_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
@@ -76,6 +76,7 @@ class TestSaveAndLoad(unittest.TestCase):
                     "engine": dann2.trainer,
                     "adapter": dann2.adapter,
                     "validator": dann2.validator,
+                    "val_hook0": val_hook2,
                 },
                 os.path.join(TEST_FOLDER, "checkpoint_1.pt"),
             )
@@ -170,6 +171,8 @@ class TestSaveAndLoad(unittest.TestCase):
             c2 = getattr(dann2.adapter, k)
             self.assertTrue(containers_are_equal(c1, c2))
 
+        print(val_hook1.validator)
+        print(val_hook2.validator)
         for attrname in ["best_epoch", "best_score", "latest_score"]:
             self.assertTrue(
                 getattr(val_hook1.validator, attrname)

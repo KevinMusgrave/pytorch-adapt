@@ -44,11 +44,19 @@ class CheckpointFnCreator:
             **kwargs,
         }
 
-    def __call__(self, adapter, validator=None, **kwargs):
+    def __call__(self, adapter, validator=None, val_hooks=None, **kwargs):
         self.handler = CustomModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {"adapter": adapter}
         if validator:
             dict_to_save["validator"] = validator
+        if val_hooks:
+            for i, v in enumerate(val_hooks):
+                if not all(hasattr(v, x) for x in ["state_dict", "load_state_dict"]):
+                    c_f.LOGGER.warning(
+                        "val_hook has no state_dict or load_state_dict so it will not be saved"
+                    )
+                else:
+                    dict_to_save[f"val_hook{i}"] = v
 
         def fn(engine):
             self.handler(engine, {"engine": engine, **dict_to_save})

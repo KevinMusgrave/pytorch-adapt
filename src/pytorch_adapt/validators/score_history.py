@@ -205,10 +205,16 @@ class ScoreHistories(ScoreHistory):
         return x
 
     def state_dict(self):
-        return {k: v.state_dict() for k, v in self.histories.items()}
+        output = super().state_dict()
+        output.update(
+            {"histories": {k: v.state_dict() for k, v in self.histories.items()}}
+        )
+        return output
 
     def load_state_dict(self, state_dict):
-        for k, v in state_dict.items():
+        histories = state_dict.pop("histories")
+        super().load_state_dict(state_dict)
+        for k, v in histories.items():
             self.histories[k].load_state_dict(v)
 
 

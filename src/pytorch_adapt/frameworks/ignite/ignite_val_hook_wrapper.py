@@ -14,3 +14,9 @@ class IgniteValHookWrapper:
     @property
     def required_data(self):
         return self.validator.required_data
+
+    def state_dict(self):
+        return self.validator.state_dict()
+
+    def load_state_dict(self, state_dict):
+        self.validator.load_state_dict(state_dict)

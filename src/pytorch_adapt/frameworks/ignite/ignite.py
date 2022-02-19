@@ -220,7 +220,10 @@ class Ignite:
         self.add_temp_event_handler(
             condition,
             self.checkpoint_fn(
-                self.adapter, self.validator, score_function=score_function
+                self.adapter,
+                validator=self.validator,
+                val_hooks=self.val_hooks,
+                score_function=score_function,
             ),
         )
         if not self.validator and self.val_hooks:
