@@ -41,7 +41,7 @@ def get_validator():
     )
 
 
-class TestSaveAndLoad(unittest.TestCase):
+class TestIgniteSaveAndLoad(unittest.TestCase):
     def test_save_and_load(self):
         max_epochs = 3
         checkpoint_fn = CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
