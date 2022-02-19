@@ -62,7 +62,7 @@ class TestSaveAndLoad(unittest.TestCase):
             max_epochs=max_epochs,
         )
 
-        for load_all_at_once in [True, False]:
+        for load_partial in [True, False]:
             val_hook2 = get_val_hook()
             validator2 = get_validator()
             dann2, _ = get_dann(validator=validator2, val_hooks=[val_hook2])
@@ -70,25 +70,36 @@ class TestSaveAndLoad(unittest.TestCase):
             self.assert_not_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
+            if load_partial:
+                objs = [
+                    {"engine": dann2.trainer, "adapter": dann2.adapter},
+                    {"validator": dann2.validator, "val_hook0": val_hook2},
+                ]
+            else:
+                objs = [
+                    {
+                        "engine": dann2.trainer,
+                        "adapter": dann2.adapter,
+                        "validator": dann2.validator,
+                        "val_hook0": val_hook2,
+                    }
+                ]
 
-            checkpoint_fn.load_objects(
-                {
-                    "engine": dann2.trainer,
-                    "adapter": dann2.adapter,
-                    "validator": dann2.validator,
-                    "val_hook0": val_hook2,
-                },
-                os.path.join(TEST_FOLDER, "checkpoint_1.pt"),
-            )
+            for to_load in objs:
+                checkpoint_fn.load_objects(
+                    to_load, os.path.join(TEST_FOLDER, "checkpoint_1.pt")
+                )
 
             self.assert_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
 
-        saver = savers.Saver(folder=TEST_FOLDER)
-        val_hook3 = get_val_hook(saver)
+        checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
+        val_hook3 = get_val_hook()
         validator3 = get_validator()
-        dann3, _ = get_dann(validator=validator3, val_hooks=[val_hook3], saver=saver)
+        dann3, _ = get_dann(
+            validator=validator3, val_hooks=[val_hook3], checkpoint_fn=checkpoint_fn
+        )
         self.assert_not_equal(
             dann1, validator1, val_hook1, dann3, validator3, val_hook3
         )
