@@ -1,4 +1,5 @@
 import logging
+import shutil
 import unittest
 
 import torch
@@ -13,12 +14,13 @@ from pytorch_adapt.datasets import (
     SourceDataset,
     TargetDataset,
 )
-from pytorch_adapt.frameworks.ignite import Ignite, CheckpointFnCreator
+from pytorch_adapt.frameworks.ignite import CheckpointFnCreator, Ignite
 from pytorch_adapt.frameworks.ignite.loggers import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import EntropyValidator, ScoreHistory
+
 from .. import TEST_FOLDER
-import shutil
+
 
 class ValHook:
     def __init__(self, unittester, val_hook_has_required_data):
@@ -41,7 +43,7 @@ def helper(
     ignore_epoch=None,
     logger=None,
     val_hooks=None,
-    with_checkpoint_fn=False
+    with_checkpoint_fn=False,
 ):
     device = torch.device("cuda")
     datasets = {}
@@ -200,11 +202,12 @@ class TestIgnite(unittest.TestCase):
                         val_hook.num_calls == max_epochs // validation_interval
                     )
 
-
     def test_evaluate_best_model(self):
         adapter, datasets = helper(with_validator=True, with_checkpoint_fn=True)
         dc = DataloaderCreator(num_workers=0)
-        adapter.run(datasets=datasets, dataloader_creator=dc, epoch_length=10, max_epochs=5)
+        adapter.run(
+            datasets=datasets, dataloader_creator=dc, epoch_length=10, max_epochs=5
+        )
 
         validator = EntropyValidator()
         best_score = adapter.evaluate_best_model(datasets, validator)

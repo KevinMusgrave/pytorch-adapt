@@ -15,7 +15,7 @@ from pytorch_adapt.validators import (
 )
 
 from .. import TEST_FOLDER
-from .get_dann import get_dann
+from ..adapters.get_dann import get_dann
 
 
 def get_val_hook():
