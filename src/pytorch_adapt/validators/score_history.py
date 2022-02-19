@@ -165,21 +165,11 @@ class ScoreHistory(ABC):
         )
 
     def state_dict(self):
-        return {
-            k: getattr(self, k)
-            for k in [
-                "best_score",
-                "best_epoch",
-                "raw_score_history",
-                "score_history",
-                "epochs",
-            ]
-        }
+        return {k: getattr(self, k) for k in state_dict_keys()}
 
     def load_state_dict(self, state_dict):
+        c_f.assert_state_dict_keys(state_dict, set(state_dict_keys()))
         for k, v in state_dict.items():
-            if not hasattr(self, k):
-                raise KeyError(f"state_dict has unexpected key: {k}")
             if not isinstance(getattr(self.__class__, k, None), property):
                 setattr(self, k, v)
 
@@ -214,6 +204,7 @@ class ScoreHistories(ScoreHistory):
     def load_state_dict(self, state_dict):
         histories = state_dict.pop("histories")
         super().load_state_dict(state_dict)
+        c_f.assert_state_dict_keys(histories, self.histories.keys())
         for k, v in histories.items():
             self.histories[k].load_state_dict(v)
 
@@ -226,3 +217,13 @@ def remove_ignore_epoch(x, epochs, ignore_epoch):
 
 def return_raw(raw_score_history):
     return raw_score_history
+
+
+def state_dict_keys():
+    return [
+        "best_score",
+        "best_epoch",
+        "raw_score_history",
+        "score_history",
+        "epochs",
+    ]

@@ -144,8 +144,8 @@ def set_loggers_and_pbars(cls, keys):
         return do_for_all_engines(cls, attach_pbar, keys)
 
 
-def resume_checks(validator, framework):
-    last_trainer_epoch = framework.trainer.state.epoch
+def resume_checks(trainer, validator):
+    last_trainer_epoch = trainer.state.epoch
     if not validator:
         return
     last_validator_epoch = validator.epochs[-1]

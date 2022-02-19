@@ -150,6 +150,7 @@ class BaseContainer(MutableMapping):
         return {k: v.state_dict() for k, v in self.items() if hasattr(v, "state_dict")}
 
     def load_state_dict(self, state_dict):
+        c_f.assert_state_dict_keys(state_dict, self.keys())
         for k, v in state_dict.items():
             self[k].load_state_dict(v)
 

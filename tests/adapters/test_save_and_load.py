@@ -44,7 +44,8 @@ def get_validator():
 
 class TestSaveAndLoad(unittest.TestCase):
     def test_save_and_load(self):
-        max_epochs = 1
+        max_epochs = 3
+        latest_filepath = os.path.join(TEST_FOLDER, f"checkpoint_{max_epochs}.pt")
         checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
 
         val_hook1 = get_val_hook()
@@ -86,15 +87,15 @@ class TestSaveAndLoad(unittest.TestCase):
                 ]
 
             for to_load in objs:
-                checkpoint_fn.load_objects(
-                    to_load, os.path.join(TEST_FOLDER, "checkpoint_1.pt")
-                )
+                checkpoint_fn.load_objects(to_load, latest_filepath)
 
             self.assert_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
 
-        checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
+        checkpoint_fn = savers.CheckpointFnCreator(
+            dirname=TEST_FOLDER, n_saved=None, require_empty=False
+        )
         val_hook3 = get_val_hook()
         validator3 = get_validator()
         dann3, _ = get_dann(
@@ -105,27 +106,30 @@ class TestSaveAndLoad(unittest.TestCase):
         )
         # this should load and then not run
         # because it has already run for max_epochs
-        saver.load_validator(val_hook3.validator, "val_hook")
         dann3.run(
             datasets=datasets,
             epoch_length=2,
             max_epochs=max_epochs,
-            resume="latest",
+            resume=latest_filepath,
         )
         self.assert_equal(dann1, validator1, val_hook1, dann3, validator3, val_hook3)
 
+        # Truncate validator.epochs, then save
+        # When resuming, epochs won't match trainer epoch, and will raise exception
         validator3.epochs = validator3.epochs[:1]
         validator3.score_history = validator3.score_history[:1]
-        saver.save_validator(validator3)
+        checkpoint_fn(dann3.adapter, dann3.validator, dann3.val_hooks)(dann3.trainer)
         with self.assertRaises(exceptions.ResumeCheckError):
             dann3.run(
                 datasets=datasets,
                 epoch_length=2,
                 max_epochs=max_epochs,
-                resume="latest",
+                resume=latest_filepath,
             )
 
-        validator3 = ScoreHistories(
+        validator4 = ScoreHistory(AccuracyValidator())
+
+        validator5 = ScoreHistories(
             MultipleValidators(
                 [
                     AccuracyValidator(),
@@ -135,11 +139,14 @@ class TestSaveAndLoad(unittest.TestCase):
             )
         )
 
-        validator4 = ScoreHistory(AccuracyValidator())
+        # should run without problems
+        checkpoint_fn.load_objects({"validator": validator3}, latest_filepath)
 
-        self.assertRaises(FileNotFoundError, lambda: saver.load_validator(validator3))
-        self.assertRaises(FileNotFoundError, lambda: saver.load_validator(validator4))
+        with self.assertRaises(KeyError):
+            checkpoint_fn.load_objects({"validator": validator4}, latest_filepath)
 
+        with self.assertRaises(KeyError):
+            checkpoint_fn.load_objects({"validator": validator5}, latest_filepath)
         shutil.rmtree(TEST_FOLDER)
 
     def assert_not_equal(

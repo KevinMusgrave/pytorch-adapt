@@ -35,6 +35,18 @@ def global_step_transform(engine, _):
     return engine.state.epoch
 
 
+def val_hooks_to_dict(val_hooks):
+    output = {}
+    for i, v in enumerate(val_hooks):
+        if not all(hasattr(v, x) for x in ["state_dict", "load_state_dict"]):
+            c_f.LOGGER.warning(
+                "val_hook has no state_dict or load_state_dict so it will not be saved or loaded"
+            )
+        else:
+            output[f"val_hook{i}"] = v
+    return output
+
+
 class CheckpointFnCreator:
     def __init__(self, **kwargs):
         self.kwargs = {
@@ -50,18 +62,13 @@ class CheckpointFnCreator:
         if validator:
             dict_to_save["validator"] = validator
         if val_hooks:
-            for i, v in enumerate(val_hooks):
-                if not all(hasattr(v, x) for x in ["state_dict", "load_state_dict"]):
-                    c_f.LOGGER.warning(
-                        "val_hook has no state_dict or load_state_dict so it will not be saved"
-                    )
-                else:
-                    dict_to_save[f"val_hook{i}"] = v
+            dict_to_save.update(val_hooks_to_dict(val_hooks))
 
         def fn(engine):
             self.handler(engine, {"engine": engine, **dict_to_save})
 
         return fn
 
-    def load_objects(self, *args, **kwargs):
-        self.handler.load_objects(*args, **kwargs)
+    def load_objects(self, to_load, checkpoint, **kwargs):
+        to_load = {k: v for k, v in to_load.items() if v}
+        self.handler.load_objects(to_load, checkpoint)

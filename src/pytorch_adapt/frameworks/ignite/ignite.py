@@ -8,6 +8,7 @@ from ...datasets import DataloaderCreator
 from ...utils import common_functions as c_f
 from ...validators import utils as val_utils
 from .. import utils as f_utils
+from . import savers
 from . import utils as i_g
 from .loggers import IgniteEmptyLogger
 
@@ -178,16 +179,7 @@ class Ignite:
             )
 
         if resume is not None:
-            if resume != "latest":
-                raise ValueError("Only 'latest' resume is currently supported")
-            if not self.saver:
-                raise ValueError("To resume, a Saver must be provided")
-            self.saver.load_all(
-                adapter=self.adapter,
-                validator=self.validator,
-                framework=self,
-                suffix=resume,
-            )
+            self.load_checkpoint(resume)
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
@@ -228,6 +220,16 @@ class Ignite:
         )
         if not self.validator and self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
+
+    def load_checkpoint(self, checkpoint_path):
+        to_load = {
+            "engine": self.trainer,
+            "adapter": self.adapter,
+            "validator": self.validator,
+        }
+        to_load.update(savers.val_hooks_to_dict(self.val_hooks))
+        self.checkpoint_fn.load_objects(to_load, checkpoint_path)
+        i_g.resume_checks(self.trainer, self.validator)
 
     def evaluate_best_model(self, datasets, validator=None, dataloader_creator=None):
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
