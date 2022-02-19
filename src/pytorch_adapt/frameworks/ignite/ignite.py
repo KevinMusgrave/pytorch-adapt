@@ -166,7 +166,7 @@ class Ignite:
         )
 
         if self.checkpoint_fn:
-            self.add_checkpoint_fns(condition, dataloaders)
+            self.add_checkpoint_fn(condition, dataloaders)
 
         elif self.validator or self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
@@ -213,22 +213,17 @@ class Ignite:
         val_runner = self.get_validation_runner(dataloaders)
         self.add_temp_event_handler(condition, val_runner)
 
-    def add_checkpoint_fns(self, condition, dataloaders):
+    def add_checkpoint_fn(self, condition, dataloaders):
         score_function = (
             self.get_validation_runner(dataloaders) if self.validator else None
         )
         self.add_temp_event_handler(
             condition,
-            self.checkpoint_fn.adapter_fn(self.adapter, score_function),
+            self.checkpoint_fn(
+                self.adapter, self.validator, score_function=score_function
+            ),
         )
-        self.add_temp_event_handler(condition, self.checkpoint_fn.engine_fn)
-
-        if self.validator:
-            self.add_temp_event_handler(
-                condition,
-                self.checkpoint_fn.validator_fn(self.validator),
-            )
-        elif self.val_hooks:
+        if not self.validator and self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
 
     def evaluate_best_model(self, datasets, validator=None, dataloader_creator=None):

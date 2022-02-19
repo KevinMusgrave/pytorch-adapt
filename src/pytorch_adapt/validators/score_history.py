@@ -176,6 +176,13 @@ class ScoreHistory(ABC):
             ]
         }
 
+    def load_state_dict(self, state_dict):
+        for k, v in state_dict.items():
+            if not hasattr(self, k):
+                raise KeyError(f"state_dict has unexpected key: {k}")
+            if not isinstance(getattr(self.__class__, k, None), property):
+                setattr(self, k, v)
+
 
 class ScoreHistories(ScoreHistory):
     def __init__(self, validator, **kwargs):
@@ -199,6 +206,10 @@ class ScoreHistories(ScoreHistory):
 
     def state_dict(self):
         return {k: v.state_dict() for k, v in self.histories.items()}
+
+    def load_state_dict(self, state_dict):
+        for k, v in state_dict.items():
+            self.histories[k].load_state_dict(v)
 
 
 def remove_ignore_epoch(x, epochs, ignore_epoch):

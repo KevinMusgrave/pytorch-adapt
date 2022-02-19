@@ -1,9 +1,11 @@
+import os
 import shutil
 import unittest
 
 import numpy as np
 
 from pytorch_adapt.containers.base_container import containers_are_equal
+from pytorch_adapt.datasets import DataloaderCreator
 from pytorch_adapt.frameworks.ignite import IgniteValHookWrapper, savers
 from pytorch_adapt.utils import exceptions
 from pytorch_adapt.validators import (
@@ -42,8 +44,8 @@ def get_validator():
 
 class TestSaveAndLoad(unittest.TestCase):
     def test_save_and_load(self):
-        max_epochs = 3
-        checkpoint_fn = savers.CheckpointFn(common_kwargs={"dirname": TEST_FOLDER})
+        max_epochs = 1
+        checkpoint_fn = savers.CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
 
         val_hook1 = get_val_hook()
         validator1 = get_validator()
@@ -51,8 +53,11 @@ class TestSaveAndLoad(unittest.TestCase):
         dann1, datasets = get_dann(
             validator=validator1, val_hooks=[val_hook1], checkpoint_fn=checkpoint_fn
         )
+        dataloader_creator = DataloaderCreator(num_workers=2)
+
         dann1.run(
             datasets=datasets,
+            dataloader_creator=dataloader_creator,
             epoch_length=2,
             max_epochs=max_epochs,
         )
@@ -60,19 +65,20 @@ class TestSaveAndLoad(unittest.TestCase):
         for load_all_at_once in [True, False]:
             val_hook2 = get_val_hook()
             validator2 = get_validator()
-            dann2, _ = get_dann()
+            dann2, _ = get_dann(validator=validator2)
 
             self.assert_not_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2
             )
 
-            checkpoint_fn.engine_fn.load(dann2.trainer, "engine_3.pt")
-            if load_all_at_once:
-                saver.load_all(dann2.adapter, validator2, dann2)
-            else:
-                saver.load_ignite(dann2.trainer)
-                saver.load_adapter(dann2.adapter, max_epochs)
-                saver.load_validator(validator2)
+            checkpoint_fn.load_objects(
+                {
+                    "engine": dann2.trainer,
+                    "adapter": dann2.adapter,
+                    "validator": dann2.validator,
+                },
+                os.path.join(TEST_FOLDER, "checkpoint_1.pt"),
+            )
 
             self.assert_equal(
                 dann1, validator1, val_hook1, dann2, validator2, val_hook2

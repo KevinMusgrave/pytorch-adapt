@@ -146,6 +146,13 @@ class BaseContainer(MutableMapping):
         for k in del_list:
             del self[k]
 
+    def state_dict(self):
+        return {k: v.state_dict() for k, v in self.items() if hasattr(v, "state_dict")}
+
+    def load_state_dict(self, state_dict):
+        for k, v in state_dict.items():
+            self[k].load_state_dict(v)
+
 
 class DeleteKey:
     pass

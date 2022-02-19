@@ -157,6 +157,16 @@ class BaseAdapter(ABC):
         c_f.LOGGER.debug(f"misc\n{self.misc}")
         c_f.LOGGER.debug(f"hook\n{self.hook}")
 
+    def state_dict(self):
+        return {
+            k: getattr(self, k).state_dict()
+            for k in ["models", "optimizers", "lr_schedulers", "misc"]
+        }
+
+    def load_state_dict(self, state_dict):
+        for k, v in state_dict.items():
+            getattr(self, k).load_state_dict(v)
+
 
 class BaseGCDAdapter(BaseAdapter):
     """
