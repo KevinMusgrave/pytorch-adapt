@@ -13,11 +13,12 @@ from pytorch_adapt.datasets import (
     SourceDataset,
     TargetDataset,
 )
-from pytorch_adapt.frameworks.ignite import Ignite
+from pytorch_adapt.frameworks.ignite import Ignite, CheckpointFnCreator
 from pytorch_adapt.frameworks.ignite.loggers import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import EntropyValidator, ScoreHistory
-
+from .. import TEST_FOLDER
+import shutil
 
 class ValHook:
     def __init__(self, unittester, val_hook_has_required_data):
@@ -35,10 +36,12 @@ class ValHook:
 
 def helper(
     with_validator=False,
+    with_dumb_history=False,
     final_best_epoch=5,
     ignore_epoch=None,
     logger=None,
     val_hooks=None,
+    with_checkpoint_fn=False
 ):
     device = torch.device("cuda")
     datasets = {}
@@ -60,15 +63,24 @@ def helper(
     validator = None
     if with_validator:
         validator = EntropyValidator()
-        validator = DumbScoreHistory(
-            final_best_epoch=final_best_epoch,
-            validator=validator,
-            ignore_epoch=ignore_epoch,
-        )
+        if with_dumb_history:
+            validator = DumbScoreHistory(
+                final_best_epoch=final_best_epoch,
+                validator=validator,
+                ignore_epoch=ignore_epoch,
+            )
+        else:
+            validator = ScoreHistory(validator)
+
+    checkpoint_fn = None
+    if with_checkpoint_fn:
+        checkpoint_fn = CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
+
     adapter = Ignite(
         adapter,
         validator=validator,
         val_hooks=val_hooks,
+        checkpoint_fn=checkpoint_fn,
         logger=logger,
         log_freq=1,
         with_pbars=False,
@@ -108,6 +120,7 @@ class TestIgnite(unittest.TestCase):
                         for check_initial_score in [False, True]:
                             adapter, datasets = helper(
                                 with_validator=True,
+                                with_dumb_history=True,
                                 final_best_epoch=final_best_epoch,
                                 ignore_epoch=ignore_epoch,
                             )
@@ -186,3 +199,15 @@ class TestIgnite(unittest.TestCase):
                     self.assertTrue(
                         val_hook.num_calls == max_epochs // validation_interval
                     )
+
+
+    def test_evaluate_best_model(self):
+        adapter, datasets = helper(with_validator=True, with_checkpoint_fn=True)
+        dc = DataloaderCreator(num_workers=0)
+        adapter.run(datasets=datasets, dataloader_creator=dc, epoch_length=10, max_epochs=5)
+
+        validator = EntropyValidator()
+        best_score = adapter.evaluate_best_model(datasets, validator)
+        self.assertTrue(best_score == adapter.validator.best_score)
+
+        shutil.rmtree(TEST_FOLDER)

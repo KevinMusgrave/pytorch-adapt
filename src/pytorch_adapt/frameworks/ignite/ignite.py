@@ -231,12 +231,11 @@ class Ignite:
         self.checkpoint_fn.load_objects(to_load, checkpoint_path)
         i_g.resume_checks(self.trainer, self.validator)
 
-    def evaluate_best_model(self, datasets, validator=None, dataloader_creator=None):
+    def evaluate_best_model(self, datasets, validator, dataloader_creator=None):
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
-        validator = c_f.default(validator, self.validator)
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)
-        self.saver.load_adapter(self.adapter, "best", container_subset=["models"])
+        self.checkpoint_fn.load_objects({"adapter": self.adapter}, global_step=self.validator.best_epoch)
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )
