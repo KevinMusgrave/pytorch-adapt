@@ -1,7 +1,6 @@
 import glob
 import os
 
-import torch
 from ignite.handlers import ModelCheckpoint
 
 from ...utils import common_functions as c_f
