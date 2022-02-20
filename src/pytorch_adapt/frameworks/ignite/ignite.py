@@ -162,15 +162,15 @@ class Ignite:
 
         self.remove_temp_events()
         max_epochs = trainer_kwargs.get("max_epochs", 1)
-        condition = i_g.interval_condition(
-            val_interval, max_epochs, check_initial_score
-        )
+        condition = i_g.interval_condition(val_interval, max_epochs)
 
         if self.checkpoint_fn:
             self.add_checkpoint_fn(condition, dataloaders)
-
         elif self.validator or self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
+
+        if check_initial_score:
+            self.add_validation_runner(Events.STARTED, dataloaders)
 
         if self.validator and early_stopper_kwargs:
             self.add_early_stopper(val_interval, **early_stopper_kwargs)

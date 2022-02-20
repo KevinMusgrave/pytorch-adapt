@@ -153,12 +153,10 @@ def zero_grad(adapter):
     return handler
 
 
-def interval_condition(interval, max_epochs, check_initial_score):
+def interval_condition(interval, max_epochs):
     condition = Events.EPOCH_COMPLETED(every=interval)
     if max_epochs % interval != 0:
         condition |= Events.EPOCH_COMPLETED(once=max_epochs)
-    if check_initial_score:
-        condition |= Events.STARTED
     return condition
 
 
