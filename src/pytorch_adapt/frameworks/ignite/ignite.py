@@ -134,7 +134,7 @@ class Ignite:
         datasets=None,
         dataloader_creator=None,
         dataloaders=None,
-        validation_interval=1,
+        val_interval=1,
         early_stopper_kwargs=None,
         resume=None,
         check_initial_score=False,
@@ -147,7 +147,7 @@ class Ignite:
             datasets:
             dataloader_creator:
             dataloaders:
-            validation_interval:
+            val_interval:
             patience:
             resume:
             check_initial_score:
@@ -163,7 +163,7 @@ class Ignite:
         self.remove_temp_events()
         max_epochs = trainer_kwargs.get("max_epochs", 1)
         condition = i_g.interval_condition(
-            validation_interval, max_epochs, check_initial_score
+            val_interval, max_epochs, check_initial_score
         )
 
         if self.checkpoint_fn:
@@ -173,13 +173,7 @@ class Ignite:
             self.add_validation_runner(condition, dataloaders)
 
         if self.validator and early_stopper_kwargs:
-            self.add_temp_event_handler(
-                Events.EPOCH_COMPLETED(every=validation_interval),
-                i_g.early_stopper(**early_stopper_kwargs)(
-                    trainer=self.trainer,
-                    score_function=lambda _: self.validator.latest_score,
-                ),
-            )
+            self.add_early_stopper(val_interval, **early_stopper_kwargs)
 
         if resume is not None:
             self.load_checkpoint(resume)
@@ -225,6 +219,18 @@ class Ignite:
         )
         if not self.validator and self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
+
+    def add_early_stopper(self, val_interval, **kwargs):
+        def score_fn(_):
+            return self.validator.latest_score
+
+        self.add_temp_event_handler(
+            Events.EPOCH_COMPLETED(every=val_interval),
+            i_g.early_stopper(**kwargs)(
+                trainer=self.trainer,
+                score_function=score_fn,
+            ),
+        )
 
     def load_checkpoint(self, checkpoint_path):
         to_load = {

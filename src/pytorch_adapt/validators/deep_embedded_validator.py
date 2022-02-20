@@ -182,7 +182,7 @@ def get_weights(
                 num_workers=num_workers, batch_size=bs
             ),
             max_epochs=epochs,
-            validation_interval=1,
+            val_interval=1,
             early_stopper_kwargs={"patience": patience},
         )
         val_acc.append(acc)

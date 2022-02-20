@@ -116,7 +116,7 @@ class TestIgnite(unittest.TestCase):
     def test_early_stopping(self):
         logging.getLogger(c_f.LOGGER_NAME).setLevel(logging.CRITICAL)
         for final_best_epoch in [1, 4]:
-            for validation_interval in [1, 2, 3]:
+            for val_interval in [1, 2, 3]:
                 for patience in [1, 5, 9]:
                     for ignore_epoch in [None, 0]:
                         for check_initial_score in [False, True]:
@@ -132,11 +132,11 @@ class TestIgnite(unittest.TestCase):
                                 epoch_length=1,
                                 early_stopper_kwargs={"patience": patience},
                                 max_epochs=100,
-                                validation_interval=validation_interval,
+                                val_interval=val_interval,
                                 check_initial_score=check_initial_score,
                             )
 
-                            num_best_check = final_best_epoch // validation_interval
+                            num_best_check = final_best_epoch // val_interval
                             if num_best_check == 0:
                                 # with patience == 1
                                 # the scores will be [-1, -1]
@@ -184,7 +184,7 @@ class TestIgnite(unittest.TestCase):
     def test_validation_runner(self):
         max_epochs = 6
         for with_validator in [True, False]:
-            for validation_interval in [1, 3]:
+            for val_interval in [1, 3]:
                 for val_hook_has_required_data in [True, False]:
                     val_hook = ValHook(self, val_hook_has_required_data)
                     adapter, datasets = helper(
@@ -194,11 +194,9 @@ class TestIgnite(unittest.TestCase):
                     adapter.run(
                         dataloaders=dataloaders,
                         max_epochs=max_epochs,
-                        validation_interval=validation_interval,
+                        val_interval=val_interval,
                     )
-                    self.assertTrue(
-                        val_hook.num_calls == max_epochs // validation_interval
-                    )
+                    self.assertTrue(val_hook.num_calls == max_epochs // val_interval)
 
     def test_evaluate_best_model(self):
         adapter, datasets = helper(with_validator=True, with_checkpoint_fn=True)
