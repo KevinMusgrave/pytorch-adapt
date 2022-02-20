@@ -1,4 +1,5 @@
 import logging
+import os
 import shutil
 import unittest
 
@@ -76,7 +77,9 @@ def helper(
 
     checkpoint_fn = None
     if with_checkpoint_fn:
-        checkpoint_fn = CheckpointFnCreator(dirname=TEST_FOLDER, n_saved=None)
+        checkpoint_fn = CheckpointFnCreator(
+            dirname=TEST_FOLDER, n_saved=None, require_empty=False
+        )
 
     adapter = Ignite(
         adapter,
@@ -208,5 +211,63 @@ class TestIgnite(unittest.TestCase):
         validator = EntropyValidator()
         best_score = adapter.evaluate_best_model(datasets, validator)
         self.assertTrue(best_score == adapter.validator.best_score)
+
+        shutil.rmtree(TEST_FOLDER)
+
+    def test_get_last_checkpoint(self):
+        final_best_epoch = 3
+        adapter, datasets = helper(
+            with_validator=True,
+            with_dumb_history=True,
+            with_checkpoint_fn=True,
+            final_best_epoch=final_best_epoch,
+        )
+        dc = DataloaderCreator(num_workers=0)
+        adapter.run(
+            datasets=datasets, dataloader_creator=dc, epoch_length=10, max_epochs=5
+        )
+
+        last_checkpoint = str(adapter.checkpoint_fn.get_last_checkpoint())
+        self.assertTrue(
+            last_checkpoint
+            == os.path.join(TEST_FOLDER, f"checkpoint_{final_best_epoch}.pt")
+        )
+
+        shutil.rmtree(TEST_FOLDER)
+
+    def test_load_last_checkpoint(self):
+        adapter, datasets = helper(
+            with_validator=True,
+            with_checkpoint_fn=True,
+        )
+        dc = DataloaderCreator(num_workers=0)
+
+        max_epochs = 10
+        adapter.run(
+            datasets=datasets,
+            dataloader_creator=dc,
+            epoch_length=10,
+            max_epochs=max_epochs,
+        )
+
+        best_score = adapter.validator.best_score
+        best_epoch = adapter.validator.best_epoch
+        self.assertTrue(len(adapter.validator.score_history) == max_epochs)
+
+        for checkpoint_fn in [
+            adapter.checkpoint_fn,
+            CheckpointFnCreator(dirname=TEST_FOLDER, require_empty=False),
+        ]:
+            checkpoint_fn.load_last_checkpoint({"validator": adapter.validator})
+            self.assertTrue(best_score == adapter.validator.best_score)
+            self.assertTrue(best_epoch == adapter.validator.best_epoch)
+            self.assertTrue(len(adapter.validator.score_history) == best_epoch)
+
+            fresh_adapter, _ = helper(
+                with_checkpoint_fn=True,
+            )
+            for x in [adapter, fresh_adapter]:
+                eval_best_score = x.evaluate_best_model(datasets, EntropyValidator())
+                self.assertTrue(eval_best_score == best_score)
 
         shutil.rmtree(TEST_FOLDER)

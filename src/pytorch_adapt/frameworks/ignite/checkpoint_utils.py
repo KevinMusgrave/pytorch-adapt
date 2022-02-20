@@ -1,14 +1,10 @@
+import glob
 import os
 
+import torch
 from ignite.handlers import ModelCheckpoint
 
 from ...utils import common_functions as c_f
-
-
-class CustomModelCheckpoint(ModelCheckpoint):
-    def __init__(self, filename_pattern=None, **kwargs):
-        super().__init__(**kwargs)
-        self.filename_pattern = filename_pattern
 
 
 def global_step_transform(engine, _):
@@ -37,13 +33,13 @@ class CheckpointFnCreator:
         }
         # Create handler here in case needed by load_objects or last_checkpoint
         # before __call__ is used
-        self.handler = CustomModelCheckpoint(**self.kwargs)
+        self.objs = ModelCheckpoint(**self.kwargs)
 
-        # For saving self.handler. Only save the very latest (n_saved = 1)
-        self.self_handler = CustomModelCheckpoint(**{**self.kwargs, "n_saved": 1})
+        # For saving self.objs. Only save the very latest (n_saved = 1)
+        self.ckpter = ModelCheckpoint(**{**self.kwargs, "n_saved": 1})
 
     def __call__(self, adapter=None, validator=None, val_hooks=None, **kwargs):
-        self.handler = CustomModelCheckpoint(**{**self.kwargs, **kwargs})
+        self.objs = ModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {}
         if adapter:
             dict_to_save["adapter"] = adapter
@@ -53,28 +49,46 @@ class CheckpointFnCreator:
             dict_to_save.update(val_hooks_to_dict(val_hooks))
 
         def fn(engine):
-            self.handler(engine, {"engine": engine, **dict_to_save})
-            self.self_handler(engine, {"checkpointer": self.handler})
+            self.objs(engine, {"engine": engine, **dict_to_save})
+            self.ckpter(engine, {"checkpointer": self.objs})
 
         return fn
 
     def load_objects(self, to_load, checkpoint=None, global_step=None, **kwargs):
         # This can be simplified once this issue is resolved https://github.com/pytorch/ignite/issues/2480
         if global_step is not None:
-            dirname = self.handler.save_handler.dirname
+            dirname = self.objs.save_handler.dirname
             filename_dict = {
-                "filename_prefix": self.handler.filename_prefix,
+                "filename_prefix": self.objs.filename_prefix,
                 "name": "checkpoint",
-                "ext": self.handler.ext,
-                "score_name": self.handler.score_name,
+                "ext": self.objs.ext,
+                "score_name": self.objs.score_name,
                 "global_step": global_step,
             }
-            filename = self.handler.filename_pattern.format(**filename_dict)
+            filename = self.objs.filename_pattern.format(**filename_dict)
             checkpoint = os.path.join(dirname, filename)
 
         to_load = {k: v for k, v in to_load.items() if v}
-        self.handler.load_objects(to_load, checkpoint, **kwargs)
+        self.objs.load_objects(to_load, str(checkpoint), **kwargs)
 
-    @property
-    def last_checkpoint(self):
-        return self.handler.last_checkpoint
+    def load_last_checkpoint(self, to_load):
+        last_checkpoint = self.get_last_checkpoint()
+        self.load_objects(to_load, last_checkpoint)
+
+    def get_last_checkpoint(self):
+        if self.objs.last_checkpoint:
+            return self.objs.last_checkpoint
+
+        ckpter_last_checkpoint = self.ckpter.last_checkpoint
+        if not ckpter_last_checkpoint:
+            files = glob.glob(
+                os.path.join(self.ckpter.save_handler.dirname, "*checkpointer*.pt")
+            )
+            if len(files) > 1:
+                raise ValueError("there should only be 1 matching checkpointer file")
+            ckpter_last_checkpoint = files[0]
+
+        self.ckpter.load_objects(
+            {"checkpointer": self.objs}, str(ckpter_last_checkpoint)
+        )
+        return self.objs.last_checkpoint
