@@ -235,10 +235,10 @@ class Ignite:
     def load_checkpoint(self, resume):
         to_load = {
             "engine": self.trainer,
-            "adapter": self.adapter,
             "validator": self.validator,
+            **checkpoint_utils.adapter_to_dict(self.adapter),
+            **checkpoint_utils.val_hooks_to_dict(self.val_hooks),
         }
-        to_load.update(checkpoint_utils.val_hooks_to_dict(self.val_hooks))
         if isinstance(resume, str):
             kwargs = {"checkpoint": resume}
         elif isinstance(resume, int):
@@ -254,7 +254,7 @@ class Ignite:
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)
-        self.checkpoint_fn.load_last_checkpoint({"adapter": self.adapter})
+        self.checkpoint_fn.load_last_checkpoint({"models": self.adapter.models})
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )

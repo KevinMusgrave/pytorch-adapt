@@ -152,7 +152,7 @@ def get_weights(
     val_set = SourceDataset(pml_cf.EmbeddingDataset(feature_for_test, label_for_test))
 
     decays = [1e-1, 3e-2, 1e-2, 3e-3, 1e-3, 3e-4, 1e-4, 3e-5, 1e-5]
-    val_acc, trainers, checkpoint_fns, folders = [], [], [], []
+    val_acc, trainers, folders = [], [], []
     epochs = 100
     patience = 2
 
@@ -187,7 +187,6 @@ def get_weights(
         )
         val_acc.append(acc)
         trainers.append(trainer)
-        checkpoint_fns.append(trainer.checkpoint_fn)
         folders.append(curr_folder)
 
     torch.cuda.empty_cache()
@@ -196,10 +195,9 @@ def get_weights(
 
     labels = torch.ones(len(validation_feature), dtype=int)
     validation_set = SourceDataset(pml_cf.EmbeddingDataset(validation_feature, labels))
-    trainer, checkpoint_fn = trainers[index], checkpoint_fns[index]
-    checkpoint_fn.load_objects(
-        {"adapter": trainer.adapter},
-        global_step=trainer.validator.best_epoch,
+    trainer = trainers[index]
+    trainer.checkpoint_fn.load_last_checkpoint(
+        {"models": trainer.adapter.models},
     )
     bs = min(len(validation_set), batch_size)
     dataloader = torch.utils.data.DataLoader(

@@ -5,7 +5,11 @@ import numpy as np
 
 from pytorch_adapt.containers.base_container import containers_are_equal
 from pytorch_adapt.datasets import DataloaderCreator
-from pytorch_adapt.frameworks.ignite import CheckpointFnCreator, IgniteValHookWrapper
+from pytorch_adapt.frameworks.ignite import (
+    CheckpointFnCreator,
+    IgniteValHookWrapper,
+    checkpoint_utils,
+)
 from pytorch_adapt.utils import exceptions
 from pytorch_adapt.validators import (
     AccuracyValidator,
@@ -71,16 +75,19 @@ class TestIgniteSaveAndLoad(unittest.TestCase):
             )
             if load_partial:
                 objs = [
-                    {"engine": dann2.trainer, "adapter": dann2.adapter},
+                    {
+                        "engine": dann2.trainer,
+                        **checkpoint_utils.adapter_to_dict(dann2.adapter),
+                    },
                     {"validator": dann2.validator, "val_hook0": val_hook2},
                 ]
             else:
                 objs = [
                     {
                         "engine": dann2.trainer,
-                        "adapter": dann2.adapter,
                         "validator": dann2.validator,
                         "val_hook0": val_hook2,
+                        **checkpoint_utils.adapter_to_dict(dann2.adapter),
                     }
                 ]
 

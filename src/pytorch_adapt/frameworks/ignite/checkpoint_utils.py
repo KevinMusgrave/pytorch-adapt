@@ -3,6 +3,7 @@ import os
 
 from ignite.handlers import ModelCheckpoint
 
+from ...adapters.utils import container_names
 from ...utils import common_functions as c_f
 
 
@@ -20,6 +21,10 @@ def val_hooks_to_dict(val_hooks):
         else:
             output[f"val_hook{i}"] = v
     return output
+
+
+def adapter_to_dict(adapter):
+    return {k: getattr(adapter, k) for k in container_names()}
 
 
 class CheckpointFnCreator:
@@ -41,7 +46,7 @@ class CheckpointFnCreator:
         self.objs = ModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {}
         if adapter:
-            dict_to_save["adapter"] = adapter
+            dict_to_save.update(adapter_to_dict(adapter))
         if validator:
             dict_to_save["validator"] = validator
         if val_hooks:

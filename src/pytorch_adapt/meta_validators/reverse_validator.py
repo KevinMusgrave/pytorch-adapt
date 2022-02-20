@@ -72,9 +72,8 @@ class ReverseValidator:
 
         forward_adapter.run(**forward_kwargs)
         if all(getattr(forward_adapter, x) for x in ["validator", "checkpoint_fn"]):
-            forward_adapter.checkpoint_fn.load_objects(
-                {"adapter": forward_adapter.adapter},
-                global_step=forward_adapter.validator.best_epoch,
+            forward_adapter.checkpoint_fn.load_last_checkpoint(
+                {"models": forward_adapter.adapter.models},
             )
 
         datasets = forward_kwargs["datasets"]

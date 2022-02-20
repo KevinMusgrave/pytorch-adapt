@@ -512,3 +512,15 @@ def assert_state_dict_keys(state_dict, keys):
         raise KeyError(
             f"state_dict.keys {state_dict.keys()} do not match expected keys {keys}"
         )
+
+
+def subset_of_dict(x, subset):
+    if not isinstance(x, dict):
+        raise TypeError(f"{x} is not a dict")
+    if subset == {}:
+        return x
+    if isinstance(subset, set):
+        return {k: x[k] for k in subset}
+    if isinstance(subset, dict):
+        return {k: subset_of_dict(x[k], v) for k, v in subset.items()}
+    raise TypeError("subset argument must be dict or set")
