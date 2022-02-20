@@ -3,6 +3,7 @@ import logging
 import ignite.distributed as idist
 from ignite.contrib.handlers import ProgressBar
 from ignite.engine import Events
+from ignite.handlers import EarlyStopping
 from ignite.utils import setup_logger
 
 from ...utils import common_functions as c_f
@@ -69,25 +70,6 @@ def auto_model(*args, **kwargs):
         return idist.auto_model(model, *args, **kwargs)
 
     return handler
-
-
-class EarlyStopper:
-    def __init__(self, patience, validator):
-        self.patience = patience
-        self.validator = validator
-        self.count = 0
-
-    def __call__(self, engine):
-        epoch = engine.state.epoch
-        curr_best = self.validator.best_epoch
-        since_best = epoch
-        if curr_best is not None:
-            since_best -= curr_best
-        c_f.LOGGER.info(f"epochs_since_best_epoch = {since_best}")
-        self.count = 0 if since_best == 0 else self.count + 1
-        if self.count >= self.patience + 1:
-            c_f.LOGGER.info("***Performance has plateaued. Exiting.***")
-            engine.terminate()
 
 
 def pbar_print_losses(pbar):
@@ -178,3 +160,10 @@ def interval_condition(interval, max_epochs, check_initial_score):
     if check_initial_score:
         condition |= Events.STARTED
     return condition
+
+
+def early_stopper(**kwargs):
+    def fn(trainer, score_function):
+        return EarlyStopping(trainer=trainer, score_function=score_function, **kwargs)
+
+    return fn

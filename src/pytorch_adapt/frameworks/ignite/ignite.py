@@ -135,7 +135,7 @@ class Ignite:
         dataloader_creator=None,
         dataloaders=None,
         validation_interval=1,
-        patience=None,
+        early_stopper_kwargs=None,
         resume=None,
         check_initial_score=False,
         **trainer_kwargs,
@@ -172,10 +172,13 @@ class Ignite:
         elif self.validator or self.val_hooks:
             self.add_validation_runner(condition, dataloaders)
 
-        if self.validator and patience is not None:
+        if self.validator and early_stopper_kwargs:
             self.add_temp_event_handler(
                 Events.EPOCH_COMPLETED(every=validation_interval),
-                i_g.EarlyStopper(patience, self.validator),
+                i_g.early_stopper(**early_stopper_kwargs)(
+                    trainer=self.trainer,
+                    score_function=lambda _: self.validator.latest_score,
+                ),
             )
 
         if resume is not None:
@@ -183,6 +186,8 @@ class Ignite:
 
         if not i_g.is_done(self.trainer, **trainer_kwargs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
+
+        self.remove_temp_events()
 
         if self.validator:
             return self.validator.best_score, self.validator.best_epoch
@@ -265,10 +270,10 @@ class Ignite:
         return handler
 
     def add_temp_event_handler(self, event, handler):
-        self.trainer.add_event_handler(event, handler)
-        self.temp_events.append((handler, event))
+        removable = self.trainer.add_event_handler(event, handler)
+        self.temp_events.append(removable)
 
     def remove_temp_events(self):
-        for h, e in self.temp_events:
-            self.trainer.remove_event_handler(h, e)
+        for h in self.temp_events:
+            h.remove()
         self.temp_events = []

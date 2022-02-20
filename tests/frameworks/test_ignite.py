@@ -117,7 +117,7 @@ class TestIgnite(unittest.TestCase):
         logging.getLogger(c_f.LOGGER_NAME).setLevel(logging.CRITICAL)
         for final_best_epoch in [1, 4]:
             for validation_interval in [1, 2, 3]:
-                for patience in [0, 1, 5, 9]:
+                for patience in [1, 5, 9]:
                     for ignore_epoch in [None, 0]:
                         for check_initial_score in [False, True]:
                             adapter, datasets = helper(
@@ -130,7 +130,7 @@ class TestIgnite(unittest.TestCase):
                             adapter.run(
                                 dataloaders=dataloaders,
                                 epoch_length=1,
-                                patience=patience,
+                                early_stopper_kwargs={"patience": patience},
                                 max_epochs=100,
                                 validation_interval=validation_interval,
                                 check_initial_score=check_initial_score,
@@ -139,13 +139,11 @@ class TestIgnite(unittest.TestCase):
                             num_best_check = final_best_epoch // validation_interval
                             if num_best_check == 0:
                                 # with patience == 1
-                                # the scores will be [-1, -1, -1]
-                                correct_len = patience + 2
+                                # the scores will be [-1, -1]
+                                correct_len = patience + 1
                             else:
-                                correct_len = num_best_check + patience + 1
-                            if check_initial_score and (
-                                num_best_check > 0 or ignore_epoch is not None
-                            ):
+                                correct_len = num_best_check + patience
+                            if check_initial_score:
                                 correct_len += 1
                             self.assertTrue(
                                 len(adapter.validator.score_history) == correct_len
