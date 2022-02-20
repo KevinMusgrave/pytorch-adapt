@@ -60,15 +60,13 @@ class BaseAdapter(ABC):
             hook_kwargs: A dictionary of keyword arguments that will be
                 passed into the wrapped hook during initialization.
         """
-        self.containers = c_f.default(
-            default_containers, self.get_default_containers, {}
-        )
+        containers = c_f.default(default_containers, self.get_default_containers, {})
         self.key_enforcer = c_f.default(key_enforcer, self.get_key_enforcer, {})
         self.before_training_starts = c_f.class_default(
             self, before_training_starts, self.before_training_starts_default
         )
 
-        self.containers.merge(
+        containers.merge(
             models=models,
             optimizers=optimizers,
             lr_schedulers=lr_schedulers,
@@ -76,7 +74,7 @@ class BaseAdapter(ABC):
         )
 
         hook_kwargs = c_f.default(hook_kwargs, {})
-        self.init_containers_and_check_keys()
+        self.init_containers_and_check_keys(containers)
         self.init_hook(hook_kwargs)
         self.inference = c_f.class_default(self, inference, self.inference_default)
 
@@ -141,13 +139,13 @@ class BaseAdapter(ABC):
         """
         pass
 
-    def init_containers_and_check_keys(self):
+    def init_containers_and_check_keys(self, containers):
         """
         Called in ```__init__```.
         """
-        self.containers.create()
-        self.key_enforcer.check(self.containers)
-        for k, v in self.containers.items():
+        containers.create()
+        self.key_enforcer.check(containers)
+        for k, v in containers.items():
             setattr(self, k, v)
 
     def before_training_starts_default(self, framework):

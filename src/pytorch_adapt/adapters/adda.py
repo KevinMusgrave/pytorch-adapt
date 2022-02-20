@@ -61,6 +61,6 @@ class ADDA(BaseAdapter):
             d_opts=with_opt(["D"]), g_opts=with_opt(["T"]), **hook_kwargs
         )
 
-    def init_containers_and_check_keys(self):
-        self.containers["models"]["T"] = copy.deepcopy(self.containers["models"]["G"])
-        super().init_containers_and_check_keys()
+    def init_containers_and_check_keys(self, containers):
+        containers["models"]["T"] = copy.deepcopy(containers["models"]["G"])
+        super().init_containers_and_check_keys(containers)

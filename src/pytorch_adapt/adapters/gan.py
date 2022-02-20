@@ -92,11 +92,11 @@ class VADA(GAN):
 
     hook_cls = VADAHook
 
-    def init_containers_and_check_keys(self):
-        models = self.containers["models"]
-        misc = self.containers["misc"]
+    def init_containers_and_check_keys(self, containers):
+        models = containers["models"]
+        misc = containers["misc"]
         misc["combined_model"] = torch.nn.Sequential(models["G"], models["C"])
-        super().init_containers_and_check_keys()
+        super().init_containers_and_check_keys(containers)
 
     def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()

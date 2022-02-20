@@ -153,13 +153,7 @@ class TestIgniteSaveAndLoad(unittest.TestCase):
         # check ignite engine state
         self.assertTrue(dann1.trainer.state_dict() != dann2.trainer.state_dict())
 
-        # check adapter.containers
-        self.assertTrue(
-            not containers_are_equal(dann1.adapter.containers, dann2.adapter.containers)
-        )
-
-        # check the attributes as well
-        for k in ["models"]:
+        for k in ["models", "optimizers"]:
             c1 = getattr(dann1.adapter, k)
             c2 = getattr(dann2.adapter, k)
             self.assertTrue(not containers_are_equal(c1, c2))
@@ -171,12 +165,6 @@ class TestIgniteSaveAndLoad(unittest.TestCase):
     def assert_equal(self, dann1, validator1, val_hook1, dann2, validator2, val_hook2):
         self.assertTrue(dann1.trainer.state_dict() == dann2.trainer.state_dict())
 
-        # check adapter.containers
-        self.assertTrue(
-            containers_are_equal(dann1.adapter.containers, dann2.adapter.containers)
-        )
-
-        # check the attributes as well
         for k in [
             "models",
             "optimizers",
