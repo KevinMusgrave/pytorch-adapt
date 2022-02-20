@@ -232,14 +232,22 @@ class Ignite:
             ),
         )
 
-    def load_checkpoint(self, checkpoint_path):
+    def load_checkpoint(self, resume):
         to_load = {
             "engine": self.trainer,
             "adapter": self.adapter,
             "validator": self.validator,
         }
         to_load.update(checkpoint_utils.val_hooks_to_dict(self.val_hooks))
-        self.checkpoint_fn.load_objects(to_load, checkpoint_path)
+        if isinstance(resume, str):
+            kwargs = {"checkpoint": resume}
+        elif isinstance(resume, int):
+            kwargs = {"global_step": resume}
+        else:
+            raise TypeError(
+                "resume must be a string representing a file path, or an integer representing a global step"
+            )
+        self.checkpoint_fn.load_objects(to_load, **kwargs)
         i_g.resume_checks(self.trainer, self.validator)
 
     def evaluate_best_model(self, datasets, validator, dataloader_creator=None):

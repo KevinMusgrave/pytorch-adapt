@@ -104,12 +104,7 @@ class TestIgniteSaveAndLoad(unittest.TestCase):
         )
         # this should load and then not run
         # because it has already run for max_epochs
-        dann3.run(
-            datasets=datasets,
-            epoch_length=2,
-            max_epochs=max_epochs,
-            resume=dann1.checkpoint_fn.last_checkpoint,
-        )
+        dann3.run(datasets=datasets, epoch_length=2, max_epochs=max_epochs, resume=3)
         self.assert_equal(dann1, validator1, val_hook1, dann3, validator3, val_hook3)
 
         # Truncate validator.epochs, then save
@@ -119,10 +114,7 @@ class TestIgniteSaveAndLoad(unittest.TestCase):
         checkpoint_fn(dann3.adapter, dann3.validator, dann3.val_hooks)(dann3.trainer)
         with self.assertRaises(exceptions.ResumeCheckError):
             dann3.run(
-                datasets=datasets,
-                epoch_length=2,
-                max_epochs=max_epochs,
-                resume=dann1.checkpoint_fn.last_checkpoint,
+                datasets=datasets, epoch_length=2, max_epochs=max_epochs, resume=3
             )
 
         validator4 = ScoreHistory(AccuracyValidator())

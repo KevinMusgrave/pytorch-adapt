@@ -39,6 +39,9 @@ class CheckpointFnCreator:
         # before __call__ is used
         self.handler = CustomModelCheckpoint(**self.kwargs)
 
+        # For saving self.handler. Only save the very latest (n_saved = 1)
+        self.self_handler = CustomModelCheckpoint(**{**self.kwargs, "n_saved": 1})
+
     def __call__(self, adapter=None, validator=None, val_hooks=None, **kwargs):
         self.handler = CustomModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {}
@@ -51,6 +54,7 @@ class CheckpointFnCreator:
 
         def fn(engine):
             self.handler(engine, {"engine": engine, **dict_to_save})
+            self.self_handler(engine, {"checkpointer": self.handler})
 
         return fn
 
