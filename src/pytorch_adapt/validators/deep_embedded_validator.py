@@ -183,7 +183,7 @@ def get_weights(
             ),
             max_epochs=epochs,
             validation_interval=1,
-            patience=patience,
+            early_stopper_kwargs={"patience": patience},
         )
         val_acc.append(acc)
         trainers.append(trainer)
