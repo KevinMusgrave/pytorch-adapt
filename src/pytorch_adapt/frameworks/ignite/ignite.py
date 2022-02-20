@@ -254,7 +254,7 @@ class Ignite:
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)
-        self.checkpoint_fn.load_last_checkpoint({"models": self.adapter.models})
+        self.checkpoint_fn.load_best_checkpoint({"models": self.adapter.models})
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )

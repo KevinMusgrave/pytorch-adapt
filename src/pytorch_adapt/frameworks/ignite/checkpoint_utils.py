@@ -75,11 +75,11 @@ class CheckpointFnCreator:
         to_load = {k: v for k, v in to_load.items() if v}
         self.objs.load_objects(to_load, str(checkpoint), **kwargs)
 
-    def load_last_checkpoint(self, to_load):
-        last_checkpoint = self.get_last_checkpoint()
+    def load_best_checkpoint(self, to_load):
+        last_checkpoint = self.get_best_checkpoint()
         self.load_objects(to_load, last_checkpoint)
 
-    def get_last_checkpoint(self):
+    def get_best_checkpoint(self):
         if self.objs.last_checkpoint:
             return self.objs.last_checkpoint
 

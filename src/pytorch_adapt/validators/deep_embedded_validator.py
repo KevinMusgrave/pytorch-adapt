@@ -196,7 +196,7 @@ def get_weights(
     labels = torch.ones(len(validation_feature), dtype=int)
     validation_set = SourceDataset(pml_cf.EmbeddingDataset(validation_feature, labels))
     trainer = trainers[index]
-    trainer.checkpoint_fn.load_last_checkpoint(
+    trainer.checkpoint_fn.load_best_checkpoint(
         {"models": trainer.adapter.models},
     )
     bs = min(len(validation_set), batch_size)

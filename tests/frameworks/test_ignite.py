@@ -214,7 +214,7 @@ class TestIgnite(unittest.TestCase):
 
         shutil.rmtree(TEST_FOLDER)
 
-    def test_get_last_checkpoint(self):
+    def test_get_best_checkpoint(self):
         final_best_epoch = 3
         adapter, datasets = helper(
             with_validator=True,
@@ -227,7 +227,7 @@ class TestIgnite(unittest.TestCase):
             datasets=datasets, dataloader_creator=dc, epoch_length=10, max_epochs=5
         )
 
-        last_checkpoint = str(adapter.checkpoint_fn.get_last_checkpoint())
+        last_checkpoint = str(adapter.checkpoint_fn.get_best_checkpoint())
         self.assertTrue(
             last_checkpoint
             == os.path.join(TEST_FOLDER, f"checkpoint_{final_best_epoch}.pt")
@@ -235,7 +235,7 @@ class TestIgnite(unittest.TestCase):
 
         shutil.rmtree(TEST_FOLDER)
 
-    def test_load_last_checkpoint(self):
+    def test_load_best_checkpoint(self):
         adapter, datasets = helper(
             with_validator=True,
             with_checkpoint_fn=True,
@@ -258,7 +258,7 @@ class TestIgnite(unittest.TestCase):
             adapter.checkpoint_fn,
             CheckpointFnCreator(dirname=TEST_FOLDER, require_empty=False),
         ]:
-            checkpoint_fn.load_last_checkpoint({"validator": adapter.validator})
+            checkpoint_fn.load_best_checkpoint({"validator": adapter.validator})
             self.assertTrue(best_score == adapter.validator.best_score)
             self.assertTrue(best_epoch == adapter.validator.best_epoch)
             self.assertTrue(len(adapter.validator.score_history) == best_epoch)
