@@ -27,7 +27,6 @@ class Ignite:
         val_hooks=None,
         checkpoint_fn=None,
         logger=None,
-        log_freq=50,
         with_pbars=True,
         device=None,
         auto_dist=True,
@@ -50,7 +49,7 @@ class Ignite:
         self.validator = validator
         self.val_hooks = c_f.default(val_hooks, [])
         self.checkpoint_fn = checkpoint_fn
-        self.logger = c_f.default(logger, IgniteEmptyLogger, {})
+        self.logger = logger
         self.log_freq = log_freq
         self.with_pbars = with_pbars
         self.device = c_f.default(device, idist.device, {})
@@ -65,35 +64,56 @@ class Ignite:
         batch = c_f.batch_to_device(batch, self.device)
         return self.adapter.training_step(batch)
 
-    def before_training_starts(self, engine):
-        self.adapter.before_training_starts(self)
-
     def trainer_init(self):
         self.trainer = Engine(self.training_step)
-        i_g.register(self.trainer, Events.STARTED, self.before_training_starts)
+        i_g.register(self.trainer, Events.STARTED, *self.trainer_started_events())
         i_g.register(
-            self.trainer, Events.EPOCH_STARTED, self.set_to_train(self.adapter.models)
+            self.trainer, Events.EPOCH_STARTED, *self.trainer_epoch_started_events()
         )
-        iteration_complete = [
+        i_g.register(
+            self.trainer,
+            Events.ITERATION_COMPLETED,
+            *self.trainer_iteration_complete_events(),
+        )
+        i_g.register(
+            self.trainer,
+            Events.ITERATION_COMPLETED(every=self.log_freq),
+            *self.trainer_log_freq_events(),
+        )
+        i_g.register(
+            self.trainer, Events.EPOCH_COMPLETED, *self.trainer_epoch_complete_events()
+        )
+
+    def trainer_started_events(self):
+        return [self.adapter.before_training_starts(self)]
+
+    def trainer_epoch_started_events(self):
+        return [self.set_to_train(self.adapter.models)]
+
+    def trainer_iteration_complete_events(self):
+        output = [
             i_g.step_lr_schedulers(self.adapter.lr_schedulers, "per_step"),
             TerminateOnNan(),
         ]
         pbars = i_g.set_loggers_and_pbars(self, ["trainer"])
         if self.with_pbars:
-            iteration_complete.append(i_g.pbar_print_losses(pbars["trainer"]))
-        i_g.register(self.trainer, Events.ITERATION_COMPLETED, *iteration_complete)
-        i_g.register(
-            self.trainer,
-            Events.ITERATION_COMPLETED(every=self.log_freq),
-            self.logger.add_training(self.adapter),
-        )
-        i_g.register(
-            self.trainer,
-            Events.EPOCH_COMPLETED,
+            output.append(i_g.pbar_print_losses(pbars["trainer"]))
+        return output
+
+    def trainer_log_freq_events(self):
+        output = []
+        if self.logger:
+            output.append(self.logger.add_training(self.adapter))
+        return output
+
+    def trainer_epoch_complete_events(self):
+        output = [
             i_g.step_lr_schedulers(self.adapter.lr_schedulers, "per_epoch"),
-            self.logger.write,
             i_g.zero_grad(self.adapter),
-        )
+        ]
+        if self.logger:
+            output.append(self.logger.write)
+        return output
 
     def collector_init(self):
         self.collector = Engine(self.get_collector_step(self.adapter.inference))
@@ -114,16 +134,6 @@ class Ignite:
         max_epochs = self.trainer.state.max_epochs
         max_iters = max_epochs * self.trainer.state.epoch_length
         return max_epochs, max_iters
-
-    def get_progress(self):
-        _, max_iters = self.get_training_length()
-        return float(self.get_iteration()) / max_iters
-
-    def get_iteration(self):
-        return self.trainer.state.iteration
-
-    def get_epoch_length(self):
-        return self.trainer.state.epoch_length
 
     def get_all_outputs(self, dataloader, split_name):
         dataloaders = {split_name: dataloader}
