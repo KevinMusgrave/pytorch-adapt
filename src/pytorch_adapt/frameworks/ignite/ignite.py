@@ -86,7 +86,10 @@ class Ignite:
         )
 
     def trainer_started_events(self):
-        return [self.adapter.before_training_starts(self)]
+        def fn(engine):
+            self.adapter.before_training_starts(self)
+
+        return [fn]
 
     def trainer_epoch_started_events(self):
         return [self.set_to_train(self.adapter.models)]
