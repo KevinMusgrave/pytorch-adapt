@@ -27,6 +27,7 @@ class Ignite:
         val_hooks=None,
         checkpoint_fn=None,
         logger=None,
+        log_freq=50,
         with_pbars=True,
         device=None,
         auto_dist=True,
