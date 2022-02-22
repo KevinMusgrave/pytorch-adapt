@@ -5,7 +5,7 @@ import torch
 
 from pytorch_adapt import inference
 from pytorch_adapt.containers import Models
-from pytorch_adapt.layers import AdaBNModel
+from pytorch_adapt.layers import AdaBNModel, MultipleModels
 from pytorch_adapt.utils import common_functions as c_f
 
 from .. import TEST_DEVICE
@@ -108,4 +108,50 @@ class TestInferenceFns(unittest.TestCase):
             src_logits = models["residual_model"](target_logits)
             self.assertTrue(torch.equal(features, output["features"]))
             logits = src_logits if domain == src_domain else target_logits
+            self.assertTrue(torch.equal(logits, output["logits"]))
+
+    def test_mcd_fn(self):
+        models, data, src_domain, target_domain = get_models_and_data()
+        models["C"] = MultipleModels(
+            models["C"], c_f.reinit(copy.deepcopy(models["C"]))
+        )
+
+        for domain in [src_domain, target_domain]:
+            output = inference.mcd_fn(x=data, models=models)
+            default_output = inference.default_fn(x=data, models=models)
+
+            # logits output will be list, not Tensor
+            with self.assertRaises(TypeError):
+                compare_with_default_fn(
+                    self,
+                    output,
+                    default_output,
+                )
+
+            features = models["G"](data)
+            [logits1, logits2] = models["C"](features)
+            self.assertTrue(torch.equal(features, output["features"]))
+            self.assertTrue(torch.equal(logits1 + logits2, output["logits"]))
+
+    def test_symnets_fn(self):
+        models, data, src_domain, target_domain = get_models_and_data()
+        models["C"] = MultipleModels(
+            models["C"], c_f.reinit(copy.deepcopy(models["C"]))
+        )
+
+        for domain in [src_domain, target_domain]:
+            output = inference.symnets_fn(x=data, domain=domain, models=models)
+            default_output = inference.default_fn(x=data, models=models)
+
+            # logits output will be list, not Tensor
+            with self.assertRaises(TypeError):
+                compare_with_default_fn(
+                    self,
+                    output,
+                    default_output,
+                )
+
+            features = models["G"](data)
+            logits = models["C"](features)[0 if domain == src_domain else 1]
+            self.assertTrue(torch.equal(features, output["features"]))
             self.assertTrue(torch.equal(logits, output["logits"]))

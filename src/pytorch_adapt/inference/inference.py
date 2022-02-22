@@ -40,11 +40,9 @@ def rtn_fn(x, domain, models, **kwargs):
         Features and logits
     """
     domain = check_domain(domain)
-    print("rtn_fn", domain)
     f_dict = default_fn(x=x, models=models)
     logits = f_dict["logits"]
     if domain == 0:
-        print("using residual")
         logits = models["residual_model"](logits)
     return {**f_dict, "logits": logits}
 
