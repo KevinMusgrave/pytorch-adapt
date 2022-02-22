@@ -5,7 +5,12 @@ import torch
 
 from pytorch_adapt import inference
 from pytorch_adapt.containers import Models
-from pytorch_adapt.layers import AdaBNModel, MultipleModels, RandomizedDotProduct
+from pytorch_adapt.layers import (
+    AdaBNModel,
+    ModelWithBridge,
+    MultipleModels,
+    RandomizedDotProduct,
+)
 from pytorch_adapt.utils import common_functions as c_f
 
 from .. import TEST_DEVICE
@@ -216,3 +221,27 @@ class TestInferenceFns(unittest.TestCase):
                     self.assertTrue(
                         torch.equal(combined, output["features_logits_combined"])
                     )
+
+    def test_gvb_fn(self):
+        models, data, src_domain, target_domain = get_models_and_data()
+        models["C"] = ModelWithBridge(models["C"], torch.nn.Linear(225, 10)).to(
+            TEST_DEVICE
+        )
+        models["D"] = ModelWithBridge(
+            torch.nn.Linear(10, 1), torch.nn.Linear(10, 1)
+        ).to(TEST_DEVICE)
+
+        for domain in [src_domain, target_domain]:
+            output = inference.with_d_bridge(x=data, models=models, fn=inference.gvb_fn)
+            compare_with_default_fn(
+                self, output, inference.default_fn(x=data, models=models), True
+            )
+
+            features = models["G"](data)
+            [logits, g_bridge] = models["C"](features, return_bridge=True)
+            [d_logits, d_bridge] = models["D"](
+                torch.softmax(logits, dim=1), return_bridge=True
+            )
+            self.assertTrue(torch.equal(d_logits, output["d_logits"]))
+            self.assertTrue(torch.equal(g_bridge, output["g_bridge"]))
+            self.assertTrue(torch.equal(d_bridge, output["d_bridge"]))

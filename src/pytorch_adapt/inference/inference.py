@@ -82,10 +82,14 @@ def feature_combiner_fn(x, y, misc, **kwargs):
     return {"features_logits_combined": misc["feature_combiner"](x, y)}
 
 
-def with_d(x, models, fn, **kwargs):
-    output = fn(x=x, models=models, **kwargs)
-    output2 = d_fn(x=output["features"], models=models, **kwargs)
+def with_d(x, models, fn, layer="features", **kwargs):
+    output = fn(x=x, models=models, layer=layer, **kwargs)
+    output2 = d_fn(x=output[layer], models=models, **kwargs)
     return {**output, **output2}
+
+
+def default_with_d(**kwargs):
+    return with_d(fn=default_fn, **kwargs)
 
 
 def with_feature_combiner(x, models, misc, fn, softmax=True, **kwargs):
@@ -97,5 +101,19 @@ def with_feature_combiner(x, models, misc, fn, softmax=True, **kwargs):
     return {**output, **output2}
 
 
-def default_with_d(**kwargs):
-    return with_d(fn=default_fn, **kwargs)
+def d_bridge_fn(x, models, **kwargs):
+    [d_logits, d_bridge] = models["D"](x, return_bridge=True)
+    return {"d_logits": d_logits, "d_bridge": d_bridge}
+
+
+def with_d_bridge(x, models, fn, **kwargs):
+    output = fn(x=x, models=models, **kwargs)
+    preds = torch.softmax(output["logits"], dim=1)
+    output2 = d_bridge_fn(x=preds, models=models, **kwargs)
+    return {**output, **output2}
+
+
+def gvb_fn(x, models, **kwargs):
+    features = models["G"](x)
+    [logits, bridge] = models["C"](features, return_bridge=True)
+    return {"features": features, "logits": logits, "g_bridge": bridge}
