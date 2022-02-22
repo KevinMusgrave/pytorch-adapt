@@ -28,7 +28,7 @@ def get_models_and_data(with_D=False):
     return models, data, src_domain, target_domain
 
 
-def compare_with_gc_fn(cls, output, default_output, should_match=False):
+def compare_with_default_fn(cls, output, default_output, should_match=False):
     eq1 = torch.equal(output["features"], default_output["features"])
     eq2 = torch.equal(output["logits"], default_output["logits"])
     for i, eq in enumerate([eq1, eq2]):
@@ -39,22 +39,22 @@ def compare_with_gc_fn(cls, output, default_output, should_match=False):
 
 
 class TestInferenceFns(unittest.TestCase):
-    def test_gc_fn(self):
+    def test_default_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
         for domain in [src_domain, target_domain]:
-            output = inference.gc_fn(x=data, models=models)
+            output = inference.default_fn(x=data, models=models)
             features = models["G"](data)
             logits = models["C"](features)
-            compare_with_gc_fn(
+            compare_with_default_fn(
                 self, output, {"features": features, "logits": logits}, True
             )
 
-    def test_gcd_fn(self):
+    def test_with_d(self):
         models, data, src_domain, target_domain = get_models_and_data(with_D=True)
         for domain in [src_domain, target_domain]:
-            output = inference.gcd_fn(x=data, models=models)
-            compare_with_gc_fn(
-                self, output, inference.gc_fn(x=data, models=models), True
+            output = inference.with_d(x=data, models=models, fn=inference.default_fn)
+            compare_with_default_fn(
+                self, output, inference.default_fn(x=data, models=models), True
             )
             d_logits = models["D"](models["G"](data))
             self.assertTrue(torch.equal(d_logits, output["d_logits"]))
@@ -78,10 +78,10 @@ class TestInferenceFns(unittest.TestCase):
             output = inference.adabn_fn(x=data, domain=domain, models=models)
 
             # original parameters should be different
-            default_output = inference.gc_fn(
+            default_output = inference.default_fn(
                 x=data, models={"G": models["G_original"], "C": models["C_original"]}
             )
-            compare_with_gc_fn(self, output, default_output, False)
+            compare_with_default_fn(self, output, default_output, False)
 
             features = models["G"](data, domain=domain)
             logits = models["C"](features, domain=domain)
@@ -89,18 +89,25 @@ class TestInferenceFns(unittest.TestCase):
             self.assertTrue(torch.equal(logits, output["logits"]))
 
     def test_adda_fn(self):
-        models, data, src_domain, target_domain = get_models_and_data()
+        models, data, src_domain, target_domain = get_models_and_data(with_D=True)
         models["T"] = c_f.reinit(copy.deepcopy(models["G"]))
 
         for domain in [src_domain, target_domain]:
             output = inference.adda_fn(x=data, domain=domain, models=models)
-            default_output = inference.gc_fn(x=data, models=models)
-            compare_with_gc_fn(self, output, default_output, domain == src_domain)
+            default_output = inference.default_fn(x=data, models=models)
+            compare_with_default_fn(self, output, default_output, domain == src_domain)
 
-            features = models["G" if domain == src_domain else "T"](data)
+            gen_model = "G" if domain == src_domain else "T"
+            features = models[gen_model](data)
             logits = models["C"](features)
             self.assertTrue(torch.equal(features, output["features"]))
             self.assertTrue(torch.equal(logits, output["logits"]))
+
+            output = inference.with_d(
+                x=data, domain=domain, models=models, fn=inference.adda_fn
+            )
+            d_logits = models["D"](models[gen_model](data))
+            self.assertTrue(torch.equal(d_logits, output["d_logits"]))
 
     def test_rtn_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
@@ -108,8 +115,8 @@ class TestInferenceFns(unittest.TestCase):
 
         for domain in [src_domain, target_domain]:
             output = inference.rtn_fn(x=data, domain=domain, models=models)
-            default_output = inference.gc_fn(x=data, models=models)
-            compare_with_gc_fn(
+            default_output = inference.default_fn(x=data, models=models)
+            compare_with_default_fn(
                 self, output, default_output, [True, domain == target_domain]
             )
 
@@ -128,11 +135,11 @@ class TestInferenceFns(unittest.TestCase):
 
         for domain in [src_domain, target_domain]:
             output = inference.mcd_fn(x=data, models=models)
-            default_output = inference.gc_fn(x=data, models=models)
+            default_output = inference.default_fn(x=data, models=models)
 
             # logits output will be list, not Tensor
             with self.assertRaises(TypeError):
-                compare_with_gc_fn(
+                compare_with_default_fn(
                     self,
                     output,
                     default_output,
@@ -151,11 +158,11 @@ class TestInferenceFns(unittest.TestCase):
 
         for domain in [src_domain, target_domain]:
             output = inference.symnets_fn(x=data, domain=domain, models=models)
-            default_output = inference.gc_fn(x=data, models=models)
+            default_output = inference.default_fn(x=data, models=models)
 
             # logits output will be list, not Tensor
             with self.assertRaises(TypeError):
-                compare_with_gc_fn(
+                compare_with_default_fn(
                     self,
                     output,
                     default_output,

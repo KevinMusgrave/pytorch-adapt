@@ -167,7 +167,7 @@ class TestRunning(unittest.TestCase):
             del models["D"]
             adapter = Aligner(models=models, hook_kwargs={"loss_fn": loss_fn})
             self.assertTrue(isinstance(adapter.hook, AlignerPlusCHook))
-            run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+            run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_cdan(self):
         models = get_gcd()
@@ -190,7 +190,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_classifier(self):
         models = get_gcd()
@@ -211,7 +211,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_dann(self):
         adapter = DANN(models=get_gcd())
@@ -236,7 +236,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_domain_confusion(self):
         models = get_gcd()
@@ -254,7 +254,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_finetuner(self):
         models = get_gcd()
@@ -274,7 +274,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_gan(self):
         adapter = GAN(models=get_gcd())
@@ -290,7 +290,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_joint_aligner(self):
         models = get_gcd()
@@ -313,7 +313,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_gvb(self):
         models = get_gcd()
@@ -344,7 +344,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_mcd(self):
         models = get_gcd()
@@ -469,4 +469,4 @@ class TestRunning(unittest.TestCase):
         log_files["engine_output_g_loss"].update(
             {"src_vat_loss", "target_vat_loss", "entropy_loss"}
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.gc_fn)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
