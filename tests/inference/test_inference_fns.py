@@ -6,11 +6,12 @@ import torch
 from pytorch_adapt import inference
 from pytorch_adapt.containers import Models
 from pytorch_adapt.layers import AdaBNModel
+from pytorch_adapt.utils import common_functions as c_f
 
 from .. import TEST_DEVICE
 
 
-def get_models_and_data():
+def get_models_and_data(with_D=False):
     models = {
         "G": torch.nn.Sequential(
             torch.nn.BatchNorm2d(3),
@@ -19,17 +20,17 @@ def get_models_and_data():
         ).to(TEST_DEVICE),
         "C": torch.nn.Linear(225, 10, device=TEST_DEVICE),
     }
+    if with_D:
+        models["D"] = torch.nn.Linear(225, 1, device=TEST_DEVICE)
     data = torch.randn(32, 3, 16, 16, device=TEST_DEVICE)
     src_domain = torch.tensor([0], device=TEST_DEVICE)
     target_domain = torch.tensor([1], device=TEST_DEVICE)
     return models, data, src_domain, target_domain
 
 
-def compare_with_default_fn(cls, data, G, C, in_features, in_logits, should_match):
-    features = G(data)
-    logits = C(features)
-    eq1 = torch.equal(in_features, features)
-    eq2 = torch.equal(in_logits, logits)
+def compare_with_default_fn(cls, output, default_output, should_match=False):
+    eq1 = torch.equal(output["features"], default_output["features"])
+    eq2 = torch.equal(output["logits"], default_output["logits"])
     for eq in [eq1, eq2]:
         cls.assertTrue(eq if should_match else not eq)
 
@@ -39,14 +40,10 @@ class TestInferenceFns(unittest.TestCase):
         models, data, src_domain, target_domain = get_models_and_data()
         for domain in [src_domain, target_domain]:
             output = inference.default_fn(x=data, models=models)
+            features = models["G"](data)
+            logits = models["C"](features)
             compare_with_default_fn(
-                self,
-                data,
-                models["G"],
-                models["C"],
-                output["features"],
-                output["logits"],
-                True,
+                self, output, {"features": features, "logits": logits}, True
             )
 
     def test_adabn_fn(self):
@@ -68,17 +65,21 @@ class TestInferenceFns(unittest.TestCase):
             output = inference.adabn_fn(x=data, domain=domain, models=models)
 
             # original parameters should be different
-            compare_with_default_fn(
-                self,
-                data,
-                models["G_original"],
-                models["C_original"],
-                output["features"],
-                output["logits"],
-                False,
+            default_output = inference.default_fn(
+                x=data, models={"G": models["G_original"], "C": models["C_original"]}
             )
+            compare_with_default_fn(self, output, default_output, False)
 
             features = models["G"](data, domain=domain)
             logits = models["C"](features, domain=domain)
             self.assertTrue(torch.equal(features, output["features"]))
             self.assertTrue(torch.equal(logits, output["logits"]))
+
+    def test_adda_fn(self):
+        models, data, src_domain, target_domain = get_models_and_data()
+        models["T"] = c_f.reinit(copy.deepcopy(models["G"]))
+
+        for domain in [src_domain, target_domain]:
+            output = inference.adda_fn(x=data, domain=domain, models=models)
+            default_output = inference.default_fn(x=data, models=models)
+            compare_with_default_fn(self, output, default_output, domain == src_domain)
