@@ -175,21 +175,41 @@ class TestInferenceFns(unittest.TestCase):
 
     def test_with_feature_combiner_fn(self):
         models, data, src_domain, target_domain = get_models_and_data(with_D=True)
+        models["residual_model"] = torch.nn.Linear(10, 10).to(TEST_DEVICE)
         misc = {
             "feature_combiner": RandomizedDotProduct(in_dims=[225, 10], out_dim=225)
         }
         for domain in [src_domain, target_domain]:
             for softmax in [True, False]:
-                for fn in [inference.default_fn, inference.default_with_d]:
+                for fn in [
+                    inference.default_fn,
+                    inference.default_with_d,
+                    inference.rtn_fn,
+                ]:
+                    using_rtn = fn is inference.rtn_fn
                     output = inference.with_feature_combiner(
-                        x=data, models=models, misc=misc, fn=fn, softmax=softmax
+                        x=data,
+                        models=models,
+                        misc=misc,
+                        fn=fn,
+                        softmax=softmax,
+                        domain=domain,
+                    )
+
+                    should_match = (
+                        [True, domain == target_domain] if using_rtn else True
                     )
                     compare_with_default_fn(
-                        self, output, inference.default_fn(x=data, models=models), True
+                        self,
+                        output,
+                        inference.default_fn(x=data, models=models),
+                        should_match,
                     )
 
                     features = models["G"](data)
                     logits = models["C"](features)
+                    if using_rtn and domain == src_domain:
+                        logits = models["residual_model"](logits)
                     if softmax:
                         logits = torch.nn.Softmax(dim=1)(logits)
                     combined = misc["feature_combiner"](features, logits)
