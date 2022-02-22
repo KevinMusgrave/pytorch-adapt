@@ -5,7 +5,7 @@ import torch
 
 from pytorch_adapt import inference
 from pytorch_adapt.containers import Models
-from pytorch_adapt.layers import AdaBNModel, MultipleModels
+from pytorch_adapt.layers import AdaBNModel, MultipleModels, RandomizedDotProduct
 from pytorch_adapt.utils import common_functions as c_f
 
 from .. import TEST_DEVICE
@@ -172,3 +172,27 @@ class TestInferenceFns(unittest.TestCase):
             logits = models["C"](features)[0 if domain == src_domain else 1]
             self.assertTrue(torch.equal(features, output["features"]))
             self.assertTrue(torch.equal(logits, output["logits"]))
+
+    def test_with_feature_combiner_fn(self):
+        models, data, src_domain, target_domain = get_models_and_data(with_D=True)
+        misc = {
+            "feature_combiner": RandomizedDotProduct(in_dims=[225, 10], out_dim=225)
+        }
+        for domain in [src_domain, target_domain]:
+            for softmax in [True, False]:
+                for fn in [inference.default_fn, inference.default_with_d]:
+                    output = inference.with_feature_combiner(
+                        x=data, models=models, misc=misc, fn=fn, softmax=softmax
+                    )
+                    compare_with_default_fn(
+                        self, output, inference.default_fn(x=data, models=models), True
+                    )
+
+                    features = models["G"](data)
+                    logits = models["C"](features)
+                    if softmax:
+                        logits = torch.nn.Softmax(dim=1)(logits)
+                    combined = misc["feature_combiner"](features, logits)
+                    self.assertTrue(
+                        torch.equal(combined, output["features_logits_combined"])
+                    )

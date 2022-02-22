@@ -1,3 +1,5 @@
+import torch
+
 from ..utils.common_functions import check_domain
 
 
@@ -76,7 +78,24 @@ def d_fn(x, models, **kwargs):
     return {"d_logits": models["D"](x)}
 
 
+def feature_combiner_fn(x, y, misc, **kwargs):
+    return {"features_logits_combined": misc["feature_combiner"](x, y)}
+
+
 def with_d(x, models, fn, **kwargs):
     output = fn(x=x, models=models, **kwargs)
-    output.update(d_fn(output["features"], models, **kwargs))
-    return output
+    output2 = d_fn(x=output["features"], models=models, **kwargs)
+    return {**output, **output2}
+
+
+def with_feature_combiner(x, models, misc, fn, softmax=True, **kwargs):
+    output = fn(x=x, models=models, misc=misc, softmax=softmax, **kwargs)
+    logits = output["logits"]
+    if softmax:
+        logits = torch.softmax(logits, dim=1)
+    output2 = feature_combiner_fn(x=output["features"], y=logits, misc=misc, **kwargs)
+    return {**output, **output2}
+
+
+def default_with_d(**kwargs):
+    return with_d(fn=default_fn, **kwargs)
