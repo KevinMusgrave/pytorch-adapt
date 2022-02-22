@@ -18,7 +18,7 @@ class AdaBNModel(torch.nn.Module):
         self.model = model
 
     def forward(self, x, domain):
-        domain = c_f.check_domain(self, domain)
+        domain = c_f.check_domain(domain)
         set_curr_domain(self.model, domain, AdaptiveBatchNorm2d)
         return self.model(x)
 

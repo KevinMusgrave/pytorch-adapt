@@ -11,6 +11,7 @@ from ..containers import (
     MultipleContainers,
     Optimizers,
 )
+from ..inference import default_fn
 from ..utils import common_functions as c_f
 from .utils import default_optimizer_tuple, with_opt
 
@@ -28,7 +29,7 @@ class BaseAdapter(ABC):
         misc: Misc = None,
         default_containers: MultipleContainers = None,
         key_enforcer: KeyEnforcer = None,
-        inference=None,
+        inference_fn=None,
         before_training_starts=None,
         hook_kwargs: Dict[str, Any] = None,
     ):
@@ -76,7 +77,7 @@ class BaseAdapter(ABC):
         hook_kwargs = c_f.default(hook_kwargs, {})
         self.init_containers_and_check_keys(containers)
         self.init_hook(hook_kwargs)
-        self.inference = c_f.class_default(self, inference, self.inference_default)
+        self.inference_fn = c_f.default(inference_fn, default_fn)
 
     def training_step(
         self, batch: Dict[str, Any], **kwargs
@@ -99,7 +100,7 @@ class BaseAdapter(ABC):
         losses, _ = self.hook({}, combined)
         return losses
 
-    def inference_default(
+    def inference(
         self, x: torch.Tensor, domain: int = None
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """
@@ -110,9 +111,12 @@ class BaseAdapter(ABC):
         Returns:
             Features and logits
         """
-        features = self.models["G"](x)
-        logits = self.models["C"](features)
-        return {"features": features, "logits": logits}
+        return self.inference_fn(
+            x=x,
+            domain=domain,
+            models=self.models,
+            misc=self.misc,
+        )
 
     def get_default_containers(self) -> MultipleContainers:
         """

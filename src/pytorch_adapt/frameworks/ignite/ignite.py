@@ -10,7 +10,6 @@ from ...validators import utils as val_utils
 from .. import utils as f_utils
 from . import checkpoint_utils
 from . import utils as i_g
-from .loggers import IgniteEmptyLogger
 
 
 class Ignite:
