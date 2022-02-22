@@ -1,7 +1,7 @@
 from ..utils.common_functions import check_domain
 
 
-def default_fn(x, models, **kwargs):
+def gc_fn(x, models, **kwargs):
     features = models["G"](x)
     logits = models["C"](features)
     return {"features": features, "logits": logits}
@@ -40,7 +40,7 @@ def rtn_fn(x, domain, models, **kwargs):
         Features and logits
     """
     domain = check_domain(domain)
-    f_dict = default_fn(x=x, models=models)
+    f_dict = gc_fn(x=x, models=models)
     logits = f_dict["logits"]
     if domain == 0:
         logits = models["residual_model"](logits)
@@ -70,3 +70,13 @@ def symnets_fn(x, domain, models, **kwargs):
     features = models["G"](x)
     logits = models["C"](features)[domain]
     return {"features": features, "logits": logits}
+
+
+def d_fn(x, models, **kwargs):
+    return {"d_logits": models["D"](x)}
+
+
+def gcd_fn(x, models, **kwargs):
+    output = gc_fn(x, models, **kwargs)
+    output.update(d_fn(output["features"], models, **kwargs))
+    return output

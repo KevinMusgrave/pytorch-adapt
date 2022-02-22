@@ -11,7 +11,7 @@ from ..containers import (
     MultipleContainers,
     Optimizers,
 )
-from ..inference import default_fn
+from ..inference import gc_fn
 from ..utils import common_functions as c_f
 from .utils import default_optimizer_tuple, with_opt
 
@@ -77,7 +77,7 @@ class BaseAdapter(ABC):
         hook_kwargs = c_f.default(hook_kwargs, {})
         self.init_containers_and_check_keys(containers)
         self.init_hook(hook_kwargs)
-        self.inference_fn = c_f.default(inference_fn, default_fn)
+        self.inference_fn = c_f.default(inference_fn, gc_fn)
 
     def training_step(
         self, batch: Dict[str, Any], **kwargs
