@@ -31,8 +31,11 @@ def get_models_and_data(with_D=False):
 def compare_with_default_fn(cls, output, default_output, should_match=False):
     eq1 = torch.equal(output["features"], default_output["features"])
     eq2 = torch.equal(output["logits"], default_output["logits"])
-    for eq in [eq1, eq2]:
-        cls.assertTrue(eq if should_match else not eq)
+    for i, eq in enumerate([eq1, eq2]):
+        should_match_ = should_match
+        if isinstance(should_match, list):
+            should_match_ = should_match[i]
+        cls.assertTrue(eq if should_match_ else not eq)
 
 
 class TestInferenceFns(unittest.TestCase):
@@ -83,3 +86,26 @@ class TestInferenceFns(unittest.TestCase):
             output = inference.adda_fn(x=data, domain=domain, models=models)
             default_output = inference.default_fn(x=data, models=models)
             compare_with_default_fn(self, output, default_output, domain == src_domain)
+
+            features = models["G" if domain == src_domain else "T"](data)
+            logits = models["C"](features)
+            self.assertTrue(torch.equal(features, output["features"]))
+            self.assertTrue(torch.equal(logits, output["logits"]))
+
+    def test_rtn_fn(self):
+        models, data, src_domain, target_domain = get_models_and_data()
+        models["residual_model"] = torch.nn.Linear(10, 10).to(TEST_DEVICE)
+
+        for domain in [src_domain, target_domain]:
+            output = inference.rtn_fn(x=data, domain=domain, models=models)
+            default_output = inference.default_fn(x=data, models=models)
+            compare_with_default_fn(
+                self, output, default_output, [True, domain == target_domain]
+            )
+
+            features = models["G"](data)
+            target_logits = models["C"](features)
+            src_logits = models["residual_model"](target_logits)
+            self.assertTrue(torch.equal(features, output["features"]))
+            logits = src_logits if domain == src_domain else target_logits
+            self.assertTrue(torch.equal(logits, output["logits"]))
