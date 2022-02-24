@@ -94,7 +94,7 @@ def mcd_full_fn(**kwargs):
 
 
 # symnets features and logits
-def symnets_fn(x, domain, models, **kwargs):
+def symnets_fn(x, domain, models, get_all=False, **kwargs):
     """
     Arguments:
         x: The input to the model
@@ -105,7 +105,15 @@ def symnets_fn(x, domain, models, **kwargs):
     domain = check_domain(domain)
     features = models["G"](x)
     logits = models["C"](features)[domain]
-    return {"features": features, "logits": logits}
+    output = {"features": features, "logits": logits}
+    if get_all:
+        logits = models["C"](features)[int(not domain)]
+        output.update({"other_logits": logits})
+    return output
+
+
+def symnets_full_fn(**kwargs):
+    return symnets_fn(get_all=True, **kwargs)
 
 
 # discriminator logits

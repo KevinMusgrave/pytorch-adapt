@@ -14,6 +14,7 @@ from .inference import (
     mcd_full_fn,
     rtn_fn,
     symnets_fn,
+    symnets_full_fn,
     with_d,
     with_d_bridge,
     with_feature_combiner,

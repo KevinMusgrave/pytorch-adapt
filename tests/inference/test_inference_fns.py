@@ -199,21 +199,28 @@ class TestInferenceFns(unittest.TestCase):
         )
 
         for domain in [src_domain, target_domain]:
-            output = inference.symnets_fn(x=data, domain=domain, models=models)
-            default_output = inference.default_fn(x=data, models=models)
+            output1 = inference.symnets_fn(x=data, domain=domain, models=models)
+            output2 = inference.symnets_full_fn(x=data, domain=domain, models=models)
+            for i, output in enumerate([output1, output2]):
+                default_output = inference.default_fn(x=data, models=models)
 
-            # logits output will be list, not Tensor
-            with self.assertRaises(TypeError):
-                compare_with_default_fn(
-                    self,
-                    output,
-                    default_output,
-                )
+                # logits output will be list, not Tensor
+                with self.assertRaises(TypeError):
+                    compare_with_default_fn(
+                        self,
+                        output,
+                        default_output,
+                    )
 
-            features = models["G"](data)
-            logits = models["C"](features)[0 if domain == src_domain else 1]
-            self.assertTrue(torch.equal(features, output["features"]))
-            self.assertTrue(torch.equal(logits, output["logits"]))
+                features = models["G"](data)
+                logits = models["C"](features)[0 if domain == src_domain else 1]
+                self.assertTrue(torch.equal(features, output["features"]))
+                self.assertTrue(torch.equal(logits, output["logits"]))
+                if i == 1:
+                    other_logits = models["C"](features)[
+                        1 if domain == src_domain else 0
+                    ]
+                    self.assertTrue(torch.equal(other_logits, output["other_logits"]))
 
     def test_with_feature_combiner_fn(self):
         models, data, src_domain, target_domain = get_models_and_data(with_D=True)
