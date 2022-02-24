@@ -98,7 +98,8 @@ def mcd_fn(x, models, get_all=False, **kwargs):
     logits = sum(logits_list)
     output = {"features": features, "logits": logits}
     if get_all:
-        output["logits_list"] = logits_list
+        for i, L in enumerate(logits_list):
+            output[f"logits{i}"] = L
     return output
 
 

@@ -202,7 +202,9 @@ class TestInferenceFns(unittest.TestCase):
             output1 = inference.mcd_fn(x=data, models=models)
             output2 = inference.mcd_full_fn(x=data, models=models)
             self.assertTrue(output1.keys() == {"features", "logits"})
-            self.assertTrue(output2.keys() == {"features", "logits", "logits_list"})
+            self.assertTrue(
+                output2.keys() == {"features", "logits", "logits0", "logits1"}
+            )
             for i, output in enumerate([output1, output2]):
                 default_output = inference.default_fn(x=data, models=models)
 
@@ -215,16 +217,12 @@ class TestInferenceFns(unittest.TestCase):
                     )
 
                 features = models["G"](data)
-                [logits1, logits2] = models["C"](features)
+                [logits0, logits1] = models["C"](features)
                 self.assertTrue(torch.equal(features, output["features"]))
-                self.assertTrue(torch.equal(logits1 + logits2, output["logits"]))
+                self.assertTrue(torch.equal(logits0 + logits1, output["logits"]))
                 if i == 1:
-                    self.assertTrue(
-                        torch.equal(
-                            torch.cat([logits1, logits2], dim=0),
-                            torch.cat(output["logits_list"], dim=0),
-                        )
-                    )
+                    self.assertTrue(torch.equal(logits0, output["logits0"]))
+                    self.assertTrue(torch.equal(logits1, output["logits1"]))
 
     def test_symnets_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
