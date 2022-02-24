@@ -145,20 +145,29 @@ class TestInferenceFns(unittest.TestCase):
     def test_rtn_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
         models["residual_model"] = torch.nn.Linear(10, 10).to(TEST_DEVICE)
-
+        misc = {
+            "feature_combiner": RandomizedDotProduct(in_dims=[225, 10], out_dim=225)
+        }
         for domain in [src_domain, target_domain]:
-            output = inference.rtn_fn(x=data, domain=domain, models=models)
-            default_output = inference.default_fn(x=data, models=models)
-            compare_with_default_fn(
-                self, output, default_output, [True, domain == target_domain]
+            output1 = inference.rtn_fn(x=data, domain=domain, models=models)
+            output2 = inference.rtn_full_fn(
+                x=data, domain=domain, models=models, misc=misc
             )
+            for i, output in enumerate([output1, output2]):
+                default_output = inference.default_fn(x=data, models=models)
+                compare_with_default_fn(
+                    self, output, default_output, [True, domain == target_domain]
+                )
 
-            features = models["G"](data)
-            target_logits = models["C"](features)
-            src_logits = models["residual_model"](target_logits)
-            self.assertTrue(torch.equal(features, output["features"]))
-            logits = src_logits if domain == src_domain else target_logits
-            self.assertTrue(torch.equal(logits, output["logits"]))
+                features = models["G"](data)
+                target_logits = models["C"](features)
+                src_logits = models["residual_model"](target_logits)
+                self.assertTrue(torch.equal(features, output["features"]))
+                logits = src_logits if domain == src_domain else target_logits
+                self.assertTrue(torch.equal(logits, output["logits"]))
+                if i == 1:
+                    other_logits = target_logits if domain == src_domain else src_logits
+                    self.assertTrue(torch.equal(other_logits, output["other_logits"]))
 
     def test_mcd_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
@@ -234,15 +243,13 @@ class TestInferenceFns(unittest.TestCase):
                     inference.default_fn,
                     inference.default_with_d,
                     inference.rtn_fn,
-                    None,
+                    inference.cdan_full_fn,
+                    inference.rtn_with_feature_combiner,
                 ]:
-                    using_rtn = fn is inference.rtn_fn
-
-                    full_fn = (
-                        inference.cdan_full_fn
-                        if fn is None
-                        else inference.with_feature_combiner
-                    )
+                    using_rtn = fn in [
+                        inference.rtn_fn,
+                        inference.rtn_with_feature_combiner,
+                    ]
 
                     kwargs = {
                         "x": data,
@@ -251,7 +258,13 @@ class TestInferenceFns(unittest.TestCase):
                         "softmax": softmax,
                         "domain": domain,
                     }
-                    if fn is not None:
+
+                    full_fn = fn
+                    if full_fn not in [
+                        inference.cdan_full_fn,
+                        inference.rtn_with_feature_combiner,
+                    ]:
+                        full_fn = inference.with_feature_combiner
                         kwargs["fn"] = fn
 
                     output = full_fn(**kwargs)

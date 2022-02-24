@@ -56,7 +56,7 @@ def adda_full_fn(x, **kwargs):
 
 
 # rtn features and logits
-def rtn_fn(x, domain, models, **kwargs):
+def rtn_fn(x, domain, models, get_all=False, **kwargs):
     """
     Arguments:
         x: The input to the model
@@ -67,10 +67,24 @@ def rtn_fn(x, domain, models, **kwargs):
     """
     domain = check_domain(domain)
     f_dict = default_fn(x=x, models=models)
-    logits = f_dict["logits"]
+    target_logits = f_dict["logits"]
+    if get_all or domain == 0:
+        src_logits = models["residual_model"](target_logits)
     if domain == 0:
-        logits = models["residual_model"](logits)
-    return {**f_dict, "logits": logits}
+        f_dict["logits"] = src_logits
+        if get_all:
+            f_dict["other_logits"] = target_logits
+    elif get_all and domain == 1:
+        f_dict["other_logits"] = src_logits
+    return f_dict
+
+
+def rtn_with_feature_combiner(**kwargs):
+    return with_feature_combiner(fn=rtn_fn, **kwargs)
+
+
+def rtn_full_fn(**kwargs):
+    return rtn_with_feature_combiner(get_all=True, **kwargs)
 
 
 # mcd features and logits

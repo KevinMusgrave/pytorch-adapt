@@ -13,6 +13,8 @@ from .inference import (
     mcd_fn,
     mcd_full_fn,
     rtn_fn,
+    rtn_full_fn,
+    rtn_with_feature_combiner,
     symnets_fn,
     symnets_full_fn,
     with_d,
