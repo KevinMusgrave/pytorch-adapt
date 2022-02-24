@@ -121,11 +121,13 @@ class TestInferenceFns(unittest.TestCase):
             self.assertTrue(torch.equal(features, output["features"]))
             self.assertTrue(torch.equal(logits, output["logits"]))
 
-            output = inference.with_d(
+            output1 = inference.with_d(
                 x=data, domain=domain, models=models, fn=inference.adda_fn
             )
-            d_logits = models["D"](models[gen_model](data))
-            self.assertTrue(torch.equal(d_logits, output["d_logits"]))
+            output2 = inference.adda_with_d(x=data, domain=domain, models=models)
+            for output in [output1, output2]:
+                d_logits = models["D"](models[gen_model](data))
+                self.assertTrue(torch.equal(d_logits, output["d_logits"]))
 
     def test_rtn_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
@@ -152,21 +154,30 @@ class TestInferenceFns(unittest.TestCase):
         )
 
         for domain in [src_domain, target_domain]:
-            output = inference.mcd_fn(x=data, models=models)
-            default_output = inference.default_fn(x=data, models=models)
+            output1 = inference.mcd_fn(x=data, models=models)
+            output2 = inference.mcd_full_fn(x=data, models=models)
+            for i, output in enumerate([output1, output2]):
+                default_output = inference.default_fn(x=data, models=models)
 
-            # logits output will be list, not Tensor
-            with self.assertRaises(TypeError):
-                compare_with_default_fn(
-                    self,
-                    output,
-                    default_output,
-                )
+                # logits output will be list, not Tensor
+                with self.assertRaises(TypeError):
+                    compare_with_default_fn(
+                        self,
+                        output,
+                        default_output,
+                    )
 
-            features = models["G"](data)
-            [logits1, logits2] = models["C"](features)
-            self.assertTrue(torch.equal(features, output["features"]))
-            self.assertTrue(torch.equal(logits1 + logits2, output["logits"]))
+                features = models["G"](data)
+                [logits1, logits2] = models["C"](features)
+                self.assertTrue(torch.equal(features, output["features"]))
+                self.assertTrue(torch.equal(logits1 + logits2, output["logits"]))
+                if i == 1:
+                    self.assertTrue(
+                        torch.equal(
+                            torch.cat([logits1, logits2], dim=0),
+                            torch.cat(output["logits_list"], dim=0),
+                        )
+                    )
 
     def test_symnets_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()
@@ -257,7 +268,7 @@ class TestInferenceFns(unittest.TestCase):
 
         for domain in [src_domain, target_domain]:
             output1 = inference.with_d_bridge(
-                x=data, models=models, fn=inference.gvb_fn
+                x=data, models=models, fn=inference.gvb_with_g_bridge
             )
             output2 = inference.gvb_full_fn(x=data, models=models)
             for output in [output1, output2]:
