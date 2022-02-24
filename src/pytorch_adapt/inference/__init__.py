@@ -1,7 +1,7 @@
 from .inference import (
     adabn_fn,
     adda_fn,
-    cdan_full_inference_fn,
+    cdan_full_fn,
     d_bridge_fn,
     default_fn,
     default_with_d,

@@ -101,7 +101,7 @@ def with_feature_combiner(x, models, misc, fn, softmax=True, **kwargs):
     return {**output, **output2}
 
 
-def cdan_full_inference_fn(**kwargs):
+def cdan_full_fn(**kwargs):
     return with_feature_combiner(fn=default_with_d, **kwargs)
 
 

@@ -195,7 +195,7 @@ class TestInferenceFns(unittest.TestCase):
                     using_rtn = fn is inference.rtn_fn
 
                     full_fn = (
-                        inference.cdan_full_inference_fn
+                        inference.cdan_full_fn
                         if fn is None
                         else inference.with_feature_combiner
                     )
