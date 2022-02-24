@@ -190,16 +190,27 @@ class TestInferenceFns(unittest.TestCase):
                     inference.default_fn,
                     inference.default_with_d,
                     inference.rtn_fn,
+                    None,
                 ]:
                     using_rtn = fn is inference.rtn_fn
-                    output = inference.with_feature_combiner(
-                        x=data,
-                        models=models,
-                        misc=misc,
-                        fn=fn,
-                        softmax=softmax,
-                        domain=domain,
+
+                    full_fn = (
+                        inference.cdan_full_inference_fn
+                        if fn is None
+                        else inference.with_feature_combiner
                     )
+
+                    kwargs = {
+                        "x": data,
+                        "models": models,
+                        "misc": misc,
+                        "softmax": softmax,
+                        "domain": domain,
+                    }
+                    if fn is not None:
+                        kwargs["fn"] = fn
+
+                    output = full_fn(**kwargs)
 
                     should_match = (
                         [True, domain == target_domain] if using_rtn else True

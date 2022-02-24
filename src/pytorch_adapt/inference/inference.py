@@ -101,6 +101,10 @@ def with_feature_combiner(x, models, misc, fn, softmax=True, **kwargs):
     return {**output, **output2}
 
 
+def cdan_full_inference_fn(**kwargs):
+    return with_feature_combiner(fn=default_with_d, **kwargs)
+
+
 def d_bridge_fn(x, models, **kwargs):
     [d_logits, d_bridge] = models["D"](x, return_bridge=True)
     return {"d_logits": d_logits, "d_bridge": d_bridge}
