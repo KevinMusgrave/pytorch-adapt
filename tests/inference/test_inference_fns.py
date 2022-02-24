@@ -125,9 +125,22 @@ class TestInferenceFns(unittest.TestCase):
                 x=data, domain=domain, models=models, fn=inference.adda_fn
             )
             output2 = inference.adda_with_d(x=data, domain=domain, models=models)
-            for output in [output1, output2]:
-                d_logits = models["D"](models[gen_model](data))
+            output3 = inference.adda_full_fn(x=data, domain=domain, models=models)
+            for i, output in enumerate([output1, output2, output3]):
+                d_logits = models["D"](features)
                 self.assertTrue(torch.equal(d_logits, output["d_logits"]))
+                if i == 2:
+                    gen_model = "T" if domain == src_domain else "G"
+                    other_features = models[gen_model](data)
+                    other_logits = models["C"](other_features)
+                    other_d_logits = models["D"](other_features)
+                    self.assertTrue(
+                        torch.equal(other_features, output["other_features"])
+                    )
+                    self.assertTrue(torch.equal(other_logits, output["other_logits"]))
+                    self.assertTrue(
+                        torch.equal(other_d_logits, output["other_d_logits"])
+                    )
 
     def test_rtn_fn(self):
         models, data, src_domain, target_domain = get_models_and_data()

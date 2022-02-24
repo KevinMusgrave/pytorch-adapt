@@ -19,7 +19,7 @@ def adabn_fn(x, domain, models, **kwargs):
 
 
 # adda features and logits
-def adda_fn(x, domain, models, **kwargs):
+def adda_fn(x, domain, models, get_all=False, **kwargs):
     """
     Arguments:
         x: The input to the model
@@ -32,7 +32,27 @@ def adda_fn(x, domain, models, **kwargs):
     fe = "G" if domain == 0 else "T"
     features = models[fe](x)
     logits = models["C"](features)
-    return {"features": features, "logits": logits}
+    output = {"features": features, "logits": logits}
+    if get_all:
+        fe = "T" if fe == "G" else "G"
+        features = models[fe](x)
+        logits = models["C"](features)
+        output.update({"other_features": features, "other_logits": logits})
+    return output
+
+
+# adda features, logits, and discriminator logits
+def adda_with_d(**kwargs):
+    return with_d(fn=adda_fn, **kwargs)
+
+
+# adda features, logits, discriminator logits, other features, other logits, other discriminator logits
+def adda_full_fn(x, **kwargs):
+    layer = kwargs.get("layer", "features")
+    output = with_d(x=x, fn=adda_fn, get_all=True, **kwargs)
+    output2 = d_fn(x=output[f"other_{layer}"], **kwargs)
+    output["other_d_logits"] = output2["d_logits"]
+    return output
 
 
 # rtn features and logits
@@ -54,7 +74,7 @@ def rtn_fn(x, domain, models, **kwargs):
 
 
 # mcd features and logits
-def mcd_fn(x, models, return_logits_list=False, **kwargs):
+def mcd_fn(x, models, get_all=False, **kwargs):
     """
     Returns:
         Features and logits, where ```logits = sum(C(features))```.
@@ -63,14 +83,14 @@ def mcd_fn(x, models, return_logits_list=False, **kwargs):
     logits_list = models["C"](features)
     logits = sum(logits_list)
     output = {"features": features, "logits": logits}
-    if return_logits_list:
+    if get_all:
         output["logits_list"] = logits_list
     return output
 
 
 # mcd features and logits, and the logits from each classifier
 def mcd_full_fn(**kwargs):
-    return mcd_fn(return_logits_list=True, **kwargs)
+    return mcd_fn(get_all=True, **kwargs)
 
 
 # symnets features and logits
@@ -113,11 +133,6 @@ def default_with_d(**kwargs):
 # features, logits, and discriminator logits, where D takes in the output of C
 def default_with_d_logits_layer(**kwargs):
     return with_d(fn=default_fn, layer="logits", **kwargs)
-
-
-# adda features, logits, and discriminator logits
-def adda_with_d(**kwargs):
-    return with_d(fn=adda_fn, **kwargs)
 
 
 # output of fn and a feature combiner that takes features and logits or preds as input
