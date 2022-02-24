@@ -92,6 +92,10 @@ def default_with_d(**kwargs):
     return with_d(fn=default_fn, **kwargs)
 
 
+def default_with_d_logits_layer(**kwargs):
+    return with_d(fn=default_fn, layer="logits", **kwargs)
+
+
 def with_feature_combiner(x, models, misc, fn, softmax=True, **kwargs):
     output = fn(x=x, models=models, misc=misc, softmax=softmax, **kwargs)
     logits = output["logits"]
@@ -121,3 +125,7 @@ def gvb_fn(x, models, **kwargs):
     features = models["G"](x)
     [logits, bridge] = models["C"](features, return_bridge=True)
     return {"features": features, "logits": logits, "g_bridge": bridge}
+
+
+def gvb_full_fn(**kwargs):
+    return with_d_bridge(fn=gvb_fn, **kwargs)

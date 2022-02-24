@@ -57,11 +57,24 @@ class TestInferenceFns(unittest.TestCase):
     def test_with_d(self):
         models, data, src_domain, target_domain = get_models_and_data(with_D=True)
         for domain in [src_domain, target_domain]:
-            output = inference.with_d(x=data, models=models, fn=inference.default_fn)
+            output1 = inference.with_d(x=data, models=models, fn=inference.default_fn)
+            output2 = inference.default_with_d(x=data, models=models)
+            for output in [output1, output2]:
+                compare_with_default_fn(
+                    self, output, inference.default_fn(x=data, models=models), True
+                )
+                d_logits = models["D"](models["G"](data))
+                self.assertTrue(torch.equal(d_logits, output["d_logits"]))
+
+    def test_default_with_d_logits_layer(self):
+        models, data, src_domain, target_domain = get_models_and_data()
+        models["D"] = torch.nn.Linear(10, 1, device=TEST_DEVICE)
+        for domain in [src_domain, target_domain]:
+            output = inference.default_with_d_logits_layer(x=data, models=models)
             compare_with_default_fn(
                 self, output, inference.default_fn(x=data, models=models), True
             )
-            d_logits = models["D"](models["G"](data))
+            d_logits = models["D"](models["C"](models["G"](data)))
             self.assertTrue(torch.equal(d_logits, output["d_logits"]))
 
     def test_adabn_fn(self):
@@ -243,16 +256,20 @@ class TestInferenceFns(unittest.TestCase):
         ).to(TEST_DEVICE)
 
         for domain in [src_domain, target_domain]:
-            output = inference.with_d_bridge(x=data, models=models, fn=inference.gvb_fn)
-            compare_with_default_fn(
-                self, output, inference.default_fn(x=data, models=models), True
+            output1 = inference.with_d_bridge(
+                x=data, models=models, fn=inference.gvb_fn
             )
+            output2 = inference.gvb_full_fn(x=data, models=models)
+            for output in [output1, output2]:
+                compare_with_default_fn(
+                    self, output, inference.default_fn(x=data, models=models), True
+                )
 
-            features = models["G"](data)
-            [logits, g_bridge] = models["C"](features, return_bridge=True)
-            [d_logits, d_bridge] = models["D"](
-                torch.softmax(logits, dim=1), return_bridge=True
-            )
-            self.assertTrue(torch.equal(d_logits, output["d_logits"]))
-            self.assertTrue(torch.equal(g_bridge, output["g_bridge"]))
-            self.assertTrue(torch.equal(d_bridge, output["d_bridge"]))
+                features = models["G"](data)
+                [logits, g_bridge] = models["C"](features, return_bridge=True)
+                [d_logits, d_bridge] = models["D"](
+                    torch.softmax(logits, dim=1), return_bridge=True
+                )
+                self.assertTrue(torch.equal(d_logits, output["d_logits"]))
+                self.assertTrue(torch.equal(g_bridge, output["g_bridge"]))
+                self.assertTrue(torch.equal(d_bridge, output["d_bridge"]))
