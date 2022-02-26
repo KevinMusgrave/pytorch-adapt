@@ -306,7 +306,7 @@ class TestIgnite(unittest.TestCase):
     def test_val_hooks(self):
         val_hooks = [
             ScoreHistory(AccuracyValidator(key_map={"src_train": "src_val"})),
-            ScoreHistory(EntropyValidator()),
+            EntropyValidator(),
         ]
         adapter, datasets = helper(val_hooks=val_hooks)
         dc = DataloaderCreator(num_workers=0)

@@ -271,7 +271,7 @@ class Ignite:
         collected_data = i_g.collect_from_dataloaders(
             self.collector, dataloaders, validator.required_data
         )
-        return val_utils.get_validation_score(validator, collected_data)
+        return val_utils.call_val_hook(validator, collected_data)
 
     def get_collector_step(self, inference):
         def collector_step(engine, batch):
