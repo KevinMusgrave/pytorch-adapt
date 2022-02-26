@@ -19,7 +19,7 @@ from pytorch_adapt.frameworks.ignite import CheckpointFnCreator, Ignite
 from pytorch_adapt.frameworks.ignite import utils as ignite_utils
 from pytorch_adapt.frameworks.ignite.loggers import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
-from pytorch_adapt.validators import EntropyValidator, ScoreHistory
+from pytorch_adapt.validators import AccuracyValidator, EntropyValidator, ScoreHistory
 
 from .. import TEST_FOLDER
 
@@ -302,3 +302,25 @@ class TestIgnite(unittest.TestCase):
             # if use_nan_model, then is_done should be false, and vice versa
             print(is_done, use_nan_model)
             self.assertTrue(is_done != use_nan_model)
+
+    def test_val_hooks(self):
+        val_hooks = [
+            ScoreHistory(AccuracyValidator(key_map={"src_train": "src_val"})),
+            ScoreHistory(EntropyValidator()),
+        ]
+        adapter, datasets = helper(val_hooks=val_hooks)
+        dc = DataloaderCreator(num_workers=0)
+        max_epochs = 1
+
+        # Test that collected data gets filtered correctly
+        # otherwise an exception will be raised
+        # So we're just testing to make sure that exception
+        # doesn't occur
+        adapter.run(
+            datasets=datasets,
+            dataloader_creator=dc,
+            epoch_length=10,
+        )
+
+        # test score history
+        self.assertTrue(val_hooks[0].best_epoch == 1)

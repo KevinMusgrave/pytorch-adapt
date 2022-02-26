@@ -32,7 +32,10 @@ def get_validation_runner(
         if validator:
             score = val_utils.get_validation_score(validator, collected_data, epoch)
         for hook in val_hooks:
-            hook(epoch, **collected_data)
+            curr_data = collected_data
+            if hasattr(hook, "required_data"):
+                curr_data = c_f.filter_kwargs(collected_data, hook.required_data)
+            hook(epoch, **curr_data)
         if logger:
             logger.add_validation({"validator": validator}, epoch)
             logger.write(engine)
