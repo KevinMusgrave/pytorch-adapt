@@ -137,11 +137,8 @@ def resume_checks(trainer, validator):
         )
 
 
-def is_done(trainer, max_epochs=None, **kwargs):
-    try:
-        return trainer.state.epoch >= max_epochs
-    except TypeError:
-        return False
+def is_done(trainer, max_epochs):
+    return trainer.state.epoch >= max_epochs
 
 
 def zero_grad(adapter):

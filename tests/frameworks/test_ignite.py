@@ -16,11 +16,21 @@ from pytorch_adapt.datasets import (
     TargetDataset,
 )
 from pytorch_adapt.frameworks.ignite import CheckpointFnCreator, Ignite
+from pytorch_adapt.frameworks.ignite import utils as ignite_utils
 from pytorch_adapt.frameworks.ignite.loggers import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import EntropyValidator, ScoreHistory
 
 from .. import TEST_FOLDER
+
+
+class NanModel(nn.Module):
+    def __init__(self, layer):
+        super().__init__()
+        self.layer = layer
+
+    def forward(self, x):
+        return self.layer(x) * torch.tensor(float("nan"), requires_grad=True)
 
 
 class ValHook:
@@ -45,6 +55,7 @@ def helper(
     logger=None,
     val_hooks=None,
     with_checkpoint_fn=False,
+    use_nan_model=False,
 ):
     device = torch.device("cuda")
     datasets = {}
@@ -61,7 +72,10 @@ def helper(
         datasets["src_train"], datasets["target_train"]
     )
 
-    models = Models({"G": nn.Identity(), "C": nn.Linear(32, 16, device=device)})
+    C = nn.Linear(32, 16, device=device)
+    if use_nan_model:
+        C = NanModel(C)
+    models = Models({"G": nn.Identity(), "C": C})
     adapter = Finetuner(models)
     validator = None
     if with_validator:
@@ -271,3 +285,20 @@ class TestIgnite(unittest.TestCase):
                 self.assertTrue(eval_best_score == best_score)
 
         shutil.rmtree(TEST_FOLDER)
+
+    def test_is_done(self):
+        for use_nan_model in [False, True]:
+            adapter, datasets = helper(use_nan_model=use_nan_model)
+            dc = DataloaderCreator(num_workers=0)
+            max_epochs = 3
+            adapter.run(
+                datasets=datasets,
+                dataloader_creator=dc,
+                epoch_length=10,
+                max_epochs=max_epochs,
+            )
+
+            is_done = ignite_utils.is_done(adapter.trainer, max_epochs)
+            # if use_nan_model, then is_done should be false, and vice versa
+            print(is_done, use_nan_model)
+            self.assertTrue(is_done != use_nan_model)

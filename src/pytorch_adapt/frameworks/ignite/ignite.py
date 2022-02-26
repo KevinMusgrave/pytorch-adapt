@@ -191,7 +191,7 @@ class Ignite:
         if resume is not None:
             self.load_checkpoint(resume)
 
-        if not i_g.is_done(self.trainer, **trainer_kwargs):
+        if not i_g.is_done(self.trainer, max_epochs):
             self.trainer.run(dataloaders["train"], **trainer_kwargs)
 
         self.remove_temp_events()
