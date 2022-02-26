@@ -84,7 +84,7 @@ class NeighborhoodAggregation(torch.nn.Module):
     def update_memory(self, normalized_features, logits, idx):
         logits = F.softmax(logits, dim=1)
         p = 1.0 / self.T
-        logits = (logits ** p) / torch.sum(logits ** p, dim=0)
+        logits = (logits**p) / torch.sum(logits**p, dim=0)
         self.feat_memory[idx] = normalized_features
         self.pred_memory[idx] = logits
 

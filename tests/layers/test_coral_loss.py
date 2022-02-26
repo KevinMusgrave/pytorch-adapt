@@ -22,5 +22,5 @@ class TestCORALLoss(unittest.TestCase):
             cy = np.cov(y.cpu().numpy(), rowvar=False)
 
             correct_loss = np.linalg.norm(cx - cy, ord="fro") ** 2
-            correct_loss /= 4 * (embedding_size ** 2)
+            correct_loss /= 4 * (embedding_size**2)
             self.assertTrue(np.isclose(loss.item(), correct_loss, rtol=1e-2))

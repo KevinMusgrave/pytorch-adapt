@@ -52,7 +52,7 @@ class TestLRSchedulerTypes(unittest.TestCase):
 
         self.assertTrue(
             all(
-                optimizers[k].param_groups[0]["lr"] == lr * (0.5 ** num_steps)
+                optimizers[k].param_groups[0]["lr"] == lr * (0.5**num_steps)
                 for k in ["A", "C"]
             )
         )

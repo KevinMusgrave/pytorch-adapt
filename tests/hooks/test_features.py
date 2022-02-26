@@ -60,7 +60,7 @@ class TestFeatures(unittest.TestCase):
             self.assertTrue(G.count == 3)
             assertRequiresGrad(self, outputs)
 
-            [x] = c_f.extract([outputs], [target_key], pop=True)
+            [x] = c_f.extract(outputs, [target_key], pop=True)
             if hook_type == "features":
                 target_imgs_features = x
                 hook = FeaturesHook(detach=True)
@@ -72,7 +72,7 @@ class TestFeatures(unittest.TestCase):
             self.assertTrue(
                 outputs.keys() == {f"{src_key}_detached", f"{target_key}_detached"}
             )
-            [src_x, target_x] = c_f.extract([locals()], [src_key, target_key])
+            [src_x, target_x] = c_f.extract(locals(), [src_key, target_key])
             assertRequiresGrad(self, outputs)
             self.assertTrue(
                 torch.equal(x, y) for x, y in zip(outputs.values(), [src_x, target_x])

@@ -173,7 +173,6 @@ def copy_file(src, dst):
 def save_torch_module(x, folder, filename):
     if isinstance(x, torch.nn.DataParallel):
         x = x.module
-    makedir_if_not_there(folder)
     filename = full_path(folder, filename)
     LOGGER.debug(f"Saving {filename}")
     pml_cf.save_model(x, filename)
@@ -188,7 +187,6 @@ def load_torch_module(x, folder, filename):
 
 
 def save_json(x, folder, filename):
-    makedir_if_not_there(folder)
     filename = full_path(folder, filename)
     with open(filename, "w") as fp:
         LOGGER.debug(f"Saving {filename}")
@@ -204,7 +202,6 @@ def load_json(folder, filename):
 
 
 def save_npy(x, folder, filename):
-    makedir_if_not_there(folder)
     filename = full_path(folder, filename)
     LOGGER.debug(f"Saving {filename}")
     np.save(filename, x, allow_pickle=False)
@@ -424,12 +421,10 @@ def to_set(x):
     return set(x)
 
 
-def check_domain(cls, domain, keep_len=False):
+def check_domain(domain, keep_len=False):
     if domain is not None:
         if len(torch.unique(domain)) > 1:
-            raise ValueError(
-                f"{cls_name(cls)} inference only supports one domain per batch"
-            )
+            raise ValueError(f"inference only supports one domain per batch")
         if not keep_len and not len_one_tensor(domain):
             domain = domain[0]
     return domain
@@ -508,3 +503,22 @@ def extract_progress(compressed_obj):
         length = len(iterable)
     for member in tqdm.tqdm(iterable, total=length):
         yield member
+
+
+def assert_state_dict_keys(state_dict, keys):
+    if state_dict.keys() != keys:
+        raise KeyError(
+            f"state_dict.keys {state_dict.keys()} do not match expected keys {keys}"
+        )
+
+
+def subset_of_dict(x, subset):
+    if not isinstance(x, dict):
+        raise TypeError(f"{x} is not a dict")
+    if subset == {}:
+        return x
+    if isinstance(subset, set):
+        return {k: x[k] for k in subset}
+    if isinstance(subset, dict):
+        return {k: subset_of_dict(x[k], v) for k, v in subset.items()}
+    raise TypeError("subset argument must be dict or set")

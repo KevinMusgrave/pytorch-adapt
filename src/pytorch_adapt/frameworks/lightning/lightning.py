@@ -73,7 +73,7 @@ class Lightning(pl.LightningModule):
         else:
             outputs = single_dataloader_collect(outputs)
             data = {required_data[0]: outputs}
-        score = self.validator.score(**data)
+        score = self.validator(**data)
         self.log("validation_score", score)
 
     def configure_optimizers(self):

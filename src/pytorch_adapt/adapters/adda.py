@@ -1,11 +1,9 @@
 import copy
-from typing import Tuple
-
-import torch
 
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..hooks import ADDAHook
-from ..utils.common_functions import check_domain
+from ..inference import adda_fn
+from ..utils import common_functions as c_f
 from .base_adapter import BaseAdapter
 from .utils import default_optimizer_tuple, with_opt
 
@@ -25,20 +23,9 @@ class ADDA(BaseAdapter):
 
     hook_cls = ADDAHook
 
-    def inference_default(self, x, domain) -> Tuple[torch.Tensor, torch.Tensor]:
-        """
-        Arguments:
-            x: The input to the model
-            domain: If 0, then ```features = G(x)```
-                Otherwise ```features = T(x)```.
-        Returns:
-            Features and logits
-        """
-        domain = check_domain(self, domain)
-        fe = "G" if domain == 0 else "T"
-        features = self.models[fe](x)
-        logits = self.models["C"](features)
-        return features, logits
+    def __init__(self, inference_fn=None, **kwargs):
+        inference_fn = c_f.default(inference_fn, adda_fn)
+        super().__init__(inference_fn=inference_fn, **kwargs)
 
     def get_default_containers(self) -> MultipleContainers:
         """
@@ -61,6 +48,6 @@ class ADDA(BaseAdapter):
             d_opts=with_opt(["D"]), g_opts=with_opt(["T"]), **hook_kwargs
         )
 
-    def init_containers_and_check_keys(self):
-        self.containers["models"]["T"] = copy.deepcopy(self.containers["models"]["G"])
-        super().init_containers_and_check_keys()
+    def init_containers_and_check_keys(self, containers):
+        containers["models"]["T"] = copy.deepcopy(containers["models"]["G"])
+        super().init_containers_and_check_keys(containers)

@@ -1,4 +1,3 @@
-import shutil
 import unittest
 
 from torchvision.datasets import MNIST
@@ -7,6 +6,8 @@ from pytorch_adapt.datasets import (
     MNISTM,
     Office31,
     OfficeHome,
+    SourceDataset,
+    TargetDataset,
     get_mnist_mnistm,
     get_office31,
     get_officehome,
@@ -26,6 +27,20 @@ class TestGetters(unittest.TestCase):
             self.assertTrue(len(datasets[k]) == sizes[k])
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
+    def test_empty_array(self):
+        datasets = get_mnist_mnistm(["mnist"], [], folder=DATASET_FOLDER, download=True)
+        self.assertTrue(datasets.keys() == {"src_train", "src_val", "train"})
+        self.assertTrue(len(datasets["train"]) == 60000)
+        self.assertTrue(isinstance(datasets["train"], SourceDataset))
+
+        datasets = get_mnist_mnistm(
+            [], ["mnistm"], folder=DATASET_FOLDER, download=True
+        )
+        self.assertTrue(datasets.keys() == {"target_train", "target_val", "train"})
+        self.assertTrue(len(datasets["train"]) == 59001)
+        self.assertTrue(isinstance(datasets["train"], TargetDataset))
+
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_get_mnist_mnistm(self):
         datasets = get_mnist_mnistm(
             ["mnist"], ["mnistm"], folder=DATASET_FOLDER, download=True
@@ -41,7 +56,6 @@ class TestGetters(unittest.TestCase):
                 "target_val": 9001,
             },
         )
-        shutil.rmtree(DATASET_FOLDER)
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_officehome(self):
@@ -59,7 +73,6 @@ class TestGetters(unittest.TestCase):
                 "target_val": 888,
             },
         )
-        shutil.rmtree(DATASET_FOLDER)
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_office31(self):
@@ -92,5 +105,3 @@ class TestGetters(unittest.TestCase):
                 "target_val": 159,
             },
         )
-
-        shutil.rmtree(DATASET_FOLDER)

@@ -2,67 +2,46 @@ import logging
 
 import ignite.distributed as idist
 from ignite.contrib.handlers import ProgressBar
+from ignite.engine import Events
+from ignite.handlers import EarlyStopping
 from ignite.utils import setup_logger
 
 from ...utils import common_functions as c_f
 from ...utils import exceptions
+from ...validators import utils as val_utils
 from ...weighters import get_multiple_loss_totals
 from .dictionary_accumulator import DictionaryAccumulator
 
 
 def get_validation_runner(
-    cls,
+    collector,
     dataloaders,
     validator,
-    stat_getter,
-    saver,
+    val_hooks,
     logger,
-    val_data_hook,
 ):
-    required_data = validator.required_data
-    if stat_getter:
-        required_data = list(set(required_data + stat_getter.required_data))
+    required_data = []
+    for v in [validator, *val_hooks]:
+        if v and hasattr(v, "required_data"):
+            required_data = list(set(required_data + v.required_data))
 
     def run_validation(engine):
-
         epoch = engine.state.epoch
-
-        collected_data = collect_from_dataloaders(cls, dataloaders, required_data)
-        get_validation_score(collected_data, validator, epoch)
-
-        if saver:
-            saver.save_validator(validator)
-            saver.save_adapter(cls.adapter, epoch, validator.best_epoch)
+        collected_data = collect_from_dataloaders(collector, dataloaders, required_data)
+        score = None
+        if validator:
+            score = val_utils.call_val_hook(validator, collected_data, epoch)
+        for hook in val_hooks:
+            val_utils.call_val_hook(hook, collected_data, epoch)
         if logger:
             logger.add_validation({"validator": validator}, epoch)
-        log_str = f"VALIDATION SCORES:\n{validator}\n"
-
-        if stat_getter:
-            get_validation_score(collected_data, stat_getter, epoch)
-            if saver:
-                saver.save_stat_getter(stat_getter)
-            if logger:
-                logger.add_validation({"stat_getter": stat_getter}, epoch)
-            log_str += f"OTHER STATS:\n{stat_getter}\n"
-
-        c_f.LOGGER.info(log_str)
-        if logger:
             logger.write(engine)
-
-        if val_data_hook:
-            val_data_hook(engine, collected_data)
+        return score
 
     return run_validation
 
 
-def get_validation_score(collected_data, validator, epoch=None):
-    kwargs = c_f.filter_kwargs(collected_data, validator.required_data)
-    if epoch is None:
-        return validator.score(**kwargs)
-    return validator.score(epoch, **kwargs)
-
-
-def collect_from_dataloaders(cls, dataloaders, required_data):
+def collect_from_dataloaders(collector, dataloaders, required_data):
     collected_data = {}
 
     for k in required_data:
@@ -71,7 +50,7 @@ def collect_from_dataloaders(cls, dataloaders, required_data):
         c_f.val_dataloader_checks(curr_dataloader)
         curr_dataset = curr_dataloader.dataset
         iterable = curr_dataloader.__iter__()
-        curr_collected = accumulate_collector_output(cls.collector, iterable, k)
+        curr_collected = accumulate_collector_output(collector, iterable, k)
         c_f.val_collected_data_checks(curr_collected, curr_dataset)
         collected_data[k] = curr_collected
         del iterable
@@ -89,30 +68,6 @@ def step_lr_schedulers(lr_schedulers, scheduler_type):
 def auto_model(*args, **kwargs):
     def handler(model):
         return idist.auto_model(model, *args, **kwargs)
-
-    return handler
-
-
-def save_adapter_without_validator(saver, adapter):
-    def handler(engine):
-        saver.save_adapter(adapter, engine.state.epoch, None)
-
-    return handler
-
-
-def early_stopper(patience, validator):
-    def handler(engine):
-        if engine.state.epoch > 2:
-            # this runs at the beginning of a new epoch
-            # so engine.state.epoch has already incremented
-            # it's also 1-indexed
-            epochs_since_best_epoch = engine.state.epoch - 1
-            if validator.best_epoch is not None:
-                epochs_since_best_epoch -= validator.best_epoch
-            c_f.LOGGER.info(f"epochs_since_best_epoch = {epochs_since_best_epoch}")
-            if epochs_since_best_epoch > patience:
-                c_f.LOGGER.info("***Performance has plateaued. Exiting.***")
-                engine.terminate()
 
     return handler
 
@@ -142,7 +97,10 @@ def accumulate_collector_output(collector, iterable, output_name):
     accumulator.attach(collector, output_name)
     collector.run(iterable)
     accumulator.detach(collector)
-    return collector.state.metrics[output_name]
+    output = collector.state.metrics[output_name]
+    collector.state.output = {}
+    collector.state.metrics = {}
+    return output
 
 
 def set_engine_logger(engine, name, level=logging.CRITICAL):
@@ -168,23 +126,19 @@ def set_loggers_and_pbars(cls, keys):
         return do_for_all_engines(cls, attach_pbar, keys)
 
 
-def resume_checks(validator, stat_getter, framework):
-    last_trainer_epoch = framework.trainer.state.epoch
-    for name, v in {"validator": validator, "stat_getter": stat_getter}.items():
-        if not v:
-            continue
-        last_validator_epoch = v.epochs[-1]
-        if last_trainer_epoch != last_validator_epoch:
-            raise exceptions.ResumeCheckError(
-                f"Last trainer epoch ({last_trainer_epoch}) does not equal last {name} epoch ({last_validator_epoch})"
-            )
+def resume_checks(trainer, validator):
+    last_trainer_epoch = trainer.state.epoch
+    if not validator:
+        return
+    last_validator_epoch = validator.epochs[-1]
+    if last_trainer_epoch != last_validator_epoch:
+        raise exceptions.ResumeCheckError(
+            f"Last trainer epoch ({last_trainer_epoch}) does not equal last validator epoch ({last_validator_epoch})"
+        )
 
 
-def is_done(trainer, max_epochs=None, **kwargs):
-    try:
-        return trainer.state.epoch >= max_epochs
-    except TypeError:
-        return False
+def is_done(trainer, max_epochs):
+    return trainer.state.epoch >= max_epochs
 
 
 def zero_grad(adapter):
@@ -194,3 +148,17 @@ def zero_grad(adapter):
         adapter.optimizers.zero_grad()
 
     return handler
+
+
+def interval_condition(interval, max_epochs):
+    condition = Events.EPOCH_COMPLETED(every=interval)
+    if max_epochs % interval != 0:
+        condition |= Events.EPOCH_COMPLETED(once=max_epochs)
+    return condition
+
+
+def early_stopper(**kwargs):
+    def fn(trainer, score_function):
+        return EarlyStopping(trainer=trainer, score_function=score_function, **kwargs)
+
+    return fn

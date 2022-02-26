@@ -22,7 +22,7 @@ class TestAccuracyValidator(unittest.TestCase):
                     logits = torch.randn(dataset_size, 10)
                     preds = torch.softmax(logits, dim=1)
                     kwargs = {"src_val": {"labels": labels, "preds": preds}}
-                    score = validator.score(epoch=epoch, **kwargs)
+                    score = validator(epoch=epoch, **kwargs)
                     correct_score = accuracy_score(
                         labels.numpy(), np.argmax(logits.numpy(), axis=1)
                     )

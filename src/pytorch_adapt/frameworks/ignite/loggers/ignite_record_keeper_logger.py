@@ -1,20 +1,9 @@
 import torch
 from pytorch_metric_learning.utils import common_functions as pml_cf
 
-from ...hooks.base import BaseHook
-from ...utils import common_functions as c_f
-from ...weighters.base_weighter import BaseWeighter
-
-
-class IgniteEmptyLogger:
-    def add_training(self, *args, **kwargs):
-        pass
-
-    def add_validation(self, *args, **kwargs):
-        pass
-
-    def write(self, *args, **kwargs):
-        pass
+from ....hooks.base import BaseHook
+from ....utils import common_functions as c_f
+from ....weighters.base_weighter import BaseWeighter
 
 
 class IgniteRecordKeeperLogger:
@@ -36,9 +25,6 @@ class IgniteRecordKeeperLogger:
             tensorboard_writer:
             record_writer: a ```RecordWriter``` object (see record-keeper)
         """
-        import record_keeper
-
-        c_f.LOGGER.info(f"record_keeper version {record_keeper.__version__}")
         from record_keeper import RecordKeeper, RecordWriter
         from torch.utils.tensorboard import SummaryWriter
 
@@ -57,25 +43,29 @@ class IgniteRecordKeeperLogger:
             attributes_to_search_for=attr_list_names,
         )
 
-    def add_training(self, engine):
-        adapter = engine.state.adapter
-        record_these = [
-            ({"engine_output": engine.state.output}, {}),
-            (
-                adapter.optimizers,
-                {
-                    "parent_name": "optimizers",
-                    "custom_attr_func": optimizer_attr_func,
-                },
-            ),
-            ({"misc": adapter.misc}, {}),
-            (
-                {"hook": adapter.hook},
-                {"recursive_types": [BaseHook, BaseWeighter, torch.nn.Module]},
-            ),
-        ]
-        for record, kwargs in record_these:
-            self.record_keeper.update_records(record, engine.state.iteration, **kwargs)
+    def add_training(self, adapter):
+        def fn(engine):
+            record_these = [
+                ({"engine_output": engine.state.output}, {}),
+                (
+                    adapter.optimizers,
+                    {
+                        "parent_name": "optimizers",
+                        "custom_attr_func": optimizer_attr_func,
+                    },
+                ),
+                ({"misc": adapter.misc}, {}),
+                (
+                    {"hook": adapter.hook},
+                    {"recursive_types": [BaseHook, BaseWeighter, torch.nn.Module]},
+                ),
+            ]
+            for record, kwargs in record_these:
+                self.record_keeper.update_records(
+                    record, engine.state.iteration, **kwargs
+                )
+
+        return fn
 
     def add_validation(self, data, epoch):
         self.record_keeper.update_records(data, epoch)

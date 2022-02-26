@@ -45,7 +45,7 @@ class ScoreHistory(ABC):
             list_of_names=["latest_score", "best_score", "latest_epoch", "best_epoch"],
         )
 
-    def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
+    def __call__(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
         """
         Arguments:
             epoch: The epoch to be scored.
@@ -60,7 +60,7 @@ class ScoreHistory(ABC):
         """
         if epoch in self.epochs:
             raise ValueError(f"Epoch {epoch} has already been evaluated")
-        score = self.validator.score(**kwargs)
+        score = self.validator(**kwargs)
         sub_scores = None
         if isinstance(score, (list, tuple)):
             score, sub_scores = score
@@ -164,6 +164,15 @@ class ScoreHistory(ABC):
             self, ["validator", "latest_score", "best_score", "best_epoch"]
         )
 
+    def state_dict(self):
+        return {k: getattr(self, k) for k in state_dict_keys()}
+
+    def load_state_dict(self, state_dict):
+        c_f.assert_state_dict_keys(state_dict, set(state_dict_keys()))
+        for k, v in state_dict.items():
+            if not isinstance(getattr(self.__class__, k, None), property):
+                setattr(self, k, v)
+
 
 class ScoreHistories(ScoreHistory):
     def __init__(self, validator, **kwargs):
@@ -174,8 +183,8 @@ class ScoreHistories(ScoreHistory):
         self.histories = {k: ScoreHistory(v) for k, v in validator.validators.items()}
         pml_cf.add_to_recordable_attributes(self, list_of_names=["histories"])
 
-    def score(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
-        score, sub_scores = super().score(epoch, **kwargs)
+    def __call__(self, epoch: int, **kwargs: Dict[str, torch.Tensor]) -> float:
+        score, sub_scores = super().__call__(epoch, **kwargs)
         for k, v in self.histories.items():
             v.append_to_history_and_normalize(sub_scores[k], epoch)
         return score
@@ -184,6 +193,20 @@ class ScoreHistories(ScoreHistory):
         x = super().extra_repr()
         x += f"\n{c_f.extra_repr(self, ['histories'])}"
         return x
+
+    def state_dict(self):
+        output = super().state_dict()
+        output.update(
+            {"histories": {k: v.state_dict() for k, v in self.histories.items()}}
+        )
+        return output
+
+    def load_state_dict(self, state_dict):
+        histories = state_dict.pop("histories")
+        super().load_state_dict(state_dict)
+        c_f.assert_state_dict_keys(histories, self.histories.keys())
+        for k, v in histories.items():
+            self.histories[k].load_state_dict(v)
 
 
 def remove_ignore_epoch(x, epochs, ignore_epoch):
@@ -194,3 +217,13 @@ def remove_ignore_epoch(x, epochs, ignore_epoch):
 
 def return_raw(raw_score_history):
     return raw_score_history
+
+
+def state_dict_keys():
+    return [
+        "best_score",
+        "best_epoch",
+        "raw_score_history",
+        "score_history",
+        "epochs",
+    ]
