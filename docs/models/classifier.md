@@ -1,1 +1,0 @@
-::: pytorch_adapt.models.classifier

@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.do_nothing_optimizer

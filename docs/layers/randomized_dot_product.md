@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.randomized_dot_product

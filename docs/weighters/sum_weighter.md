@@ -1,1 +1,0 @@
-::: pytorch_adapt.weighters.sum_weighter

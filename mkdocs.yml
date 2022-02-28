@@ -19,29 +19,24 @@ theme:
   logo: imgs/TinyLogo.png
   favicon: imgs/Favicon.png
 
+nav:
+# rest of the navigation...
+# defer to gen-files + literate-nav
+- Code Reference: reference/  # 
+# rest of the navigation...
+
 
 plugins:
 - search
+- gen-files:
+    scripts:
+    - docs/gen_ref_pages.py
+- mkdocstrings:
+    watch:
+    - src/pytorch_adapt
 - section-index
 - literate-nav:
     nav_file: SUMMARY.md
-- mkdocstrings:
-    default_handler: python
-    handlers:
-      python:
-        selection:
-          filters: []
-        rendering:
-          show_root_heading: true
-          show_source: true
-          heading_level: 3
-        setup_commands:
-          - import sys
-          - sys.path.insert(0, "src")
-      watch:
-      - src/pytorch_adapt
-      selection:
-        new_path_syntax: yes
 
 markdown_extensions:
 - toc:

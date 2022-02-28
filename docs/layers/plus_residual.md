@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.plus_residual
