@@ -20,7 +20,7 @@ class TestConditions(unittest.TestCase):
             G = Net(32, 16)
             D = Net(16, 1)
 
-            result = h({}, locals())
+            result = h(locals())
             self.assertTrue(G.count == D.count == 2)
 
             logits = D(G(torch.cat([src_imgs, target_imgs], dim=0)))

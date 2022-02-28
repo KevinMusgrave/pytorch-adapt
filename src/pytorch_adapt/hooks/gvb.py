@@ -93,14 +93,14 @@ class BridgeLossHook(BaseWrapperHook):
         self.hook = hook
         self.loss_fn = c_f.default(loss_fn, AbsLoss, {})
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         strs = c_f.filter(self.hook.out_keys, f"_[a-z]bridge$", ["^src", "^target"])
         [src_bridge, target_bridge] = c_f.extract([outputs, inputs], strs)
-        return {
+        return outputs, {
             f"src_bridge_loss": self.loss_fn(src_bridge),
             f"target_bridge_loss": self.loss_fn(target_bridge),
-        }, outputs
+        }
 
     def _loss_keys(self):
         return [f"src_bridge_loss", f"target_bridge_loss"]

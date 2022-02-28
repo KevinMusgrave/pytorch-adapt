@@ -51,7 +51,7 @@ class TestMCD(unittest.TestCase):
 
             src_imgs_features = torch.randn(batch_size, emb_size)
             src_labels = torch.randint(0, num_classes, size=(batch_size,))
-            loss, outputs = h({}, locals())
+            outputs, loss = h(locals())
             assertRequiresGrad(self, outputs)
 
             self.assertTrue(
@@ -91,7 +91,7 @@ class TestMCD(unittest.TestCase):
             C = MultipleModels(C0, C1)
 
             target_imgs_features = torch.randn(batch_size, emb_size)
-            loss, outputs = h({}, locals())
+            outputs, loss = h(locals())
             assertRequiresGrad(self, outputs)
             self.assertTrue(
                 outputs[logits_key][i].requires_grad == True for i in range(3)
@@ -157,7 +157,7 @@ class TestMCD(unittest.TestCase):
                 model_counts = validate_hook(h, list(data.keys()))
 
                 torch.manual_seed(seed)
-                losses, outputs = h({}, {**models, **data})
+                outputs, losses = h({**models, **data})
                 assertRequiresGrad(self, outputs)
                 self.assertTrue(
                     outputs.keys()

@@ -58,7 +58,7 @@ class TestADDA(unittest.TestCase):
                     "target_domain": target_domain,
                 }
                 model_counts = validate_hook(h, list(data.keys()))
-                losses, outputs = h({}, {**models, **data})
+                outputs, losses = h({**models, **data})
                 assertRequiresGrad(self, outputs)
                 output_keys = {
                     "src_imgs_features_detached",

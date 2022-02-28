@@ -81,7 +81,7 @@ class TestCDAN(unittest.TestCase):
 
                 ctx = self.assertRaises(RuntimeError) if bad_fc_size else nullcontext()
                 with ctx:
-                    losses_d, outputs_d = d_hook({}, locals())
+                    outputs_d, losses_d = d_hook(locals())
                 if bad_fc_size:
                     break
                 self.assertTrue(G.count == C.count == D.count == 2)
@@ -102,7 +102,7 @@ class TestCDAN(unittest.TestCase):
                 )
                 assertRequiresGrad(self, outputs_d)
 
-                losses_g, outputs_g = g_hook({}, {**locals(), **outputs_d})
+                outputs_g, losses_g = g_hook({**locals(), **outputs_d})
                 self.assertTrue(G.count == C.count == 2)
                 self.assertTrue(D.count == 4)
                 self.assertTrue(
@@ -198,7 +198,7 @@ class TestCDAN(unittest.TestCase):
                     post_g=post_g_,
                 )
                 model_counts = validate_hook(hook, list(data.keys()))
-                losses, outputs = hook({}, {**models, **data})
+                outputs, losses = hook({**models, **data})
                 assertRequiresGrad(self, outputs)
 
                 output_keys = {

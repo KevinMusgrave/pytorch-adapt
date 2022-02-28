@@ -45,12 +45,12 @@ class AlignerHook(BaseWrapperHook):
         self.hook = c_f.default(hook, default_hook, {})
         self.layer = layer
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         strs = c_f.filter(self.hook.out_keys, f"_{self.layer}$", ["^src", "^target"])
         [src, target] = c_f.extract([outputs, inputs], strs)
         confusion_loss = self.loss_fn(src, target)
-        return {self._loss_keys()[0]: confusion_loss}, outputs
+        return outputs, {self._loss_keys()[0]: confusion_loss}
 
     def _loss_keys(self):
         return [f"{self.layer}_confusion_loss"]
@@ -84,12 +84,12 @@ class JointAlignerHook(BaseWrapperHook):
         self.loss_fn = c_f.default(loss_fn, MMDLoss, {})
         self.hook = c_f.default(hook, FeaturesAndLogitsHook, {})
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         src = self.get_all_domain_features(inputs, outputs, "src")
         target = self.get_all_domain_features(inputs, outputs, "target")
         confusion_loss = self.loss_fn(src, target)
-        return {self._loss_keys()[0]: confusion_loss}, outputs
+        return outputs, {self._loss_keys()[0]: confusion_loss}
 
     def _loss_keys(self):
         return ["joint_confusion_loss"]

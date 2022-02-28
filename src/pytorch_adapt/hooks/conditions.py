@@ -28,10 +28,10 @@ class StrongDHook(BaseConditionHook):
             FeaturesHook(detach=True), DLogitsHook(detach=True)
         )
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         with torch.no_grad():
-            outputs = self.hook(losses, inputs)[1]
+            outputs = self.hook(inputs, losses)[0]
             [d_src_logits, d_target_logits] = c_f.extract(
                 [outputs, inputs],
                 c_f.filter(

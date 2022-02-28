@@ -60,7 +60,7 @@ class TestSymNets(unittest.TestCase):
         G, C, src_imgs, target_imgs, batch_size, num_classes = get_model_and_data()
         h = SymNetsEntropyHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.models[0].count == C.models[1].count == 1)
         assertRequiresGrad(self, outputs)
@@ -83,7 +83,7 @@ class TestSymNets(unittest.TestCase):
             for half_idx in [0, 1]:
                 h = SymNetsDomainLossHook(domain, half_idx)
 
-                losses, new_outputs = h({}, {**models, **data, **outputs})
+                new_outputs, losses = h({**models, **data, **outputs})
                 outputs.update(new_outputs)
                 correct_count = 1 if domain == "src" else 2
                 self.assertTrue(
@@ -113,7 +113,7 @@ class TestSymNets(unittest.TestCase):
         src_labels = torch.randint(0, num_classes, size=(batch_size,))
         h = SymNetsCategoryLossHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.models[0].count == C.models[1].count == 1)
         assertRequiresGrad(self, outputs)
@@ -146,7 +146,7 @@ class TestSymNets(unittest.TestCase):
         h = SymNetsHook(c_opts, g_opts)
         model_counts = validate_hook(h, list(data.keys()))
 
-        losses, outputs = h({}, {**models, **data})
+        outputs, losses = h({**models, **data})
         self.assertTrue(G.count == model_counts["G"] == 2)
         self.assertTrue(
             C.models[0].count == C.models[1].count == model_counts["C"] == 4

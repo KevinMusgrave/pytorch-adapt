@@ -44,8 +44,8 @@ class ATDOCHook(BaseHook):
         )
         self.hook = FeaturesAndLogitsHook(domains=["target"])
 
-    def call(self, losses, inputs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        outputs = self.hook(inputs, losses)[0]
         [features, logits] = c_f.extract(
             [outputs, inputs],
             c_f.filter(self.hook.out_keys, "", ["_features$", "_logits$"]),
@@ -56,7 +56,7 @@ class ATDOCHook(BaseHook):
         loss = self.loss_fn(logits, pseudo_labels)
         weights = self.weighter(neighbor_preds)
         loss = torch.mean(weights * loss)
-        return {"pseudo_label_loss": loss}, outputs
+        return outputs, {"pseudo_label_loss": loss}
 
     def _loss_keys(self):
         """"""

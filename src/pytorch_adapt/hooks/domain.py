@@ -95,9 +95,9 @@ class DomainLossHook(BaseWrapperHook):
         self.hook = ChainHook(f_hook, d_hook)
         self.in_keys = self.hook.in_keys + ["src_domain", "target_domain"]
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         losses = {}
-        outputs = self.hook(losses, inputs)[1]
+        outputs = self.hook(inputs, losses)[0]
         labels = self.extract_domain_labels(inputs)
         for domain_name, labels in labels.items():
             [dlogits] = c_f.extract(
@@ -110,7 +110,7 @@ class DomainLossHook(BaseWrapperHook):
                 labels = labels.type(torch.float)
             loss = self.d_loss_fn(dlogits, labels)
             losses[f"{domain_name}_domain_loss"] = loss
-        return losses, outputs
+        return outputs, losses
 
     def extract_domain_labels(self, inputs):
         [src_domain, target_domain] = c_f.extract(

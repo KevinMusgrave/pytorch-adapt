@@ -37,23 +37,23 @@ class BaseReducer(BaseHook, ABC):
         self.default_reducer = default_reducer
         self.curr_loss_keys = []
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         self.curr_loss_keys = list(losses.keys())
         apply_to = self.get_keys_to_apply_to(losses)
-        losses, outputs = self.call_reducer(losses, inputs, apply_to)
+        outputs, losses = self.call_reducer(inputs, losses, apply_to)
         if self.default_reducer:
             combined = c_f.assert_dicts_are_disjoint(inputs, outputs)
-            losses, new_outputs = self.default_reducer(losses, combined)
+            new_outputs, losses = self.default_reducer(combined, losses)
             outputs.update(new_outputs)
         if losses.keys() != set(self.curr_loss_keys):
             raise ValueError(
                 "Loss dict returned by reducer should have same keys as input loss dict"
             )
-        return losses, outputs
+        return outputs, losses
 
     @abstractmethod
-    def call_reducer(self, losses, inputs, apply_to):
+    def call_reducer(self, inputs, losses, apply_to):
         pass
 
     def _loss_keys(self):
@@ -79,10 +79,10 @@ class MultipleReducers(BaseHook):
         super().__init__(**kwargs)
         self.reducers = reducers
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         for r in self.reducers:
-            losses, inputs = r(losses, inputs)
-        return losses, inputs
+            inputs, losses = r(inputs, losses)
+        return inputs, losses
 
     def _loss_keys(self):
         return c_f.join_lists([r.loss_keys for r in self.reducers])
@@ -135,8 +135,8 @@ class EntropyReducer(BaseReducer):
         )
         self.context = torch.no_grad() if detach_weights else nullcontext()
 
-    def call_reducer(self, losses, inputs, apply_to):
-        outputs = self.f_hook(losses, inputs)[1]
+    def call_reducer(self, inputs, losses, apply_to):
+        outputs = self.f_hook(inputs, losses)[0]
         for k in apply_to:
             if self.src_regex.search(k):
                 domain = "src"
@@ -150,7 +150,7 @@ class EntropyReducer(BaseReducer):
                 weights = self.entropy_weights_fn(logits)
             losses[k] = torch.mean(weights * losses[k])
 
-        return losses, outputs
+        return outputs, losses
 
     def _out_keys(self):
         """"""
@@ -162,10 +162,10 @@ class MeanReducer(BaseReducer):
     Reduces loss elements by taking the mean.
     """
 
-    def call_reducer(self, losses, inputs, apply_to):
+    def call_reducer(self, inputs, losses, apply_to):
         for k in apply_to:
             losses[k] = torch.mean(losses[k])
-        return losses, {}
+        return {}, losses
 
     def _out_keys(self):
         """"""
