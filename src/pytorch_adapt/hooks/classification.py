@@ -87,7 +87,7 @@ class CLossHook(BaseWrapperHook):
             [outputs, inputs], c_f.filter(self.hook.out_keys, "_logits$")
         )
         loss = self.loss_fn(src_logits, inputs["src_labels"])
-        return {self._loss_keys()[0]: loss}, outputs
+        return outputs, {self._loss_keys()[0]: loss}
 
     def _loss_keys(self):
         """"""

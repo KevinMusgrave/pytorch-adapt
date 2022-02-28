@@ -24,7 +24,7 @@ class ISTLossHook(BaseWrapperHook):
         )
         domain = torch.cat([src_domain, target_domain], dim=0)
         loss = self.loss_fn(features, domain)
-        return {"ist_loss": loss}, outputs
+        return outputs, {"ist_loss": loss}
 
     def _loss_keys(self):
         return ["ist_loss"]

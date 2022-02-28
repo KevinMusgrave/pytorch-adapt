@@ -423,7 +423,7 @@ class ApplyToListHook(BaseWrapperHook):
             curr_extracted = [x[i] for x in extracted]
             curr_extracted = {k: v for k, v in zip(search_strs, curr_extracted)}
             x = self.hook({**inputs, **curr_extracted}, losses)
-            losses.update({f"{k}{i}": v for k, v in x[0].items()})
+            losses.update({f"{k}{i}": v for k, v in x[1].items()})
         return {}, losses
 
     def _loss_keys(self):

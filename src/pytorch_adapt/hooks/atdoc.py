@@ -56,7 +56,7 @@ class ATDOCHook(BaseHook):
         loss = self.loss_fn(logits, pseudo_labels)
         weights = self.weighter(neighbor_preds)
         loss = torch.mean(weights * loss)
-        return {"pseudo_label_loss": loss}, outputs
+        return outputs, {"pseudo_label_loss": loss}
 
     def _loss_keys(self):
         """"""

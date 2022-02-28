@@ -81,7 +81,7 @@ class TestGAN(unittest.TestCase):
                     model_counts = validate_hook(h, list(data.keys()))
 
                     torch.manual_seed(seed)
-                    losses, outputs = h({}, {**models, **data})
+                    outputs, losses = h({**models, **data})
                     assertRequiresGrad(self, outputs)
 
                     output_keys = {

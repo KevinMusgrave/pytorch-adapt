@@ -17,7 +17,7 @@ class TestVADA(unittest.TestCase):
         combined_model = torch.nn.Sequential(G, C)
         h = VATHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         # 2 for src+target features/logits
         # 4 inside the vat loss
@@ -43,7 +43,7 @@ class TestVADA(unittest.TestCase):
         combined_model = torch.nn.Sequential(G, C)
         h = VATPlusEntropyHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         # 2 for src+target features/logits
         # 4 inside the vat loss

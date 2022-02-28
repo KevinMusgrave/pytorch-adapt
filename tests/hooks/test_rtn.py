@@ -35,8 +35,8 @@ class TestRTN(unittest.TestCase):
         h1 = FeaturesAndLogitsHook()
         h2 = ResidualHook(domains=["src"])
 
-        outputs1 = h1({}, locals())[1]
-        outputs2 = h2({}, {**locals(), **outputs1})[1]
+        outputs1 = h1(locals())[0]
+        outputs2 = h2({**locals(), **outputs1})[0]
 
         self.assertTrue(G.count == C.count == 2)
         self.assertTrue(residual_model.layer.count == 1)
@@ -73,7 +73,7 @@ class TestRTN(unittest.TestCase):
         residual_model = PlusResidual(residual_layers)
         h = RTNLogitsHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.count == 2)
         self.assertTrue(residual_model.layer.count == 1)
@@ -109,7 +109,7 @@ class TestRTN(unittest.TestCase):
         feature_combiner = RandomizedDotProduct([16, 10], 16)
         h = RTNAlignerHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.count == 2)
         assertRequiresGrad(self, outputs)
@@ -174,7 +174,7 @@ class TestRTN(unittest.TestCase):
         }
         model_counts = validate_hook(h, list(data.keys()))
 
-        losses, outputs = h({}, {**models, **data})
+        outputs, losses = h({**models, **data})
         assertRequiresGrad(self, outputs)
         self.assertTrue(
             outputs.keys()
