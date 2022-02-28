@@ -17,8 +17,8 @@ class VATHook(BaseWrapperHook):
         self.loss_fn = c_f.default(loss_fn, VATLoss, {})
         self.hook = FeaturesAndLogitsHook()
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         [src_imgs, target_imgs, combined_model] = c_f.extract(
             inputs, ["src_imgs", "target_imgs", "combined_model"]
         )
@@ -28,10 +28,10 @@ class VATHook(BaseWrapperHook):
         )
         src_vat_loss = self.loss_fn(src_imgs, src_logits, combined_model)
         target_vat_loss = self.loss_fn(target_imgs, target_logits, combined_model)
-        return {
+        return outputs, {
             "src_vat_loss": src_vat_loss,
             "target_vat_loss": target_vat_loss,
-        }, outputs
+        }
 
     def _loss_keys(self):
         return ["src_vat_loss", "target_vat_loss"]

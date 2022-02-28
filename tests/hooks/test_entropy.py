@@ -16,7 +16,7 @@ class TestEntropy(unittest.TestCase):
         src_labels = torch.randint(0, 10, size=(100,))
         G = Net(32, 16)
         C = Net(16, 10)
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
         assertRequiresGrad(self, outputs)
 
         base_key = "target_imgs_features"

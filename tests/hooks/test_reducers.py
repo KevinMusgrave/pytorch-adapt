@@ -51,8 +51,8 @@ class TestReducers(unittest.TestCase):
                     entropy_weights_fn=entropy_weights_fn,
                 )
 
-                losses, outputs = h1({}, {**models, **data})
-                losses, outputs = h2(losses, {**models, **outputs})
+                outputs, losses = h1({**models, **data})
+                outputs, losses = h2({**models, **outputs}, losses)
 
                 [x.zero_grad() for x in opts]
                 losses["target_domain_loss"].backward()

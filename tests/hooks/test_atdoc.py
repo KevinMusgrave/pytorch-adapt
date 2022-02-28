@@ -34,7 +34,7 @@ class TestATDOC(unittest.TestCase):
         all_losses = []
         for i in range(iters):
             data = get_data(dataset_size, feature_dim, num_classes, batch_size)
-            losses, outputs = h({}, data)
+            outputs, losses = h(data)
             all_losses.append(losses["pseudo_label_loss"])
 
         torch.manual_seed(seed)

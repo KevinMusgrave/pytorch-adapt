@@ -80,14 +80,14 @@ class CLossHook(BaseWrapperHook):
             {"domains": ["src"], "detach_features": detach_features},
         )
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        outputs = self.hook(losses, inputs)[1]
+        outputs = self.hook(inputs, losses)[0]
         [src_logits] = c_f.extract(
             [outputs, inputs], c_f.filter(self.hook.out_keys, "_logits$")
         )
         loss = self.loss_fn(src_logits, inputs["src_labels"])
-        return {self._loss_keys()[0]: loss}, outputs
+        return outputs, {self._loss_keys()[0]: loss}
 
     def _loss_keys(self):
         """"""

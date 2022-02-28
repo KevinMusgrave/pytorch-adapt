@@ -23,12 +23,12 @@ class BaseLossHook(BaseHook):
         )
         self.regex = [f"^{k}" for k in self.domains]
 
-    def call(self, losses, inputs):
-        outputs = self.f_hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.f_hook(inputs, losses)[0]
         strs = c_f.filter(self.f_hook.out_keys, f"_{self.layer}$", self.regex)
         features = c_f.extract([outputs, inputs], strs)
         loss = sum(self.loss_fn(f) for f in features)
-        return {self.loss_name: loss}, outputs
+        return outputs, {self.loss_name: loss}
 
     def _loss_keys(self):
         return [self.loss_name]

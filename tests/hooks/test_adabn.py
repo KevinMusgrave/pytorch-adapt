@@ -46,7 +46,7 @@ class TestAdaBN(unittest.TestCase):
 
         h = AdaBNHook()
         model_counts = validate_hook(h, list(data.keys()))
-        losses, outputs = h({}, {**models, **data})
+        outputs, losses = h({**models, **data})
         self.assertTrue(
             G.count == C.count == model_counts["G"] == model_counts["C"] == 2
         )

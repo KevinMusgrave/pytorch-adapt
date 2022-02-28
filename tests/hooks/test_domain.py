@@ -60,7 +60,7 @@ class TestDomain(unittest.TestCase):
                             for x in output_keys
                         ]
 
-                    losses, outputs = h({}, locals())
+                    outputs, losses = h(locals())
                     self.assertTrue(all(x.count == 2 for x in [G, D]))
                     self.assertTrue(C.count == (2 if use_logits else 0))
                     self.assertTrue(outputs.keys() == {*output_keys})

@@ -97,7 +97,7 @@ class BaseAdapter(ABC):
         combined = c_f.assert_dicts_are_disjoint(
             self.models, self.misc, with_opt(self.optimizers), batch, kwargs
         )
-        losses, _ = self.hook({}, combined)
+        _, losses = self.hook(combined)
         return losses
 
     def inference(

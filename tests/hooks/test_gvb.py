@@ -78,7 +78,7 @@ class TestGVB(unittest.TestCase):
                         "target_domain",
                     ],
                 )
-                losses, outputs = h({}, locals())
+                outputs, losses = h(locals())
                 self.assertTrue(
                     losses["total_loss"].keys()
                     == {
@@ -226,7 +226,7 @@ class TestGVB(unittest.TestCase):
         model_counts = validate_hook(
             h, ["src_imgs", "src_labels", "target_imgs", "src_domain", "target_domain"]
         )
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(
             losses["d_loss"].keys()

@@ -37,7 +37,6 @@ class AdaBNHook(BaseWrapperHook):
             hooks.append(FeaturesChainHook(f_hook, l_hook))
         self.hook = ParallelHook(*hooks)
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         with torch.no_grad():
-            losses, outputs = self.hook(losses, inputs)
-        return losses, outputs
+            return self.hook(inputs, losses)

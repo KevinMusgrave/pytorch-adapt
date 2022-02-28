@@ -44,7 +44,7 @@ for data in tqdm(dataloader):
     data = batch_to_device(data, device)
     # Optimization is done inside the hook.
     # The returned loss is for logging.
-    loss, _ = hook({}, {**models, **data})
+    _, loss = hook({**models, **data})
 ```
 
 ### Build complex algorithms
@@ -62,7 +62,7 @@ misc = {"combined_model": torch.nn.Sequential(G, C)}
 hook = DANNHook(optimizers, post_g=[MCCHook(), VATHook()])
 for data in tqdm(dataloader):
     data = batch_to_device(data, device)
-    loss, _ = hook({}, {**models, **data, **misc})
+    _, loss = hook({**models, **data, **misc})
 ```
 
 ### Wrap with your favorite PyTorch framework

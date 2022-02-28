@@ -36,7 +36,7 @@ class TestDomainConfusion(unittest.TestCase):
         model_counts = validate_hook(h, list(data.keys()))
 
         for _ in range(10):
-            losses, outputs = h({}, {**models, **data})
+            outputs, losses = h({**models, **data})
             assertRequiresGrad(self, outputs)
             self.assertTrue(
                 outputs.keys()

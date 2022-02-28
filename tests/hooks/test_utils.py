@@ -17,7 +17,7 @@ class TestUtils(unittest.TestCase):
         D = Net(16, 1)
         h = AssertHook(DomainLossHook(), "_dlogits$")
         with self.assertRaises(ValueError):
-            losses, outputs = h({}, locals())
+            outputs, losses = h(locals())
 
         h = ChainHook(FeaturesHook(), h)
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
