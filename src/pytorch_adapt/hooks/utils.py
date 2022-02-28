@@ -7,7 +7,7 @@ from .base import BaseConditionHook, BaseHook, BaseWrapperHook
 class EmptyHook(BaseHook):
     """Returns two empty dictionaries."""
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         return {}, {}
 
@@ -37,11 +37,11 @@ class ZeroLossHook(BaseHook):
         self.loss_names = loss_names
         self.out_names = out_names
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         out_keys = set(self.out_names) - inputs.keys()
-        return {k: c_f.zero_loss() for k in self.loss_names}, {
-            k: None for k in out_keys
+        return {k: None for k in out_keys}, {
+            k: c_f.zero_loss() for k in self.loss_names
         }
 
     def _loss_keys(self):
@@ -94,24 +94,24 @@ class ChainHook(BaseHook):
         self.overwrite = overwrite
         self.in_keys = self.hooks[0].in_keys
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        out_losses, outputs = {}, {}
-        all_losses, all_inputs = losses, inputs
-        prev_losses, prev_outputs = {}, {}
+        outputs, out_losses = {}, {}
+        all_inputs, all_losses = inputs, losses
+        prev_outputs, prev_losses = {}, {}
         for i, h in enumerate(self.hooks):
-            self.check_overwrite(i, all_losses, prev_losses, False)
             self.check_overwrite(i, all_inputs, prev_outputs, self.overwrite)
-            all_losses = {**all_losses, **prev_losses}
+            self.check_overwrite(i, all_losses, prev_losses, False)
             all_inputs = {**all_inputs, **prev_outputs}
-            if self.conditions[i](all_losses, all_inputs):
-                x = h(all_losses, all_inputs)
+            all_losses = {**all_losses, **prev_losses}
+            if self.conditions[i](all_inputs, all_losses):
+                x = h(all_inputs, all_losses)
             else:
-                x = self.alts[i](all_losses, all_inputs)
-            prev_losses, prev_outputs = x
+                x = self.alts[i](all_inputs, all_losses)
+            prev_outputs, prev_losses = x
             out_losses.update(prev_losses)
             outputs.update(prev_outputs)
-        return out_losses, outputs
+        return outputs, out_losses
 
     def check_overlap(self, x, y, names):
         is_overlap, overlap = c_f.dicts_are_overlapping(x, y, return_overlap=True)
@@ -174,15 +174,15 @@ class ParallelHook(BaseHook):
         self.hooks = hooks
         self.in_keys = c_f.join_lists([h.in_keys for h in self.hooks])
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        out_losses, outputs = {}, {}
+        outputs, out_losses = {}, {}
         for h in self.hooks:
-            x = h(losses, inputs)
-            out_losses.update(x[0])
-            outputs.update(x[1])
+            x = h(inputs, losses)
+            outputs.update(x[0])
+            out_losses.update(x[1])
 
-        return out_losses, outputs
+        return outputs, out_losses
 
     def children_repr(self):
         x = super().children_repr()
@@ -214,12 +214,12 @@ class OnlyNewOutputsHook(BaseWrapperHook):
         super().__init__(**kwargs)
         self.hook = hook
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        losses, outputs = self.hook(losses, inputs)
+        outputs, losses = self.hook(inputs, losses)
         outputs = {k: outputs[k] for k in (outputs.keys() - inputs.keys())}
         c_f.assert_dicts_are_disjoint(inputs, outputs)
-        return losses, outputs
+        return outputs, losses
 
 
 class ApplyFnHook(BaseHook):
@@ -242,13 +242,13 @@ class ApplyFnHook(BaseHook):
         self.apply_to = apply_to
         self.is_loss = is_loss
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         x = c_f.extract(inputs, self.apply_to)
         outputs = {k: self.fn(v) for k, v in zip(self.apply_to, x)}
         if self.is_loss:
             return outputs, {}
-        return {}, outputs
+        return outputs, {}
 
     def _loss_keys(self):
         """"""
@@ -265,7 +265,7 @@ class ApplyFnHook(BaseHook):
 class TrueHook(BaseConditionHook):
     """Returns ```True```"""
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         return True
 
@@ -273,7 +273,7 @@ class TrueHook(BaseConditionHook):
 class FalseHook(BaseConditionHook):
     """Returns ```False```"""
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         return False
 
@@ -289,9 +289,9 @@ class NotHook(BaseConditionHook):
         super().__init__(**kwargs)
         self.hook = hook
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        return not self.hook(losses, inputs)
+        return not self.hook(inputs, losses)
 
 
 class AssertHook(BaseWrapperHook):
@@ -312,11 +312,11 @@ class AssertHook(BaseWrapperHook):
             raise TypeError("allowed must be a str")
         self.allowed = allowed
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        losses, outputs = self.hook(losses, inputs)
+        outputs, losses = self.hook(inputs, losses)
         self.assert_fn(outputs)
-        return losses, outputs
+        return outputs, losses
 
     def assert_fn(self, outputs):
         filtered = c_f.filter(outputs, self.allowed)
@@ -345,11 +345,11 @@ class MultiplierHook(BaseWrapperHook):
         self.hook = hook
         self.m = m
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        losses, outputs = self.hook(losses, inputs)
+        outputs, losses = self.hook(inputs, losses)
         losses = {k: v * self.m for k, v in losses.items()}
-        return losses, outputs
+        return outputs, losses
 
     def extra_repr(self):
         return c_f.extra_repr(self, ["m"])
@@ -365,9 +365,9 @@ class RepeatHook(BaseHook):
         Arguments:
             hook: The hook that will be executed ```n``` times
             n: The number of times the hook will be executed.
-            keep_only_last: If ```False```, the (losses, outputs) from each execution
+            keep_only_last: If ```False```, the (outputs, losses) from each execution
                 will be accumulated, and the keys will have the iteration number appended.
-                If ```True```, then only the (losses, outputs) of the final execution will
+                If ```True```, then only the (outputs, losses) of the final execution will
                 be kept.
         """
         super().__init__(**kwargs)
@@ -375,17 +375,17 @@ class RepeatHook(BaseHook):
         self.n = n
         self.keep_only_last = keep_only_last
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        losses, outputs = {}, {}
+        outputs, losses = {}, {}
         for i in range(self.n):
-            x = self.hook(losses, inputs)
+            x = self.hook(inputs, losses)
             if self.keep_only_last and i == self.n - 1:
-                losses, outputs = x
+                outputs, losses = x
             else:
-                losses.update({f"{k}{i}": v for k, v in x[0].items()})
-                outputs.update({f"{k}{i}": v for k, v in x[1].items()})
-        return losses, outputs
+                outputs.update({f"{k}{i}": v for k, v in x[0].items()})
+                losses.update({f"{k}{i}": v for k, v in x[1].items()})
+        return outputs, losses
 
     def _loss_keys(self):
         """"""
@@ -412,7 +412,7 @@ class ApplyToListHook(BaseWrapperHook):
         self.list_size = list_size
         self.regex = regex
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         search_strs = c_f.filter(inputs, self.regex)
         extracted = c_f.extract(inputs, search_strs)
@@ -422,9 +422,9 @@ class ApplyToListHook(BaseWrapperHook):
         for i in range(len(extracted[0])):
             curr_extracted = [x[i] for x in extracted]
             curr_extracted = {k: v for k, v in zip(search_strs, curr_extracted)}
-            x = self.hook(losses, {**inputs, **curr_extracted})
+            x = self.hook({**inputs, **curr_extracted}, losses)
             losses.update({f"{k}{i}": v for k, v in x[0].items()})
-        return losses, {}
+        return {}, losses
 
     def _loss_keys(self):
         """"""

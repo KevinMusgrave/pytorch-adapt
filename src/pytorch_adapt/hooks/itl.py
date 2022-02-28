@@ -12,8 +12,8 @@ class ISTLossHook(BaseWrapperHook):
         self.loss_fn = ISTLoss(distance=distance, with_div=with_div)
         self.hook = FeaturesHook()
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         [src_features, target_features] = c_f.extract(
             [outputs, inputs],
             c_f.filter(self.hook.out_keys, "_features$", ["^src", "^target"]),

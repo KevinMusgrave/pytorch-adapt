@@ -44,18 +44,18 @@ class OptimizerHook(BaseHook):
         self.reducer = c_f.default(reducer, MeanReducer, {})
         self.loss_components = {}
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
-        losses, outputs = self.hook(losses, inputs)
+        outputs, losses = self.hook(inputs, losses)
         combined = c_f.assert_dicts_are_disjoint(inputs, outputs)
-        losses, new_outputs = self.reducer(losses, combined)
+        new_outputs, losses = self.reducer(combined, losses)
         outputs.update(new_outputs)
         loss, self.loss_components = self.weighter(losses)
         optimizers = self.optimizers
         if isinstance(optimizers[0], str):
             optimizers = c_f.extract(inputs, optimizers)
         c_f.zero_back_step(loss, optimizers, inputs.get("custom_backward"))
-        return {}, outputs
+        return outputs, {}
 
     def _loss_keys(self):
         """"""
@@ -87,12 +87,12 @@ class SummaryHook(BaseHook):
         super().__init__(**kwargs)
         self.optimizers = optimizers
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         losses = {}
         for k, v in self.optimizers.items():
             losses[k] = v.loss_components
-        return losses, {}
+        return {}, losses
 
     def _loss_keys(self):
         """"""

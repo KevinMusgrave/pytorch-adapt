@@ -44,8 +44,8 @@ class ATDOCHook(BaseHook):
         )
         self.hook = FeaturesAndLogitsHook(domains=["target"])
 
-    def call(self, losses, inputs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        outputs = self.hook(inputs, losses)[0]
         [features, logits] = c_f.extract(
             [outputs, inputs],
             c_f.filter(self.hook.out_keys, "", ["_features$", "_logits$"]),
