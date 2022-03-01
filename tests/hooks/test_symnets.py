@@ -15,7 +15,7 @@ from pytorch_adapt.hooks import (
 )
 from pytorch_adapt.layers import MultipleModels
 
-from .utils import Net, assertRequiresGrad, get_opts, get_opt_tuple, assert_equal_models
+from .utils import Net, assert_equal_models, assertRequiresGrad, get_opt_tuple, get_opts
 
 
 def test_equivalent_adapter(G, C, data):
@@ -248,10 +248,5 @@ class TestSymNets(unittest.TestCase):
         total_loss.backward()
         g_opts[0].step()
 
-
-        assert_equal_models(
-            self, (G, adapter_models["G"], originalG), rtol=1e-6
-        )
-        assert_equal_models(
-            self, (C, adapter_models["C"], originalC), rtol=1e-6
-        )
+        assert_equal_models(self, (G, adapter_models["G"], originalG), rtol=1e-6)
+        assert_equal_models(self, (C, adapter_models["C"], originalC), rtol=1e-6)
