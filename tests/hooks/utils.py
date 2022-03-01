@@ -75,7 +75,14 @@ def get_opts(*models):
     return [torch.optim.SGD(m.parameters(), lr=0.1) for m in models]
 
 
+def get_opt_tuple():
+    return (torch.optim.SGD, {"lr": 0.1})
+
+
 def post_g_hook_update_keys(post_g, loss_keys, output_keys):
+    if not isinstance(post_g, list):
+        return
+    post_g = post_g[0]
     if isinstance(post_g, BSPHook):
         loss_keys.update({"bsp_loss"})
         for domain in post_g.domains:
@@ -94,6 +101,9 @@ def post_g_hook_update_keys(post_g, loss_keys, output_keys):
 def post_g_hook_update_total_loss(
     post_g, total_loss, src_features, target_features, target_logits
 ):
+    if not isinstance(post_g, list):
+        return
+    post_g = post_g[0]
     if isinstance(post_g, BSPHook):
         bsp_loss = 0
         if src_features is not None:
