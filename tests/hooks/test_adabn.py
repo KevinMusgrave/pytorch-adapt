@@ -14,7 +14,7 @@ from .utils import assertRequiresGrad
 
 def test_equivalent_adapter(G, C, data):
     models = Models({"G": copy.deepcopy(G), "C": copy.deepcopy(C)})
-    adapter = AdaBN(models=models)
+    adapter = AdaBN(models)
     adapter.training_step(data)
     return models
 

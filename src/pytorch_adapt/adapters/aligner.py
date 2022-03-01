@@ -38,9 +38,9 @@ class RTN(Aligner):
 
     hook_cls = RTNHook
 
-    def __init__(self, inference_fn=None, **kwargs):
+    def __init__(self, *args, inference_fn=None, **kwargs):
         inference_fn = c_f.default(inference_fn, rtn_fn)
-        super().__init__(inference_fn=inference_fn, **kwargs)
+        super().__init__(*args, inference_fn=inference_fn, **kwargs)
 
     def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()

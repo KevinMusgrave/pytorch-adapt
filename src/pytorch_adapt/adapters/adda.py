@@ -23,9 +23,9 @@ class ADDA(BaseAdapter):
 
     hook_cls = ADDAHook
 
-    def __init__(self, inference_fn=None, **kwargs):
+    def __init__(self, *args, inference_fn=None, **kwargs):
         inference_fn = c_f.default(inference_fn, adda_fn)
-        super().__init__(inference_fn=inference_fn, **kwargs)
+        super().__init__(*args, inference_fn=inference_fn, **kwargs)
 
     def get_default_containers(self) -> MultipleContainers:
         """
