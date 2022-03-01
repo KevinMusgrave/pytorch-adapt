@@ -4,6 +4,8 @@ import unittest
 import numpy as np
 import torch
 
+from pytorch_adapt.adapters import SymNets
+from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.hooks import (
     SymNetsCategoryLossHook,
     SymNetsDomainLossHook,
@@ -12,9 +14,19 @@ from pytorch_adapt.hooks import (
     validate_hook,
 )
 from pytorch_adapt.layers import MultipleModels
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_opts
+from .utils import Net, assertRequiresGrad, get_opts, get_opt_tuple, assert_equal_models
+
+
+def test_equivalent_adapter(G, C, data):
+    models = Models({"G": copy.deepcopy(G), "C": copy.deepcopy(C)})
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = SymNets(
+        models,
+        optimizers,
+    )
+    adapter.training_step(data)
+    return models
 
 
 def get_model_and_data():
@@ -187,6 +199,8 @@ class TestSymNets(unittest.TestCase):
             }
         )
 
+        adapter_models = test_equivalent_adapter(originalG, originalC, data)
+
         c_opts = get_opts(originalC)
         g_opts = get_opts(originalG)
 
@@ -234,7 +248,10 @@ class TestSymNets(unittest.TestCase):
         total_loss.backward()
         g_opts[0].step()
 
-        for x, y in [(G, originalG), (C, originalC)]:
-            self.assertTrue(
-                c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-6)
-            )
+
+        assert_equal_models(
+            self, (G, adapter_models["G"], originalG), rtol=1e-6
+        )
+        assert_equal_models(
+            self, (C, adapter_models["C"], originalC), rtol=1e-6
+        )
