@@ -1,3 +1,4 @@
+import itertools
 from contextlib import nullcontext
 
 import torch
@@ -11,6 +12,7 @@ from pytorch_adapt.layers import (
     MaxNormalizer,
     MCCLoss,
 )
+from pytorch_adapt.utils import common_functions as c_f
 
 
 class Net(torch.nn.Module):
@@ -140,3 +142,10 @@ def get_entropy_weights(c_logits, bs, detach_reducer):
         raise ValueError
 
     return src_entropy_weights, target_entropy_weights
+
+
+def assert_equal_models(cls, args, rtol=1e-6):
+    for x, y in itertools.combinations(args, 2):
+        cls.assertTrue(
+            c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=rtol)
+        )

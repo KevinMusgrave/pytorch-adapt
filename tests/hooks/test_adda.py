@@ -12,6 +12,7 @@ from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (
     Net,
+    assert_equal_models,
     assertRequiresGrad,
     get_opt_tuple,
     get_opts,
@@ -160,18 +161,12 @@ class TestADDA(unittest.TestCase):
                 # can't use model_counts for conditional part
                 self.assertTrue(D.count == d_count)
 
-                for x, y, z in [
-                    (G, adapter_models["G"], originalG),
-                    (T, adapter_models["T"], originalT),
-                    (D, adapter_models["D"], originalD),
-                ]:
-                    self.assertTrue(
-                        c_f.state_dicts_are_equal(
-                            x.state_dict(), z.state_dict(), rtol=1e-3
-                        )
-                    )
-                    self.assertTrue(
-                        c_f.state_dicts_are_equal(
-                            y.state_dict(), z.state_dict(), rtol=1e-3
-                        )
-                    )
+                assert_equal_models(
+                    self, (G, adapter_models["G"], originalG), rtol=1e-3
+                )
+                assert_equal_models(
+                    self, (T, adapter_models["T"], originalT), rtol=1e-3
+                )
+                assert_equal_models(
+                    self, (D, adapter_models["D"], originalD), rtol=1e-3
+                )

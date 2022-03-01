@@ -5,11 +5,30 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from pytorch_adapt.adapters import Aligner
+from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.hooks import AlignerPlusCHook, JointAlignerHook, validate_hook
 from pytorch_adapt.layers import CORALLoss, MMDLoss
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import assertRequiresGrad, get_models_and_data, get_opts
+from .utils import (
+    assert_equal_models,
+    assertRequiresGrad,
+    get_models_and_data,
+    get_opt_tuple,
+    get_opts,
+)
+
+
+def test_equivalent_adapter(G, C, data, aligner_hook, loss_fn):
+    models = Models({"G": copy.deepcopy(G), "C": copy.deepcopy(C)})
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = Aligner(
+        models,
+        optimizers,
+        hook_kwargs={"aligner_hook": aligner_hook, "loss_fn": loss_fn},
+    )
+    adapter.training_step(data)
+    return models
 
 
 class TestAligners(unittest.TestCase):
@@ -74,6 +93,10 @@ class TestAligners(unittest.TestCase):
                     G.count == model_counts["G"] == C.count == model_counts["C"] == 2
                 )
 
+                adapter_models = test_equivalent_adapter(
+                    originalG, originalC, data, aligner_hook, loss_fn()
+                )
+
                 opts = get_opts(originalG, originalC)
 
                 src_features = originalG(src_imgs)
@@ -120,9 +143,9 @@ class TestAligners(unittest.TestCase):
                 total_loss.backward()
                 [x.step() for x in opts]
 
-                for x, y in [(G, originalG), (C, originalC)]:
-                    self.assertTrue(
-                        c_f.state_dicts_are_equal(
-                            x.state_dict(), y.state_dict(), rtol=1e-6
-                        )
-                    )
+                assert_equal_models(
+                    self, (G, adapter_models["G"], originalG), rtol=1e-6
+                )
+                assert_equal_models(
+                    self, (C, adapter_models["C"], originalC), rtol=1e-6
+                )
