@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from pytorch_adapt.adapters import MCD
+from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.hooks import MCDHook, MCDLossHook, MultipleCLossHook, validate_hook
 from pytorch_adapt.layers import (
     MCDLoss,
@@ -12,9 +14,27 @@ from pytorch_adapt.layers import (
     SlicedWasserstein,
     StochasticLinear,
 )
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_models_and_data, get_opts
+from .utils import (
+    Net,
+    assert_equal_models,
+    assertRequiresGrad,
+    get_models_and_data,
+    get_opt_tuple,
+    get_opts,
+)
+
+
+def test_equivalent_adapter(G, C, data, repeat, loss_fn):
+    models = Models({"G": copy.deepcopy(G), "C": copy.deepcopy(C)})
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = MCD(
+        models,
+        optimizers,
+        hook_kwargs={"repeat": repeat, "discrepancy_loss_fn": loss_fn},
+    )
+    adapter.training_step(data)
+    return models
 
 
 def get_disc_loss(loss_fn, target_logits):
@@ -187,6 +207,11 @@ class TestMCD(unittest.TestCase):
                 self.assertTrue(C.models[0].count == model_counts["C"])
                 self.assertTrue(C.models[1].count == model_counts["C"])
 
+                torch.manual_seed(seed)
+                adapter_models = test_equivalent_adapter(
+                    originalG, originalC, data, repeat, loss_fn
+                )
+
                 opts = get_opts(originalG, originalC)
 
                 torch.manual_seed(seed)
@@ -255,9 +280,9 @@ class TestMCD(unittest.TestCase):
                     all(x == y for x, y in zip(correct_losses, computed_losses))
                 )
 
-                for x, y in [(G, originalG), (C, originalC)]:
-                    self.assertTrue(
-                        c_f.state_dicts_are_equal(
-                            x.state_dict(), y.state_dict(), rtol=1e-6
-                        )
-                    )
+                assert_equal_models(
+                    self, (G, adapter_models["G"], originalG), rtol=1e-6
+                )
+                assert_equal_models(
+                    self, (C, adapter_models["C"], originalC), rtol=1e-6
+                )
