@@ -5,6 +5,8 @@ from contextlib import nullcontext
 import numpy as np
 import torch
 
+from pytorch_adapt.adapters import CDANE
+from pytorch_adapt.containers import Misc, Models, Optimizers
 from pytorch_adapt.hooks import (
     AFNHook,
     BNMHook,
@@ -16,16 +18,39 @@ from pytorch_adapt.hooks import (
     validate_hook,
 )
 from pytorch_adapt.layers import RandomizedDotProduct
-from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (
+    assert_equal_models,
     assertRequiresGrad,
     get_entropy_weights,
     get_models_and_data,
+    get_opt_tuple,
     get_opts,
     post_g_hook_update_keys,
     post_g_hook_update_total_loss,
 )
+
+
+def test_equivalent_adapter(
+    G, D, C, feature_combiner, data, detach_reducer, post_g, softmax
+):
+    models = Models(
+        {"G": copy.deepcopy(G), "D": copy.deepcopy(D), "C": copy.deepcopy(C)}
+    )
+    misc = Misc({"feature_combiner": copy.deepcopy(feature_combiner)})
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = CDANE(
+        models,
+        optimizers,
+        misc=misc,
+        hook_kwargs={
+            "detach_entropy_reducer": detach_reducer,
+            "post_g": post_g,
+            "softmax": softmax,
+        },
+    )
+    adapter.training_step(data)
+    return models
 
 
 def get_correct_domain_losses(
@@ -159,7 +184,7 @@ class TestCDAN(unittest.TestCase):
     def test_cdan_hook(self):
         torch.manual_seed(985)
         for detach_reducer in [False, True]:
-            for post_g in [None, BSPHook(), BNMHook(), MCCHook(), AFNHook()]:
+            for post_g in [None, [BSPHook()], [BNMHook()], [MCCHook()], [AFNHook()]]:
                 softmax = True
                 fc_out_size = 16
                 (
@@ -189,13 +214,12 @@ class TestCDAN(unittest.TestCase):
                     "src_domain": src_domain,
                     "target_domain": target_domain,
                 }
-                post_g_ = [post_g] if post_g is not None else post_g
                 hook = CDANEHook(
                     detach_entropy_reducer=detach_reducer,
                     d_opts=d_opts,
                     g_opts=g_opts,
                     softmax=softmax,
-                    post_g=post_g_,
+                    post_g=post_g,
                 )
                 model_counts = validate_hook(hook, list(data.keys()))
                 outputs, losses = hook({**models, **data})
@@ -235,6 +259,17 @@ class TestCDAN(unittest.TestCase):
                     G.count == C.count == model_counts["G"] == model_counts["C"] == 2
                 )
                 self.assertTrue(D.count == model_counts["D"] == 4)
+
+                adapter_models = test_equivalent_adapter(
+                    originalG,
+                    originalD,
+                    originalC,
+                    originalFeatureCombiner,
+                    data,
+                    detach_reducer,
+                    post_g,
+                    softmax,
+                )
 
                 d_opts = get_opts(originalD)
                 g_opts = get_opts(originalG, originalC)
@@ -338,9 +373,12 @@ class TestCDAN(unittest.TestCase):
                 total_loss.backward()
                 [x.step() for x in g_opts]
 
-                for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
-                    self.assertTrue(
-                        c_f.state_dicts_are_equal(
-                            x.state_dict(), y.state_dict(), rtol=1e-2
-                        )
-                    )
+                assert_equal_models(
+                    self, (G, adapter_models["G"], originalG), rtol=1e-2
+                )
+                assert_equal_models(
+                    self, (C, adapter_models["C"], originalC), rtol=1e-2
+                )
+                assert_equal_models(
+                    self, (D, adapter_models["D"], originalD), rtol=1e-2
+                )

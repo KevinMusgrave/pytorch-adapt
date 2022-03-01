@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from pytorch_adapt.adapters import RTN
+from pytorch_adapt.containers import Misc, Models, Optimizers
 from pytorch_adapt.hooks import (
     FeaturesAndLogitsHook,
     ResidualHook,
@@ -19,9 +21,30 @@ from pytorch_adapt.layers import (
     PlusResidual,
     RandomizedDotProduct,
 )
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_models_and_data, get_opts
+from .utils import (
+    Net,
+    assert_equal_models,
+    assertRequiresGrad,
+    get_models_and_data,
+    get_opt_tuple,
+    get_opts,
+)
+
+
+def test_equivalent_adapter(G, C, R, feature_combiner, data):
+    models = Models(
+        {
+            "G": copy.deepcopy(G),
+            "C": copy.deepcopy(C),
+            "residual_model": PlusResidual(copy.deepcopy(R)),
+        }
+    )
+    optimizers = Optimizers(get_opt_tuple())
+    misc = Misc({"feature_combiner": copy.deepcopy(feature_combiner)})
+    adapter = RTN(models, optimizers, misc=misc)
+    adapter.training_step(data)
+    return models
 
 
 class TestRTN(unittest.TestCase):
@@ -201,6 +224,10 @@ class TestRTN(unittest.TestCase):
             G.count == model_counts["G"] == C.count == model_counts["C"] == 2
         )
 
+        adapter_models = test_equivalent_adapter(
+            originalG, originalC, originalR, feature_combiner, data
+        )
+
         opts = get_opts(originalG, originalC, originalR)
 
         src_features = originalG(src_imgs)
@@ -227,7 +254,10 @@ class TestRTN(unittest.TestCase):
         total_loss.backward()
         [x.step() for x in opts]
 
-        for x, y in [(G, originalG), (C, originalC), (residual_layers, originalR)]:
-            self.assertTrue(
-                c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-6)
-            )
+        assert_equal_models(self, (G, adapter_models["G"], originalG), rtol=1e-6)
+        assert_equal_models(self, (C, adapter_models["C"], originalC), rtol=1e-6)
+        assert_equal_models(
+            self,
+            (residual_layers, adapter_models["residual_model"].layer, originalR),
+            rtol=1e-6,
+        )

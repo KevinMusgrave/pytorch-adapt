@@ -3,11 +3,20 @@ import unittest
 
 import torch
 
+from pytorch_adapt.adapters import AdaBN
+from pytorch_adapt.containers import Models
 from pytorch_adapt.hooks import AdaBNHook, validate_hook
 from pytorch_adapt.layers import AdaptiveBatchNorm2d
 from pytorch_adapt.layers.adaptive_batch_norm import set_curr_domain
 
 from .utils import assertRequiresGrad
+
+
+def test_equivalent_adapter(G, C, data):
+    models = Models({"G": copy.deepcopy(G), "C": copy.deepcopy(C)})
+    adapter = AdaBN(models)
+    adapter.training_step(data)
+    return models
 
 
 class Net(torch.nn.Module):
@@ -53,17 +62,22 @@ class TestAdaBN(unittest.TestCase):
         assertRequiresGrad(self, outputs)
         self.assertTrue(len(losses) == 0)
 
+        adapter_models = test_equivalent_adapter(originalG, originalC, data)
+
         originalG.net[0].bns[0](src_imgs)
         originalG.net[0].bns[1](target_imgs)
 
         for i in range(2):
-            self.assertTrue(
-                torch.equal(
-                    G.net[0].bns[i].running_mean, originalG.net[0].bns[i].running_mean
+            for M in [models, adapter_models]:
+                self.assertTrue(
+                    torch.equal(
+                        M["G"].net[0].bns[i].running_mean,
+                        originalG.net[0].bns[i].running_mean,
+                    )
                 )
-            )
-            self.assertTrue(
-                torch.equal(
-                    G.net[0].bns[i].running_var, originalG.net[0].bns[i].running_var
+                self.assertTrue(
+                    torch.equal(
+                        M["G"].net[0].bns[i].running_var,
+                        originalG.net[0].bns[i].running_var,
+                    )
                 )
-            )

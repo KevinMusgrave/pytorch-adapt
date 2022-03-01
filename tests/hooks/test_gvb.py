@@ -4,11 +4,30 @@ import unittest
 import numpy as np
 import torch
 
+from pytorch_adapt.adapters import GVB
+from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.hooks import GVBEHook, GVBGANHook, GVBHook, validate_hook
 from pytorch_adapt.layers import GradientReversal, ModelWithBridge
 from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_entropy_weights, get_opts
+from .utils import (
+    Net,
+    assert_equal_models,
+    assertRequiresGrad,
+    get_entropy_weights,
+    get_opt_tuple,
+    get_opts,
+)
+
+
+def test_equivalent_adapter(G, D, C, data):
+    models = Models(
+        {"G": copy.deepcopy(G), "D": copy.deepcopy(D), "C": copy.deepcopy(C)}
+    )
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = GVB(models, optimizers)
+    adapter.training_step(data)
+    return models
 
 
 def get_models_and_data():
@@ -68,16 +87,16 @@ class TestGVB(unittest.TestCase):
                     hook_kwargs["detach_entropy_reducer"] = detach_reducer
 
                 h = hook_cls(**hook_kwargs)
-                model_counts = validate_hook(
-                    h,
-                    [
-                        "src_imgs",
-                        "src_labels",
-                        "target_imgs",
-                        "src_domain",
-                        "target_domain",
-                    ],
-                )
+
+                data = {
+                    "src_imgs": src_imgs,
+                    "src_labels": src_labels,
+                    "target_imgs": target_imgs,
+                    "src_domain": src_domain,
+                    "target_domain": target_domain,
+                }
+
+                model_counts = validate_hook(h, list(data.keys()))
                 outputs, losses = h(locals())
                 self.assertTrue(
                     losses["total_loss"].keys()
@@ -102,6 +121,12 @@ class TestGVB(unittest.TestCase):
                     == model_counts["C"]
                     == model_counts["D"]
                 )
+
+                adapter_models = None
+                if hook_cls is GVBHook:
+                    adapter_models = test_equivalent_adapter(
+                        originalG, originalD, originalC, data
+                    )
 
                 original_opts = get_opts(originalG, originalC, originalD)
                 grl = GradientReversal()
@@ -197,12 +222,18 @@ class TestGVB(unittest.TestCase):
                 [x.zero_grad() for x in original_opts]
                 total_loss.backward()
                 [x.step() for x in original_opts]
-                for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
-                    self.assertTrue(
-                        c_f.state_dicts_are_equal(
-                            x.state_dict(), y.state_dict(), rtol=1e-6
-                        )
-                    )
+
+                g_models = [G, originalG]
+                c_models = [C, originalC]
+                d_models = [D, originalD]
+                if adapter_models:
+                    g_models.append(adapter_models["G"])
+                    c_models.append(adapter_models["C"])
+                    d_models.append(adapter_models["D"])
+
+                assert_equal_models(self, g_models, rtol=1e-6)
+                assert_equal_models(self, c_models, rtol=1e-6)
+                assert_equal_models(self, d_models, rtol=1e-6)
 
     def test_gvb_gan_hook(self):
         torch.manual_seed(123)
