@@ -393,10 +393,13 @@ def join_lists(x):
     return list(itertools.chain(*x))
 
 
-def attrs_of_type(cls, obj):
+def attrs_of_type(cls, obj, return_as_list=False):
     attrs = [a for a in dir(cls) if not a.startswith("__")]
     attrs = {h: getattr(cls, h) for h in attrs}
-    return {k: v for k, v in attrs.items() if isinstance(v, obj)}
+    attrs = {k: v for k, v in attrs.items() if isinstance(v, obj)}
+    if return_as_list:
+        return list(attrs.values())
+    return attrs
 
 
 def append_error_message(e, msg):

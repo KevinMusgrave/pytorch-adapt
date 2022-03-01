@@ -34,6 +34,7 @@ from .features import (
     LogitsHook,
 )
 from .gan import GANHook
+from .get_hooks import get_hooks
 from .gvb import GVBEHook, GVBGANHook, GVBHook
 from .itl import ISTLossHook
 from .losses import (
