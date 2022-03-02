@@ -29,7 +29,7 @@ class TestHookLogger(unittest.TestCase):
             "D": torch.nn.Sequential(torch.nn.Linear(10, 1), torch.nn.Flatten(0)),
         }
         with self.assertRaises(KeyError) as cm:
-            hook({}, {**data, **models})
+            hook({**data, **models})
 
         correct_str = (
             "in DANNHook: __call__"
@@ -60,7 +60,7 @@ class TestHookLogger(unittest.TestCase):
         }
 
         with self.assertRaises(TypeError) as cm:
-            hook({}, {**data, **models})
+            hook({**data, **models})
 
         correct_str = (
             "in GVBHook: __call__"

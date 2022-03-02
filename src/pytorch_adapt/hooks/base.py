@@ -129,7 +129,6 @@ class BaseHook(ABC):
         all_modules = c_f.attrs_of_type(self, torch.nn.Module)
         return c_f.assert_dicts_are_disjoint(all_hooks, all_modules)
 
-
     def check_losses_and_outputs(self, outputs, losses, inputs):
         check_keys_are_present(self, self.loss_keys, [losses], "loss_keys", "losses")
         check_keys_are_present(
