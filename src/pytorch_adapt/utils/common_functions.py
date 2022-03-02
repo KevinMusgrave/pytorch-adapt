@@ -58,6 +58,30 @@ def dict_pop_lazy(x, key, *args, **kwargs):
     return default(y, *args, **kwargs)
 
 
+def try_use_model(model, model_name, input_vals):
+    try:
+        return default(None, model, input_vals, is_none)
+    except TypeError as e:
+        add_error_message(
+            e,
+            f"\n{model_name}.forward() signature is {inspect.signature(model.forward)}",
+        )
+        raise
+
+
+def assign_to_output(d, key, x, new_x, condition):
+    if len(x) > 1:
+        if not is_list_or_tuple(new_x) or len(new_x) != len(x):
+            raise TypeError(
+                "if input x and key are lists, then output of model must be a list of the same length"
+            )
+        for i in range(len(x)):
+            if condition(x[i]):
+                d[key[i]] = new_x[i]
+    else:
+        d[key[0]] = new_x
+
+
 def add_if_new(d, key, x, kwargs, model_name, in_keys, other_args=None, logger=None):
     other_args = default(other_args, {})
     if logger:
@@ -65,31 +89,14 @@ def add_if_new(d, key, x, kwargs, model_name, in_keys, other_args=None, logger=N
         logger(
             f"Using model {model_name} with inputs: {', '.join(in_keys + list(other_args.keys()))}"
         )
-    # if key is list then assume model returns multiple args
     if not is_list_or_tuple(key) or not is_list_or_tuple(x):
         raise TypeError("key and x must both be a list or tuple")
     condition = is_none
     if any(condition(y) for y in x):
         model = kwargs[model_name]
         input_vals = [kwargs[k] for k in in_keys] + list(other_args.values())
-        try:
-            new_x = default(None, model, input_vals, is_none)
-        except TypeError as e:
-            add_error_message(
-                e,
-                f"\n{model_name}.forward() signature is {inspect.signature(model.forward)}",
-            )
-            raise
-        if len(x) > 1:
-            if not is_list_or_tuple(new_x) or len(new_x) != len(x):
-                raise TypeError(
-                    "if input x and key are lists, then output of model must be a list of the same length"
-                )
-            for i in range(len(x)):
-                if condition(x[i]):
-                    d[key[i]] = new_x[i]
-        else:
-            d[key[0]] = new_x
+        new_x = try_use_model(model, model_name, input_vals)
+        assign_to_output(d, key, x, new_x, condition)
 
 
 def class_default(cls, x, default):
