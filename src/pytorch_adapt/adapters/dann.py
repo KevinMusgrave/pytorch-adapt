@@ -48,12 +48,12 @@ class GVB(DANN):
 
     hook_cls = GVBHook
 
-    def init_containers_and_check_keys(self):
-        models = self.containers["models"]
+    def init_containers_and_check_keys(self, containers):
+        models = containers["models"]
         for k in ["D", "C"]:
             if not isinstance(models[k], ModelWithBridge):
                 models[k] = ModelWithBridge(models[k])
-        super().init_containers_and_check_keys()
+        super().init_containers_and_check_keys(containers)
 
 
 class GVBE(GVB):

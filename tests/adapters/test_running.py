@@ -3,6 +3,7 @@ import unittest
 
 import torch
 
+from pytorch_adapt import inference
 from pytorch_adapt.adapters import (
     ADDA,
     CDAN,
@@ -62,19 +63,19 @@ def common_log_files():
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_ScoreHistories": {
+        "val_hook_ScoreHistories": {
             "latest_score",
             "best_score",
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_ScoreHistories_histories_src_train_ScoreHistory": {
+        "val_hook_ScoreHistories_histories_src_train_ScoreHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",
             "best_epoch",
         },
-        "stat_getter_ScoreHistories_histories_src_val_ScoreHistory": {
+        "val_hook_ScoreHistories_histories_src_val_ScoreHistory": {
             "latest_score",
             "best_score",
             "latest_epoch",
@@ -114,7 +115,7 @@ class TestRunning(unittest.TestCase):
             models[k] = AdaBNModel(v)
         adapter = AdaBN(models=models)
         self.assertTrue(isinstance(adapter.hook, AdaBNHook))
-        run_adapter(self, TEST_FOLDER, adapter, common_log_files())
+        run_adapter(self, TEST_FOLDER, adapter, common_log_files(), inference.adabn_fn)
 
     def test_adda(self):
         adapter = ADDA(models=get_gcd())
@@ -142,7 +143,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.adda_fn)
 
     def test_aligner(self):
         log_files = common_log_files()
@@ -166,7 +167,7 @@ class TestRunning(unittest.TestCase):
             del models["D"]
             adapter = Aligner(models=models, hook_kwargs={"loss_fn": loss_fn})
             self.assertTrue(isinstance(adapter.hook, AlignerPlusCHook))
-            run_adapter(self, TEST_FOLDER, adapter, log_files)
+            run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_cdan(self):
         models = get_gcd()
@@ -189,7 +190,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_classifier(self):
         models = get_gcd()
@@ -210,7 +211,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_dann(self):
         adapter = DANN(models=get_gcd())
@@ -235,7 +236,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_domain_confusion(self):
         models = get_gcd()
@@ -253,7 +254,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_finetuner(self):
         models = get_gcd()
@@ -273,7 +274,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_gan(self):
         adapter = GAN(models=get_gcd())
@@ -289,7 +290,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_joint_aligner(self):
         models = get_gcd()
@@ -312,7 +313,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_gvb(self):
         models = get_gcd()
@@ -343,7 +344,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)
 
     def test_mcd(self):
         models = get_gcd()
@@ -381,7 +382,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.mcd_fn)
 
     def test_rtn(self):
         models = get_gcd()
@@ -407,7 +408,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.rtn_fn)
 
     def test_symnets(self):
         models = get_gcd()
@@ -444,7 +445,7 @@ class TestRunning(unittest.TestCase):
                 },
             }
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.symnets_fn)
 
     def test_vada(self):
         adapter = VADA(models=get_gcd())
@@ -468,4 +469,4 @@ class TestRunning(unittest.TestCase):
         log_files["engine_output_g_loss"].update(
             {"src_vat_loss", "target_vat_loss", "entropy_loss"}
         )
-        run_adapter(self, TEST_FOLDER, adapter, log_files)
+        run_adapter(self, TEST_FOLDER, adapter, log_files, inference.default_fn)

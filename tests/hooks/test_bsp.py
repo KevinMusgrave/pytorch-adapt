@@ -15,11 +15,11 @@ class TestBSP(unittest.TestCase):
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
         self.assertTrue(G.count == 2)
         assertRequiresGrad(self, outputs)
 
-        losses2, outputs = h({}, {**locals(), **outputs})
+        outputs, losses2 = h({**locals(), **outputs})
         assertRequiresGrad(self, outputs)
         self.assertTrue(G.count == 2)
         self.assertTrue(losses == losses2)

@@ -1,21 +1,17 @@
 import torch
 
-
-def create_output_dict(features, logits):
-    return {
-        "features": features,
-        "logits": logits,
-        "preds": torch.softmax(logits, dim=1),
-    }
+from ..utils import common_functions as c_f
 
 
-def create_output_dict_preds_as_features(features, logits):
+def create_output_dict(f_dict):
+    return {**f_dict, "preds": torch.softmax(f_dict["logits"], dim=1)}
+
+
+def create_output_dict_preds_as_features(f_dict):
+    [features, logits] = c_f.extract(f_dict, ["features", "logits"])
     if not torch.allclose(features, logits):
         raise ValueError(f"features and logits should be equal")
-    return {
-        "features": features,
-        "preds": features,
-    }
+    return {"features": features, "preds": features}
 
 
 def extract_data(batch):
@@ -30,12 +26,13 @@ def extract_data(batch):
 def collector_step(inference, batch, output_dict_fn):
     data = extract_data(batch)
     with torch.no_grad():
-        features, logits = inference(data["imgs"], domain=data["domain"])
-    output = output_dict_fn(features, logits)
-    if len(output.keys() & data.keys()) > 0:
-        raise ValueError("output and data should have no overlap at this point")
-    output.update(data)
-    return output
+        f_dict = inference(data["imgs"], domain=data["domain"])
+    data.pop("imgs")  # we don't want to collect imgs
+    f_dict = output_dict_fn(f_dict)
+    if len(f_dict.keys() & data.keys()) > 0:
+        raise ValueError("f_dict and data should have no overlap at this point")
+    f_dict.update(data)
+    return f_dict
 
 
 def filter_datasets(datasets, validator):

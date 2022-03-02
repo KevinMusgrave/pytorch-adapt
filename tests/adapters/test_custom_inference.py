@@ -11,13 +11,10 @@ from .get_dann import get_dann
 
 class TestCustomInference(unittest.TestCase):
     def test_custom_inference(self):
-        def custom_inference(cls):
-            def func(x, domain):
-                features = cls.models["G"](x)
-                features = cls.models["C"](features)
-                return features, features
-
-            return func
+        def custom_inference(x, models, **kwargs):
+            features = models["G"](x)
+            features = models["C"](features)
+            return {"features": features, "logits": features}
 
         for use_custom in [False, True]:
             if use_custom:
@@ -35,7 +32,6 @@ class TestCustomInference(unittest.TestCase):
 
                 def compute_score(self, src_val):
                     features = src_val["features"]
-                    print("features.shape", features.shape, self.correct_shape)
                     self.unittester.assertTrue(features.shape == self.correct_shape)
                     return 0
 

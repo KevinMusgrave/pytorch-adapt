@@ -13,7 +13,7 @@ class SNDValidator(BaseValidator):
     [Tune it the Right Way: Unsupervised Validation of Domain Adaptation via Soft Neighborhood Density](https://arxiv.org/abs/2108.10860)
     """
 
-    def __init__(self, layer="preds", T=0.05, batch_size=1000, **kwargs):
+    def __init__(self, layer="preds", T=0.05, batch_size=1024, **kwargs):
         super().__init__(**kwargs)
         self.layer = layer
         self.T = T

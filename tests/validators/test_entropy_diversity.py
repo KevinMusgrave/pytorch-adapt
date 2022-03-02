@@ -63,9 +63,9 @@ class TestEntropyDiversity(unittest.TestCase):
 
                 score1, score2, score3 = [], [], []
                 for v in [validator, validator2]:
-                    score1.append(v.score(epoch=0, target_val={layer: logits1}))
-                    score2.append(v.score(epoch=1, target_val={layer: logits2}))
-                    score3.append(v.score(epoch=2, target_val={layer: logits3}))
+                    score1.append(v(epoch=0, target_val={layer: logits1}))
+                    score2.append(v(epoch=1, target_val={layer: logits2}))
+                    score3.append(v(epoch=2, target_val={layer: logits3}))
 
                 v1_scores, v2_scores = list(zip(score1, score2, score3))
 

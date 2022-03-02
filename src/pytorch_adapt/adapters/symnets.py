@@ -1,9 +1,6 @@
-from typing import Tuple
-
-import torch
-
 from ..hooks import SymNetsHook
-from ..utils.common_functions import check_domain
+from ..inference import symnets_fn
+from ..utils import common_functions as c_f
 from .base_adapter import BaseGCAdapter
 from .utils import with_opt
 
@@ -23,18 +20,9 @@ class SymNets(BaseGCAdapter):
 
     hook_cls = SymNetsHook
 
-    def inference_default(self, x, domain) -> Tuple[torch.Tensor, torch.Tensor]:
-        """
-        Arguments:
-            x: The input to the model
-            domain: 0 for the source domain, 1 for the target domain.
-        Returns:
-            Features and logits, where ```logits = C(features)[domain]```.
-        """
-        domain = check_domain(self, domain)
-        features = self.models["G"](x)
-        logits = self.models["C"](features)[domain]
-        return features, logits
+    def __init__(self, *args, inference_fn=None, **kwargs):
+        inference_fn = c_f.default(inference_fn, symnets_fn)
+        super().__init__(*args, inference_fn=inference_fn, **kwargs)
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(

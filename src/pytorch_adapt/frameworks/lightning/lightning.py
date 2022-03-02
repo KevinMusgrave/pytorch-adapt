@@ -26,7 +26,17 @@ def multi_dataloader_collect(outputs):
 
 
 class Lightning(pl.LightningModule):
+    """
+    Converts an [Adapter](../../adapters/index.md) into a PyTorch
+    Lightning module.
+    """
+
     def __init__(self, adapter, validator=None):
+        """
+        Arguments:
+            adapter:
+            validator:
+        """
         super().__init__()
         self.models = torch.nn.ModuleDict(adapter.models)
         self.misc = torch.nn.ModuleDict(adapter.misc)
@@ -37,9 +47,11 @@ class Lightning(pl.LightningModule):
         self.automatic_optimization = False
 
     def forward(self, x, domain=None):
+        """"""
         return self.adapter.inference(x, domain=domain)
 
     def training_step(self, batch, batch_idx):
+        """"""
         set_adapter_optimizers_to_pl(self.adapter, self.optimizers())
         losses = self.adapter.training_step(
             batch,
@@ -49,9 +61,11 @@ class Lightning(pl.LightningModule):
             self.log(k, v)
 
     def validation_step(self, batch, batch_idx, dataloader_idx=0):
+        """"""
         return f_utils.collector_step(self, batch, f_utils.create_output_dict)
 
     def validation_epoch_end(self, outputs):
+        """"""
         required_data = self.validator.required_data
         if len(required_data) > 1:
             outputs = multi_dataloader_collect(outputs)
@@ -59,10 +73,11 @@ class Lightning(pl.LightningModule):
         else:
             outputs = single_dataloader_collect(outputs)
             data = {required_data[0]: outputs}
-        score = self.validator.score(**data)
+        score = self.validator(**data)
         self.log("validation_score", score)
 
     def configure_optimizers(self):
+        """"""
         optimizers = list(self.adapter.optimizers.values())
         lr_schedulers = []
         for interval in ["epoch", "step"]:

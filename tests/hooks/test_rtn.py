@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from pytorch_adapt.adapters import RTN
+from pytorch_adapt.containers import Misc, Models, Optimizers
 from pytorch_adapt.hooks import (
     FeaturesAndLogitsHook,
     ResidualHook,
@@ -19,9 +21,30 @@ from pytorch_adapt.layers import (
     PlusResidual,
     RandomizedDotProduct,
 )
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_models_and_data, get_opts
+from .utils import (
+    Net,
+    assert_equal_models,
+    assertRequiresGrad,
+    get_models_and_data,
+    get_opt_tuple,
+    get_opts,
+)
+
+
+def test_equivalent_adapter(G, C, R, feature_combiner, data):
+    models = Models(
+        {
+            "G": copy.deepcopy(G),
+            "C": copy.deepcopy(C),
+            "residual_model": PlusResidual(copy.deepcopy(R)),
+        }
+    )
+    optimizers = Optimizers(get_opt_tuple())
+    misc = Misc({"feature_combiner": copy.deepcopy(feature_combiner)})
+    adapter = RTN(models, optimizers, misc=misc)
+    adapter.training_step(data)
+    return models
 
 
 class TestRTN(unittest.TestCase):
@@ -35,8 +58,8 @@ class TestRTN(unittest.TestCase):
         h1 = FeaturesAndLogitsHook()
         h2 = ResidualHook(domains=["src"])
 
-        outputs1 = h1({}, locals())[1]
-        outputs2 = h2({}, {**locals(), **outputs1})[1]
+        outputs1 = h1(locals())[0]
+        outputs2 = h2({**locals(), **outputs1})[0]
 
         self.assertTrue(G.count == C.count == 2)
         self.assertTrue(residual_model.layer.count == 1)
@@ -73,7 +96,7 @@ class TestRTN(unittest.TestCase):
         residual_model = PlusResidual(residual_layers)
         h = RTNLogitsHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.count == 2)
         self.assertTrue(residual_model.layer.count == 1)
@@ -109,7 +132,7 @@ class TestRTN(unittest.TestCase):
         feature_combiner = RandomizedDotProduct([16, 10], 16)
         h = RTNAlignerHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.count == 2)
         assertRequiresGrad(self, outputs)
@@ -174,7 +197,7 @@ class TestRTN(unittest.TestCase):
         }
         model_counts = validate_hook(h, list(data.keys()))
 
-        losses, outputs = h({}, {**models, **data})
+        outputs, losses = h({**models, **data})
         assertRequiresGrad(self, outputs)
         self.assertTrue(
             outputs.keys()
@@ -199,6 +222,10 @@ class TestRTN(unittest.TestCase):
         self.assertTrue(losses["total_loss"].keys() == loss_keys)
         self.assertTrue(
             G.count == model_counts["G"] == C.count == model_counts["C"] == 2
+        )
+
+        adapter_models = test_equivalent_adapter(
+            originalG, originalC, originalR, feature_combiner, data
         )
 
         opts = get_opts(originalG, originalC, originalR)
@@ -227,7 +254,10 @@ class TestRTN(unittest.TestCase):
         total_loss.backward()
         [x.step() for x in opts]
 
-        for x, y in [(G, originalG), (C, originalC), (residual_layers, originalR)]:
-            self.assertTrue(
-                c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-6)
-            )
+        assert_equal_models(self, (G, adapter_models["G"], originalG), rtol=1e-6)
+        assert_equal_models(self, (C, adapter_models["C"], originalC), rtol=1e-6)
+        assert_equal_models(
+            self,
+            (residual_layers, adapter_models["residual_model"].layer, originalR),
+            rtol=1e-6,
+        )

@@ -29,4 +29,4 @@ Before running the notebooks, make sure that the runtime type is set to "GPU", b
 |Notebook|Colab Link|
 |:---|:---|
 [README examples](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/other/ReadmeExamples.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/other/ReadmeExamples.ipynb)
-[Display MNIST and MNIST-M](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/other/DigitsViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/other/DigitsViz.ipynb)
+[Display dataset images](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/other/DatasetViz.ipynb) |[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KevinMusgrave/pytorch-adapt/blob/main/examples/other/DatasetViz.ipynb)

@@ -11,7 +11,7 @@ class TestClassification(unittest.TestCase):
     def test_softmax_hook(self):
         h = SoftmaxHook(apply_to=["src_imgs_features"])
         src_imgs_features = torch.randn(100, 10)
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
         self.assertTrue(losses == {})
         self.assertTrue(
             torch.equal(
@@ -28,7 +28,7 @@ class TestClassification(unittest.TestCase):
             src_labels = torch.randint(0, 10, size=(100,))
             G = Net(32, 16)
             C = Net(16, 10)
-            losses, outputs = h({}, locals())
+            outputs, losses = h(locals())
             assertRequiresGrad(self, outputs)
             base_key = "src_imgs_features"
             if detach_features:

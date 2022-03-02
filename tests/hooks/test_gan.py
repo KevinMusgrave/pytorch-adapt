@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from pytorch_adapt.adapters import GAN
+from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.hooks import (
     AFNHook,
     BNMHook,
@@ -17,22 +19,33 @@ from pytorch_adapt.hooks import (
     validate_hook,
 )
 from pytorch_adapt.layers import EntropyLoss, UniformDistributionLoss, VATLoss
-from pytorch_adapt.utils import common_functions as c_f
 
 from .utils import (
+    assert_equal_models,
     assertRequiresGrad,
     get_entropy_weights,
     get_models_and_data,
+    get_opt_tuple,
     get_opts,
     post_g_hook_update_keys,
     post_g_hook_update_total_loss,
 )
 
 
+def test_equivalent_adapter(G, D, C, data, post_g):
+    models = Models(
+        {"G": copy.deepcopy(G), "D": copy.deepcopy(D), "C": copy.deepcopy(C)}
+    )
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = GAN(models, optimizers, hook_kwargs={"post_g": post_g})
+    adapter.training_step(data)
+    return models
+
+
 class TestGAN(unittest.TestCase):
     def test_gan(self):
         seed = 1234
-        for post_g in [None, BSPHook(), BNMHook(), MCCHook(), AFNHook()]:
+        for post_g in [None, [BSPHook()], [BNMHook()], [MCCHook()], [AFNHook()]]:
             for hook_cls in [GANHook, DomainConfusionHook, VADAHook, GANEHook]:
                 for detach_reducer in [False, True]:
                     if detach_reducer and hook_cls is not GANEHook:
@@ -61,11 +74,10 @@ class TestGAN(unittest.TestCase):
 
                     d_opts = get_opts(D)
                     g_opts = get_opts(G, C)
-                    post_g_ = [post_g] if post_g is not None else post_g
                     hook_kwargs = {
                         "d_opts": d_opts,
                         "g_opts": g_opts,
-                        "post_g": post_g_,
+                        "post_g": post_g,
                     }
                     if hook_cls is GANEHook:
                         hook_kwargs["detach_entropy_reducer"] = detach_reducer
@@ -81,7 +93,7 @@ class TestGAN(unittest.TestCase):
                     model_counts = validate_hook(h, list(data.keys()))
 
                     torch.manual_seed(seed)
-                    losses, outputs = h({}, {**models, **data})
+                    outputs, losses = h({**models, **data})
                     assertRequiresGrad(self, outputs)
 
                     output_keys = {
@@ -130,7 +142,9 @@ class TestGAN(unittest.TestCase):
 
                     if hook_cls is GANEHook:
                         correct_c_count = 3 if detach_reducer else 4
-                    elif isinstance(post_g, (BNMHook, MCCHook)) or hook_cls is VADAHook:
+                    elif (
+                        post_g and isinstance(post_g[0], (BNMHook, MCCHook))
+                    ) or hook_cls is VADAHook:
                         correct_c_count = 2
                     else:
                         correct_c_count = 1
@@ -146,6 +160,13 @@ class TestGAN(unittest.TestCase):
                     self.assertTrue(C.count == model_counts["C"])
                     self.assertTrue(G.count == model_counts["G"])
                     self.assertTrue(D.count == model_counts["D"])
+
+                    torch.manual_seed(seed)
+                    adapter_models = None
+                    if hook_cls is GANHook:
+                        adapter_models = test_equivalent_adapter(
+                            originalG, originalD, originalC, data, post_g
+                        )
 
                     d_opts = get_opts(originalD)
                     g_opts = get_opts(originalG, originalC)
@@ -273,9 +294,14 @@ class TestGAN(unittest.TestCase):
                     g_opts[0].step()
                     g_opts[1].step()
 
-                    for x, y in [(G, originalG), (C, originalC), (D, originalD)]:
-                        self.assertTrue(
-                            c_f.state_dicts_are_equal(
-                                x.state_dict(), y.state_dict(), rtol=1e-6
-                            )
-                        )
+                    g_models = [G, originalG]
+                    c_models = [C, originalC]
+                    d_models = [D, originalD]
+                    if adapter_models:
+                        g_models.append(adapter_models["G"])
+                        c_models.append(adapter_models["C"])
+                        d_models.append(adapter_models["D"])
+
+                    assert_equal_models(self, g_models, rtol=1e-6)
+                    assert_equal_models(self, c_models, rtol=1e-6)
+                    assert_equal_models(self, d_models, rtol=1e-6)

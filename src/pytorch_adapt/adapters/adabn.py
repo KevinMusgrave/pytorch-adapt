@@ -1,17 +1,16 @@
 from ..containers import KeyEnforcer, MultipleContainers
 from ..hooks import AdaBNHook
-from ..utils.common_functions import check_domain
+from ..inference import adabn_fn
+from ..utils import common_functions as c_f
 from .base_adapter import BaseAdapter
 
 
 class AdaBN(BaseAdapter):
     hook_cls = AdaBNHook
 
-    def inference_default(self, x, domain):
-        domain = check_domain(self, domain, keep_len=True)
-        features = self.models["G"](x, domain)
-        logits = self.models["C"](features, domain)
-        return features, logits
+    def __init__(self, *args, inference_fn=None, **kwargs):
+        inference_fn = c_f.default(inference_fn, adabn_fn)
+        super().__init__(*args, inference_fn=inference_fn, **kwargs)
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(**hook_kwargs)

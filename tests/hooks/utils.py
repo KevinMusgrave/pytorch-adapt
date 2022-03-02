@@ -1,3 +1,4 @@
+import itertools
 from contextlib import nullcontext
 
 import torch
@@ -11,6 +12,7 @@ from pytorch_adapt.layers import (
     MaxNormalizer,
     MCCLoss,
 )
+from pytorch_adapt.utils import common_functions as c_f
 
 
 class Net(torch.nn.Module):
@@ -75,7 +77,14 @@ def get_opts(*models):
     return [torch.optim.SGD(m.parameters(), lr=0.1) for m in models]
 
 
+def get_opt_tuple():
+    return (torch.optim.SGD, {"lr": 0.1})
+
+
 def post_g_hook_update_keys(post_g, loss_keys, output_keys):
+    if not isinstance(post_g, list):
+        return
+    post_g = post_g[0]
     if isinstance(post_g, BSPHook):
         loss_keys.update({"bsp_loss"})
         for domain in post_g.domains:
@@ -94,6 +103,9 @@ def post_g_hook_update_keys(post_g, loss_keys, output_keys):
 def post_g_hook_update_total_loss(
     post_g, total_loss, src_features, target_features, target_logits
 ):
+    if not isinstance(post_g, list):
+        return
+    post_g = post_g[0]
     if isinstance(post_g, BSPHook):
         bsp_loss = 0
         if src_features is not None:
@@ -130,3 +142,10 @@ def get_entropy_weights(c_logits, bs, detach_reducer):
         raise ValueError
 
     return src_entropy_weights, target_entropy_weights
+
+
+def assert_equal_models(cls, args, rtol=1e-6):
+    for x, y in itertools.combinations(args, 2):
+        cls.assertTrue(
+            c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=rtol)
+        )

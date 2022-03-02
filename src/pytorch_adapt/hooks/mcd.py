@@ -29,15 +29,15 @@ class MCDLossHook(BaseWrapperHook):
         )
         self.minimize = minimize
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         [target_logits] = c_f.extract(
             [outputs, inputs], c_f.filter(self.hook.out_keys, "_logits$")
         )
         loss = self.loss_fn(*target_logits)
         if not self.minimize:
             loss = -loss
-        return {"discrepancy_loss": loss}, outputs
+        return outputs, {"discrepancy_loss": loss}
 
     def _loss_keys(self):
         return ["discrepancy_loss"]

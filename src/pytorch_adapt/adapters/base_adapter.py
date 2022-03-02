@@ -11,6 +11,7 @@ from ..containers import (
     MultipleContainers,
     Optimizers,
 )
+from ..inference import default_fn
 from ..utils import common_functions as c_f
 from .utils import default_optimizer_tuple, with_opt
 
@@ -28,7 +29,7 @@ class BaseAdapter(ABC):
         misc: Misc = None,
         default_containers: MultipleContainers = None,
         key_enforcer: KeyEnforcer = None,
-        inference=None,
+        inference_fn=None,
         before_training_starts=None,
         hook_kwargs: Dict[str, Any] = None,
     ):
@@ -60,15 +61,13 @@ class BaseAdapter(ABC):
             hook_kwargs: A dictionary of keyword arguments that will be
                 passed into the wrapped hook during initialization.
         """
-        self.containers = c_f.default(
-            default_containers, self.get_default_containers, {}
-        )
+        containers = c_f.default(default_containers, self.get_default_containers, {})
         self.key_enforcer = c_f.default(key_enforcer, self.get_key_enforcer, {})
         self.before_training_starts = c_f.class_default(
             self, before_training_starts, self.before_training_starts_default
         )
 
-        self.containers.merge(
+        containers.merge(
             models=models,
             optimizers=optimizers,
             lr_schedulers=lr_schedulers,
@@ -76,9 +75,9 @@ class BaseAdapter(ABC):
         )
 
         hook_kwargs = c_f.default(hook_kwargs, {})
-        self.init_containers_and_check_keys()
+        self.init_containers_and_check_keys(containers)
         self.init_hook(hook_kwargs)
-        self.inference = c_f.class_default(self, inference, self.inference_default)
+        self.inference_fn = c_f.default(inference_fn, default_fn)
 
     def training_step(
         self, batch: Dict[str, Any], **kwargs
@@ -98,10 +97,10 @@ class BaseAdapter(ABC):
         combined = c_f.assert_dicts_are_disjoint(
             self.models, self.misc, with_opt(self.optimizers), batch, kwargs
         )
-        losses, _ = self.hook({}, combined)
+        _, losses = self.hook(combined)
         return losses
 
-    def inference_default(
+    def inference(
         self, x: torch.Tensor, domain: int = None
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """
@@ -112,9 +111,12 @@ class BaseAdapter(ABC):
         Returns:
             Features and logits
         """
-        features = self.models["G"](x)
-        logits = self.models["C"](features)
-        return features, logits
+        return self.inference_fn(
+            x=x,
+            domain=domain,
+            models=self.models,
+            misc=self.misc,
+        )
 
     def get_default_containers(self) -> MultipleContainers:
         """
@@ -141,13 +143,13 @@ class BaseAdapter(ABC):
         """
         pass
 
-    def init_containers_and_check_keys(self):
+    def init_containers_and_check_keys(self, containers):
         """
         Called in ```__init__```.
         """
-        self.containers.create()
-        self.key_enforcer.check(self.containers)
-        for k, v in self.containers.items():
+        containers.create()
+        self.key_enforcer.check(containers)
+        for k, v in containers.items():
             setattr(self, k, v)
 
     def before_training_starts_default(self, framework):

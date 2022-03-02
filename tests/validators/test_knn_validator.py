@@ -25,7 +25,7 @@ class TestKNNValidator(unittest.TestCase):
                 src_domain = torch.zeros(dataset_size, device=TEST_DEVICE)
                 target_domain = torch.ones(dataset_size, device=TEST_DEVICE)
 
-                score = validator.score(
+                score = validator(
                     epoch=epoch,
                     src_train={"features": src_features, "domain": src_domain},
                     target_train={"features": target_features, "domain": target_domain},

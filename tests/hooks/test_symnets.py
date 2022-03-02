@@ -4,6 +4,8 @@ import unittest
 import numpy as np
 import torch
 
+from pytorch_adapt.adapters import SymNets
+from pytorch_adapt.containers import Models, Optimizers
 from pytorch_adapt.hooks import (
     SymNetsCategoryLossHook,
     SymNetsDomainLossHook,
@@ -12,9 +14,19 @@ from pytorch_adapt.hooks import (
     validate_hook,
 )
 from pytorch_adapt.layers import MultipleModels
-from pytorch_adapt.utils import common_functions as c_f
 
-from .utils import Net, assertRequiresGrad, get_opts
+from .utils import Net, assert_equal_models, assertRequiresGrad, get_opt_tuple, get_opts
+
+
+def test_equivalent_adapter(G, C, data):
+    models = Models({"G": copy.deepcopy(G), "C": copy.deepcopy(C)})
+    optimizers = Optimizers(get_opt_tuple())
+    adapter = SymNets(
+        models,
+        optimizers,
+    )
+    adapter.training_step(data)
+    return models
 
 
 def get_model_and_data():
@@ -60,7 +72,7 @@ class TestSymNets(unittest.TestCase):
         G, C, src_imgs, target_imgs, batch_size, num_classes = get_model_and_data()
         h = SymNetsEntropyHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.models[0].count == C.models[1].count == 1)
         assertRequiresGrad(self, outputs)
@@ -83,7 +95,7 @@ class TestSymNets(unittest.TestCase):
             for half_idx in [0, 1]:
                 h = SymNetsDomainLossHook(domain, half_idx)
 
-                losses, new_outputs = h({}, {**models, **data, **outputs})
+                new_outputs, losses = h({**models, **data, **outputs})
                 outputs.update(new_outputs)
                 correct_count = 1 if domain == "src" else 2
                 self.assertTrue(
@@ -113,7 +125,7 @@ class TestSymNets(unittest.TestCase):
         src_labels = torch.randint(0, num_classes, size=(batch_size,))
         h = SymNetsCategoryLossHook()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
 
         self.assertTrue(G.count == C.models[0].count == C.models[1].count == 1)
         assertRequiresGrad(self, outputs)
@@ -146,7 +158,7 @@ class TestSymNets(unittest.TestCase):
         h = SymNetsHook(c_opts, g_opts)
         model_counts = validate_hook(h, list(data.keys()))
 
-        losses, outputs = h({}, {**models, **data})
+        outputs, losses = h({**models, **data})
         self.assertTrue(G.count == model_counts["G"] == 2)
         self.assertTrue(
             C.models[0].count == C.models[1].count == model_counts["C"] == 4
@@ -186,6 +198,8 @@ class TestSymNets(unittest.TestCase):
                 "total",
             }
         )
+
+        adapter_models = test_equivalent_adapter(originalG, originalC, data)
 
         c_opts = get_opts(originalC)
         g_opts = get_opts(originalG)
@@ -234,7 +248,5 @@ class TestSymNets(unittest.TestCase):
         total_loss.backward()
         g_opts[0].step()
 
-        for x, y in [(G, originalG), (C, originalC)]:
-            self.assertTrue(
-                c_f.state_dicts_are_equal(x.state_dict(), y.state_dict(), rtol=1e-6)
-            )
+        assert_equal_models(self, (G, adapter_models["G"], originalG), rtol=1e-6)
+        assert_equal_models(self, (C, adapter_models["C"], originalC), rtol=1e-6)

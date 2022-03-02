@@ -44,23 +44,24 @@ class BaseHook(ABC):
         self.in_keys = []
         self.logger = HookLogger(c_f.cls_name(self))
 
-    def __call__(self, losses, inputs):
+    def __call__(self, inputs, losses=None):
         self.logger("__call__")
+        losses = c_f.default(losses, {})
         try:
             inputs = c_f.map_keys(inputs, self.key_map)
-            x = self.call(losses, inputs)
+            x = self.call(inputs, losses)
             if isinstance(x, (bool, np.bool_)):
                 self.logger.reset()
                 return x
             elif isinstance(x, tuple):
-                losses, outputs = x
+                outputs, losses = x
                 outputs = replace_mapped_keys(outputs, self.key_map)
                 inputs = replace_mapped_keys(inputs, self.key_map)
-                losses = wrap_keys(losses, self.loss_prefix, self.loss_suffix)
                 outputs = wrap_keys(outputs, self.out_prefix, self.out_suffix)
-                self.check_losses_and_outputs(losses, outputs, inputs)
+                losses = wrap_keys(losses, self.loss_prefix, self.loss_suffix)
+                self.check_losses_and_outputs(outputs, losses, inputs)
                 self.logger.reset()
-                return losses, outputs
+                return outputs, losses
             else:
                 raise TypeError(
                     f"Output is of type {type(x)}, but should be bool or tuple"
@@ -75,12 +76,12 @@ class BaseHook(ABC):
         self, losses: Dict[str, Any], inputs: Dict[str, Any]
     ) -> Union[Tuple[Dict[str, Any], Dict[str, Any]], bool]:
         """
-        This must be implemented by the child class
+        This gets called by ```__call__``` and must be implemented by the child class.
         Arguments:
             losses: previously computed losses
             inputs: holds everything else: tensors, models etc.
         Returns:
-            Either a tuple of (losses, outputs) that will be merged with the input context,
+            Either a tuple of (outputs, losses) that will be merged with the input context,
             or a boolean
         """
         pass
@@ -128,7 +129,8 @@ class BaseHook(ABC):
         all_modules = c_f.attrs_of_type(self, torch.nn.Module)
         return c_f.assert_dicts_are_disjoint(all_hooks, all_modules)
 
-    def check_losses_and_outputs(self, losses, outputs, inputs):
+
+    def check_losses_and_outputs(self, outputs, losses, inputs):
         check_keys_are_present(self, self.loss_keys, [losses], "loss_keys", "losses")
         check_keys_are_present(
             self, self.out_keys, [inputs, outputs], "out_keys", "inputs or outputs"

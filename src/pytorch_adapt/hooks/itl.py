@@ -12,8 +12,8 @@ class ISTLossHook(BaseWrapperHook):
         self.loss_fn = ISTLoss(distance=distance, with_div=with_div)
         self.hook = FeaturesHook()
 
-    def call(self, losses, inputs):
-        outputs = self.hook(losses, inputs)[1]
+    def call(self, inputs, losses):
+        outputs = self.hook(inputs, losses)[0]
         [src_features, target_features] = c_f.extract(
             [outputs, inputs],
             c_f.filter(self.hook.out_keys, "_features$", ["^src", "^target"]),
@@ -24,7 +24,7 @@ class ISTLossHook(BaseWrapperHook):
         )
         domain = torch.cat([src_domain, target_domain], dim=0)
         loss = self.loss_fn(features, domain)
-        return {"ist_loss": loss}, outputs
+        return outputs, {"ist_loss": loss}
 
     def _loss_keys(self):
         return ["ist_loss"]

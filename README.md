@@ -44,7 +44,7 @@ for data in tqdm(dataloader):
     data = batch_to_device(data, device)
     # Optimization is done inside the hook.
     # The returned loss is for logging.
-    loss, _ = hook({}, {**models, **data})
+    _, loss = hook({**models, **data})
 ```
 
 ### Build complex algorithms
@@ -62,7 +62,7 @@ misc = {"combined_model": torch.nn.Sequential(G, C)}
 hook = DANNHook(optimizers, post_g=[MCCHook(), VATHook()])
 for data in tqdm(dataloader):
     data = batch_to_device(data, device)
-    loss, _ = hook({}, {**models, **data, **misc})
+    _, loss = hook({**models, **data, **misc})
 ```
 
 ### Wrap with your favorite PyTorch framework
@@ -105,7 +105,7 @@ from pytorch_adapt.validators import SNDValidator
 # Assuming predictions have been collected
 target_train = {"preds": preds}
 validator = SNDValidator()
-score = validator.score(target_train=target_train)
+score = validator(target_train=target_train)
 ```
 
 You can also do this during training with a framework wrapper:
@@ -162,7 +162,8 @@ pip install pytorch-adapt[ignite]
 Coming soon...
 
 ### Dependencies
-Required dependencies: 
+Required dependencies:
+
 - numpy
 - torch >= 1.6
 - torchvision

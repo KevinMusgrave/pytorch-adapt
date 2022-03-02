@@ -37,9 +37,14 @@ def office31G(*args, **kwargs):
 
 
 def office31C(
-    domain, num_classes=31, in_size=2048, h=256, pretrained=False, progress=True
+    domain=None, num_classes=31, in_size=2048, h=256, pretrained=False, progress=True
 ):
+    if pretrained and not domain:
+        raise ValueError("if pretrained, domain must be specified")
+
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
+    if not pretrained:
+        return model
     url = {
         "amazon": "https://cornell.box.com/shared/static/6h165jqlxcpo16jbs3a7vpvslb6u9vaq",
         "dslr": "https://cornell.box.com/shared/static/t97sedzf4wrto3yfvr8hxivyblqkljiq",
@@ -59,9 +64,14 @@ def officehomeG(*args, **kwargs):
 
 
 def officehomeC(
-    domain, num_classes=65, in_size=2048, h=256, pretrained=False, progress=True
+    domain=None, num_classes=65, in_size=2048, h=256, pretrained=False, progress=True
 ):
+    if pretrained and not domain:
+        raise ValueError("if pretrained, domain must be specified")
+
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
+    if not pretrained:
+        return model
     url = {
         "art": "https://cornell.box.com/shared/static/wxg7v32e2m0jcmq53amhdipty9veb2xx",
         "clipart": "https://cornell.box.com/shared/static/4dhwhj6fkzg9lfgu0mfskt2kby8mznez",

@@ -22,11 +22,11 @@ class TestITL(unittest.TestCase):
             target_domain,
         ) = get_models_and_data()
 
-        losses, outputs = h({}, locals())
+        outputs, losses = h(locals())
         self.assertTrue(G.count == 2)
         assertRequiresGrad(self, outputs)
 
-        losses2, outputs = h({}, {**locals(), **outputs})
+        outputs, losses2 = h({**locals(), **outputs})
         assertRequiresGrad(self, outputs)
         self.assertTrue(G.count == 2)
         self.assertTrue(losses == losses2)

@@ -35,7 +35,7 @@ class TestMultipleValidators(unittest.TestCase):
                 logits = torch.randn(dataset_size, 10)
                 target_train = {"features": features, "logits": logits}
 
-                validator.score(epoch=i, src_val=src_val, target_train=target_train)
+                validator(epoch=i, src_val=src_val, target_train=target_train)
 
                 actual_weights = weights
                 if actual_weights is None:
@@ -43,9 +43,15 @@ class TestMultipleValidators(unittest.TestCase):
                 self.assertTrue(
                     validator.latest_score
                     == (
-                        v1.score(src_val=src_val) * actual_weights[0]
-                        + v2.score(target_train=target_train) * actual_weights[1]
+                        v1(src_val=src_val) * actual_weights[0]
+                        + v2(target_train=target_train) * actual_weights[1]
                     )
                 )
 
-                print(validator)
+    def test_incorrect_keys(self):
+        # good version
+        v = IMValidator(weights={"entropy": 1, "diversity": 2})
+
+        # bad version
+        with self.assertRaises(KeyError):
+            v = IMValidator(weights={"entropy": 1, "y": 2})

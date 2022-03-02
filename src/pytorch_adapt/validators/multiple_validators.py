@@ -12,6 +12,8 @@ class MultipleValidators(BaseValidator):
         self.validators = c_f.enumerate_to_dict(validators)
         self.weights = c_f.default(weights, {k: 1 for k in self.validators.keys()})
         self.weights = c_f.enumerate_to_dict(self.weights)
+        if self.validators.keys() != self.weights.keys():
+            raise KeyError("validator keys and weight keys must be the same")
         self.return_sub_scores = return_sub_scores
         pml_cf.add_to_recordable_attributes(self, list_of_names=["weights"])
 
@@ -23,11 +25,11 @@ class MultipleValidators(BaseValidator):
     def compute_score(self):
         pass
 
-    def score(self, **kwargs):
+    def __call__(self, **kwargs):
         kwargs = self.kwargs_check(kwargs)
         outputs = {}
         for k, v in self.validators.items():
-            score = v.score(**c_f.filter_kwargs(kwargs, v.required_data))
+            score = v(**c_f.filter_kwargs(kwargs, v.required_data))
             outputs[k] = score * self.weights[k]
         final = sum(outputs.values())
         if self.return_sub_scores:

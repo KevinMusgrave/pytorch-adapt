@@ -31,7 +31,7 @@ class TestFeatures(unittest.TestCase):
                 target_key = "target_imgs_features_logits"
 
             # none yet computed
-            losses, outputs = hook({}, locals())
+            outputs, losses = hook(locals())
             self.assertTrue(losses == {})
             self.assertTrue(
                 outputs.keys()
@@ -44,7 +44,7 @@ class TestFeatures(unittest.TestCase):
             assertRequiresGrad(self, outputs)
 
             # both already computed
-            losses, outputs = hook({}, {**locals(), **outputs})
+            outputs, losses = hook({**locals(), **outputs})
             self.assertTrue(losses == {})
             self.assertTrue(outputs == {})
             self.assertTrue(G.count == 2)
@@ -55,12 +55,12 @@ class TestFeatures(unittest.TestCase):
                 src_imgs_features = torch.randn(8)
             else:
                 src_imgs_features_logits = torch.randn(8)
-            losses, outputs = hook({}, {**locals(), **outputs})
+            outputs, losses = hook({**locals(), **outputs})
             self.assertTrue(losses == {})
             self.assertTrue(G.count == 3)
             assertRequiresGrad(self, outputs)
 
-            [x] = c_f.extract([outputs], [target_key], pop=True)
+            [x] = c_f.extract(outputs, [target_key], pop=True)
             if hook_type == "features":
                 target_imgs_features = x
                 hook = FeaturesHook(detach=True)
@@ -68,11 +68,11 @@ class TestFeatures(unittest.TestCase):
                 target_imgs_features_logits = x
                 hook = LogitsHook(detach=True, key_map={"G": "C"})
             outputs = {}
-            losses, outputs = hook({}, {**locals(), **outputs})
+            outputs, losses = hook({**locals(), **outputs})
             self.assertTrue(
                 outputs.keys() == {f"{src_key}_detached", f"{target_key}_detached"}
             )
-            [src_x, target_x] = c_f.extract([locals()], [src_key, target_key])
+            [src_x, target_x] = c_f.extract(locals(), [src_key, target_key])
             assertRequiresGrad(self, outputs)
             self.assertTrue(
                 torch.equal(x, y) for x, y in zip(outputs.values(), [src_x, target_x])
@@ -87,7 +87,7 @@ class TestFeatures(unittest.TestCase):
         target_imgs = torch.randn(100, 32)
         hook = FeaturesAndLogitsHook()
         # none yet computed
-        losses, outputs = hook({}, locals())
+        outputs, losses = hook(locals())
         self.assertTrue(losses == {})
         self.assertTrue(
             outputs.keys()
@@ -102,13 +102,13 @@ class TestFeatures(unittest.TestCase):
         assertRequiresGrad(self, outputs)
 
         # both already computed
-        losses, outputs = hook({}, {**locals(), **outputs})
-        self.assertTrue(all(x == {} for x in [losses, outputs]))
+        outputs, losses = hook({**locals(), **outputs})
+        self.assertTrue(all(x == {} for x in [outputs, losses]))
         self.assertTrue(all(x.count == 2 for x in [G, C]))
 
         src_imgs_features = torch.randn(8)
         target_imgs_features_logits = torch.randn(2)
-        losses, outputs = hook({}, {**locals(), **outputs})
+        outputs, losses = hook({**locals(), **outputs})
         self.assertTrue(losses == {})
         self.assertTrue(
             outputs.keys() == {"target_imgs_features", "src_imgs_features_logits"}
@@ -116,7 +116,7 @@ class TestFeatures(unittest.TestCase):
         self.assertTrue(all(x.count == 3 for x in [G, C]))
 
         hook = FeaturesAndLogitsHook(detach_features=True)
-        losses, outputs = hook({}, {**locals(), **outputs})
+        outputs, losses = hook({**locals(), **outputs})
         self.assertTrue(
             outputs.keys()
             == {
@@ -130,7 +130,7 @@ class TestFeatures(unittest.TestCase):
         self.assertTrue(G.count == 3)
         self.assertTrue(C.count == 5)
 
-        losses, outputs = hook({}, {**locals(), **outputs})
+        outputs, losses = hook({**locals(), **outputs})
         self.assertTrue(G.count == 3)
         self.assertTrue(C.count == 5)
 
@@ -140,7 +140,7 @@ class TestFeatures(unittest.TestCase):
         target_imgs_features = torch.randn(100, 32)
         hook = DLogitsHook()
         # none yet computed
-        losses, outputs = hook({}, locals())
+        outputs, losses = hook(locals())
         self.assertTrue(losses == {})
         self.assertTrue(
             outputs.keys()
@@ -154,7 +154,7 @@ class TestFeatures(unittest.TestCase):
 
         hook = DLogitsHook(detach=True)
         with torch.no_grad():
-            losses, outputs = hook({}, {**locals(), **outputs})
+            outputs, losses = hook({**locals(), **outputs})
         self.assertTrue(
             outputs.keys()
             == {
@@ -168,7 +168,7 @@ class TestFeatures(unittest.TestCase):
         with self.assertRaises(ValueError):
             hook = DLogitsHook(detach=False)
             with torch.no_grad():
-                losses, outputs = hook({}, locals())
+                outputs, losses = hook(locals())
 
     def test_multiple_detach_modes(self):
         G = Net(32, 8)
@@ -176,14 +176,14 @@ class TestFeatures(unittest.TestCase):
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)
         hook = FeaturesHook(detach={"src": True, "target": False})
-        _, outputs = hook({}, locals())
+        outputs, _ = hook(locals())
         assertRequiresGrad(self, outputs)
         self.assertTrue(
             outputs.keys() == {"src_imgs_features_detached", "target_imgs_features"}
         )
 
         hook = FeaturesAndLogitsHook(detach_features={"src": False, "target": True})
-        _, outputs = hook({}, locals())
+        outputs, _ = hook(locals())
         assertRequiresGrad(self, outputs)
         self.assertTrue(
             outputs.keys()

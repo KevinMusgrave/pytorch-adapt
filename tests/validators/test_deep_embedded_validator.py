@@ -8,6 +8,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 
 from pytorch_adapt.validators import DeepEmbeddedValidator
+from pytorch_adapt.validators.deep_embedded_validator import (
+    get_dev_risk as pa_get_dev_risk,
+)
 
 from .. import TEST_DEVICE, TEST_FOLDER
 
@@ -75,13 +78,30 @@ def get_weight(source_feature, target_feature, validation_feature):
 ### end of original implementation ###
 
 
+def get_correct_score(cls, src_train, target_train, src_val):
+    weights = get_weight(
+        src_train["features"].cpu().numpy(),
+        target_train["features"].cpu().numpy(),
+        src_val["features"].cpu().numpy(),
+    )
+
+    loss_fn = torch.nn.CrossEntropyLoss(reduction="none")
+    error_per_sample = loss_fn(src_val["logits"], src_val["labels"])
+    correct_dev_risk = get_dev_risk(weights, error_per_sample[:, None].cpu().numpy())
+    dev_risk = pa_get_dev_risk(torch.from_numpy(weights), error_per_sample[:, None])
+    cls.assertTrue(np.isclose(correct_dev_risk, dev_risk, rtol=0.01))
+    return correct_dev_risk
+
+
 class TestDeepEmbeddedValidator(unittest.TestCase):
     def test_deep_embedded_validator(self):
+        torch.manual_seed(1234)
+        np.random.seed(1234)
         validator = DeepEmbeddedValidator(
             temp_folder=os.path.join(TEST_FOLDER, "deep_embedded_validation"),
-            batch_size=1000,
+            batch_size=256,
         )
-        for epoch, dataset_size in enumerate([100, 1000]):
+        for epoch, dataset_size in enumerate([100, 350, 600]):
             features = torch.randn(dataset_size, 512, device=TEST_DEVICE)
             src_train = {"features": features}
 
@@ -93,29 +113,21 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
                 logits[s:], dims=(0,)
             )  # make some of the logits incorrect
             logits = logits.float()
-            src_val = {"features": features, "logits": logits, "labels": labels}
+            src_val_features = torch.randn(dataset_size, 512, device=TEST_DEVICE)
+            src_val = {"features": src_val_features, "logits": logits, "labels": labels}
 
-            shift_by = 0.1
+            shift_by = 0.5
             features = torch.randn(dataset_size, 512, device=TEST_DEVICE) + shift_by
             target_train = {"features": features}
 
-            score = validator.score(
+            score = validator(
                 src_train=src_train,
                 src_val=src_val,
                 target_train=target_train,
             )
-            print(score)
+
+            correct_score = get_correct_score(self, src_train, target_train, src_val)
+            correct_score = -correct_score
+            self.assertTrue(np.isclose(score, correct_score, rtol=0.2))
 
         shutil.rmtree(TEST_FOLDER)
-
-        # correct_weights = get_weight(
-        #     src_train["features"].cpu().numpy(),
-        #     target_train["features"].cpu().numpy(),
-        #     src_val["features"].cpu().numpy(),
-        # )
-
-        # loss_fn = torch.nn.CrossEntropyLoss(reduction="none")
-        # error_per_sample = loss_fn(src_val["logits"], src_val["labels"])
-        # correct_dev = get_dev_risk(
-        #     correct_weights, error_per_sample[:, None].cpu().numpy()
-        # )

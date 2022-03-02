@@ -13,10 +13,19 @@ from ..containers import Models, Optimizers
 from ..datasets import DataloaderCreator, SourceDataset
 from ..models import Discriminator
 from ..utils import common_functions as c_f
-from ..utils.savers import Saver
 from .accuracy_validator import AccuracyValidator
 from .base_validator import BaseValidator
 from .score_history import ScoreHistory
+
+
+def default_framework_fn(adapter, validator, folder):
+    from ..frameworks.ignite import CheckpointFnCreator, Ignite
+
+    validator = ScoreHistory(validator)
+    checkpoint_fn = CheckpointFnCreator(dirname=folder)
+    return Ignite(
+        adapter, validator=validator, checkpoint_fn=checkpoint_fn, with_pbars=False
+    )
 
 
 class DeepEmbeddedValidator(BaseValidator):
@@ -33,7 +42,7 @@ class DeepEmbeddedValidator(BaseValidator):
         batch_size=32,
         error_fn=None,
         error_layer="logits",
-        framework_cls=None,
+        framework_fn=None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -45,11 +54,7 @@ class DeepEmbeddedValidator(BaseValidator):
             error_fn, torch.nn.CrossEntropyLoss(reduction="none")
         )
         self.error_layer = error_layer
-        self.framework_cls = framework_cls
-        if self.framework_cls is None:
-            from ..frameworks.ignite import Ignite
-
-            self.framework_cls = Ignite
+        self.framework_fn = c_f.default(framework_fn, default_framework_fn)
         self.D_accuracy_val = None
         self.D_accuracy_test = None
         self.mean_error = None
@@ -66,7 +71,7 @@ class DeepEmbeddedValidator(BaseValidator):
             self.num_workers,
             self.batch_size,
             self.temp_folder,
-            self.framework_cls,
+            self.framework_fn,
         )
         error_per_sample = self.error_fn(src_val[self.error_layer], src_val["labels"])
         output = get_dev_risk(weights, error_per_sample[:, None])
@@ -114,7 +119,7 @@ def get_weights(
     num_workers,
     batch_size,
     temp_folder,
-    framework_cls,
+    framework_fn,
 ):
     """
     :param source_feature: shape [N_tr, d], features from training set
@@ -147,7 +152,7 @@ def get_weights(
     val_set = SourceDataset(pml_cf.EmbeddingDataset(feature_for_test, label_for_test))
 
     decays = [1e-1, 3e-2, 1e-2, 3e-3, 1e-3, 3e-4, 1e-4, 3e-5, 1e-5]
-    val_acc, trainers, savers, folders = [], [], [], []
+    val_acc, trainers, folders = [], [], []
     epochs = 100
     patience = 2
 
@@ -167,11 +172,7 @@ def get_weights(
         validator = AccuracyValidator(
             torchmetric_kwargs={"average": "macro", "num_classes": 2}
         )
-        validator = ScoreHistory(validator)
-        saver = Saver(folder=curr_folder)
-        trainer = framework_cls(
-            trainer, validator=validator, saver=saver, with_pbars=False
-        )
+        trainer = framework_fn(trainer, validator, curr_folder)
         datasets = {"train": train_set, "src_val": val_set}
         bs = int(np.min([len(train_set), len(val_set), batch_size]))
 
@@ -181,12 +182,11 @@ def get_weights(
                 num_workers=num_workers, batch_size=bs
             ),
             max_epochs=epochs,
-            validation_interval=1,
-            patience=patience,
+            val_interval=1,
+            early_stopper_kwargs={"patience": patience},
         )
         val_acc.append(acc)
         trainers.append(trainer)
-        savers.append(saver)
         folders.append(curr_folder)
 
     torch.cuda.empty_cache()
@@ -195,8 +195,10 @@ def get_weights(
 
     labels = torch.ones(len(validation_feature), dtype=int)
     validation_set = SourceDataset(pml_cf.EmbeddingDataset(validation_feature, labels))
-    trainer, saver = trainers[index], savers[index]
-    saver.load_adapter(trainer.adapter, "best")
+    trainer = trainers[index]
+    trainer.checkpoint_fn.load_best_checkpoint(
+        {"models": trainer.adapter.models},
+    )
     bs = min(len(validation_set), batch_size)
     dataloader = torch.utils.data.DataLoader(
         validation_set, num_workers=num_workers, batch_size=bs

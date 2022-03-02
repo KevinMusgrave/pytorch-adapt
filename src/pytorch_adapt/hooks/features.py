@@ -69,7 +69,7 @@ class BaseFeaturesHook(BaseHook):
         self.init_detach_mode(detach)
         self.init_suffixes(in_suffixes, out_suffixes)
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         outputs = {}
         for domain in self.domains:
@@ -80,7 +80,7 @@ class BaseFeaturesHook(BaseHook):
             func(inputs, outputs, domain, in_keys)
 
         self.check_outputs_requires_grad(outputs)
-        return {}, outputs
+        return outputs, {}
 
     def check_grad_mode(self, domain):
         detach = self.detach[domain]
@@ -480,10 +480,9 @@ class FrozenModelHook(BaseWrapperHook):
         self.hook = hook
         self.model_name = model_name
 
-    def call(self, losses, inputs):
+    def call(self, inputs, losses):
         """"""
         model = inputs[self.model_name]
         model.eval()
         with torch.no_grad():
-            losses, outputs = self.hook(losses, inputs)
-        return losses, outputs
+            return self.hook(inputs, losses)

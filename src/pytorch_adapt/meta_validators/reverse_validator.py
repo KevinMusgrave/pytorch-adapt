@@ -71,8 +71,10 @@ class ReverseValidator:
             raise KeyError("reverse_adapter must include 'validator'")
 
         forward_adapter.run(**forward_kwargs)
-        if all(getattr(forward_adapter, x) for x in ["validator", "saver"]):
-            forward_adapter.saver.load_adapter(forward_adapter.adapter, "best")
+        if all(getattr(forward_adapter, x) for x in ["validator", "checkpoint_fn"]):
+            forward_adapter.checkpoint_fn.load_best_checkpoint(
+                {"models": forward_adapter.adapter.models},
+            )
 
         datasets = forward_kwargs["datasets"]
         pl_dataloader_creator = c_f.default(

@@ -1,10 +1,7 @@
-from typing import Tuple
-
-import torch
-
 from ..containers import KeyEnforcer
 from ..hooks import AlignerPlusCHook, RTNHook
-from ..utils.common_functions import check_domain
+from ..inference import rtn_fn
+from ..utils import common_functions as c_f
 from .base_adapter import BaseGCAdapter
 from .utils import with_opt
 
@@ -41,20 +38,9 @@ class RTN(Aligner):
 
     hook_cls = RTNHook
 
-    def inference_default(self, x, domain=None) -> Tuple[torch.Tensor, torch.Tensor]:
-        """
-        Arguments:
-            x: The input to the model
-            domain: If 0, ```logits = residual_model(C(G(x)))```.
-                Otherwise, ```logits = C(G(x))```.
-        Returns:
-            Features and logits
-        """
-        domain = check_domain(self, domain)
-        features, logits = super().inference_default(x, domain)
-        if domain == 0:
-            return features, self.models["residual_model"](logits)
-        return features, logits
+    def __init__(self, *args, inference_fn=None, **kwargs):
+        inference_fn = c_f.default(inference_fn, rtn_fn)
+        super().__init__(*args, inference_fn=inference_fn, **kwargs)
 
     def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()
