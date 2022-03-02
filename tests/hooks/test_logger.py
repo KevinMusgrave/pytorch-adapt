@@ -22,16 +22,29 @@ class TestHookLogger(unittest.TestCase):
         hook = DANNHook(opts=[])
         data = {
             "src_imgs": torch.randn(32, 32),
-            # "target_imgs": torch.randn(32, 32),
-            "src_domain": torch.zeros(32),
-            "target_domain": torch.ones(32),
-            "src_labels": torch.randint(0, 2, size=(32,)),
         }
         models = {
             "G": torch.nn.Linear(32, 10),
             "C": torch.nn.Linear(10, 2),
             "D": torch.nn.Sequential(torch.nn.Linear(10, 1), torch.nn.Flatten(0)),
         }
-        # with self.assertRaises(KeyError):
-        hook({}, {**models, **data})
-        # print(hook.logger.str)
+        with self.assertRaises(KeyError) as cm:
+            hook({}, {**data, **models})
+
+        correct_str = (
+            "in DANNHook: __call__"
+            "\nin ChainHook: __call__"
+            "\nin OptimizerHook: __call__"
+            "\nin ChainHook: __call__"
+            "\nin FeaturesForDomainLossHook: __call__"
+            "\nin FeaturesHook: __call__"
+            "\nFeaturesHook: Getting src"
+            "\nFeaturesHook: Getting output ['src_imgs_features']"
+            "\nFeaturesHook: Using model G with inputs ['src_imgs']"
+            "\nFeaturesHook: Getting target"
+            "\nFeaturesHook: Getting output ['target_imgs_features']"
+            "\nFeaturesHook: Using model G with inputs ['target_imgs']"
+            "\ntarget_imgs"
+        )
+
+        self.assertTrue(str(cm.exception) == correct_str)

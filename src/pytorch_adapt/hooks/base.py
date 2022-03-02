@@ -67,6 +67,7 @@ class BaseHook(ABC):
                 )
         except Exception as e:
             c_f.add_error_message(e, f"in {self.logger.str}\n", prepend=True)
+            self.logger.reset()
             raise
 
     @abstractmethod
@@ -126,13 +127,6 @@ class BaseHook(ABC):
         all_hooks = c_f.attrs_of_type(self, BaseHook)
         all_modules = c_f.attrs_of_type(self, torch.nn.Module)
         return c_f.assert_dicts_are_disjoint(all_hooks, all_modules)
-
-    def str_for_error_msg(self, x=None, n=None):
-        e = str(self if x is None else x)
-        if n is not None:
-            e = "\n".join(e.split("\n")[:n])
-            e += "\n...\n"
-        return f"\nERROR occuring in:\n{e}"
 
     def check_losses_and_outputs(self, losses, outputs, inputs):
         check_keys_are_present(self, self.loss_keys, [losses], "loss_keys", "losses")

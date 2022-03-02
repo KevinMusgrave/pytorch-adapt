@@ -405,6 +405,7 @@ def attrs_of_type(cls, obj):
     return {k: v for k, v in attrs.items() if isinstance(v, obj)}
 
 
+# https://stackoverflow.com/a/70114007/16941290
 class ErrorMsgWithNewLines(str):
     def __repr__(self):
         return str(self)
