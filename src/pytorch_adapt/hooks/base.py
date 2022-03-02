@@ -5,6 +5,7 @@ import numpy as np
 import torch
 
 from ..utils import common_functions as c_f
+from .logger import HookLogger
 
 
 class BaseHook(ABC):
@@ -41,13 +42,16 @@ class BaseHook(ABC):
         self.out_suffix = out_suffix
         self.key_map = c_f.default(key_map, {})
         self.in_keys = []
+        self.logger = HookLogger(c_f.cls_name(self))
 
     def __call__(self, inputs, losses=None):
+        self.logger("__call__")
         losses = c_f.default(losses, {})
         try:
             inputs = c_f.map_keys(inputs, self.key_map)
             x = self.call(inputs, losses)
             if isinstance(x, (bool, np.bool_)):
+                self.logger.reset()
                 return x
             elif isinstance(x, tuple):
                 outputs, losses = x
@@ -56,14 +60,15 @@ class BaseHook(ABC):
                 outputs = wrap_keys(outputs, self.out_prefix, self.out_suffix)
                 losses = wrap_keys(losses, self.loss_prefix, self.loss_suffix)
                 self.check_losses_and_outputs(outputs, losses, inputs)
+                self.logger.reset()
                 return outputs, losses
             else:
                 raise TypeError(
                     f"Output is of type {type(x)}, but should be bool or tuple"
                 )
         except Exception as e:
-            if not isinstance(e, KeyError):
-                c_f.append_error_message(e, self.str_for_error_msg(n=1))
+            c_f.add_error_message(e, f"in {self.logger.str}\n", prepend=True)
+            self.logger.reset()
             raise
 
     @abstractmethod
@@ -123,13 +128,6 @@ class BaseHook(ABC):
         all_hooks = c_f.attrs_of_type(self, BaseHook)
         all_modules = c_f.attrs_of_type(self, torch.nn.Module)
         return c_f.assert_dicts_are_disjoint(all_hooks, all_modules)
-
-    def str_for_error_msg(self, x=None, n=None):
-        e = str(self if x is None else x)
-        if n is not None:
-            e = "\n".join(e.split("\n")[:n])
-            e += "\n...\n"
-        return f"\nERROR occuring in:\n{e}"
 
     def check_losses_and_outputs(self, outputs, losses, inputs):
         check_keys_are_present(self, self.loss_keys, [losses], "loss_keys", "losses")

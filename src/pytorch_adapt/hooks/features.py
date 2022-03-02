@@ -73,6 +73,7 @@ class BaseFeaturesHook(BaseHook):
         """"""
         outputs = {}
         for domain in self.domains:
+            self.logger(f"Getting {domain}")
             detach = self.check_grad_mode(domain)
             func = self.mode_detached if detach else self.mode_with_grad
             in_keys = c_f.filter(self.in_keys, f"^{domain}")
@@ -129,7 +130,15 @@ class BaseFeaturesHook(BaseHook):
     def add_if_new(
         self, outputs, full_key, output_vals, inputs, model_name, in_keys, domain
     ):
-        c_f.add_if_new(outputs, full_key, output_vals, inputs, model_name, in_keys)
+        c_f.add_if_new(
+            outputs,
+            full_key,
+            output_vals,
+            inputs,
+            model_name,
+            in_keys,
+            logger=self.logger,
+        )
 
     def create_keys(self, domain, suffix, starting_keys=None, detach=False):
         if starting_keys is None:

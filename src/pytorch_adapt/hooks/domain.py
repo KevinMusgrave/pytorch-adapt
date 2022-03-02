@@ -100,6 +100,7 @@ class DomainLossHook(BaseWrapperHook):
         outputs = self.hook(inputs, losses)[0]
         labels = self.extract_domain_labels(inputs)
         for domain_name, labels in labels.items():
+            self.logger(f"Computing loss for {domain_name} domain")
             [dlogits] = c_f.extract(
                 [outputs, inputs],
                 c_f.filter(self.hook.out_keys, f"_dlogits$", [f"^{domain_name}"]),
@@ -113,6 +114,7 @@ class DomainLossHook(BaseWrapperHook):
         return outputs, losses
 
     def extract_domain_labels(self, inputs):
+        self.logger("Expecting 'src_domain' and 'target_domain' in inputs")
         [src_domain, target_domain] = c_f.extract(
             inputs, ["src_domain", "target_domain"]
         )
