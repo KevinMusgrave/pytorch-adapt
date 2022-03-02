@@ -19,7 +19,7 @@ def weight_losses(reduction, weights, scale, loss_dict):
             losses.append(loss)
             components[k] = loss.item()
         except Exception as e:
-            c_f.append_error_message(e, f"\nError occuring with loss key = {k}")
+            c_f.add_error_message(e, f"\nError occuring with loss key = {k}")
             raise
 
     total = reduction(losses)

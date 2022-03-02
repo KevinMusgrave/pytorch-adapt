@@ -33,7 +33,7 @@ def get_correct_memory_update(
 
     # https://github.com/tim-learn/ATDOC/issues/1
     # https://github.com/KevinMusgrave/pytorch-adapt/issues/10
-    outputs_target = softmax_out ** 2 / ((softmax_out ** 2).sum(dim=0))
+    outputs_target = softmax_out**2 / ((softmax_out**2).sum(dim=0))
 
     mem_fea[idx] = (1.0 - momentum) * mem_fea[idx] + momentum * features_target.clone()
     mem_cls[idx] = (1.0 - momentum) * mem_cls[idx] + momentum * outputs_target.clone()

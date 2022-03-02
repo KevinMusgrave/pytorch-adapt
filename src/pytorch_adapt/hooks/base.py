@@ -45,10 +45,12 @@ class BaseHook(ABC):
         self.logger = HookLogger(c_f.cls_name(self))
 
     def __call__(self, losses, inputs):
+        self.logger("__call__")
         try:
             inputs = c_f.map_keys(inputs, self.key_map)
             x = self.call(losses, inputs)
             if isinstance(x, (bool, np.bool_)):
+                self.logger.reset()
                 return x
             elif isinstance(x, tuple):
                 losses, outputs = x
@@ -57,14 +59,15 @@ class BaseHook(ABC):
                 losses = wrap_keys(losses, self.loss_prefix, self.loss_suffix)
                 outputs = wrap_keys(outputs, self.out_prefix, self.out_suffix)
                 self.check_losses_and_outputs(losses, outputs, inputs)
+                self.logger.reset()
                 return losses, outputs
             else:
                 raise TypeError(
                     f"Output is of type {type(x)}, but should be bool or tuple"
                 )
         except Exception as e:
-            if not isinstance(e, KeyError):
-                c_f.append_error_message(e, self.str_for_error_msg(n=1))
+            print(f"ERROR in {self.logger.str}")
+            print("----------")
             raise
 
     @abstractmethod

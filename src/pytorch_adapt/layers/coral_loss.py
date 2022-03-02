@@ -26,4 +26,4 @@ class CORALLoss(torch.nn.Module):
         cx = covariance(x)
         cy = covariance(y)
         squared_fro_norm = torch.linalg.norm(cx - cy, ord="fro") ** 2
-        return squared_fro_norm / (4 * (embedding_size ** 2))
+        return squared_fro_norm / (4 * (embedding_size**2))
