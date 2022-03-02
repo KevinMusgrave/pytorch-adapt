@@ -57,10 +57,11 @@ def dict_pop_lazy(x, key, *args, **kwargs):
     return default(y, *args, **kwargs)
 
 
-def add_if_new(logger, d, key, x, kwargs, model_name, in_keys, other_args=None):
+def add_if_new(d, key, x, kwargs, model_name, in_keys, other_args=None, logger=None):
+    if logger:
+        logger(f"Getting output {key}")
+        logger(f"Using model {model_name} with inputs {in_keys}")
     # if key is list then assume model returns multiple args
-    logger(f"Desired output is {key}")
-    logger(f"Using model {model_name} with inputs {in_keys}")
     if not is_list_or_tuple(key) or not is_list_or_tuple(x):
         raise TypeError("key and x must both be a list or tuple")
     condition = is_none
@@ -404,12 +405,17 @@ def attrs_of_type(cls, obj):
     return {k: v for k, v in attrs.items() if isinstance(v, obj)}
 
 
+class ErrorMsgWithNewLines(str):
+    def __repr__(self):
+        return str(self)
+
+
 def add_error_message(e, msg, prepend=False):
     if len(e.args) >= 1:
         if prepend:
-            x = (msg + e.args[0],)
+            x = (ErrorMsgWithNewLines(msg + e.args[0]),)
         else:
-            x = (e.args[0] + msg,)
+            x = (ErrorMsgWithNewLines(e.args[0] + msg),)
         e.args = x + e.args[1:]
 
 

@@ -66,8 +66,7 @@ class BaseHook(ABC):
                     f"Output is of type {type(x)}, but should be bool or tuple"
                 )
         except Exception as e:
-            print(f"ERROR in {self.logger.str}")
-            print("----------")
+            c_f.add_error_message(e, f"in {self.logger.str}\n", prepend=True)
             raise
 
     @abstractmethod

@@ -131,7 +131,13 @@ class BaseFeaturesHook(BaseHook):
         self, outputs, full_key, output_vals, inputs, model_name, in_keys, domain
     ):
         c_f.add_if_new(
-            self.logger, outputs, full_key, output_vals, inputs, model_name, in_keys
+            outputs,
+            full_key,
+            output_vals,
+            inputs,
+            model_name,
+            in_keys,
+            logger=self.logger,
         )
 
     def create_keys(self, domain, suffix, starting_keys=None, detach=False):

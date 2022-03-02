@@ -31,6 +31,7 @@ class BridgeAndLogitsHook(BaseFeaturesHook):
             model_name,
             in_keys,
             other_args=[True],
+            logger=self.logger,
         )
 
 

@@ -22,7 +22,7 @@ class TestHookLogger(unittest.TestCase):
         hook = DANNHook(opts=[])
         data = {
             "src_imgs": torch.randn(32, 32),
-            "target_imgs": torch.randn(32, 32),
+            # "target_imgs": torch.randn(32, 32),
             "src_domain": torch.zeros(32),
             "target_domain": torch.ones(32),
             "src_labels": torch.randint(0, 2, size=(32,)),
