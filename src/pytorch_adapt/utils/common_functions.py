@@ -1,5 +1,6 @@
 import errno
 import glob
+import inspect
 import itertools
 import json
 import logging
@@ -57,27 +58,45 @@ def dict_pop_lazy(x, key, *args, **kwargs):
     return default(y, *args, **kwargs)
 
 
-def add_if_new(d, key, x, kwargs, model_name, in_keys, other_args=None):
-    # if key is list then assume model returns multiple args
+def try_use_model(model, model_name, input_vals):
+    try:
+        return default(None, model, input_vals, is_none)
+    except TypeError as e:
+        add_error_message(
+            e,
+            f"\n{model_name}.forward() signature is {inspect.signature(model.forward)}",
+        )
+        raise
+
+
+def assign_to_output(d, key, x, new_x, condition):
+    if len(x) > 1:
+        if not is_list_or_tuple(new_x) or len(new_x) != len(x):
+            raise TypeError(
+                "if input x and key are lists, then output of model must be a list of the same length"
+            )
+        for i in range(len(x)):
+            if condition(x[i]):
+                d[key[i]] = new_x[i]
+    else:
+        d[key[0]] = new_x
+
+
+def add_if_new(d, key, x, kwargs, model_name, in_keys, other_args=None, logger=None):
+    other_args = default(other_args, {})
+    if logger:
+        logger(f"Getting output: {key}")
+        logger(
+            f"Using model {model_name} with inputs: {', '.join(in_keys + list(other_args.keys()))}"
+        )
     if not is_list_or_tuple(key) or not is_list_or_tuple(x):
         raise TypeError("key and x must both be a list or tuple")
     condition = is_none
     if any(condition(y) for y in x):
         model = kwargs[model_name]
-        input_vals = [kwargs[k] for k in in_keys]
-        if other_args is not None:
-            input_vals += other_args
-        new_x = default(None, model, input_vals, is_none)
-        if len(x) > 1:
-            if not is_list_or_tuple(new_x) or len(new_x) != len(x):
-                raise TypeError(
-                    "if input x and key are lists, then output of model must be a list of the same length"
-                )
-            for i in range(len(x)):
-                if condition(x[i]):
-                    d[key[i]] = new_x[i]
-        else:
-            d[key[0]] = new_x
+        input_vals = [kwargs[k] for k in in_keys] + list(other_args.values())
+        new_x = try_use_model(model, model_name, input_vals)
+        assign_to_output(d, key, x, new_x, condition)
 
 
 def class_default(cls, x, default):
@@ -399,9 +418,19 @@ def attrs_of_type(cls, obj):
     return {k: v for k, v in attrs.items() if isinstance(v, obj)}
 
 
-def append_error_message(e, msg):
+# https://stackoverflow.com/a/70114007/16941290
+class ErrorMsgWithNewLines(str):
+    def __repr__(self):
+        return str(self)
+
+
+def add_error_message(e, msg, prepend=False):
     if len(e.args) >= 1:
-        e.args = (e.args[0] + msg,) + e.args[1:]
+        if prepend:
+            x = (ErrorMsgWithNewLines(msg + e.args[0]),)
+        else:
+            x = (ErrorMsgWithNewLines(e.args[0] + msg),)
+        e.args = x + e.args[1:]
 
 
 def requires_grad(x, does=True):

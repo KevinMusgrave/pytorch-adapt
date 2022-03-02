@@ -18,7 +18,8 @@ class DomainSpecificFeaturesHook(FeaturesHook):
             inputs,
             model_name,
             in_keys,
-            other_args=[domain],
+            other_args={"domain": domain},
+            logger=self.logger,
         )
 
 
