@@ -1,5 +1,6 @@
 import errno
 import glob
+import inspect
 import itertools
 import json
 import logging
@@ -58,19 +59,27 @@ def dict_pop_lazy(x, key, *args, **kwargs):
 
 
 def add_if_new(d, key, x, kwargs, model_name, in_keys, other_args=None, logger=None):
+    other_args = default(other_args, {})
     if logger:
-        logger(f"Getting output {key}")
-        logger(f"Using model {model_name} with inputs {in_keys}")
+        logger(f"Getting output: {key}")
+        logger(
+            f"Using model {model_name} with inputs: {', '.join(in_keys + list(other_args.keys()))}"
+        )
     # if key is list then assume model returns multiple args
     if not is_list_or_tuple(key) or not is_list_or_tuple(x):
         raise TypeError("key and x must both be a list or tuple")
     condition = is_none
     if any(condition(y) for y in x):
         model = kwargs[model_name]
-        input_vals = [kwargs[k] for k in in_keys]
-        if other_args is not None:
-            input_vals += other_args
-        new_x = default(None, model, input_vals, is_none)
+        input_vals = [kwargs[k] for k in in_keys] + list(other_args.values())
+        try:
+            new_x = default(None, model, input_vals, is_none)
+        except TypeError as e:
+            add_error_message(
+                e,
+                f"\n{model_name}.forward() signature is {inspect.signature(model.forward)}",
+            )
+            raise
         if len(x) > 1:
             if not is_list_or_tuple(new_x) or len(new_x) != len(x):
                 raise TypeError(
