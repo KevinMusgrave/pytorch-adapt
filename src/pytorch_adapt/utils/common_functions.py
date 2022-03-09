@@ -551,3 +551,24 @@ def subset_of_dict(x, subset):
     if isinstance(subset, dict):
         return {k: subset_of_dict(x[k], v) for k, v in subset.items()}
     raise TypeError("subset argument must be dict or set")
+
+
+class BatchedDistance(torch.nn.Module):
+    def __init__(self, distance, batch_size=32, iter_fn=None):
+        super().__init__()
+        self.distance = distance
+        self.batch_size = batch_size
+        self.iter_fn = iter_fn
+
+    def forward(self, query_emb, ref_emb=None):
+        ref_emb = default(ref_emb, query_emb)
+        n = query_emb.shape[0]
+        output = []
+        for s in range(0, n, self.batch_size):
+            e = s + self.batch_size
+            L = query_emb[s:e]
+            sim_mat = self.distance(L, ref_emb)
+            output.append(sim_mat)
+            if self.iter_fn:
+                self.iter_fn(sim_mat, s, e)
+        return torch.cat(output, dim=0)
