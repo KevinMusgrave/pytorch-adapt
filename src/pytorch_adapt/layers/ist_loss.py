@@ -19,12 +19,13 @@ def get_probs(mat, mask, y, dist_is_inverted):
     return torch.cat([src_probs, target_probs], dim=1)
 
 
-def get_loss(probs, ent_fn, div_fn, with_div):
-    ent_loss = ent_fn(probs)
-
+def get_loss(probs, ent_fn, div_fn, with_ent, with_div):
+    loss = 0
+    if with_ent:
+        loss += -ent_fn(probs)
     if with_div:
-        return -div_fn(probs) - ent_loss
-    return -ent_loss
+        loss += -div_fn(probs)
+    return loss
 
 
 class ISTLoss(torch.nn.Module):
@@ -33,9 +34,12 @@ class ISTLoss(torch.nn.Module):
     [Information-Theoretical Learning of Discriminative Clusters for Unsupervised Domain Adaptation](https://icml.cc/2012/papers/566.pdf)
     """
 
-    def __init__(self, distance=None, with_div=True):
+    def __init__(self, distance=None, with_ent=True, with_div=True):
         super().__init__()
         self.distance = c_f.default(distance, CosineSimilarity, {})
+        if not (with_ent or with_div):
+            raise ValueError("At least one of with_ent or with_div must be True")
+        self.with_ent = with_ent
         self.with_div = with_div
         self.ent_loss_fn = EntropyLoss(after_softmax=True)
         self.div_loss_fn = DiversityLoss(after_softmax=True)
@@ -58,7 +62,9 @@ class ISTLoss(torch.nn.Module):
         mat = mat[mask].view(n, n - 1)
         probs = get_probs(mat, mask, y, self.distance.is_inverted)
 
-        return get_loss(probs, self.ent_loss_fn, self.div_loss_fn, self.with_div)
+        return get_loss(
+            probs, self.ent_loss_fn, self.div_loss_fn, self.with_ent, self.with_div
+        )
 
     def extra_repr(self):
         """"""

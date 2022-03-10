@@ -17,10 +17,14 @@ def get_iter_fn(probs, y, dist_is_inverted):
 
 
 class ISTValidator(BaseValidator):
-    def __init__(self, layer="features", batch_size=1024, **kwargs):
+    def __init__(
+        self, layer="features", batch_size=1024, with_ent=True, with_div=True, **kwargs
+    ):
         super().__init__(**kwargs)
         self.layer = layer
         self.dist_fn = BatchedDistance(CosineSimilarity(), batch_size=batch_size)
+        self.with_ent = with_ent
+        self.with_div = with_div
         self.ent_fn = EntropyLoss(after_softmax=True)
         self.div_fn = DiversityLoss(after_softmax=True)
 
@@ -37,4 +41,4 @@ class ISTValidator(BaseValidator):
         probs = torch.cat(probs, dim=0)
         if len(probs) != len(features):
             raise ValueError("probs should have same length as features")
-        return get_loss(probs, self.ent_fn, self.div_fn, with_div=True)
+        return get_loss(probs, self.ent_fn, self.div_fn, self.with_ent, self.with_div)
