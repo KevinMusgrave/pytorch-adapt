@@ -3,7 +3,7 @@ import torch.nn.functional as F
 from pytorch_metric_learning.distances import CosineSimilarity
 
 from ..layers import EntropyLoss
-from ..utils.common_functions import BatchedDistance
+from ..utils.common_functions import BatchedDistance, mask_out_self
 from .base_validator import BaseValidator
 
 
@@ -14,15 +14,6 @@ def get_iter_fn(all_entropies, entropy_fn, T):
         all_entropies.append(entropy_fn(sim_mat))
 
     return fn
-
-
-def mask_out_self(sim_mat, start_idx):
-    num_rows, num_cols = sim_mat.shape
-    mask = torch.ones(num_rows, num_cols, dtype=torch.bool)
-    rows = torch.arange(num_rows)
-    cols = rows + start_idx
-    mask[rows, cols] = False
-    return sim_mat[mask].view(num_rows, num_cols - 1)
 
 
 # https://arxiv.org/pdf/2108.10860.pdf

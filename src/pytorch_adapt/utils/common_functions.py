@@ -572,3 +572,15 @@ class BatchedDistance(torch.nn.Module):
             if self.iter_fn:
                 self.iter_fn(sim_mat, s, e)
         return torch.cat(output, dim=0)
+
+
+def mask_out_self(sim_mat, start_idx, return_mask=False):
+    num_rows, num_cols = sim_mat.shape
+    mask = torch.ones(num_rows, num_cols, dtype=torch.bool)
+    rows = torch.arange(num_rows)
+    cols = rows + start_idx
+    mask[rows, cols] = False
+    sim_mat = sim_mat[mask].view(num_rows, num_cols - 1)
+    if return_mask:
+        return sim_mat, mask
+    return sim_mat
