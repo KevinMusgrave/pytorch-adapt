@@ -563,15 +563,12 @@ class BatchedDistance(torch.nn.Module):
     def forward(self, query_emb, ref_emb=None):
         ref_emb = default(ref_emb, query_emb)
         n = query_emb.shape[0]
-        output = []
         for s in range(0, n, self.batch_size):
             e = s + self.batch_size
             L = query_emb[s:e]
             sim_mat = self.distance(L, ref_emb)
-            output.append(sim_mat)
             if self.iter_fn:
                 self.iter_fn(sim_mat, s, e)
-        return torch.cat(output, dim=0)
 
 
 def mask_out_self(sim_mat, start_idx, return_mask=False):
