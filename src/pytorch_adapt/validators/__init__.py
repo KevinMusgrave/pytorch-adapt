@@ -6,6 +6,7 @@ from .entropy_validator import EntropyValidator
 from .error_validator import ErrorValidator
 from .im_validator import IMValidator
 from .ist_validator import ISTValidator
+from .mmd_validator import MMDValidator
 
 # from .knn_validator import ClusterValidator, KNNValidator
 from .multiple_validators import MultipleValidators
