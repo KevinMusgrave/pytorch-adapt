@@ -2,8 +2,7 @@ import unittest
 
 import torch
 
-from pytorch_adapt.validators import ScoreHistory
-from pytorch_adapt.validators.knn_validator import ClusterValidator, KNNValidator
+from pytorch_adapt.validators import ClusterValidator, KNNValidator, ScoreHistory
 
 from .. import TEST_DEVICE
 
