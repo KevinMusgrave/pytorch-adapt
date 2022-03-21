@@ -1,9 +1,9 @@
 import torch
-from pytorch_metric_learning.distances import CosineSimilarity
+from pytorch_metric_learning.distances import BatchedDistance, CosineSimilarity
 
 from ..layers import DiversityLoss, EntropyLoss
 from ..layers.ist_loss import get_loss, get_probs
-from ..utils.common_functions import BatchedDistance, mask_out_self
+from ..utils.common_functions import mask_out_self
 from .base_validator import BaseValidator
 
 

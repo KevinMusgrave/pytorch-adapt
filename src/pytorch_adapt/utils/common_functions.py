@@ -553,24 +553,6 @@ def subset_of_dict(x, subset):
     raise TypeError("subset argument must be dict or set")
 
 
-class BatchedDistance(torch.nn.Module):
-    def __init__(self, distance, batch_size=32, iter_fn=None):
-        super().__init__()
-        self.distance = distance
-        self.batch_size = batch_size
-        self.iter_fn = iter_fn
-
-    def forward(self, query_emb, ref_emb=None):
-        ref_emb = default(ref_emb, query_emb)
-        n = query_emb.shape[0]
-        for s in range(0, n, self.batch_size):
-            e = s + self.batch_size
-            L = query_emb[s:e]
-            sim_mat = self.distance(L, ref_emb)
-            if self.iter_fn:
-                self.iter_fn(sim_mat, s, e)
-
-
 def mask_out_self(sim_mat, start_idx, return_mask=False):
     num_rows, num_cols = sim_mat.shape
     mask = torch.ones(num_rows, num_cols, dtype=torch.bool)
