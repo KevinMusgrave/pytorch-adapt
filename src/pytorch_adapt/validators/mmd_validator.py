@@ -6,9 +6,9 @@ from .base_validator import BaseValidator
 
 
 def randomly_sample(x, num_samples):
-    if num_samples > len(x):
+    if num_samples == len(x):
         return x
-    return x[np.random.choice(len(x), size=num_samples, replace=False)]
+    return x[np.random.choice(len(x), size=num_samples, replace=True)]
 
 
 class MMDValidator(BaseValidator):
@@ -33,11 +33,11 @@ class MMDValidator(BaseValidator):
         x = src_train[self.layer]
         y = target_train[self.layer]
         score = []
+        num_samples = (
+            np.max([len(x), len(y)]) if self.num_samples == "max" else self.num_samples
+        )
         for i in range(self.num_trials):
-            if self.num_samples == "max":
-                curr_x, curr_y = x, y
-            else:
-                curr_x = randomly_sample(x, self.num_samples)
-                curr_y = randomly_sample(y, self.num_samples)
+            curr_x = randomly_sample(x, num_samples)
+            curr_y = randomly_sample(y, num_samples)
             score.append(self.loss_fn(curr_x, curr_y).item())
         return -np.mean(score)
