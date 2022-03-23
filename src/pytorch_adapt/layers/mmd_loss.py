@@ -18,7 +18,10 @@ class MMDLoss(torch.nn.Module):
     """
 
     def __init__(
-        self, kernel_scales: Union[float, torch.Tensor] = 1, mmd_type: str = "linear"
+        self,
+        kernel_scales: Union[float, torch.Tensor] = 1,
+        mmd_type: str = "linear",
+        dist_func=None,
     ):
         """
         Arguments:
@@ -28,7 +31,9 @@ class MMDLoss(torch.nn.Module):
         """
         super().__init__()
         self.kernel_scales = kernel_scales
-        self.dist_func = LpDistance(normalize_embeddings=False, p=2, power=2)
+        self.dist_func = c_f.default(
+            dist_func, LpDistance(normalize_embeddings=False, p=2, power=2)
+        )
         self.mmd_type = mmd_type
         if mmd_type == "linear":
             self.mmd_func = l_u.get_mmd_linear
