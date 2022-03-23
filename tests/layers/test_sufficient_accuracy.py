@@ -16,7 +16,7 @@ def correct_fn(x, labels, threshold):
 
 class TestSufficientAccuracy(unittest.TestCase):
     def test_sufficient_accuracy(self):
-        batch_size = 32
+        batch_size = 256
         embedding_size = 1
         for threshold in np.linspace(0, 1, 100):
             loss_fn = SufficientAccuracy(
@@ -31,5 +31,5 @@ class TestSufficientAccuracy(unittest.TestCase):
                 acc = loss_fn.accuracy
 
                 correct_result, correct_acc = correct_fn(x, labels, threshold)
-                self.assertTrue(np.isclose(result, correct_result))
-                self.assertTrue(np.isclose(acc, correct_acc, rtol=1e-2))
+                self.assertTrue(result == correct_result)
+                self.assertTrue(acc == correct_acc)
