@@ -14,6 +14,7 @@ from .. import TEST_DEVICE
 class TestMMDValidator(unittest.TestCase):
     def test_mmd_validator(self):
         torch.manual_seed(3531)
+        np.random.seed(3531)
         embedding_size = 128
         for kernel_scales in [1, utils.get_kernel_scales()]:
             for src_dataset_size in [100, 500]:
