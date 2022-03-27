@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 import torch
 
+from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import (
     ClusterValidator,
     KNNValidator,
@@ -10,13 +11,15 @@ from pytorch_adapt.validators import (
     PerClassValidator,
     SNDValidator,
 )
+from pytorch_adapt.validators.per_class_validator import get_common_labels
 
 from .. import TEST_DEVICE
 
 
-def get_data(dataset_size, domain):
+def get_data(dataset_size, domain, label_range=None):
+    label_range = c_f.default(label_range, [0, 7])
     features = torch.randn(dataset_size, 128, device=TEST_DEVICE)
-    labels = torch.randint(0, 7, size=(dataset_size,), device=TEST_DEVICE)
+    labels = torch.randint(*label_range, size=(dataset_size,), device=TEST_DEVICE)
     logits = torch.randn(dataset_size, 7, device=TEST_DEVICE)
     preds = torch.softmax(logits, dim=1)
     domain = torch.ones(dataset_size, device=TEST_DEVICE) * domain
@@ -78,3 +81,16 @@ class TestPerClassValidator(unittest.TestCase):
                 self.assertTrue(np.isclose(score, correct_score, rtol=0.05))
             else:
                 self.assertTrue(score == correct_score)
+
+    def test_common_labels(self):
+        def label_fn(x):
+            return x["labels"]
+
+        kwargs = {
+            "src_train": get_data(100, 0, label_range=[0, 5]),
+            "target_train": get_data(100, 1, label_range=[3, 6]),
+        }
+        _, common_labels = get_common_labels(
+            kwargs, {"src_train": label_fn, "target_train": label_fn}
+        )
+        self.assertTrue(common_labels == {3, 4})
