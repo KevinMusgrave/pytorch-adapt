@@ -551,3 +551,15 @@ def subset_of_dict(x, subset):
     if isinstance(subset, dict):
         return {k: subset_of_dict(x[k], v) for k, v in subset.items()}
     raise TypeError("subset argument must be dict or set")
+
+
+def mask_out_self(sim_mat, start_idx, return_mask=False):
+    num_rows, num_cols = sim_mat.shape
+    mask = torch.ones(num_rows, num_cols, dtype=torch.bool)
+    rows = torch.arange(num_rows)
+    cols = rows + start_idx
+    mask[rows, cols] = False
+    sim_mat = sim_mat[mask].view(num_rows, num_cols - 1)
+    if return_mask:
+        return sim_mat, mask
+    return sim_mat
