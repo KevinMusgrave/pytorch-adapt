@@ -1,5 +1,6 @@
 import unittest
 
+import numpy as np
 import torch
 
 from pytorch_adapt.validators import (
@@ -28,13 +29,39 @@ def get_data(dataset_size, domain):
     }
 
 
+def map_keys(kwargs, validator):
+    for k, v in validator.validator.key_map.items():
+        kwargs[k] = kwargs.pop(v)
+    return {k: v for k, v in kwargs.items() if k in validator.required_data}
+
+
+def get_correct_score(data, validator):
+    labels = torch.argmax(data["target_train"]["logits"], dim=1)
+    unique_labels = torch.unique(labels)
+    score = 0
+    for L in unique_labels:
+        curr_data = {}
+        curr_data["target_train"] = {
+            k: v[labels == L] for k, v in data["target_train"].items()
+        }
+        curr_data["src_train"] = {
+            k: v[data["src_train"]["labels"] == L] for k, v in data["src_train"].items()
+        }
+        curr_data = map_keys(curr_data, validator)
+        score += validator(**curr_data)
+    return score / len(unique_labels)
+
+
 class TestPerClassValidator(unittest.TestCase):
     def test_per_class_validator(self):
-        dataset_size = 2048
+        torch.manual_seed(204)
+        dataset_size = 256
         inner_validators = [
-            ClusterValidator(),
-            KNNValidator(),
-            MMDValidator(num_samples=1024),
+            ClusterValidator(key_map={"src_val": "src_train"}),
+            KNNValidator(
+                key_map={"src_val": "src_train", "target_val": "target_train"}
+            ),
+            MMDValidator(num_trials=1000),
             SNDValidator(),
         ]
         for v in inner_validators:
@@ -43,6 +70,11 @@ class TestPerClassValidator(unittest.TestCase):
                 "src_train": get_data(dataset_size, 0),
                 "target_train": get_data(dataset_size, 1),
             }
-            kwargs = {k: v for k, v in kwargs.items() if k in validator.required_data}
+            correct_score = get_correct_score(kwargs, validator)
+            kwargs = map_keys(kwargs, validator)
+
             score = validator(**kwargs)
-            print(score)
+            if isinstance(v, MMDValidator):
+                self.assertTrue(np.isclose(score, correct_score, rtol=0.05))
+            else:
+                self.assertTrue(score == correct_score)
