@@ -5,6 +5,7 @@ import torch
 
 from ..utils import common_functions as c_f
 from .base_validator import BaseValidator
+from .utils import default_label_fns
 
 
 def check_keys(src_key, target_key):
@@ -12,27 +13,6 @@ def check_keys(src_key, target_key):
         raise ValueError(
             f"Expected keys to start with 'src' and 'target', but got {src_key}, {target_key}"
         )
-
-
-def src_label_fn(x):
-    return x["labels"]
-
-
-def target_label_fn(x):
-    return torch.argmax(x["logits"], dim=1)
-
-
-def default_label_fns(required_data):
-    output = {}
-    for k in required_data:
-        if k.startswith("src"):
-            label_fn = src_label_fn
-        elif k.startswith("target"):
-            label_fn = target_label_fn
-        else:
-            raise ValueError(f"expected key to start with 'src' or 'target but got {k}")
-        output[k] = label_fn
-    return output
 
 
 def get_common_labels(kwargs, label_fns):
