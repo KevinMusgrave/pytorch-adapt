@@ -47,5 +47,5 @@ class TargetKNNValidator(KNNValidator):
             accuracies = self.acc_fn.get_accuracy(
                 *d, embeddings_come_from_same_source=False
             )
-            scores.append(-accuracies[self.metric])
+            scores.append(accuracies[self.metric])
         return np.mean(scores)
