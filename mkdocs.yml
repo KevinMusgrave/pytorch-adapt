@@ -18,6 +18,9 @@ theme:
         name: Switch to light mode
   logo: imgs/TinyLogo.png
   favicon: imgs/Favicon.png
+  features:
+    - navigation.tabs
+    # - toc.integrate # gets rid of table of contents on the right side of the page
 
 nav:
 - Getting Started: getting_started.md 
@@ -37,7 +40,8 @@ plugins:
         setup_commands:
           - import sys
           - sys.path.append("src")
-- section-index
+        rendering:
+          show_root_toc_entry: false
 - literate-nav:
     nav_file: SUMMARY.md
 
