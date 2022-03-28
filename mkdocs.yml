@@ -7,11 +7,12 @@ theme:
       accent: 'green'
   logo: imgs/TinyLogo.png
   favicon: imgs/Favicon.png
-  features:
-    - navigation.tabs
+  # features:
+    # - navigation.tabs
     # - toc.integrate # gets rid of table of contents on the right side of the page
 
 nav:
+- Overview: index.md
 - Getting Started: getting_started.md 
 - Code Reference: reference/
 

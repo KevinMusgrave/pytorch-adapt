@@ -30,7 +30,6 @@ def main():
 
         with mkdocs_gen_files.open(full_doc_path, "w") as fd:
             ident = ".".join(parts)
-            print(ident)
             print("::: " + ident, file=fd)
 
         mkdocs_gen_files.set_edit_path(full_doc_path, path)
