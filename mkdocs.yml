@@ -13,21 +13,11 @@ theme:
 
 nav:
 - Overview: index.md
-- Getting Started: 
-  - getting_started/index.md
-  - Adapters: getting_started/adapters.md
-  - Containers: getting_started/containers.md
-  - Datasets: getting_started/datasets.md
-  - Frameworks: getting_started/frameworks.md
-  - Hooks: getting_started/hooks.md
-  - Layers: getting_started/layers.md
-  - Meta Validators: getting_started/meta_validators.md
-  - Validators: getting_started/validators.md
-  - Weighters: getting_started/weighters.md
+- Getting started: getting_started.md
 - Papers implemented:
   - Unsupervised Domain Adaptation: algorithms/uda.md
   - Validators: algorithms/validators.md
-- Code Reference: reference/
+- Code: code/
 
 
 plugins:

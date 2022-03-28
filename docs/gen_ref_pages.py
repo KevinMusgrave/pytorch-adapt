@@ -5,6 +5,7 @@ from pathlib import Path
 import mkdocs_gen_files
 
 TOP_LEVEL_NAME = "pytorch_adapt"
+FOLDER = "code"
 
 
 def remove_pytorch_adapt(x):
@@ -21,7 +22,7 @@ def main():
             continue
 
         doc_path = path.relative_to("src").with_suffix(".md")
-        full_doc_path = Path("reference", doc_path)
+        full_doc_path = Path(FOLDER, doc_path)
         doc_path = Path(*remove_pytorch_adapt(doc_path))
         full_doc_path = Path(*remove_pytorch_adapt(full_doc_path))
 
@@ -34,7 +35,7 @@ def main():
 
         mkdocs_gen_files.set_edit_path(full_doc_path, path)
 
-    with mkdocs_gen_files.open("reference/SUMMARY.md", "w") as nav_file:
+    with mkdocs_gen_files.open(f"{FOLDER}/SUMMARY.md", "w") as nav_file:
         nav_file.writelines(nav.build_literate_nav())
 
 
