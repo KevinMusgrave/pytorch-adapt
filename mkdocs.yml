@@ -2,20 +2,9 @@ site_name: PyTorch Adapt
 theme:
   name: 'material'
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: 'green'
-      accent: 'green'
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: 'green'
       accent: 'green'
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
   logo: imgs/TinyLogo.png
   favicon: imgs/Favicon.png
   features:
