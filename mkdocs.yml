@@ -20,10 +20,8 @@ theme:
   favicon: imgs/Favicon.png
 
 nav:
-# rest of the navigation...
-# defer to gen-files + literate-nav
-- Code Reference: reference/  # 
-# rest of the navigation...
+- Getting Started: getting_started.md 
+- Code Reference: reference/
 
 
 plugins:
