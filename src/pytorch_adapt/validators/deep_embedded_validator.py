@@ -91,14 +91,6 @@ class DeepEmbeddedValidator(BaseValidator):
 
 
 def get_dev_risk(weight, error):
-    """
-    :param weight: shape [N, 1], the importance weight for N source samples in the validation set
-    :param error: shape [N, 1], the error value for each source sample in the validation set
-    (typically 0 for correct classification and 1 for wrong classification)
-    """
-    if torch.any(weight < 0) or torch.any(error < 0):
-        raise ValueError("weights and errors must be positive")
-
     weight = pml_cf.to_numpy(weight)
     error = pml_cf.to_numpy(error)
 
@@ -108,7 +100,7 @@ def get_dev_risk(weight, error):
     weighted_error = weight * error
     cov = np.cov(np.concatenate((weighted_error, weight), axis=1), rowvar=False)[0][1]
     var_w = np.var(weight, ddof=1)
-    eta = -cov / (var_w + 1e-6)
+    eta = -cov / var_w
     return np.mean(weighted_error) + eta * np.mean(weight) - eta
 
 
