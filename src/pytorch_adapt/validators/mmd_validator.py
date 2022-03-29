@@ -40,4 +40,4 @@ class MMDValidator(BaseValidator):
             curr_x = randomly_sample(x, num_samples)
             curr_y = randomly_sample(y, num_samples)
             score.append(self.loss_fn(curr_x, curr_y).item())
-        return -np.mean(score)
+        return -np.nanmean(score)
