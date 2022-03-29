@@ -88,7 +88,7 @@ def get_correct_score(cls, src_train, target_train, src_val):
     loss_fn = torch.nn.CrossEntropyLoss(reduction="none")
     error_per_sample = loss_fn(src_val["logits"], src_val["labels"])
     correct_dev_risk = get_dev_risk(weights, error_per_sample[:, None].cpu().numpy())
-    dev_risk = pa_get_dev_risk(torch.from_numpy(weights), error_per_sample[:, None])
+    dev_risk = pa_get_dev_risk(torch.from_numpy(weights), error_per_sample[:, None], 0)
     cls.assertTrue(np.isclose(correct_dev_risk, dev_risk, rtol=0.01))
     return correct_dev_risk
 

@@ -42,6 +42,7 @@ class DeepEmbeddedValidator(BaseValidator):
         batch_size=32,
         error_fn=None,
         error_layer="logits",
+        min_var=0,
         framework_fn=None,
         **kwargs,
     ):
@@ -54,6 +55,7 @@ class DeepEmbeddedValidator(BaseValidator):
             error_fn, torch.nn.CrossEntropyLoss(reduction="none")
         )
         self.error_layer = error_layer
+        self.min_var = min_var
         self.framework_fn = c_f.default(framework_fn, default_framework_fn)
         self.D_accuracy_val = None
         self.D_accuracy_test = None
@@ -74,7 +76,7 @@ class DeepEmbeddedValidator(BaseValidator):
             self.framework_fn,
         )
         error_per_sample = self.error_fn(src_val[self.error_layer], src_val["labels"])
-        output = get_dev_risk(weights, error_per_sample[:, None])
+        output = get_dev_risk(weights, error_per_sample[:, None], self.min_var)
         self.mean_error = torch.mean(error_per_sample).item()
         c_f.LOGGER.setLevel(init_logging_level)
         return -output
@@ -90,7 +92,7 @@ class DeepEmbeddedValidator(BaseValidator):
 #########################################################################
 
 
-def get_dev_risk(weight, error):
+def get_dev_risk(weight, error, min_var):
     weight = pml_cf.to_numpy(weight)
     error = pml_cf.to_numpy(error)
 
@@ -100,6 +102,7 @@ def get_dev_risk(weight, error):
     weighted_error = weight * error
     cov = np.cov(np.concatenate((weighted_error, weight), axis=1), rowvar=False)[0][1]
     var_w = np.var(weight, ddof=1)
+    var_w = max(min_var, var_w)
     eta = -cov / var_w
     return np.mean(weighted_error) + eta * np.mean(weight) - eta
 
