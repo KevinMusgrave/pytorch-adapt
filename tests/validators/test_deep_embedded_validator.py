@@ -131,3 +131,11 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
             self.assertTrue(np.isclose(score, correct_score, rtol=0.2))
 
         shutil.rmtree(TEST_FOLDER)
+
+    def test_min_var(self):
+        weights = torch.ones(128, 1)
+        error = torch.randn(128, 1)
+        x = pa_get_dev_risk(weights, error, 0)
+        self.assertTrue(np.isnan(x))
+        x = pa_get_dev_risk(weights, error, 0.01)
+        self.assertTrue(not np.isnan(x))
