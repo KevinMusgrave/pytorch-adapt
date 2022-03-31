@@ -11,6 +11,7 @@ from pytorch_adapt.validators import DeepEmbeddedValidator
 from pytorch_adapt.validators.deep_embedded_validator import (
     get_dev_risk as pa_get_dev_risk,
 )
+from pytorch_adapt.validators.deep_embedded_validator import normalize_weights
 
 from .. import TEST_DEVICE, TEST_FOLDER
 
@@ -88,7 +89,7 @@ def get_correct_score(cls, src_train, target_train, src_val):
     loss_fn = torch.nn.CrossEntropyLoss(reduction="none")
     error_per_sample = loss_fn(src_val["logits"], src_val["labels"])
     correct_dev_risk = get_dev_risk(weights, error_per_sample[:, None].cpu().numpy())
-    dev_risk = pa_get_dev_risk(torch.from_numpy(weights), error_per_sample[:, None], 0)
+    dev_risk = pa_get_dev_risk(torch.from_numpy(weights), error_per_sample[:, None])
     cls.assertTrue(np.isclose(correct_dev_risk, dev_risk, rtol=0.01))
     return correct_dev_risk
 
@@ -132,10 +133,27 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
 
         shutil.rmtree(TEST_FOLDER)
 
-    def test_min_var(self):
-        weights = torch.ones(128, 1)
-        error = torch.randn(128, 1)
-        x = pa_get_dev_risk(weights, error, 0)
-        self.assertTrue(np.isnan(x))
-        x = pa_get_dev_risk(weights, error, 0.01)
-        self.assertTrue(not np.isnan(x))
+    def test_normalize_weights(self):
+        N = 1000
+        np.random.seed(15)
+
+        def new_weights():
+            weights = np.random.normal(loc=10, scale=0.1, size=(N, 1))
+            weights[0] = 100000000000
+            self.assertTrue(not np.isclose(np.mean(weights), 1))
+            self.assertTrue(not np.isclose(np.std(weights), 1))
+            return weights
+
+        weights = normalize_weights(new_weights(), "max")
+        self.assertTrue(np.isclose(np.mean(weights), 1))
+
+        weights = normalize_weights(new_weights(), "standardize")
+        self.assertTrue(np.isclose(np.mean(weights), 1))
+        self.assertTrue(np.isclose(np.std(weights), 1))
+
+        weights = normalize_weights(new_weights(), None)
+        self.assertTrue(not np.isclose(np.mean(weights), 1))
+        self.assertTrue(not np.isclose(np.std(weights), 1))
+
+        with self.assertRaises(ValueError) as c:
+            normalize_weights(new_weights(), "")
