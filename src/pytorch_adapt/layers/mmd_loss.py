@@ -22,6 +22,7 @@ class MMDLoss(torch.nn.Module):
         kernel_scales: Union[float, torch.Tensor] = 1,
         mmd_type: str = "linear",
         dist_func=None,
+        bandwidth=None,
     ):
         """
         Arguments:
@@ -34,6 +35,7 @@ class MMDLoss(torch.nn.Module):
         self.dist_func = c_f.default(
             dist_func, LpDistance(normalize_embeddings=False, p=2, power=2)
         )
+        self.bandwidth = bandwidth
         self.mmd_type = mmd_type
         if mmd_type == "linear":
             self.mmd_func = l_u.get_mmd_linear
@@ -55,7 +57,7 @@ class MMDLoss(torch.nn.Module):
         Returns:
             MMD if the inputs are tensors, and Joint MMD (JMMD) if the inputs are lists of tensors.
         """
-        xx, yy, zz, scale = l_u.get_mmd_dist_mats(x, y, self.dist_func)
+        xx, yy, zz, scale = l_u.get_mmd_dist_mats(x, y, self.dist_func, self.bandwidth)
         if torch.is_tensor(self.kernel_scales):
             s = scale[0] if c_f.is_list_or_tuple(scale) else scale
             self.kernel_scales = pml_cf.to_device(self.kernel_scales, s, dtype=s.dtype)

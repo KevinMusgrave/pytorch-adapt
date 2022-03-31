@@ -18,7 +18,7 @@ def get_kernel_scales(low=-8, high=8, num_kernels=33, base=2.0):
     return torch.from_numpy(np.logspace(low, high, num=num_kernels, base=base))
 
 
-def _mmd_dist_mats(x, y, dist_func):
+def _mmd_dist_mats(x, y, dist_func, bandwidth=None):
     xx = dist_func(x, x)
     yy = dist_func(y, y)
     zz = dist_func(x, y)
@@ -26,23 +26,28 @@ def _mmd_dist_mats(x, y, dist_func):
     with torch.no_grad():
         # https://arxiv.org/pdf/1409.6041.pdf
         # https://arxiv.org/pdf/1707.07269.pdf
-        scale = -1.0 / torch.median(xx)
+        denom = (
+            torch.median(xx)
+            if bandwidth is None
+            else torch.tensor([bandwidth], dtype=xx.dtype, device=xx.device)
+        )
+        scale = -1.0 / denom
 
     return xx, yy, zz, scale
 
 
-def get_mmd_dist_mats(x, y, dist_func):
+def get_mmd_dist_mats(x, y, dist_func, bandwidth):
     if c_f.is_list_or_tuple(x):
         xx, yy, zz, scale = [], [], [], []
         for i in range(len(x)):
-            _xx, _yy, _zz, _scale = _mmd_dist_mats(x[i], y[i], dist_func)
+            _xx, _yy, _zz, _scale = _mmd_dist_mats(x[i], y[i], dist_func, bandwidth)
             xx.append(_xx)
             yy.append(_yy)
             zz.append(_zz)
             scale.append(_scale)
         return xx, yy, zz, scale
     else:
-        return _mmd_dist_mats(x, y, dist_func)
+        return _mmd_dist_mats(x, y, dist_func, bandwidth)
 
 
 def get_default_kernel_weights(scale):

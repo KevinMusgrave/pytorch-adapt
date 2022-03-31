@@ -66,17 +66,20 @@ def DAN_Linear(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
 
 
 class TestMMDLossWithOriginal(unittest.TestCase):
-    def test_mmd_loss_quadratic(self):
+    def test_mmd_loss_with_original(self):
         s = torch.randn(128, 32, device=TEST_DEVICE)
         t = torch.randn(128, 32, device=TEST_DEVICE) + 0.5
 
         kernel_num = 5
         half = kernel_num // 2
         kernel_scales = get_kernel_scales(low=-half, high=half, num_kernels=kernel_num)
-        loss_fn = MMDLoss(kernel_scales=kernel_scales)
-        loss = loss_fn(s, t)
 
-        median = torch.median(torch.cdist(s, s) ** 2)
-        correct = DAN_Linear(s, t, kernel_num=kernel_num, fix_sigma=median)
+        for bandwidth in [None, 0.5, 1]:
+            loss_fn = MMDLoss(kernel_scales=kernel_scales, bandwidth=bandwidth)
+            loss = loss_fn(s, t)
 
-        self.assertTrue(np.isclose(loss.item(), correct.item()))
+            if bandwidth is None:
+                bandwidth = torch.median(torch.cdist(s, s) ** 2)
+            correct = DAN_Linear(s, t, kernel_num=kernel_num, fix_sigma=bandwidth)
+
+            self.assertTrue(np.isclose(loss.item(), correct.item()))
