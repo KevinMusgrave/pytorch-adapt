@@ -50,3 +50,20 @@ class TestMMDValidator(unittest.TestCase):
                             ).item()
                             rtol = 1e-2 if bandwidth is None else 1e-6
                             self.assertTrue(np.isclose(score, correct_score, rtol=rtol))
+
+    def test_collapsed_features(self):
+        for bandwidth in [None, 1]:
+            validator = MMDValidator(
+                mmd_kwargs={"mmd_type": "quadratic", "bandwidth": bandwidth},
+            )
+            src_features = torch.zeros(1024, 128, device=TEST_DEVICE)
+            target_features = torch.zeros(999, 128, device=TEST_DEVICE)
+
+            score = validator(
+                src_train={"features": src_features},
+                target_train={"features": target_features},
+            )
+            if bandwidth is None:
+                self.assertTrue(np.isnan(score))
+            else:
+                self.assertTrue(score == 0)
