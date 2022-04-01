@@ -90,8 +90,6 @@ class MMDLoss(torch.nn.Module):
 class MMDBatchedLoss(MMDLoss):
     def __init__(self, batch_size=1024, **kwargs):
         super().__init__(**kwargs)
-        if self.bandwidth is None:
-            raise ValueError("bandwidth must be specified for MMDBatchedLoss")
         if self.mmd_type != "quadratic":
             raise ValueError("mmd_type must be 'quadratic'")
         self.mmd_func = l_u.get_mmd_quadratic_batched

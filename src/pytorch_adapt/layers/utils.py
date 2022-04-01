@@ -141,8 +141,22 @@ def _mmd_quadratic_batched(rsum, scale, weights, query_is_ref):
     return fn
 
 
+def get_median_of_medians(x, dist_func):
+    medians = []
+
+    def fn(mat, *_):
+        with torch.no_grad():
+            medians.append(torch.median(mat))
+
+    dist_func.iter_fn = fn
+    dist_func(x, x)
+    return torch.median(torch.stack(medians))
+
+
 def get_mmd_quadratic_batched(x, y, dist_func, kernel_scales, bandwidth, weights=None):
     kernel_scales = pml_cf.to_device(kernel_scales, x, dtype=x.dtype)
+    if bandwidth is None:
+        bandwidth = get_median_of_medians(x, dist_func)
     scale = -kernel_scales / bandwidth
     weights = c_f.default(weights, get_default_kernel_weights(scale))
 

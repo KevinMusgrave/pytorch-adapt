@@ -174,10 +174,12 @@ class TestMMDLossWithOriginal(unittest.TestCase):
                             loss_fn = MMDBatchedLoss(
                                 kernel_scales=kernel_scales,
                                 mmd_type=mmd_type,
-                                bandwidth=get_bandwidth(s, original_bandwidth),
+                                bandwidth=original_bandwidth,
                                 batch_size=batch_size,
                             )
                             loss = loss_fn(s, t)
+
+                            rtol = 1e-4 if original_bandwidth is not None else 1e-2
                             self.assertTrue(
-                                np.isclose(loss.item(), correct.item(), rtol=1e-4)
+                                np.isclose(loss.item(), correct.item(), rtol=rtol)
                             )
