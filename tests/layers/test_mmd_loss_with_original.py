@@ -137,14 +137,17 @@ class TestMMDLossWithOriginal(unittest.TestCase):
             t = torch.randn(t_size, 32, device=TEST_DEVICE) + 0.5
             same_size = s_size == t_size
             for mmd_type in ["linear", "quadratic"]:
-                if not same_size and mmd_type == "linear":
-                    continue
                 for bandwidth in [None, 0.5, 1]:
                     loss_fn = MMDLoss(
                         kernel_scales=kernel_scales,
                         mmd_type=mmd_type,
                         bandwidth=bandwidth,
                     )
+                    if not same_size and mmd_type == "linear":
+                        with self.assertRaises(ValueError):
+                            loss = loss_fn(s, t)
+                        continue
+
                     loss = loss_fn(s, t)
 
                     if bandwidth is None:

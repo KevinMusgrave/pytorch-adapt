@@ -8,6 +8,17 @@ from ..utils import common_functions as c_f
 from . import utils as l_u
 
 
+def check_batch_sizes(s, t, mmd_type):
+    if mmd_type == "quadratic":
+        return
+    if (
+        c_f.is_list_or_tuple(s) and any(s[i].shape != t[i].shape for i in range(len(s)))
+    ) or s.shape != t.shape:
+        raise ValueError(
+            "For mmd_type 'linear', source and target must have the same batch size."
+        )
+
+
 class MMDLoss(torch.nn.Module):
     """
     Implementation of
@@ -57,6 +68,7 @@ class MMDLoss(torch.nn.Module):
         Returns:
             MMD if the inputs are tensors, and Joint MMD (JMMD) if the inputs are lists of tensors.
         """
+        check_batch_sizes(x, y, self.mmd_type)
         xx, yy, zz, scale = l_u.get_mmd_dist_mats(x, y, self.dist_func, self.bandwidth)
         if torch.is_tensor(self.kernel_scales):
             s = scale[0] if c_f.is_list_or_tuple(scale) else scale
