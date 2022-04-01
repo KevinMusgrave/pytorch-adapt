@@ -33,6 +33,33 @@ def guassian_kernel(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None
 
 
 # from https://github.com/thuml/Xlearn/blob/master/pytorch/src/loss.py
+def DAN(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
+    batch_size = int(source.size()[0])
+    kernels = guassian_kernel(
+        source,
+        target,
+        kernel_mul=kernel_mul,
+        kernel_num=kernel_num,
+        fix_sigma=fix_sigma,
+    )
+
+    loss1 = 0
+    for s1 in range(batch_size):
+        for s2 in range(s1 + 1, batch_size):
+            t1, t2 = s1 + batch_size, s2 + batch_size
+            loss1 += kernels[s1, s2] + kernels[t1, t2]
+    loss1 = loss1 / float(batch_size * (batch_size - 1) / 2)
+
+    loss2 = 0
+    for s1 in range(batch_size):
+        for s2 in range(batch_size):
+            t1, t2 = s1 + batch_size, s2 + batch_size
+            loss2 -= kernels[s1, t2] + kernels[s2, t1]
+    loss2 = loss2 / float(batch_size * batch_size)
+    return loss1 + loss2
+
+
+# from https://github.com/thuml/Xlearn/blob/master/pytorch/src/loss.py
 def DAN_Linear(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
     batch_size = int(source.size()[0])
     kernels = guassian_kernel(
@@ -67,6 +94,7 @@ def DAN_Linear(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
 
 class TestMMDLossWithOriginal(unittest.TestCase):
     def test_mmd_loss_with_original(self):
+        torch.manual_seed(49)
         s = torch.randn(128, 32, device=TEST_DEVICE)
         t = torch.randn(128, 32, device=TEST_DEVICE) + 0.5
 
@@ -74,12 +102,18 @@ class TestMMDLossWithOriginal(unittest.TestCase):
         half = kernel_num // 2
         kernel_scales = get_kernel_scales(low=-half, high=half, num_kernels=kernel_num)
 
-        for bandwidth in [None, 0.5, 1]:
-            loss_fn = MMDLoss(kernel_scales=kernel_scales, bandwidth=bandwidth)
-            loss = loss_fn(s, t)
+        for mmd_type in ["linear", "quadratic"]:
+            for bandwidth in [None, 0.5, 1]:
+                loss_fn = MMDLoss(
+                    kernel_scales=kernel_scales, mmd_type=mmd_type, bandwidth=bandwidth
+                )
+                loss = loss_fn(s, t)
 
-            if bandwidth is None:
-                bandwidth = torch.median(torch.cdist(s, s) ** 2)
-            correct = DAN_Linear(s, t, kernel_num=kernel_num, fix_sigma=bandwidth)
+                if bandwidth is None:
+                    bandwidth = torch.median(torch.cdist(s, s) ** 2)
 
-            self.assertTrue(np.isclose(loss.item(), correct.item()))
+                correct_fn = {"linear": DAN_Linear, "quadratic": DAN}[mmd_type]
+
+                correct = correct_fn(s, t, kernel_num=kernel_num, fix_sigma=bandwidth)
+
+                self.assertTrue(np.isclose(loss.item(), correct.item(), rtol=1e-4))
