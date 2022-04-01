@@ -154,7 +154,8 @@ def get_median_of_medians(x, dist_func):
 
 
 def get_mmd_quadratic_batched(x, y, dist_func, kernel_scales, bandwidth, weights=None):
-    kernel_scales = pml_cf.to_device(kernel_scales, x, dtype=x.dtype)
+    if torch.is_tensor(kernel_scales):
+        kernel_scales = pml_cf.to_device(kernel_scales, x, dtype=x.dtype)
     if bandwidth is None:
         bandwidth = get_median_of_medians(x, dist_func)
     scale = -kernel_scales / bandwidth
