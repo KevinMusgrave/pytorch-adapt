@@ -42,6 +42,7 @@ plugins:
 markdown_extensions:
 - toc:
     permalink: True
+    toc_depth: 2
 - pymdownx.highlight
 - pymdownx.superfences
 
