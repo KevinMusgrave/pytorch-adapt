@@ -3,6 +3,8 @@
 from pathlib import Path
 
 import mkdocs_gen_files
+from griffe.collections import ModulesCollection
+from griffe.loader import GriffeLoader
 
 TOP_LEVEL_NAME = "pytorch_adapt"
 FOLDER = "code"
@@ -13,12 +15,17 @@ def remove_pytorch_adapt(x):
 
 
 def main():
+    collection = ModulesCollection()
+    loader = GriffeLoader(modules_collection=collection)
+    loader.load_module(Path("src", TOP_LEVEL_NAME))
     nav = mkdocs_gen_files.Nav()
 
     for path in sorted(Path("src").rglob("*.py")):
         module_path = path.relative_to("src").with_suffix("")
         parts = list(module_path.parts)
-        if parts[-1] in ["__init__", "__main__"]:
+        if (parts[-1] in ["__init__", "__main__"]) or (
+            not collection[module_path.parts].has_docstrings
+        ):
             continue
 
         doc_path = path.relative_to("src").with_suffix(".md")
