@@ -59,6 +59,38 @@ def DAN(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
     return loss1 + loss2
 
 
+# modified version of above function
+def DAN_diff_size(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
+    s_size = int(source.size()[0])
+    t_size = int(target.size()[0])
+    kernels = guassian_kernel(
+        source,
+        target,
+        kernel_mul=kernel_mul,
+        kernel_num=kernel_num,
+        fix_sigma=fix_sigma,
+    )
+
+    loss1 = 0
+    for s1 in range(s_size):
+        for s2 in range(s1 + 1, s_size):
+            loss1 += kernels[s1, s2]
+    loss1 = loss1 / float(s_size * (s_size - 1) / 2)
+
+    loss2 = 0
+    for t1 in range(t_size):
+        for t2 in range(t1 + 1, t_size):
+            loss2 += kernels[s_size + t1, s_size + t2]
+    loss2 = loss2 / float(t_size * (t_size - 1) / 2)
+
+    loss3 = 0
+    for s in range(s_size):
+        for t in range(t_size):
+            loss3 -= kernels[s, s_size + t]
+    loss3 = 2 * loss3 / float(s_size * t_size)
+    return loss1 + loss2 + loss3
+
+
 # from https://github.com/thuml/Xlearn/blob/master/pytorch/src/loss.py
 def DAN_Linear(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
     batch_size = int(source.size()[0])
@@ -95,25 +127,36 @@ def DAN_Linear(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
 class TestMMDLossWithOriginal(unittest.TestCase):
     def test_mmd_loss_with_original(self):
         torch.manual_seed(49)
-        s = torch.randn(128, 32, device=TEST_DEVICE)
-        t = torch.randn(128, 32, device=TEST_DEVICE) + 0.5
 
         kernel_num = 5
         half = kernel_num // 2
         kernel_scales = get_kernel_scales(low=-half, high=half, num_kernels=kernel_num)
 
-        for mmd_type in ["linear", "quadratic"]:
-            for bandwidth in [None, 0.5, 1]:
-                loss_fn = MMDLoss(
-                    kernel_scales=kernel_scales, mmd_type=mmd_type, bandwidth=bandwidth
-                )
-                loss = loss_fn(s, t)
+        for s_size, t_size in [(128, 128), (128, 70), (70, 128)]:
+            s = torch.randn(s_size, 32, device=TEST_DEVICE)
+            t = torch.randn(t_size, 32, device=TEST_DEVICE) + 0.5
+            same_size = s_size == t_size
+            for mmd_type in ["linear", "quadratic"]:
+                if not same_size and mmd_type == "linear":
+                    continue
+                for bandwidth in [None, 0.5, 1]:
+                    loss_fn = MMDLoss(
+                        kernel_scales=kernel_scales,
+                        mmd_type=mmd_type,
+                        bandwidth=bandwidth,
+                    )
+                    loss = loss_fn(s, t)
 
-                if bandwidth is None:
-                    bandwidth = torch.median(torch.cdist(s, s) ** 2)
+                    if bandwidth is None:
+                        bandwidth = torch.median(torch.cdist(s, s) ** 2)
 
-                correct_fn = {"linear": DAN_Linear, "quadratic": DAN}[mmd_type]
+                    if same_size:
+                        correct_fn = {"linear": DAN_Linear, "quadratic": DAN}[mmd_type]
+                    else:
+                        correct_fn = DAN_diff_size
 
-                correct = correct_fn(s, t, kernel_num=kernel_num, fix_sigma=bandwidth)
+                    correct = correct_fn(
+                        s, t, kernel_num=kernel_num, fix_sigma=bandwidth
+                    )
 
-                self.assertTrue(np.isclose(loss.item(), correct.item(), rtol=1e-4))
+                    self.assertTrue(np.isclose(loss.item(), correct.item(), rtol=1e-4))
