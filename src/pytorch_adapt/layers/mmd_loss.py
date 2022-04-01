@@ -11,9 +11,10 @@ from . import utils as l_u
 def check_batch_sizes(s, t, mmd_type):
     if mmd_type == "quadratic":
         return
-    if (
-        c_f.is_list_or_tuple(s) and any(s[i].shape != t[i].shape for i in range(len(s)))
-    ) or s.shape != t.shape:
+    is_list = c_f.is_list_or_tuple(s)
+    if (is_list and any(s[i].shape != t[i].shape for i in range(len(s)))) or (
+        not is_list and s.shape != t.shape
+    ):
         raise ValueError(
             "For mmd_type 'linear', source and target must have the same batch size."
         )

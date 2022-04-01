@@ -64,7 +64,7 @@ class TestPerClassValidator(unittest.TestCase):
             KNNValidator(
                 key_map={"src_val": "src_train", "target_val": "target_train"}
             ),
-            MMDValidator(num_trials=1000),
+            MMDValidator(mmd_kwargs={"mmd_type": "quadratic"}),
             SNDValidator(),
         ]
         for v in inner_validators:
