@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import torch
 
-from pytorch_adapt.layers import MMDLoss
+from pytorch_adapt.layers import MMDBatchedLoss, MMDLoss
 from pytorch_adapt.layers.utils import get_kernel_scales
 
 from .. import TEST_DEVICE
@@ -124,6 +124,13 @@ def DAN_Linear(source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
     return 2 * loss / float(batch_size)
 
 
+def get_bandwidth(s, original_bandwidth):
+    bandwidth = original_bandwidth
+    if bandwidth is None:
+        bandwidth = torch.median(torch.cdist(s, s) ** 2)
+    return bandwidth
+
+
 class TestMMDLossWithOriginal(unittest.TestCase):
     def test_mmd_loss_with_original(self):
         torch.manual_seed(49)
@@ -137,11 +144,11 @@ class TestMMDLossWithOriginal(unittest.TestCase):
             t = torch.randn(t_size, 32, device=TEST_DEVICE) + 0.5
             same_size = s_size == t_size
             for mmd_type in ["linear", "quadratic"]:
-                for bandwidth in [None, 0.5, 1]:
+                for original_bandwidth in [None, 0.5, 1]:
                     loss_fn = MMDLoss(
                         kernel_scales=kernel_scales,
                         mmd_type=mmd_type,
-                        bandwidth=bandwidth,
+                        bandwidth=original_bandwidth,
                     )
                     if not same_size and mmd_type == "linear":
                         with self.assertRaises(ValueError):
@@ -149,17 +156,28 @@ class TestMMDLossWithOriginal(unittest.TestCase):
                         continue
 
                     loss = loss_fn(s, t)
-
-                    if bandwidth is None:
-                        bandwidth = torch.median(torch.cdist(s, s) ** 2)
-
                     if same_size:
                         correct_fn = {"linear": DAN_Linear, "quadratic": DAN}[mmd_type]
                     else:
                         correct_fn = DAN_diff_size
 
                     correct = correct_fn(
-                        s, t, kernel_num=kernel_num, fix_sigma=bandwidth
+                        s,
+                        t,
+                        kernel_num=kernel_num,
+                        fix_sigma=get_bandwidth(s, original_bandwidth),
                     )
-
                     self.assertTrue(np.isclose(loss.item(), correct.item(), rtol=1e-4))
+
+                    if mmd_type == "quadratic":
+                        for batch_size in [2, 10, 31, 32, 128, 199]:
+                            loss_fn = MMDBatchedLoss(
+                                kernel_scales=kernel_scales,
+                                mmd_type=mmd_type,
+                                bandwidth=get_bandwidth(s, original_bandwidth),
+                                batch_size=batch_size,
+                            )
+                            loss = loss_fn(s, t)
+                            self.assertTrue(
+                                np.isclose(loss.item(), correct.item(), rtol=1e-4)
+                            )

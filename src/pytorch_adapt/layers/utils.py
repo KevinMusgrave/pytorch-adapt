@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ..utils import common_functions as c_f
 
@@ -129,3 +130,29 @@ def get_mmd_linear(xx, yy, zz, scale, weights=None):
 
     loss = loss1 + loss2 - loss3 - loss4
     return torch.sum(loss) / float(B // 2)
+
+
+def _mmd_quadratic_batched(rsum, scale, weights, query_is_ref):
+    def fn(mat, s, *_):
+        if query_is_ref:
+            mat = c_f.mask_out_self(mat, s)
+        rsum[0] += torch.sum(_mmd_quadratic(mat, scale, weights))
+
+    return fn
+
+
+def get_mmd_quadratic_batched(x, y, dist_func, kernel_scales, bandwidth, weights=None):
+    kernel_scales = pml_cf.to_device(kernel_scales, x, dtype=x.dtype)
+    scale = -kernel_scales / bandwidth
+    weights = c_f.default(weights, get_default_kernel_weights(scale))
+
+    sums = []
+    for s, t in [(x, x), (y, y), (x, y)]:
+        rsum = [0]
+        query_is_ref = s is t
+        dist_func.iter_fn = _mmd_quadratic_batched(rsum, scale, weights, query_is_ref)
+        dist_func(s, t)
+        denom = (len(s) * (len(s) - 1)) if query_is_ref else (len(s) * len(t))
+        sums.append(torch.sum(rsum[0]) / denom)
+
+    return sums[0] + sums[1] - 2 * sums[2]
