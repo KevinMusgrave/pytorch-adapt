@@ -1,8 +1,10 @@
 import unittest
 
 import torch
+from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 
 from pytorch_adapt.validators import ClusterValidator, KNNValidator, ScoreHistory
+from pytorch_adapt.validators.knn_validator import BatchedAccuracyCalculator
 
 from .. import TEST_DEVICE
 
@@ -56,6 +58,10 @@ class TestKNNValidator(unittest.TestCase):
 
                 v1 = KNNValidator(metric=metric)
                 v2 = KNNValidator(batch_size=batch_size, metric=metric)
+
+                if batch_size is not None:
+                    self.assertTrue(isinstance(v1.acc_fn, AccuracyCalculator))
+                    self.assertTrue(isinstance(v2.acc_fn, BatchedAccuracyCalculator))
 
                 scores = [
                     v(src_train=src_train, target_train=target_train) for v in [v1, v2]
