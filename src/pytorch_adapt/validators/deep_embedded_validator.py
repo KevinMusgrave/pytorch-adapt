@@ -18,6 +18,11 @@ from .base_validator import BaseValidator
 from .score_history import ScoreHistory
 
 
+def dev_binary_fn(preds, labels):
+    preds = torch.argmax(preds, dim=1)
+    return (preds != labels).float()
+
+
 def default_framework_fn(adapter, validator, folder):
     from ..frameworks.ignite import CheckpointFnCreator, Ignite
 

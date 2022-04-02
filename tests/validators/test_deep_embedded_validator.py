@@ -4,10 +4,12 @@ import unittest
 
 import numpy as np
 import torch
+import torchmetrics
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 
 from pytorch_adapt.validators import DeepEmbeddedValidator
+from pytorch_adapt.validators.deep_embedded_validator import dev_binary_fn
 from pytorch_adapt.validators.deep_embedded_validator import (
     get_dev_risk as pa_get_dev_risk,
 )
@@ -159,3 +161,11 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
 
         with self.assertRaises(ValueError) as c:
             normalize_weights(new_weights(), "")
+
+    def test_dev_binary_fn(self):
+        torch.manual_seed(99)
+        labels = torch.randint(0, 10, size=(1000,))
+        preds = torch.randn(1000, 10)
+        error = torch.mean(dev_binary_fn(preds, labels)).item()
+        correct = torchmetrics.functional.accuracy(preds, labels).item()
+        self.assertTrue(np.isclose((1 - error), correct))
