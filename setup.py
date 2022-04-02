@@ -35,7 +35,7 @@ setuptools.setup(
         "torch",
         "torchvision",
         "torchmetrics",
-        "pytorch-metric-learning >= 1.3.0",
+        "pytorch-metric-learning >= 1.3.1.dev0",
     ],
     extras_require={
         "ignite": extras_require_ignite,

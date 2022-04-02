@@ -41,3 +41,23 @@ class TestKNNValidator(unittest.TestCase):
 
         self.assertTrue(cluster_validator.best_epoch == 1)
         self.assertTrue(cluster_validator.best_score > -0.001)
+
+    def test_batched_vs_regular(self):
+        metric = "mean_average_precision"
+        for batch_size in [None, 10, 99, 128, 500, 512]:
+            for dataset_size in [10, 100, 1000, 10000]:
+                src_features = torch.randn(dataset_size, 64, device=TEST_DEVICE)
+                target_features = torch.randn(dataset_size, 64, device=TEST_DEVICE)
+                src_domain = torch.zeros(dataset_size, device=TEST_DEVICE)
+                target_domain = torch.ones(dataset_size, device=TEST_DEVICE)
+
+                src_train = {"features": src_features, "domain": src_domain}
+                target_train = {"features": target_features, "domain": target_domain}
+
+                v1 = KNNValidator(metric=metric)
+                v2 = KNNValidator(batch_size=batch_size, metric=metric)
+
+                scores = [
+                    v(src_train=src_train, target_train=target_train) for v in [v1, v2]
+                ]
+                self.assertTrue(scores[0] == scores[1])
