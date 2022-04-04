@@ -5,7 +5,6 @@ import torch
 
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import (
-    ClusterValidator,
     KNNValidator,
     MMDValidator,
     PerClassValidator,
@@ -60,7 +59,7 @@ class TestPerClassValidator(unittest.TestCase):
         torch.manual_seed(204)
         dataset_size = 256
         inner_validators = [
-            ClusterValidator(key_map={"src_val": "src_train"}),
+            KNNValidator(key_map={"src_val": "src_train"}, metric="AMI"),
             KNNValidator(
                 key_map={"src_val": "src_train", "target_val": "target_train"}
             ),

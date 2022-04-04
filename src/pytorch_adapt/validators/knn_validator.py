@@ -135,10 +135,3 @@ class KNNValidator(BaseValidator):
         labels = torch.cat([src_train["domain"], target_train["domain"]], dim=0)
         accuracies = self.acc_fn.get_accuracy(features, features, labels, labels, True)
         return -accuracies[self.metric]
-
-
-class ClusterValidator(KNNValidator):
-    def __init__(self, layer="features", metric="AMI", **kwargs):
-        if metric not in ["AMI", "NMI"]:
-            raise ValueError("metric must be 'AMI' or 'NMI'")
-        super().__init__(layer=layer, metric=metric, **kwargs)

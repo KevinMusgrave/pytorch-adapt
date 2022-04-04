@@ -3,7 +3,7 @@ import unittest
 import torch
 from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 
-from pytorch_adapt.validators import ClusterValidator, KNNValidator, ScoreHistory
+from pytorch_adapt.validators import KNNValidator, ScoreHistory
 from pytorch_adapt.validators.knn_validator import BatchedAccuracyCalculator
 
 from .. import TEST_DEVICE
@@ -13,7 +13,7 @@ class TestKNNValidator(unittest.TestCase):
     def test_knn_validator(self):
         torch.cuda.empty_cache()
         knn_validator = ScoreHistory(KNNValidator())
-        cluster_validator = ScoreHistory(ClusterValidator())
+        cluster_validator = ScoreHistory(KNNValidator(metric="AMI"))
         for epoch in [1, 2]:
             for validator in [knn_validator, cluster_validator]:
                 dataset_size = 10000
