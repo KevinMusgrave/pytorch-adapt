@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.metrics import adjusted_mutual_info_score
@@ -21,10 +22,11 @@ class ClassClusterValidator(BaseValidator):
         target_label_fn=None,
         with_src=False,
         src_for_pca=False,
-        pca_size=64,
+        pca_size=None,
         centroid_init=None,
         score_fn=None,
         score_fn_type="labels",
+        feat_normalizer=None,
         **kwargs
     ):
         super().__init__(**kwargs)
@@ -38,6 +40,7 @@ class ClassClusterValidator(BaseValidator):
         self.centroid_init = centroid_init
         self.score_fn = c_f.default(score_fn, adjusted_mutual_info_score)
         self.score_fn_type = score_fn_type
+        self.feat_normalizer = feat_normalizer
 
     def _required_data(self):
         x = ["target_train"]
@@ -50,15 +53,15 @@ class ClassClusterValidator(BaseValidator):
         return self.with_src or self.src_for_pca
 
     def compute_score(self, target_train, src_train=None):
-        feats = target_train[self.layer].cpu().numpy()
-        labels = self.target_label_fn(target_train).cpu().numpy()
+        feats = target_train[self.layer]
+        labels = self.target_label_fn(target_train)
         num_classes = target_train["logits"].shape[1]
 
         src_feats, src_labels = None, None
         if self.requires_src:
-            src_feats = src_train[self.layer].cpu().numpy()
+            src_feats = src_train[self.layer]
         if self.with_src:
-            src_labels = src_train["labels"].cpu().numpy()
+            src_labels = src_train["labels"]
 
         return get_clustering_performance(
             feats,
@@ -70,6 +73,7 @@ class ClassClusterValidator(BaseValidator):
             src_labels=src_labels,
             pca_size=self.pca_size,
             centroid_init=self.centroid_init,
+            feat_normalizer=self.feat_normalizer,
         )
 
 
@@ -95,8 +99,9 @@ def get_clustering_performance(
     score_fn_type,
     src_feats=None,
     src_labels=None,
-    pca_size=64,
-    centroid_init="label_centers",
+    pca_size=None,
+    centroid_init=None,
+    feat_normalizer=None,
 ):
     """
     :param feats: N x out numpy vector
@@ -109,7 +114,12 @@ def get_clustering_performance(
     num_target_feats = feats.shape[0]
 
     if src_feats is not None:
-        feats = np.concatenate((feats, src_feats), axis=0)
+        feats = torch.cat((feats, src_feats), dim=0)
+
+    if feat_normalizer:
+        feats = feat_normalizer(feats)
+
+    feats = feats.cpu().numpy()
 
     if pca_size is not None:
         pca = PCA(pca_size)
@@ -119,7 +129,9 @@ def get_clustering_performance(
     if src_labels is None:
         feats = feats[:num_target_feats]
     else:
-        labels = np.concatenate((labels, src_labels), axis=0)
+        labels = torch.cat((labels, src_labels), dim=0)
+
+    labels = labels.cpu().numpy()
 
     if centroid_init == "label_centers":
         centroids = get_centroids(feats, labels, num_classes)
