@@ -53,18 +53,18 @@ class TestNeighborhoodAggregation(unittest.TestCase):
 
             batch_size = 64
 
+            curr_feat_memory = na.feat_memory.clone()
+            curr_pred_memory = na.pred_memory.clone()
+
             for i in range(10):
                 features = torch.randn(batch_size, feature_dim, device=TEST_DEVICE)
                 logits = torch.randn(batch_size, num_classes, device=TEST_DEVICE)
                 idx = torch.randint(0, dataset_size, size=(64,))
 
-                curr_feat_memory = na.feat_memory.clone()
-                curr_pred_memory = na.pred_memory.clone()
-
-                pseudo_labels, neighbor_logits = na(
+                pseudo_labels, neighbor_preds = na(
                     features, logits, update=True, idx=idx
                 )
-                weights = weighter(neighbor_logits)
+                weights = weighter(neighbor_preds)
 
                 self.assertTrue(not torch.allclose(curr_feat_memory, na.feat_memory))
                 self.assertTrue(not torch.allclose(curr_pred_memory, na.pred_memory))
