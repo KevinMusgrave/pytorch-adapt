@@ -3,7 +3,7 @@ import unittest
 import torch
 from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 
-from pytorch_adapt.validators import ClusterValidator, KNNValidator, ScoreHistory
+from pytorch_adapt.validators import KNNValidator, ScoreHistory
 from pytorch_adapt.validators.knn_validator import BatchedAccuracyCalculator
 
 from .. import TEST_DEVICE
@@ -67,25 +67,3 @@ class TestKNNValidator(unittest.TestCase):
                     v(src_train=src_train, target_train=target_train) for v in [v1, v2]
                 ]
                 self.assertTrue(scores[0] == scores[1])
-
-    def test_cluster_validator(self):
-        def target_label_fn(x):
-            return x["labels"]
-
-        features, labels = [], []
-        num_classes = 5
-        for i in range(num_classes):
-            features.append(torch.randn(32, 128, device=TEST_DEVICE) + i * 100)
-            labels.append(torch.ones(32, device=TEST_DEVICE) * i)
-
-        features = torch.cat(features, dim=0)
-        labels = torch.cat(labels, dim=0)
-        validator = ClusterValidator(target_label_fn=target_label_fn)
-
-        args = {"features": features, "labels": labels}
-        score = validator(src_train=args, target_train=args)
-        self.assertTrue(score > 0.8)
-
-        args["labels"] = torch.randint(0, num_classes, size=args["labels"].shape)
-        score = validator(src_train=args, target_train=args)
-        self.assertTrue(score < 0.1)

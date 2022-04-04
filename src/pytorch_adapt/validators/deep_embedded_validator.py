@@ -115,8 +115,8 @@ def normalize_weights(weights, normalization):
 
 
 def get_dev_risk(weight, error, normalization):
-    weight = pml_cf.to_numpy(weight)
-    error = pml_cf.to_numpy(error)
+    weight = weight.cpu().numpy()
+    error = error.cpu().numpy()
 
     N, d = weight.shape
     _N, _d = error.shape
@@ -147,9 +147,9 @@ def get_weights(
     """
 
     device = source_feature.device
-    source_feature = pml_cf.to_numpy(source_feature)
-    validation_feature = pml_cf.to_numpy(validation_feature)
-    target_feature = pml_cf.to_numpy(target_feature)
+    source_feature = source_feature.cpu().numpy()
+    validation_feature = validation_feature.cpu().numpy()
+    target_feature = target_feature.cpu().numpy()
 
     N_s, d = source_feature.shape
     N_t, _d = target_feature.shape
