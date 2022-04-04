@@ -94,7 +94,7 @@ def get_correct_score(cls, src_train, target_train, src_val):
     dev_risk = pa_get_dev_risk(
         torch.from_numpy(weights), error_per_sample[:, None], None
     )
-    cls.assertTrue(np.isclose(correct_dev_risk, dev_risk, rtol=0.01))
+    cls.assertTrue(np.isclose(correct_dev_risk, dev_risk, rtol=1e-6))
     return correct_dev_risk
 
 
