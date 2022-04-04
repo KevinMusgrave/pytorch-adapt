@@ -13,4 +13,4 @@ from .per_class_validator import PerClassValidator
 from .score_history import ScoreHistories, ScoreHistory
 from .silhouette_score_validator import CHScoreValidator, SilhouetteScoreValidator
 from .snd_validator import SNDValidator
-from .target_knn_validator import TargetKNNValidator
+from .target_knn_validator import TargetClusterValidator, TargetKNNValidator
