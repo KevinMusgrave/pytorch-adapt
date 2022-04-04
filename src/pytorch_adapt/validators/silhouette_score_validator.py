@@ -57,7 +57,7 @@ def get_centroids(data, labels, num_classes):
     return centroids
 
 
-# copied from https://github.com/lr94/abas/blob/master/model_selection.py
+# copied and modified from https://github.com/lr94/abas/blob/master/model_selection.py
 def get_clustering_performance(
     feats, plabels, num_classes, score_fn, source_feats=None, pca_size=64
 ):
@@ -69,18 +69,18 @@ def get_clustering_performance(
     :param pca_size
     :return: silhouette and calinski harabasz scores
     """
-    pca = PCA(pca_size)
-    n_samples = feats.shape[0]
-
-    if source_feats is not None:
-        feats = np.concatenate((feats, source_feats))
+    if pca_size is not None:
+        pca = PCA(pca_size)
+        n_samples = feats.shape[0]
+        if source_feats is not None:
+            feats = np.concatenate((feats, source_feats))
+        x = pca.fit_transform(feats)[:n_samples]
+    else:
+        x = feats
 
     try:
-        x = pca.fit_transform(feats)[:n_samples]
         centroids = get_centroids(x, plabels, num_classes)
-
         clustering = KMeans(n_clusters=num_classes, init=centroids, n_init=1)
-
         clustering.fit(x)
         clabels = clustering.labels_
         score = score_fn(x, clabels)
