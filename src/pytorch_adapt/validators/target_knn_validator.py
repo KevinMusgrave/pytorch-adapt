@@ -49,21 +49,3 @@ class TargetKNNValidator(KNNValidator):
             )
             scores.append(accuracies[self.metric])
         return np.mean(scores)
-
-
-class TargetClusterValidator(KNNValidator):
-    def __init__(self, src_label_fn=None, target_label_fn=None, metric="AMI", **kwargs):
-        if metric not in ["AMI", "NMI"]:
-            raise ValueError("metric must be 'AMI' or 'NMI'")
-        super().__init__(metric=metric, **kwargs)
-        self.src_label_fn = c_f.default(src_label_fn, val_utils.src_label_fn)
-        self.target_label_fn = c_f.default(target_label_fn, val_utils.target_label_fn)
-
-    def compute_score(self, src_train, target_train):
-        query = torch.cat([src_train[self.layer], target_train[self.layer]], dim=0)
-        labels = torch.cat(
-            [self.src_label_fn(src_train), self.target_label_fn(target_train)], dim=0
-        )
-
-        acc = self.acc_fn.get_accuracy(query, query, labels, labels, True)
-        return acc[self.metric]
