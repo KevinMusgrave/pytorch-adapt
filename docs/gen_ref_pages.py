@@ -30,14 +30,32 @@ def get_init_entries(module_instance, init_entries, prefix=""):
     return init_entries
 
 
-def set_init_pages(module_instance, nav):
+def get_init_doc_contents(module_name, members, collection):
+    output = ""
+    for name, target_path in members:
+        if collection[target_path].has_docstring:
+            output += f"- [{name}][{target_path}]\n"
+        else:
+            output += f"- {name}\n"
+    if len(output) > 0:
+        example_name, _ = members[0]
+        prepend = (
+            f"The following can be imported like this (using ```{example_name}``` as an example):\n\n"
+            f"```from {TOP_LEVEL_NAME}.{module_name} import {example_name}```\n\n"
+            "## Module members"
+        )
+        output = f"{prepend}\n\n{output}"
+    return output
+
+
+def set_init_pages(module_instance, collection, nav):
     init_entries = get_init_entries(module_instance, {}, prefix="")
     for k, v in init_entries.items():
         k_split = k.split(".")
         doc_path = Path(*k_split, "index").with_suffix(".md")
         full_doc_path = Path(FOLDER, doc_path)
         nav[k_split] = doc_path
-        to_write = "\n".join([f"- [{x[0]}][{x[1]}]" for x in v])
+        to_write = get_init_doc_contents(k, v, collection)
         with mkdocs_gen_files.open(full_doc_path, "w") as fd:
             fd.write(to_write)
 
@@ -70,7 +88,7 @@ def main():
     loader = GriffeLoader(modules_collection=collection)
     module_instance = loader.load_module(Path("src", TOP_LEVEL_NAME))
     nav = mkdocs_gen_files.Nav()
-    set_init_pages(module_instance, nav)
+    set_init_pages(module_instance, collection, nav)
     set_non_init_pages(collection, nav)
     with mkdocs_gen_files.open(f"{FOLDER}/SUMMARY.md", "w") as nav_file:
         nav_file.writelines(nav.build_literate_nav())
