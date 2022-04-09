@@ -257,6 +257,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adapters" class="md-nav__link">
     Adapters
   </a>
@@ -729,6 +736,20 @@
           datasets
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code/datasets/base_dataset/" class="md-nav__link">
+        base_dataset
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -2319,6 +2340,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adapters" class="md-nav__link">
     Adapters
   </a>
@@ -2396,6 +2424,66 @@
 <p>Currently the best place to start is the <strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/tree/main/examples">example jupyter notebooks</a></strong>. You can download them or run them on Google Colab.</p>
 <p>After that, you might be interested in looking at the documentation. This is a large library, so some of the documentation isn't filled in yet. I'm currently focused on adding notebook examples, because I think they provide an easier introduction to this library.</p>
 <p>Please <strong><a href="https://github.com/KevinMusgrave/pytorch-adapt/issues">open an issue on GitHub</a></strong> if you have any questions.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>This library consists of 12 modules:</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../code/adapters/"><strong>Adapters</strong></a></td>
+<td>Wrappers for training and inference steps</td>
+</tr>
+<tr>
+<td><a href="../code/containers/"><strong>Containers</strong></a></td>
+<td>Dictionaries for simplifying object creation</td>
+</tr>
+<tr>
+<td><a href="../code/datasets/"><strong>Datasets</strong></a></td>
+<td>Commonly used datasets and tools for domain adaptation</td>
+</tr>
+<tr>
+<td><a href="../code/frameworks/"><strong>Frameworks</strong></a></td>
+<td>Wrappers for training/testing pipelines</td>
+</tr>
+<tr>
+<td><a href="../code/hooks/"><strong>Hooks</strong></a></td>
+<td>Modular building blocks for domain adaptation algorithms</td>
+</tr>
+<tr>
+<td><a href="../code/inference/"><strong>Inference</strong></a></td>
+<td>Algorithm-specific functions used during inference</td>
+</tr>
+<tr>
+<td><a href="../code/layers/"><strong>Layers</strong></a></td>
+<td>Loss functions and helper layers</td>
+</tr>
+<tr>
+<td><a href="../code/meta_validators/"><strong>Meta Validators</strong></a></td>
+<td>Post-processing of metrics, for hyperparameter optimization</td>
+</tr>
+<tr>
+<td><a href="../code/models/"><strong>Models</strong></a></td>
+<td>Architectures used for benchmarking and in examples</td>
+</tr>
+<tr>
+<td><a href="../code/utils/"><strong>Utils</strong></a></td>
+<td>Various tools</td>
+</tr>
+<tr>
+<td><a href="../code/validators/"><strong>Validators</strong></a></td>
+<td>Metrics for determining and estimating accuracy</td>
+</tr>
+<tr>
+<td><a href="../code/weighters/"><strong>Weighters</strong></a></td>
+<td>Functions for weighting losses</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="adapters">Adapters<a class="headerlink" href="#adapters" title="Permanent link">&para;</a></h2>
 <p>Adapters contain an algorithm's training step and inference step. The training step is defined in the wrapped <a href="#hooks">hook</a>. </p>

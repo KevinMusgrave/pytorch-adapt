@@ -13,7 +13,7 @@
     
     
       
-        <title>mnist - PyTorch Adapt</title>
+        <title>base_dataset - PyTorch Adapt</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.models.mnist.MNISTFeatures" class="md-skip">
+        <a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              mnist
+              base_dataset
             
           </span>
         </div>
@@ -614,12 +614,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
       
       
       
@@ -627,7 +629,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../datasets/">datasets</a>
+          <a href="../">datasets</a>
           
             <label for="__nav_4_3">
               <span class="md-nav__icon md-icon"></span>
@@ -646,11 +648,48 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../datasets/base_dataset/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          base_dataset
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         base_dataset
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="md-nav__link">
+    BaseDownloadableDataset
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -662,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/combined_source_and_target/" class="md-nav__link">
+      <a href="../combined_source_and_target/" class="md-nav__link">
         combined_source_and_target
       </a>
     </li>
@@ -676,7 +715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/concat_dataset/" class="md-nav__link">
+      <a href="../concat_dataset/" class="md-nav__link">
         concat_dataset
       </a>
     </li>
@@ -690,7 +729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/dataloader_creator/" class="md-nav__link">
+      <a href="../dataloader_creator/" class="md-nav__link">
         dataloader_creator
       </a>
     </li>
@@ -704,7 +743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/domainnet/" class="md-nav__link">
+      <a href="../domainnet/" class="md-nav__link">
         domainnet
       </a>
     </li>
@@ -718,7 +757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/mnistm/" class="md-nav__link">
+      <a href="../mnistm/" class="md-nav__link">
         mnistm
       </a>
     </li>
@@ -732,7 +771,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/office31/" class="md-nav__link">
+      <a href="../office31/" class="md-nav__link">
         office31
       </a>
     </li>
@@ -746,7 +785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/officehome/" class="md-nav__link">
+      <a href="../officehome/" class="md-nav__link">
         officehome
       </a>
     </li>
@@ -760,7 +799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/pseudo_labeled_dataset/" class="md-nav__link">
+      <a href="../pseudo_labeled_dataset/" class="md-nav__link">
         pseudo_labeled_dataset
       </a>
     </li>
@@ -774,7 +813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/source_dataset/" class="md-nav__link">
+      <a href="../source_dataset/" class="md-nav__link">
         source_dataset
       </a>
     </li>
@@ -788,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../datasets/target_dataset/" class="md-nav__link">
+      <a href="../target_dataset/" class="md-nav__link">
         target_dataset
       </a>
     </li>
@@ -1889,14 +1928,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
       
       
       
@@ -1904,7 +1941,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">models</a>
+          <a href="../../models/">models</a>
           
             <label for="__nav_4_9">
               <span class="md-nav__icon md-icon"></span>
@@ -1925,7 +1962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../classifier/" class="md-nav__link">
+      <a href="../../models/classifier/" class="md-nav__link">
         classifier
       </a>
     </li>
@@ -1939,7 +1976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../discriminator/" class="md-nav__link">
+      <a href="../../models/discriminator/" class="md-nav__link">
         discriminator
       </a>
     </li>
@@ -1951,48 +1988,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          mnist
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../models/mnist/" class="md-nav__link">
         mnist
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.models.mnist.MNISTFeatures" class="md-nav__link">
-    MNISTFeatures
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2282,8 +2282,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.models.mnist.MNISTFeatures" class="md-nav__link">
-    MNISTFeatures
+  <a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="md-nav__link">
+    BaseDownloadableDataset
   </a>
   
 </li>
@@ -2300,13 +2300,13 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/KevinMusgrave/edit/master/docs/src\pytorch_adapt\models\mnist.py" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/KevinMusgrave/edit/master/docs/src\pytorch_adapt\datasets\base_dataset.py" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-  <h1>mnist</h1>
+  <h1>base_dataset</h1>
 
 <div class="doc doc-object doc-module">
 
@@ -2324,49 +2324,54 @@
 
 
 
+
   <div class="doc doc-object doc-class">
 
 
 
-<h2 id="pytorch_adapt.models.mnist.MNISTFeatures" class="doc doc-heading">
+<h2 id="pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="doc doc-heading">
         <code>
-MNISTFeatures            (<span title="torch.nn.modules.module.Module">Module</span>)
+BaseDownloadableDataset            (<span title="pytorch_adapt.datasets.base_dataset.BaseDataset">BaseDataset</span>)
         </code>
 
 
 
-<a href="#pytorch_adapt.models.mnist.MNISTFeatures" class="headerlink" title="Permanent link">&para;</a></h2>
+<a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
-      <p>A small convnet for extracting features
-from MNIST.</p>
+      <p>Allows automatic downloading of datasets.</p>
 
         <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\models\mnist.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MNISTFeatures</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+          <summary>Source code in <code>pytorch_adapt\datasets\base_dataset.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseDownloadableDataset</span><span class="p">(</span><span class="n">BaseDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A small convnet for extracting features</span>
-<span class="sd">    from MNIST.</span>
+<span class="sd">    Allows automatic downloading of datasets.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Identity</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">download</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            root: Folder where dataset will be downloaded to.</span>
+<span class="sd">            download: If True, will download the dataset if it hasn&#39;t already been downloaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_paths_and_labels</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_paths_and_labels</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_paths_and_labels</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_paths_and_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">download_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+        <span class="n">download_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">md5</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">md5</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;r:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
+            <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">members</span><span class="o">=</span><span class="n">c_f</span><span class="o">.</span><span class="n">extract_progress</span><span class="p">(</span><span class="n">tar</span><span class="p">))</span>
 </code></pre></div>
         </details>
 
@@ -2379,6 +2384,72 @@ from MNIST.</p>
 
 
 
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>root</code></td>
+        <td><code>str</code></td>
+        <td><p>Folder where dataset will be downloaded to.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>download</code></td>
+        <td><code>bool</code></td>
+        <td><p>If True, will download the dataset if it hasn't already been downloaded.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\base_dataset.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">download</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        root: Folder where dataset will be downloaded to.</span>
+<span class="sd">        download: If True, will download the dataset if it hasn&#39;t already been downloaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_paths_and_labels</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_paths_and_labels</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_paths_and_labels</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -2416,7 +2487,7 @@ from MNIST.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../discriminator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: discriminator" rel="prev">
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: datasets" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -2425,20 +2496,20 @@ from MNIST.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              discriminator
+              datasets
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../utils/" class="md-footer__link md-footer__link--next" aria-label="Next: utils" rel="next">
+        <a href="../combined_source_and_target/" class="md-footer__link md-footer__link--next" aria-label="Next: combined_source_and_target" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              utils
+              combined_source_and_target
             </div>
           </div>
           <div class="md-footer__button md-icon">
