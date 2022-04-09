@@ -29,6 +29,10 @@ class BaseDataset(torch.utils.data.Dataset):
 
 
 class BaseDownloadableDataset(BaseDataset):
+    """
+    Allows automatic downloading of datasets.
+    """
+
     def __init__(self, root: str, download: bool = False, **kwargs):
         """
         Arguments:

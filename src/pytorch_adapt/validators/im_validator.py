@@ -5,8 +5,8 @@ from .multiple_validators import MultipleValidators
 
 class IMValidator(MultipleValidators):
     """
-    The sum of [EntropyValidator][pytorch_adapt.validators.entropy_validator]
-    and [DiversityValidator][pytorch_adapt.validators.diversity_validator]
+    The sum of [EntropyValidator][pytorch_adapt.validators.EntropyValidator]
+    and [DiversityValidator][pytorch_adapt.validators.DiversityValidator]
     """
 
     def __init__(self, weights=None, **kwargs):

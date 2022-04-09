@@ -44,7 +44,7 @@ class BaseAdapter(ABC):
             lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.LRSchedulers] container.
                 The lr schedulers are called automatically by the
                 [```framework```](../frameworks/index.md) that wrap this adapter.
-            misc: A [```Misc```][pytorch_adapt.containers.misc] container for models
+            misc: A [```Misc```][pytorch_adapt.containers.Misc] container for models
                 that don't require optimizers and other miscellaneous objects.
                 These are passed into the wrapped hook at each training iteration.
             default_containers: The default set of containers to use, wrapped in a
