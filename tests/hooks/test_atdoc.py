@@ -42,7 +42,7 @@ class TestATDOC(unittest.TestCase):
         all_correct_losses = []
         for i in range(iters):
             data = get_data(dataset_size, feature_dim, num_classes, batch_size)
-            pseudo_labels, neighbor_logits = na(
+            pseudo_labels, neighbor_preds = na(
                 data["target_imgs_features"],
                 data["target_imgs_features_logits"],
                 update=True,
@@ -51,7 +51,7 @@ class TestATDOC(unittest.TestCase):
             loss = F.cross_entropy(
                 data["target_imgs_features_logits"], pseudo_labels, reduction="none"
             )
-            loss = torch.mean(loss * ConfidenceWeights()(neighbor_logits))
+            loss = torch.mean(loss * ConfidenceWeights()(neighbor_preds))
             all_correct_losses.append(loss)
 
         self.assertTrue(

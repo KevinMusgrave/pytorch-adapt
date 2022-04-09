@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+from pytorch_metric_learning.utils import common_functions as pml_cf
 
 from ..utils import common_functions as c_f
 
@@ -18,7 +19,7 @@ def get_kernel_scales(low=-8, high=8, num_kernels=33, base=2.0):
     return torch.from_numpy(np.logspace(low, high, num=num_kernels, base=base))
 
 
-def _mmd_dist_mats(x, y, dist_func):
+def _mmd_dist_mats(x, y, dist_func, bandwidth=None):
     xx = dist_func(x, x)
     yy = dist_func(y, y)
     zz = dist_func(x, y)
@@ -26,23 +27,28 @@ def _mmd_dist_mats(x, y, dist_func):
     with torch.no_grad():
         # https://arxiv.org/pdf/1409.6041.pdf
         # https://arxiv.org/pdf/1707.07269.pdf
-        scale = -1.0 / torch.median(xx)
+        denom = (
+            torch.median(xx)
+            if bandwidth is None
+            else torch.tensor([bandwidth], dtype=xx.dtype, device=xx.device)
+        )
+        scale = -1.0 / denom
 
     return xx, yy, zz, scale
 
 
-def get_mmd_dist_mats(x, y, dist_func):
+def get_mmd_dist_mats(x, y, dist_func, bandwidth):
     if c_f.is_list_or_tuple(x):
         xx, yy, zz, scale = [], [], [], []
         for i in range(len(x)):
-            _xx, _yy, _zz, _scale = _mmd_dist_mats(x[i], y[i], dist_func)
+            _xx, _yy, _zz, _scale = _mmd_dist_mats(x[i], y[i], dist_func, bandwidth)
             xx.append(_xx)
             yy.append(_yy)
             zz.append(_zz)
             scale.append(_scale)
         return xx, yy, zz, scale
     else:
-        return _mmd_dist_mats(x, y, dist_func)
+        return _mmd_dist_mats(x, y, dist_func, bandwidth)
 
 
 def get_default_kernel_weights(scale):
@@ -124,3 +130,44 @@ def get_mmd_linear(xx, yy, zz, scale, weights=None):
 
     loss = loss1 + loss2 - loss3 - loss4
     return torch.sum(loss) / float(B // 2)
+
+
+def _mmd_quadratic_batched(rsum, scale, weights, query_is_ref):
+    def fn(mat, s, *_):
+        if query_is_ref:
+            mat = c_f.mask_out_self(mat, s)
+        rsum[0] += torch.sum(_mmd_quadratic(mat, scale, weights))
+
+    return fn
+
+
+def get_median_of_medians(x, dist_func):
+    medians = []
+
+    def fn(mat, *_):
+        with torch.no_grad():
+            medians.append(torch.median(mat))
+
+    dist_func.iter_fn = fn
+    dist_func(x, x)
+    return torch.median(torch.stack(medians))
+
+
+def get_mmd_quadratic_batched(x, y, dist_func, kernel_scales, bandwidth, weights=None):
+    if torch.is_tensor(kernel_scales):
+        kernel_scales = pml_cf.to_device(kernel_scales, x, dtype=x.dtype)
+    if bandwidth is None:
+        bandwidth = get_median_of_medians(x, dist_func)
+    scale = -kernel_scales / bandwidth
+    weights = c_f.default(weights, get_default_kernel_weights(scale))
+
+    sums = []
+    for s, t in [(x, x), (y, y), (x, y)]:
+        rsum = [0]
+        query_is_ref = s is t
+        dist_func.iter_fn = _mmd_quadratic_batched(rsum, scale, weights, query_is_ref)
+        dist_func(s, t)
+        denom = (len(s) * (len(s) - 1)) if query_is_ref else (len(s) * len(t))
+        sums.append(torch.sum(rsum[0]) / denom)
+
+    return sums[0] + sums[1] - 2 * sums[2]

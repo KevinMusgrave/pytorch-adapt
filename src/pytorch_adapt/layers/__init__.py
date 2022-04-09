@@ -16,7 +16,7 @@ from .ist_loss import ISTLoss
 from .mcc_loss import MCCLoss
 from .mcd_loss import GeneralMCDLoss, MCDLoss
 from .mean_dist_loss import MeanDistLoss
-from .mmd_loss import MMDLoss
+from .mmd_loss import MMDBatchedLoss, MMDLoss
 from .model_with_bridge import ModelWithBridge
 from .multiple_models import MultipleModels
 from .neighborhood_aggregation import NeighborhoodAggregation

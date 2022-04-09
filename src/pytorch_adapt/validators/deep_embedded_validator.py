@@ -18,6 +18,11 @@ from .base_validator import BaseValidator
 from .score_history import ScoreHistory
 
 
+def dev_binary_fn(preds, labels):
+    preds = torch.argmax(preds, dim=1)
+    return (preds != labels).float()
+
+
 def default_framework_fn(adapter, validator, folder):
     from ..frameworks.ignite import CheckpointFnCreator, Ignite
 
@@ -42,6 +47,7 @@ class DeepEmbeddedValidator(BaseValidator):
         batch_size=32,
         error_fn=None,
         error_layer="logits",
+        normalization=None,
         framework_fn=None,
         **kwargs,
     ):
@@ -54,6 +60,8 @@ class DeepEmbeddedValidator(BaseValidator):
             error_fn, torch.nn.CrossEntropyLoss(reduction="none")
         )
         self.error_layer = error_layer
+        check_normalization(normalization)
+        self.normalization = normalization
         self.framework_fn = c_f.default(framework_fn, default_framework_fn)
         self.D_accuracy_val = None
         self.D_accuracy_test = None
@@ -74,7 +82,7 @@ class DeepEmbeddedValidator(BaseValidator):
             self.framework_fn,
         )
         error_per_sample = self.error_fn(src_val[self.error_layer], src_val["labels"])
-        output = get_dev_risk(weights, error_per_sample[:, None])
+        output = get_dev_risk(weights, error_per_sample[:, None], self.normalization)
         self.mean_error = torch.mean(error_per_sample).item()
         c_f.LOGGER.setLevel(init_logging_level)
         return -output
@@ -90,25 +98,35 @@ class DeepEmbeddedValidator(BaseValidator):
 #########################################################################
 
 
-def get_dev_risk(weight, error):
-    """
-    :param weight: shape [N, 1], the importance weight for N source samples in the validation set
-    :param error: shape [N, 1], the error value for each source sample in the validation set
-    (typically 0 for correct classification and 1 for wrong classification)
-    """
-    if torch.any(weight < 0) or torch.any(error < 0):
-        raise ValueError("weights and errors must be positive")
+def check_normalization(normalization):
+    if normalization not in [None, "max", "standardize"]:
+        raise ValueError("normalization must be one of [None, 'max', 'standardize']")
 
-    weight = pml_cf.to_numpy(weight)
-    error = pml_cf.to_numpy(error)
+
+def normalize_weights(weights, normalization):
+    check_normalization(normalization)
+    if normalization == "max":
+        weights /= np.max(weights)  # normalize between 0 and 1
+        weights -= np.mean(weights) - 1  # shift to have mean of 1
+    elif normalization == "standardize":
+        weights = (weights - np.mean(weights)) / np.std(weights)  # standardize
+        weights += 1  # shift to have mean of 1
+    return weights
+
+
+def get_dev_risk(weight, error, normalization):
+    weight = weight.cpu().numpy()
+    error = error.cpu().numpy()
 
     N, d = weight.shape
     _N, _d = error.shape
     assert N == _N and d == _d, "dimension mismatch!"
+
+    weight = normalize_weights(weight, normalization)
     weighted_error = weight * error
     cov = np.cov(np.concatenate((weighted_error, weight), axis=1), rowvar=False)[0][1]
     var_w = np.var(weight, ddof=1)
-    eta = -cov / (var_w + 1e-6)
+    eta = -cov / var_w
     return np.mean(weighted_error) + eta * np.mean(weight) - eta
 
 
@@ -129,9 +147,9 @@ def get_weights(
     """
 
     device = source_feature.device
-    source_feature = pml_cf.to_numpy(source_feature)
-    validation_feature = pml_cf.to_numpy(validation_feature)
-    target_feature = pml_cf.to_numpy(target_feature)
+    source_feature = source_feature.cpu().numpy()
+    validation_feature = validation_feature.cpu().numpy()
+    target_feature = target_feature.cpu().numpy()
 
     N_s, d = source_feature.shape
     N_t, _d = target_feature.shape

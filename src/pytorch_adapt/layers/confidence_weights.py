@@ -25,6 +25,6 @@ class ConfidenceWeights(torch.nn.Module):
         super().__init__()
         self.normalizer = c_f.default(normalizer, NoNormalizer())
 
-    def forward(self, logits):
+    def forward(self, preds):
         """"""
-        return self.normalizer(torch.max(logits, dim=1)[0])
+        return self.normalizer(torch.max(preds, dim=1)[0])
