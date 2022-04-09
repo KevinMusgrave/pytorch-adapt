@@ -40,9 +40,10 @@ class ZeroLossHook(BaseHook):
     def call(self, inputs, losses):
         """"""
         out_keys = set(self.out_names) - inputs.keys()
-        return {k: None for k in out_keys}, {
-            k: c_f.zero_loss() for k in self.loss_names
-        }
+        return (
+            {k: None for k in out_keys},
+            {k: c_f.zero_loss() for k in self.loss_names},
+        )
 
     def _loss_keys(self):
         """"""

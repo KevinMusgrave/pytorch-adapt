@@ -28,10 +28,13 @@ class VATHook(BaseWrapperHook):
         )
         src_vat_loss = self.loss_fn(src_imgs, src_logits, combined_model)
         target_vat_loss = self.loss_fn(target_imgs, target_logits, combined_model)
-        return outputs, {
-            "src_vat_loss": src_vat_loss,
-            "target_vat_loss": target_vat_loss,
-        }
+        return (
+            outputs,
+            {
+                "src_vat_loss": src_vat_loss,
+                "target_vat_loss": target_vat_loss,
+            },
+        )
 
     def _loss_keys(self):
         return ["src_vat_loss", "target_vat_loss"]

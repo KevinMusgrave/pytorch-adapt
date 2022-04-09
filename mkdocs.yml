@@ -32,7 +32,7 @@ plugins:
       python:
         setup_commands:
           - import sys
-          - sys.path.append("src")
+          - sys.path.insert(0, "src")
         rendering:
           show_root_toc_entry: false
 - section-index
