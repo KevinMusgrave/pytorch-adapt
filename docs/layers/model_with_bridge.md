@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.model_with_bridge
