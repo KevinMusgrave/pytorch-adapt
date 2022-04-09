@@ -6,7 +6,6 @@ import torch
 
 from pytorch_adapt.layers import MMDLoss, utils
 from pytorch_adapt.validators import MMDValidator
-from pytorch_adapt.validators.mmd_validator import randomly_sample
 
 from .. import TEST_DEVICE
 
@@ -18,46 +17,53 @@ class TestMMDValidator(unittest.TestCase):
         for kernel_scales in [1, utils.get_kernel_scales()]:
             for src_dataset_size in [100, 500]:
                 for target_dataset_size in [100, 500]:
-                    for num_samples in ["max", 128, 256, 512]:
-                        max_dataset_size = max(src_dataset_size, target_dataset_size)
-                        num_trials = 200
-                        loss_fn = MMDLoss(kernel_scales=kernel_scales)
-                        validator = MMDValidator(
-                            num_samples=num_samples,
-                            num_trials=num_trials,
-                            mmd_kwargs={"kernel_scales": kernel_scales},
-                        )
-                        src_features = torch.randn(src_dataset_size, embedding_size).to(
-                            TEST_DEVICE
-                        )
-                        target_features = torch.randn(
-                            target_dataset_size, embedding_size
-                        ).to(TEST_DEVICE)
-                        target_offset = random.uniform(0.5, 2)
-                        target_features += target_offset
+                    for batch_size in [32, 128, 256, 512]:
+                        for bandwidth in [None, 1]:
+                            loss_fn = MMDLoss(
+                                kernel_scales=kernel_scales,
+                                bandwidth=bandwidth,
+                                mmd_type="quadratic",
+                            )
+                            validator = MMDValidator(
+                                batch_size=batch_size,
+                                mmd_kwargs={
+                                    "kernel_scales": kernel_scales,
+                                    "mmd_type": "quadratic",
+                                    "bandwidth": bandwidth,
+                                },
+                            )
+                            src_features = torch.randn(
+                                src_dataset_size, embedding_size
+                            ).to(TEST_DEVICE)
+                            target_features = torch.randn(
+                                target_dataset_size, embedding_size
+                            ).to(TEST_DEVICE)
+                            target_offset = random.uniform(0.5, 2)
+                            target_features += target_offset
 
-                        score = validator(
-                            src_train={"features": src_features},
-                            target_train={"features": target_features},
-                        )
-
-                        _num_samples = (
-                            max_dataset_size if num_samples == "max" else num_samples
-                        )
-                        _src_features = randomly_sample(src_features, _num_samples)
-                        _target_features = randomly_sample(
-                            target_features, _num_samples
-                        )
-                        self.assertTrue(
-                            len(_src_features) == len(_target_features) == _num_samples
-                        )
-                        if src_dataset_size == target_dataset_size:
+                            score = validator(
+                                src_train={"features": src_features},
+                                target_train={"features": target_features},
+                            )
                             correct_score = -loss_fn(
                                 src_features, target_features
                             ).item()
-                            if num_samples == "max":
-                                self.assertTrue(score == correct_score)
-                            elif src_dataset_size > 100:
-                                self.assertTrue(
-                                    np.isclose(score, correct_score, rtol=0.1)
-                                )
+                            rtol = 1e-2 if bandwidth is None else 1e-6
+                            self.assertTrue(np.isclose(score, correct_score, rtol=rtol))
+
+    def test_collapsed_features(self):
+        for bandwidth in [None, 1]:
+            validator = MMDValidator(
+                mmd_kwargs={"mmd_type": "quadratic", "bandwidth": bandwidth},
+            )
+            src_features = torch.zeros(1024, 128, device=TEST_DEVICE)
+            target_features = torch.zeros(999, 128, device=TEST_DEVICE)
+
+            score = validator(
+                src_train={"features": src_features},
+                target_train={"features": target_features},
+            )
+            if bandwidth is None:
+                self.assertTrue(np.isnan(score))
+            else:
+                self.assertTrue(score == 0)

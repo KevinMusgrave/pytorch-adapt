@@ -77,16 +77,16 @@ class NeighborhoodAggregation(torch.nn.Module):
         for di in range(dis.size(0)):
             dis[di, idx[di]] = torch.min(dis)
         _, indices = torch.topk(dis, k=self.k, dim=1)
-        logits = torch.mean(self.pred_memory[indices], dim=1)
-        pseudo_labels = torch.argmax(logits, dim=1)
-        return pseudo_labels, logits
+        preds = torch.mean(self.pred_memory[indices], dim=1)
+        pseudo_labels = torch.argmax(preds, dim=1)
+        return pseudo_labels, preds
 
     def update_memory(self, normalized_features, logits, idx):
-        logits = F.softmax(logits, dim=1)
+        preds = F.softmax(logits, dim=1)
         p = 1.0 / self.T
-        logits = (logits**p) / torch.sum(logits**p, dim=0)
+        preds = (preds**p) / torch.sum(preds**p, dim=0)
         self.feat_memory[idx] = normalized_features
-        self.pred_memory[idx] = logits
+        self.pred_memory[idx] = preds
 
     def extra_repr(self):
         """"""
