@@ -1,6 +1,6 @@
 # PyTorch Adapt
 
-## Getting started
+## Examples
 See the **[examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md)** for notebooks you can download or run on Google Colab.
 
 ## How to...

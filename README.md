@@ -26,9 +26,8 @@ Add additional functionality to your code by using one of the framework wrappers
 - [**Documentation**](https://kevinmusgrave.github.io/pytorch-adapt/)
 - [**Installation instructions**](https://github.com/KevinMusgrave/pytorch-adapt#installation)
 - [**List of papers implemented**](https://kevinmusgrave.github.io/pytorch-adapt/algorithms/uda)
-- [**Overview of modules**](https://github.com/KevinMusgrave/pytorch-adapt/blob/master/CONTENTS.md)
 
-## Getting started
+## Examples
 See the **[examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md)** for notebooks you can download or run on Google Colab.
 
 ## How to...
