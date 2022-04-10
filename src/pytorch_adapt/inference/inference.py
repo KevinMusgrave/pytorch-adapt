@@ -5,8 +5,10 @@ import torch
 from ..utils.common_functions import check_domain
 
 
-# features and logits
-def default_fn(x, models, **kwargs):
+def default_fn(x, models, **kwargs) -> Dict[str, torch.Tensor]:
+    """
+    The default inference function for [BaseAdapter][pytorch_adapt.adapters.BaseAdapter].
+    """
     features = models["G"](x)
     logits = models["C"](features)
     return {"features": features, "logits": logits}
@@ -15,6 +17,7 @@ def default_fn(x, models, **kwargs):
 # adabn features and logits
 def adabn_fn(x, domain, models, **kwargs) -> Dict[str, torch.Tensor]:
     """
+    [AdaBN][pytorch_adapt.adapters.AdaBN] features and logits.
     Arguments:
         x: The input to the model
         domain: 0 for source domain, 1 for target domain.
@@ -25,11 +28,11 @@ def adabn_fn(x, domain, models, **kwargs) -> Dict[str, torch.Tensor]:
     return {"features": features, "logits": logits}
 
 
-# adda features and logits
 def adda_fn(
     x, domain, models, get_all: bool = False, **kwargs
 ) -> Dict[str, torch.Tensor]:
     """
+    [ADDA][pytorch_adapt.adapters.ADDA] features and logits.
     Arguments:
         x: The input to the model
         domain: If 0, then ```features = G(x)```.
@@ -48,8 +51,6 @@ def adda_fn(
         then the keys will be ```{"features", "logits", "other_features", "other_logits"}```,
         where the ```other_``` prefix represents the features and logits obtained
         using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.
-
-
     """
     domain = check_domain(domain)
     fe = "G" if domain == 0 else "T"
@@ -64,13 +65,27 @@ def adda_fn(
     return output
 
 
-# adda features, logits, and discriminator logits
-def adda_with_d(**kwargs):
+def adda_with_d(**kwargs) -> Dict[str, torch.Tensor]:
+    """
+    [ADDA][pytorch_adapt.adapters.ADDA] features, logits, and discriminator logits. See
+    [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.
+    Returns:
+        discriminator logits as ```"d_logits"```, in addition to
+        everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].
+    """
     return with_d(fn=adda_fn, **kwargs)
 
 
-# adda features, logits, discriminator logits, other features, other logits, other discriminator logits
-def adda_full_fn(x, **kwargs):
+def adda_full_fn(x, **kwargs) -> Dict[str, torch.Tensor]:
+    """
+    [ADDA][pytorch_adapt.adapters.ADDA] features, logits, discriminator logits,
+    other features, other logits, other discriminator logits.
+    See [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.
+    Returns:
+        discriminator logits (```"d_logits"```), "other" discriminator logits (```"other_d_logits"```)
+        in addition to everything returned by [adda_fn][pytorch_adapt.inference.adda_fn]
+        with ```get_all = True```.
+    """
     layer = kwargs.get("layer", "features")
     output = with_d(x=x, fn=adda_fn, get_all=True, **kwargs)
     output2 = d_fn(x=output[f"other_{layer}"], **kwargs)
@@ -79,14 +94,25 @@ def adda_full_fn(x, **kwargs):
 
 
 # rtn features and logits
-def rtn_fn(x, domain, models, get_all=False, **kwargs):
+def rtn_fn(x, domain, models, get_all=False, **kwargs) -> Dict[str, torch.Tensor]:
     """
+    [RTN][pytorch_adapt.adapters.RTN] features and logits.
     Arguments:
         x: The input to the model
         domain: If 0, ```logits = residual_model(C(G(x)))```.
             Otherwise, ```logits = C(G(x))```.
+        models: Dictionary of models with keys
+            ```["G", "C", "residual_model"]```.
+        get_all: If ```True```, then in addition to the regular outputs,
+            it will return the ```residual_model``` logits when
+            ```domain == 1``` and the ```C``` logits when ```domain == 0```.
     Returns:
-        Features and logits
+        A dictionary of features and logits.
+
+        - If ```get_all``` is ```False```, then the keys are ```{"features", "logits"}```.
+
+        - If ```get_all``` is ```True```,
+        then the keys will be ```{"features", "logits", "other_logits"}```.
     """
     domain = check_domain(domain)
     f_dict = default_fn(x=x, models=models)
