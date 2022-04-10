@@ -161,13 +161,7 @@ pip install pytorch-adapt[ignite]
 Coming soon...
 
 ### Dependencies
-Required dependencies:
-
-- numpy
-- torch >= 1.6
-- torchvision
-- torchmetrics
-- pytorch-metric-learning >= 1.0.0.dev5
+See [setup.py](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/setup.py)
 
 ## Acknowledgements
 
