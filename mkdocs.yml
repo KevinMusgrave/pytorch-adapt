@@ -17,7 +17,7 @@ nav:
 - Papers implemented:
   - Unsupervised Domain Adaptation: algorithms/uda.md
   - Validators: algorithms/validators.md
-- Code: code/
+- Documentation: docs/
 
 
 plugins:

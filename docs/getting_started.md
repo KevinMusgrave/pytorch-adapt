@@ -14,18 +14,18 @@ This library consists of 12 modules:
 
 | Module | Description |
 | --- | --- |
-| [**Adapters**](code/adapters/index.md) | Wrappers for training and inference steps
-| [**Containers**](code/containers/index.md) | Dictionaries for simplifying object creation
-| [**Datasets**](code/datasets/index.md) | Commonly used datasets and tools for domain adaptation
-| [**Frameworks**](code/frameworks/index.md) | Wrappers for training/testing pipelines
-| [**Hooks**](code/hooks/index.md) | Modular building blocks for domain adaptation algorithms
-| [**Inference**](code/inference/index.md) | Algorithm-specific functions used during inference
-| [**Layers**](code/layers/index.md) | Loss functions and helper layers
-| [**Meta Validators**](code/meta_validators/index.md) | Post-processing of metrics, for hyperparameter optimization
-| [**Models**](code/models/index.md) | Architectures used for benchmarking and in examples
-| [**Utils**](code/utils/index.md) | Various tools
-| [**Validators**](code/validators/index.md) | Metrics for determining and estimating accuracy
-| [**Weighters**](code/weighters/index.md) | Functions for weighting losses
+| [**Adapters**](docs/adapters/index.md) | Wrappers for training and inference steps
+| [**Containers**](docs/containers/index.md) | Dictionaries for simplifying object creation
+| [**Datasets**](docs/datasets/index.md) | Commonly used datasets and tools for domain adaptation
+| [**Frameworks**](docs/frameworks/index.md) | Wrappers for training/testing pipelines
+| [**Hooks**](docs/hooks/index.md) | Modular building blocks for domain adaptation algorithms
+| [**Inference**](docs/inference/index.md) | Algorithm-specific functions used during inference
+| [**Layers**](docs/layers/index.md) | Loss functions and helper layers
+| [**Meta Validators**](docs/meta_validators/index.md) | Post-processing of metrics, for hyperparameter optimization
+| [**Models**](docs/models/index.md) | Architectures used for benchmarking and in examples
+| [**Utils**](docs/utils/index.md) | Various tools
+| [**Validators**](docs/validators/index.md) | Metrics for determining and estimating accuracy
+| [**Weighters**](docs/weighters/index.md) | Functions for weighting losses
 
 
 ---
