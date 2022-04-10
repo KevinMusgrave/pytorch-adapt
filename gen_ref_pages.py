@@ -8,7 +8,7 @@ from griffe.dataclasses import Alias, Module
 from griffe.loader import GriffeLoader
 
 TOP_LEVEL_NAME = "pytorch_adapt"
-FOLDER = "code"
+FOLDER = "docs"
 
 
 def remove_pytorch_adapt(x):
