@@ -42,7 +42,7 @@ def get_init_doc_contents(module_name, members, collection):
         prepend = (
             f"The following can be imported like this (using ```{example_name}``` as an example):\n\n"
             f"```from {TOP_LEVEL_NAME}.{module_name} import {example_name}```\n\n"
-            "## Module members"
+            "## Direct module members"
         )
         output = f"{prepend}\n\n{output}"
     return output

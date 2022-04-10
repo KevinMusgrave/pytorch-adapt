@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.inference.inference.adda_fn" class="md-skip">
+        <a href="#pytorch_adapt.inference.inference.adabn_fn" class="md-skip">
           Skip to content
         </a>
       
@@ -360,6 +360,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../adapters/adabn/" class="md-nav__link">
+        adabn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../adapters/adda/" class="md-nav__link">
         adda
       </a>
@@ -460,6 +474,20 @@
     <li class="md-nav__item">
       <a href="../../adapters/symnets/" class="md-nav__link">
         symnets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adapters/utils/" class="md-nav__link">
+        utils
       </a>
     </li>
   
@@ -1039,6 +1067,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../hooks/adabn/" class="md-nav__link">
+        adabn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../hooks/adda/" class="md-nav__link">
         adda
       </a>
@@ -1404,8 +1446,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.adabn_fn" class="md-nav__link">
+    adabn_fn()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.inference.inference.adda_fn" class="md-nav__link">
     adda_fn()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.adda_full_fn" class="md-nav__link">
+    adda_full_fn()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.adda_with_d" class="md-nav__link">
+    adda_with_d()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.default_fn" class="md-nav__link">
+    default_fn()
   </a>
   
 </li>
@@ -2317,8 +2387,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.adabn_fn" class="md-nav__link">
+    adabn_fn()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.inference.inference.adda_fn" class="md-nav__link">
     adda_fn()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.adda_full_fn" class="md-nav__link">
+    adda_full_fn()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.adda_with_d" class="md-nav__link">
+    adda_with_d()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.inference.inference.default_fn" class="md-nav__link">
+    default_fn()
   </a>
   
 </li>
@@ -2381,19 +2479,19 @@
 
 
 
-
   <div class="doc doc-object doc-function">
 
 
 
-<h2 id="pytorch_adapt.inference.inference.adda_fn" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">adda_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h2 id="pytorch_adapt.inference.inference.adabn_fn" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">adabn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
-<a href="#pytorch_adapt.inference.inference.adda_fn" class="headerlink" title="Permanent link">&para;</a></h2>
+<a href="#pytorch_adapt.inference.inference.adabn_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
+      <p><a class="autorefs autorefs-internal" href="../../adapters/adabn/#pytorch_adapt.adapters.adabn.AdaBN">AdaBN</a> features and logits.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -2415,9 +2513,84 @@
       <tr>
         <td><code>domain</code></td>
         <td></td>
-        <td><p>If 0, then <code>features = G(x)</code>
+        <td><p>0 for source domain, 1 for target domain.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adabn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [AdaBN][pytorch_adapt.adapters.AdaBN] features and logits.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        x: The input to the model</span>
+<span class="sd">        domain: 0 for source domain, 1 for target domain.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">keep_len</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span> <span class="s2">&quot;logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">}</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="pytorch_adapt.inference.inference.adda_fn" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">adda_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.inference.inference.adda_fn" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p><a class="autorefs autorefs-internal" href="../../adapters/adda/#pytorch_adapt.adapters.adda.ADDA">ADDA</a> features and logits.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>x</code></td>
+        <td></td>
+        <td><p>The input to the model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>domain</code></td>
+        <td></td>
+        <td><p>If 0, then <code>features = G(x)</code>.
 Otherwise <code>features = T(x)</code>.</p></td>
         <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>models</code></td>
+        <td></td>
+        <td><p>Dictionary of models with keys
+<code>["G", "C", "T"]</code>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>get_all</code></td>
+        <td><code>bool</code></td>
+        <td><p>If <code>True</code>, then return features
+and logits using both <code>G</code> and <code>T</code>
+as the feature extractor.</p></td>
+        <td><code>False</code></td>
       </tr>
   </tbody>
 </table>
@@ -2431,21 +2604,47 @@ Otherwise <code>features = T(x)</code>.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>Features and logits</p></td>
+      <td><code>Dict[str, torch.Tensor]</code></td>
+      <td><p>A dictionary of features and logits.</p>
+<ul>
+<li>
+<p>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</p>
+</li>
+<li>
+<p>If <code>get_all</code> is <code>True</code>,
+then the keys will be <code>{"features", "logits", "other_features", "other_logits"}</code>,
+where the <code>other_</code> prefix represents the features and logits obtained
+using <code>G</code> if <code>domain == 1</code> and <code>T</code> if <code>domain == 0</code>.</p>
+</li>
+</ul></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_fn</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [ADDA][pytorch_adapt.adapters.ADDA] features and logits.</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        x: The input to the model</span>
-<span class="sd">        domain: If 0, then ```features = G(x)```</span>
+<span class="sd">        domain: If 0, then ```features = G(x)```.</span>
 <span class="sd">            Otherwise ```features = T(x)```.</span>
+<span class="sd">        models: Dictionary of models with keys</span>
+<span class="sd">            ```[&quot;G&quot;, &quot;C&quot;, &quot;T&quot;]```.</span>
+<span class="sd">        get_all: If ```True```, then return features</span>
+<span class="sd">            and logits using both ```G``` and ```T```</span>
+<span class="sd">            as the feature extractor.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        Features and logits</span>
+<span class="sd">        A dictionary of features and logits.</span>
+
+<span class="sd">        - If ```get_all``` is ```False```, then the keys are ```{&quot;features&quot;, &quot;logits&quot;}```.</span>
+
+<span class="sd">        - If ```get_all``` is ```True```,</span>
+<span class="sd">        then the keys will be ```{&quot;features&quot;, &quot;logits&quot;, &quot;other_features&quot;, &quot;other_logits&quot;}```,</span>
+<span class="sd">        where the ```other_``` prefix represents the features and logits obtained</span>
+<span class="sd">        using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
     <span class="n">fe</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span> <span class="k">if</span> <span class="n">domain</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;T&quot;</span>
@@ -2466,9 +2665,145 @@ Otherwise <code>features = T(x)</code>.</p></td>
 
 
 
+  <div class="doc doc-object doc-function">
 
 
 
+<h2 id="pytorch_adapt.inference.inference.adda_full_fn" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">adda_full_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.inference.inference.adda_full_fn" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p><a class="autorefs autorefs-internal" href="../../adapters/adda/#pytorch_adapt.adapters.adda.ADDA">ADDA</a> features, logits, discriminator logits,
+other features, other logits, other discriminator logits.
+See <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a> for the input arguments.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, torch.Tensor]</code></td>
+      <td><p>discriminator logits (<code>"d_logits"</code>), "other" discriminator logits (<code>"other_d_logits"</code>)
+in addition to everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>
+with <code>get_all = True</code>.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_full_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [ADDA][pytorch_adapt.adapters.ADDA] features, logits, discriminator logits,</span>
+<span class="sd">    other features, other logits, other discriminator logits.</span>
+<span class="sd">    See [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        discriminator logits (```&quot;d_logits&quot;```), &quot;other&quot; discriminator logits (```&quot;other_d_logits&quot;```)</span>
+<span class="sd">        in addition to everything returned by [adda_fn][pytorch_adapt.inference.adda_fn]</span>
+<span class="sd">        with ```get_all = True```.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;layer&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">with_d</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">adda_fn</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">output2</span> <span class="o">=</span> <span class="n">d_fn</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">output</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;other_</span><span class="si">{</span><span class="n">layer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">[</span><span class="s2">&quot;other_d_logits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output2</span><span class="p">[</span><span class="s2">&quot;d_logits&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="pytorch_adapt.inference.inference.adda_with_d" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">adda_with_d</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.inference.inference.adda_with_d" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p><a class="autorefs autorefs-internal" href="../../adapters/adda/#pytorch_adapt.adapters.adda.ADDA">ADDA</a> features, logits, and discriminator logits. See
+<a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a> for the input arguments.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, torch.Tensor]</code></td>
+      <td><p>discriminator logits as <code>"d_logits"</code>, in addition to
+everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_with_d</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [ADDA][pytorch_adapt.adapters.ADDA] features, logits, and discriminator logits. See</span>
+<span class="sd">    [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        discriminator logits as ```&quot;d_logits&quot;```, in addition to</span>
+<span class="sd">        everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">with_d</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">adda_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="pytorch_adapt.inference.inference.default_fn" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">default_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.inference.inference.default_fn" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>The default inference function for <a class="autorefs autorefs-internal" href="../../adapters/base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">default_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default inference function for [BaseAdapter][pytorch_adapt.adapters.BaseAdapter].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span> <span class="s2">&quot;logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">}</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -2541,6 +2876,7 @@ Otherwise <code>features = T(x)</code>.</p></td>
 
     <div class="doc doc-contents ">
 
+      <p><a class="autorefs autorefs-internal" href="../../adapters/aligner/#pytorch_adapt.adapters.aligner.RTN">RTN</a> features and logits.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -2566,6 +2902,21 @@ Otherwise <code>features = T(x)</code>.</p></td>
 Otherwise, <code>logits = C(G(x))</code>.</p></td>
         <td><em>required</em></td>
       </tr>
+      <tr>
+        <td><code>models</code></td>
+        <td></td>
+        <td><p>Dictionary of models with keys
+<code>["G", "C", "residual_model"]</code>.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>get_all</code></td>
+        <td></td>
+        <td><p>If <code>True</code>, then in addition to the regular outputs,
+it will return the <code>residual_model</code> logits when
+<code>domain == 1</code> and the <code>C</code> logits when <code>domain == 0</code>.</p></td>
+        <td><code>False</code></td>
+      </tr>
   </tbody>
 </table>
 <p><strong>Returns:</strong></p>
@@ -2578,21 +2929,41 @@ Otherwise, <code>logits = C(G(x))</code>.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>Features and logits</p></td>
+      <td><code>Dict[str, torch.Tensor]</code></td>
+      <td><p>A dictionary of features and logits.</p>
+<ul>
+<li>
+<p>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</p>
+</li>
+<li>
+<p>If <code>get_all</code> is <code>True</code>,
+then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p>
+</li>
+</ul></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rtn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rtn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [RTN][pytorch_adapt.adapters.RTN] features and logits.</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        x: The input to the model</span>
 <span class="sd">        domain: If 0, ```logits = residual_model(C(G(x)))```.</span>
 <span class="sd">            Otherwise, ```logits = C(G(x))```.</span>
+<span class="sd">        models: Dictionary of models with keys</span>
+<span class="sd">            ```[&quot;G&quot;, &quot;C&quot;, &quot;residual_model&quot;]```.</span>
+<span class="sd">        get_all: If ```True```, then in addition to the regular outputs,</span>
+<span class="sd">            it will return the ```residual_model``` logits when</span>
+<span class="sd">            ```domain == 1``` and the ```C``` logits when ```domain == 0```.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        Features and logits</span>
+<span class="sd">        A dictionary of features and logits.</span>
+
+<span class="sd">        - If ```get_all``` is ```False```, then the keys are ```{&quot;features&quot;, &quot;logits&quot;}```.</span>
+
+<span class="sd">        - If ```get_all``` is ```True```,</span>
+<span class="sd">        then the keys will be ```{&quot;features&quot;, &quot;logits&quot;, &quot;other_logits&quot;}```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
     <span class="n">f_dict</span> <span class="o">=</span> <span class="n">default_fn</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>

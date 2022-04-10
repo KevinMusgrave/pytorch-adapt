@@ -362,6 +362,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../adabn/" class="md-nav__link">
+        adabn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../adda/" class="md-nav__link">
         adda
       </a>
@@ -506,6 +520,20 @@
     <li class="md-nav__item">
       <a href="../symnets/" class="md-nav__link">
         symnets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        utils
       </a>
     </li>
   
@@ -1078,6 +1106,20 @@
           hooks
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hooks/adabn/" class="md-nav__link">
+        adabn
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -2367,8 +2409,7 @@ Aligner            (<a class="autorefs autorefs-internal" title="pytorch_adapt.a
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/aligners/#pytorch_adapt.hooks.aligners.AlignerPlusCHook">AlignerPlusCHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/aligners/#pytorch_adapt.hooks.aligners.AlignerPlusCHook">AlignerPlusCHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2392,8 +2433,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/aligners/#pyto
           <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Aligner</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]</span>
-<span class="sd">    and wraps [AlignerPlusCHook][pytorch_adapt.hooks.AlignerPlusCHook].</span>
+<span class="sd">    Wraps [AlignerPlusCHook][pytorch_adapt.hooks.AlignerPlusCHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2546,8 +2586,7 @@ RTN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.aligner.Aligner">Aligner</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/rtn/#pytorch_adapt.hooks.rtn.RTNHook">RTNHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/rtn/#pytorch_adapt.hooks.rtn.RTNHook">RTNHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2575,8 +2614,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/rtn/#pytorch_a
           <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RTN</span><span class="p">(</span><span class="n">Aligner</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [Aligner][pytorch_adapt.adapters.Aligner]</span>
-<span class="sd">    and wraps [RTNHook][pytorch_adapt.hooks.RTNHook].</span>
+<span class="sd">    Wraps [RTNHook][pytorch_adapt.hooks.RTNHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2588,6 +2626,10 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/rtn/#pytorch_a
     <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">RTNHook</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            inference_fn: Default is [rtn_fn][pytorch_adapt.inference.rtn_fn]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">rtn_fn</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="n">inference_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -2678,6 +2720,57 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="pytorch_adapt.adapters.aligner.RTN.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.adapters.aligner.RTN.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>inference_fn</code></td>
+        <td></td>
+        <td><p>Default is <a class="autorefs autorefs-internal" href="../../inference/inference/#pytorch_adapt.inference.inference.rtn_fn">rtn_fn</a></p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        inference_fn: Default is [rtn_fn][pytorch_adapt.inference.rtn_fn]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">rtn_fn</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="n">inference_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

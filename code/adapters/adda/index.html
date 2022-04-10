@@ -360,6 +360,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../adabn/" class="md-nav__link">
+        adabn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -499,6 +513,20 @@
     <li class="md-nav__item">
       <a href="../symnets/" class="md-nav__link">
         symnets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        utils
       </a>
     </li>
   
@@ -1071,6 +1099,20 @@
           hooks
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hooks/adabn/" class="md-nav__link">
+        adabn
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -2353,8 +2395,7 @@ ADDA            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/adda/#pytorch_adapt.hooks.adda.ADDAHook">ADDAHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/adda/#pytorch_adapt.hooks.adda.ADDAHook">ADDAHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2379,8 +2420,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/adda/#pytorch_
           <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ADDA</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [BaseAdapter][pytorch_adapt.adapters.BaseAdapter]</span>
-<span class="sd">    and wraps [ADDAHook][pytorch_adapt.hooks.ADDAHook].</span>
+<span class="sd">    Wraps [ADDAHook][pytorch_adapt.hooks.ADDAHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2393,6 +2433,10 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/adda/#pytorch_
     <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">ADDAHook</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            inference_fn: Default is [adda_fn][pytorch_adapt.inference.adda_fn]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">adda_fn</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="n">inference_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -2400,8 +2444,9 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/adda/#pytorch_
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The default set of containers. This</span>
-<span class="sd">            will create an Adam optimizer with lr 0.0001 for</span>
-<span class="sd">            the T and D models.</span>
+<span class="sd">            will use the</span>
+<span class="sd">            [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">            for the T and D models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -2587,6 +2632,57 @@ if the discriminator's accuracy is greater than <code>threshold</code>.</p></td>
 
 
 
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="pytorch_adapt.adapters.adda.ADDA.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.adapters.adda.ADDA.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>inference_fn</code></td>
+        <td></td>
+        <td><p>Default is <a class="autorefs autorefs-internal" href="../../inference/inference/#pytorch_adapt.inference.inference.adda_fn">adda_fn</a></p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\adapters\adda.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        inference_fn: Default is [adda_fn][pytorch_adapt.inference.adda_fn]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">adda_fn</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="n">inference_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-method">
 
@@ -2613,8 +2709,9 @@ if the discriminator's accuracy is greater than <code>threshold</code>.</p></td>
     <tr>
       <td><code>MultipleContainers</code></td>
       <td><p>The default set of containers. This
-will create an Adam optimizer with lr 0.0001 for
-the T and D models.</p></td>
+will use the
+<a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default optimizer</a>
+for the T and D models.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2624,8 +2721,9 @@ the T and D models.</p></td>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The default set of containers. This</span>
-<span class="sd">        will create an Adam optimizer with lr 0.0001 for</span>
-<span class="sd">        the T and D models.</span>
+<span class="sd">        will use the</span>
+<span class="sd">        [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">        for the T and D models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -2767,7 +2865,7 @@ the T and D models.</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: adapters" rel="prev">
+        <a href="../adabn/" class="md-footer__link md-footer__link--prev" aria-label="Previous: adabn" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -2776,7 +2874,7 @@ the T and D models.</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              adapters
+              adabn
             </div>
           </div>
         </a>
