@@ -39,13 +39,13 @@ class BaseAdapter(ABC):
                 The models will be passed to the wrapped hook at each
                 training iteration.
             optimizers: An [```Optimizers```][pytorch_adapt.containers.Optimizers] container.
-                The optimizers will be passed into the wrapped hook during
-                initialization. The hook uses the optimizers at each training iteration.
+                The optimizers will be passed to the wrapped hook at each
+                training iteration.
             lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.LRSchedulers] container.
                 The lr schedulers are called automatically by the
                 [```framework```](../frameworks/index.md) that wrap this adapter.
             misc: A [```Misc```][pytorch_adapt.containers.Misc] container for models
-                that don't require optimizers and other miscellaneous objects.
+                that don't require optimizers, and other miscellaneous objects.
                 These are passed into the wrapped hook at each training iteration.
             default_containers: The default set of containers to use, wrapped in a
                 [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.
@@ -54,8 +54,13 @@ class BaseAdapter(ABC):
             key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.KeyEnforcer] object.
                 If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]
                 is used.
-            inference: A function that takes in this adapter and returns another function
-                that will be used for inference (i.e. during testing).
+            inference_fn: A function that takes in:
+
+                - ```x```: the input to the model
+                - ```domain```: an integer representing the domain of the data
+                - ```models```: a dictionary of models, i.e. ```self.models```
+                - ```misc```: a dictionary of misc objects, i.e. ```self.misc```
+
             before_training_starts: A function that takes in this adapter and returns another
                 function that is optionally called by a framework wrapper before training starts.
             hook_kwargs: A dictionary of keyword arguments that will be
@@ -86,8 +91,9 @@ class BaseAdapter(ABC):
         Calls the wrapped hook at each iteration during training.
         Arguments:
             batch: A dictionary containing training data.
+            **kwargs: Any other data that will be passed into the hook.
         Returns:
-            A two-level dictionary:
+            A two-level dictionary
 
             - the outer level is associated with a particular optimization step
                 (relevant for GAN architectures),
@@ -121,9 +127,10 @@ class BaseAdapter(ABC):
     def get_default_containers(self) -> MultipleContainers:
         """
         Returns:
-            The default set of containers. This will create
-            an Adam optimizer with lr 0.0001 for
-            each model that is passed into ```__init__```.
+            The default set of containers. Consists of an
+            [Optimizers][pytorch_adapt.containers.Optimizers]
+            container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]
+            of Adam with lr 0.0001.
         """
         optimizers = Optimizers(default_optimizer_tuple())
         return MultipleContainers(optimizers=optimizers)
@@ -145,7 +152,8 @@ class BaseAdapter(ABC):
 
     def init_containers_and_check_keys(self, containers):
         """
-        Called in ```__init__```.
+        Called in ```__init__``` before
+        [```init_hook```][pytorch_adapt.adapters.BaseAdapter.init_hook].
         """
         containers.create()
         self.key_enforcer.check(containers)
