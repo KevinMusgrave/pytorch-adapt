@@ -10,8 +10,7 @@ from .utils import default_optimizer_tuple, with_opt
 
 class ADDA(BaseAdapter):
     """
-    Extends [BaseAdapter][pytorch_adapt.adapters.BaseAdapter]
-    and wraps [ADDAHook][pytorch_adapt.hooks.ADDAHook].
+    Wraps [ADDAHook][pytorch_adapt.hooks.ADDAHook].
 
     |Container|Required keys|
     |---|---|
@@ -24,6 +23,10 @@ class ADDA(BaseAdapter):
     hook_cls = ADDAHook
 
     def __init__(self, *args, inference_fn=None, **kwargs):
+        """
+        Arguments:
+            inference_fn: Default is [adda_fn][pytorch_adapt.inference.adda_fn]
+        """
         inference_fn = c_f.default(inference_fn, adda_fn)
         super().__init__(*args, inference_fn=inference_fn, **kwargs)
 
@@ -32,7 +35,9 @@ class ADDA(BaseAdapter):
         Returns:
             The default set of containers. This
             will create an Adam optimizer with lr 0.0001 for
-            the T and D models.
+            the T and D models. See the
+            [default_optimizer_tuple][pytorch_adapt.adapters.utils.default_optimizer_tuple]
+            function.
         """
         optimizers = Optimizers(default_optimizer_tuple(), keys=["T", "D"])
         return MultipleContainers(optimizers=optimizers)

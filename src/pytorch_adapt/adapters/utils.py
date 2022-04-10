@@ -1,9 +1,15 @@
 from collections.abc import MutableMapping
+from typing import Any, Dict, Tuple
 
 import torch
 
 
-def default_optimizer_tuple():
+def default_optimizer_tuple() -> Tuple[torch.optim.Optimizer, Dict[str, Any]]:
+    """
+    Returns:
+        A tuple to be passed into an [Optimizers][pytorch_adapt.containers.Optimizers]
+        container. The tuple specifies an Adam optimizer with lr 0.0001.
+    """
     return (torch.optim.Adam, {"lr": 0.0001})
 
 
