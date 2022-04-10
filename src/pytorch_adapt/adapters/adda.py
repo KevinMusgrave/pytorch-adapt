@@ -34,10 +34,9 @@ class ADDA(BaseAdapter):
         """
         Returns:
             The default set of containers. This
-            will create an Adam optimizer with lr 0.0001 for
-            the T and D models. See the
-            [default_optimizer_tuple][pytorch_adapt.adapters.utils.default_optimizer_tuple]
-            function.
+            will use the
+            [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]
+            for the T and D models.
         """
         optimizers = Optimizers(default_optimizer_tuple(), keys=["T", "D"])
         return MultipleContainers(optimizers=optimizers)

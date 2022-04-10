@@ -28,6 +28,12 @@ class DomainSpecificLogitsHook(LogitsHook, DomainSpecificFeaturesHook):
 
 
 class AdaBNHook(BaseWrapperHook):
+    """
+    Passes inputs into model without doing any optimization.
+    The model is expected to receive a ```domain``` argument
+    and update its BatchNorm parameters itself.
+    """
+
     def __init__(self, domains=None, **kwargs):
         super().__init__(**kwargs)
         domains = c_f.default(domains, ["src", "target"])

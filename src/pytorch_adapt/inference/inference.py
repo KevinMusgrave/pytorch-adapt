@@ -1,3 +1,5 @@
+from typing import Dict
+
 import torch
 
 from ..utils.common_functions import check_domain
@@ -11,7 +13,12 @@ def default_fn(x, models, **kwargs):
 
 
 # adabn features and logits
-def adabn_fn(x, domain, models, **kwargs):
+def adabn_fn(x, domain, models, **kwargs) -> Dict[str, torch.Tensor]:
+    """
+    Arguments:
+        x: The input to the model
+        domain: 0 for source domain, 1 for target domain.
+    """
     domain = check_domain(domain, keep_len=True)
     features = models["G"](x, domain)
     logits = models["C"](features, domain)
@@ -19,14 +26,30 @@ def adabn_fn(x, domain, models, **kwargs):
 
 
 # adda features and logits
-def adda_fn(x, domain, models, get_all=False, **kwargs):
+def adda_fn(
+    x, domain, models, get_all: bool = False, **kwargs
+) -> Dict[str, torch.Tensor]:
     """
     Arguments:
         x: The input to the model
-        domain: If 0, then ```features = G(x)```
+        domain: If 0, then ```features = G(x)```.
             Otherwise ```features = T(x)```.
+        models: Dictionary of models with keys
+            ```["G", "C", "T"]```.
+        get_all: If ```True```, then return features
+            and logits using both ```G``` and ```T```
+            as the feature extractor.
     Returns:
-        Features and logits
+        A dictionary of features and logits.
+
+        - If ```get_all``` is ```False```, then the keys are ```{"features", "logits"}```.
+
+        - If ```get_all``` is ```True```,
+        then the keys will be ```{"features", "logits", "other_features", "other_logits"}```,
+        where the ```other_``` prefix represents the features and logits obtained
+        using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.
+
+
     """
     domain = check_domain(domain)
     fe = "G" if domain == 0 else "T"
