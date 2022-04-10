@@ -7,8 +7,7 @@ from .utils import with_opt
 
 class DANN(BaseGCDAdapter):
     """
-    Extends [BaseGCDAdapter][pytorch_adapt.adapters.base_adapter.BaseGCDAdapter]
-    and wraps [DANNHook][pytorch_adapt.hooks.DANNHook].
+    Wraps [DANNHook][pytorch_adapt.hooks.DANNHook].
 
     |Container|Required keys|
     |---|---|
@@ -33,8 +32,7 @@ class CDANNE(DANN, CDAN):
 
 class GVB(DANN):
     """
-    Extends [DANN][pytorch_adapt.adapters.DANN]
-    and wraps [GVBHook][pytorch_adapt.hooks.GVBHook].
+    Wraps [GVBHook][pytorch_adapt.hooks.GVBHook].
 
     |Container|Required keys|
     |---|---|

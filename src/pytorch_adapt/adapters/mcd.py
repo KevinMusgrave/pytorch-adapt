@@ -7,8 +7,7 @@ from .utils import with_opt
 
 class MCD(BaseGCAdapter):
     """
-    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]
-    and wraps [MCDHook][pytorch_adapt.hooks.MCDHook].
+    Wraps [MCDHook][pytorch_adapt.hooks.MCDHook].
 
     |Container|Required keys|
     |---|---|

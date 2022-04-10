@@ -7,8 +7,7 @@ from .utils import with_opt
 
 class SymNets(BaseGCAdapter):
     """
-    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]
-    and wraps [SymNetsHook][pytorch_adapt.hooks.SymNetsHook].
+    Wraps [SymNetsHook][pytorch_adapt.hooks.SymNetsHook].
 
     |Container|Required keys|
     |---|---|

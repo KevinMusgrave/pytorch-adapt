@@ -15,8 +15,7 @@ from .utils import with_opt
 
 class GAN(BaseGCDAdapter):
     """
-    Extends [BaseGCDAdapter][pytorch_adapt.adapters.base_adapter.BaseGCDAdapter]
-    and wraps [GANHook][pytorch_adapt.hooks.GANHook].
+    Wraps [GANHook][pytorch_adapt.hooks.GANHook].
 
     |Container|Required keys|
     |---|---|
@@ -38,8 +37,7 @@ class GANE(GAN):
 
 class CDAN(GAN):
     """
-    Extends [GAN][pytorch_adapt.adapters.GAN]
-    and wraps [CDANHook][pytorch_adapt.hooks.CDANHook].
+    Wraps [CDANHook][pytorch_adapt.hooks.CDANHook].
 
     |Container|Required keys|
     |---|---|
@@ -62,8 +60,7 @@ class CDANE(CDAN):
 
 class DomainConfusion(GAN):
     """
-    Extends [GAN][pytorch_adapt.adapters.GAN]
-    and wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].
+    Wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].
 
     |Container|Required keys|
     |---|---|
@@ -76,8 +73,7 @@ class DomainConfusion(GAN):
 
 class VADA(GAN):
     """
-    Extends [GAN][pytorch_adapt.adapters.GAN]
-    and wraps [VADAHook][pytorch_adapt.hooks.VADAHook].
+    Wraps [VADAHook][pytorch_adapt.hooks.VADAHook].
 
     |Container|Required keys|
     |---|---|
