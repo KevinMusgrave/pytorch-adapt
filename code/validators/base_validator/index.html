@@ -13,7 +13,7 @@
     
     
       
-        <title>mnistm - PyTorch Adapt</title>
+        <title>base_validator - PyTorch Adapt</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="md-skip">
+        <a href="#pytorch_adapt.validators.base_validator.BaseValidator" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              mnistm
+              base_validator
             
           </span>
         </div>
@@ -614,14 +614,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
       
       
@@ -629,7 +627,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">datasets</a>
+          <a href="../../datasets/">datasets</a>
           
             <label for="__nav_4_3">
               <span class="md-nav__icon md-icon"></span>
@@ -650,7 +648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../base_dataset/" class="md-nav__link">
+      <a href="../../datasets/base_dataset/" class="md-nav__link">
         base_dataset
       </a>
     </li>
@@ -664,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../combined_source_and_target/" class="md-nav__link">
+      <a href="../../datasets/combined_source_and_target/" class="md-nav__link">
         combined_source_and_target
       </a>
     </li>
@@ -678,7 +676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concat_dataset/" class="md-nav__link">
+      <a href="../../datasets/concat_dataset/" class="md-nav__link">
         concat_dataset
       </a>
     </li>
@@ -692,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dataloader_creator/" class="md-nav__link">
+      <a href="../../datasets/dataloader_creator/" class="md-nav__link">
         dataloader_creator
       </a>
     </li>
@@ -706,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domainnet/" class="md-nav__link">
+      <a href="../../datasets/domainnet/" class="md-nav__link">
         domainnet
       </a>
     </li>
@@ -718,48 +716,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          mnistm
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../datasets/mnistm/" class="md-nav__link">
         mnistm
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="md-nav__link">
-    MNISTM
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -771,7 +732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../office31/" class="md-nav__link">
+      <a href="../../datasets/office31/" class="md-nav__link">
         office31
       </a>
     </li>
@@ -785,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../officehome/" class="md-nav__link">
+      <a href="../../datasets/officehome/" class="md-nav__link">
         officehome
       </a>
     </li>
@@ -799,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pseudo_labeled_dataset/" class="md-nav__link">
+      <a href="../../datasets/pseudo_labeled_dataset/" class="md-nav__link">
         pseudo_labeled_dataset
       </a>
     </li>
@@ -813,7 +774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../source_dataset/" class="md-nav__link">
+      <a href="../../datasets/source_dataset/" class="md-nav__link">
         source_dataset
       </a>
     </li>
@@ -827,7 +788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../target_dataset/" class="md-nav__link">
+      <a href="../../datasets/target_dataset/" class="md-nav__link">
         target_dataset
       </a>
     </li>
@@ -2023,12 +1984,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" checked>
       
       
       
@@ -2036,7 +1999,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../validators/">validators</a>
+          <a href="../">validators</a>
           
             <label for="__nav_4_11">
               <span class="md-nav__icon md-icon"></span>
@@ -2057,7 +2020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/accuracy_validator/" class="md-nav__link">
+      <a href="../accuracy_validator/" class="md-nav__link">
         accuracy_validator
       </a>
     </li>
@@ -2069,11 +2032,48 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../validators/base_validator/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          base_validator
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         base_validator
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.validators.base_validator.BaseValidator" class="md-nav__link">
+    BaseValidator
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2085,7 +2085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/deep_embedded_validator/" class="md-nav__link">
+      <a href="../deep_embedded_validator/" class="md-nav__link">
         deep_embedded_validator
       </a>
     </li>
@@ -2099,7 +2099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/diversity_validator/" class="md-nav__link">
+      <a href="../diversity_validator/" class="md-nav__link">
         diversity_validator
       </a>
     </li>
@@ -2113,7 +2113,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/entropy_validator/" class="md-nav__link">
+      <a href="../entropy_validator/" class="md-nav__link">
         entropy_validator
       </a>
     </li>
@@ -2127,7 +2127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/error_validator/" class="md-nav__link">
+      <a href="../error_validator/" class="md-nav__link">
         error_validator
       </a>
     </li>
@@ -2141,7 +2141,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/im_validator/" class="md-nav__link">
+      <a href="../im_validator/" class="md-nav__link">
         im_validator
       </a>
     </li>
@@ -2155,7 +2155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/score_history/" class="md-nav__link">
+      <a href="../score_history/" class="md-nav__link">
         score_history
       </a>
     </li>
@@ -2169,7 +2169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validators/snd_validator/" class="md-nav__link">
+      <a href="../snd_validator/" class="md-nav__link">
         snd_validator
       </a>
     </li>
@@ -2296,8 +2296,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="md-nav__link">
-    MNISTM
+  <a href="#pytorch_adapt.validators.base_validator.BaseValidator" class="md-nav__link">
+    BaseValidator
   </a>
   
 </li>
@@ -2314,13 +2314,13 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/KevinMusgrave/edit/master/docs/src\pytorch_adapt\datasets\mnistm.py" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/KevinMusgrave/edit/master/docs/src\pytorch_adapt\validators\base_validator.py" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-  <h1>mnistm</h1>
+  <h1>base_validator</h1>
 
 <div class="doc doc-object doc-module">
 
@@ -2342,59 +2342,72 @@
 
 
 
-<h2 id="pytorch_adapt.datasets.mnistm.MNISTM" class="doc doc-heading">
+<h2 id="pytorch_adapt.validators.base_validator.BaseValidator" class="doc doc-heading">
         <code>
-MNISTM            (<a class="autorefs autorefs-internal" title="pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" href="../base_dataset/#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset">BaseDownloadableDataset</a>)
+BaseValidator            (<span title="abc.ABC">ABC</span>)
         </code>
 
 
 
-<a href="#pytorch_adapt.datasets.mnistm.MNISTM" class="headerlink" title="Permanent link">&para;</a></h2>
+<a href="#pytorch_adapt.validators.base_validator.BaseValidator" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
-      <p>The dataset used in "Domain-Adversarial Training of Neural Networks".
-It consists of colored MNIST digits.</p>
-<p>Extends <a class="autorefs autorefs-internal" href="../base_dataset/#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset">BaseDownloadableDataset</a>,
-so the dataset can be downloaded by setting <code>download=True</code> when
-initializing.</p>
 
         <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\datasets\mnistm.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MNISTM</span><span class="p">(</span><span class="n">BaseDownloadableDataset</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The dataset used in &quot;Domain-Adversarial Training of Neural Networks&quot;.</span>
-<span class="sd">    It consists of colored MNIST digits.</span>
-
-<span class="sd">    Extends [BaseDownloadableDataset][pytorch_adapt.datasets.BaseDownloadableDataset],</span>
-<span class="sd">    so the dataset can be downloaded by setting ```download=True``` when</span>
-<span class="sd">    initializing.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://cornell.box.com/shared/static/jado7quprg6hzzdubvwzh9umr75damwi&quot;</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;mnist_m.tar.gz&quot;</span>
-    <span class="n">md5</span> <span class="o">=</span> <span class="s2">&quot;859df31c91afe82e80e5012ba928f279&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <summary>Source code in <code>pytorch_adapt\validators\base_validator.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseValidator</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Arguments:</span>
-<span class="sd">            root: The dataset must be located at ```&lt;root&gt;/mnist_m```</span>
-<span class="sd">            train: Whether or not to use the training set.</span>
-<span class="sd">            transform: The image transform applied to each sample.</span>
+<span class="sd">            key_map: A mapping from ```&lt;new_split_names&gt;``` to</span>
+<span class="sd">                ```&lt;original_split_names&gt;```. For example,</span>
+<span class="sd">                [```AccuracyValidator```][pytorch_adapt.validators.AccuracyValidator]</span>
+<span class="sd">                expects ```src_val``` by default. When used with one of the</span>
+<span class="sd">                [```frameworks```](../frameworks/index.md), this default</span>
+<span class="sd">                indicates that data related to the ```src_val``` split should be retrieved.</span>
+<span class="sd">                If you instead want to compute accuracy for the ```src_train``` split,</span>
+<span class="sd">                you would set the ```key_map``` to ```{&quot;src_train&quot;: &quot;src_val&quot;}```.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">check_train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s2">&quot;MNISTM&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key_map</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">key_map</span><span class="p">,</span> <span class="p">{})</span>
 
-    <span class="k">def</span> <span class="nf">set_paths_and_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="k">else</span> <span class="s2">&quot;test&quot;</span>
-        <span class="n">labels_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;mnist_m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;mnist_m_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_labels.txt&quot;</span><span class="p">)</span>
-        <span class="n">img_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;mnist_m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;mnist_m_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">labels_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]</span>
-        <span class="n">check_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="mi">59001</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="mi">9001</span><span class="p">}[</span><span class="n">name</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">_required_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getfullargspec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_score</span><span class="p">)</span><span class="o">.</span><span class="n">args</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;self&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">required_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of dataset split names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_required_data</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_map</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">compute_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs_check</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_score</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">kwargs_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">required_data</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Input to compute_score has keys = </span><span class="si">{</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2"> but should have keys </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">required_data</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">c_f</span><span class="o">.</span><span class="n">map_keys</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_map</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">c_f</span><span class="o">.</span><span class="n">nice_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">(),</span> <span class="p">{})</span>
+
+    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">c_f</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;required_data&quot;</span><span class="p">])</span>
 </code></pre></div>
         </details>
 
@@ -2407,6 +2420,41 @@ initializing.</p>
 
 
 
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pytorch_adapt.validators.base_validator.BaseValidator.required_data" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">required_data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#pytorch_adapt.validators.base_validator.BaseValidator.required_data" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[str]</code></td>
+      <td><p>A list of dataset split names.</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
 
 
 
@@ -2417,14 +2465,14 @@ initializing.</p>
 
 
 
-<h3 id="pytorch_adapt.datasets.mnistm.MNISTM.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="pytorch_adapt.validators.base_validator.BaseValidator.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_map</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
   </span>
 
-<a href="#pytorch_adapt.datasets.mnistm.MNISTM.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#pytorch_adapt.validators.base_validator.BaseValidator.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2441,42 +2489,43 @@ initializing.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>root</code></td>
-        <td><code>str</code></td>
-        <td><p>The dataset must be located at <code>&lt;root&gt;/mnist_m</code></p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>train</code></td>
-        <td><code>bool</code></td>
-        <td><p>Whether or not to use the training set.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>transform</code></td>
-        <td></td>
-        <td><p>The image transform applied to each sample.</p></td>
+        <td><code>key_map</code></td>
+        <td><code>Dict[str, str]</code></td>
+        <td><p>A mapping from <code>&lt;new_split_names&gt;</code> to
+<code>&lt;original_split_names&gt;</code>. For example,
+<a class="autorefs autorefs-internal" href="../accuracy_validator/#pytorch_adapt.validators.accuracy_validator.AccuracyValidator"><code>AccuracyValidator</code></a>
+expects <code>src_val</code> by default. When used with one of the
+<a href="../../frameworks/"><code>frameworks</code></a>, this default
+indicates that data related to the <code>src_val</code> split should be retrieved.
+If you instead want to compute accuracy for the <code>src_train</code> split,
+you would set the <code>key_map</code> to <code>{"src_train": "src_val"}</code>.</p></td>
         <td><code>None</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\datasets\mnistm.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <summary>Source code in <code>pytorch_adapt\validators\base_validator.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        root: The dataset must be located at ```&lt;root&gt;/mnist_m```</span>
-<span class="sd">        train: Whether or not to use the training set.</span>
-<span class="sd">        transform: The image transform applied to each sample.</span>
+<span class="sd">        key_map: A mapping from ```&lt;new_split_names&gt;``` to</span>
+<span class="sd">            ```&lt;original_split_names&gt;```. For example,</span>
+<span class="sd">            [```AccuracyValidator```][pytorch_adapt.validators.AccuracyValidator]</span>
+<span class="sd">            expects ```src_val``` by default. When used with one of the</span>
+<span class="sd">            [```frameworks```](../frameworks/index.md), this default</span>
+<span class="sd">            indicates that data related to the ```src_val``` split should be retrieved.</span>
+<span class="sd">            If you instead want to compute accuracy for the ```src_train``` split,</span>
+<span class="sd">            you would set the ```key_map``` to ```{&quot;src_train&quot;: &quot;src_val&quot;}```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">check_train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s2">&quot;MNISTM&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">key_map</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">key_map</span><span class="p">,</span> <span class="p">{})</span>
 </code></pre></div>
         </details>
     </div>
 
   </div>
+
+
+
 
 
 
@@ -2513,7 +2562,7 @@ initializing.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../domainnet/" class="md-footer__link md-footer__link--prev" aria-label="Previous: domainnet" rel="prev">
+        <a href="../accuracy_validator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: accuracy_validator" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -2522,20 +2571,20 @@ initializing.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              domainnet
+              accuracy_validator
             </div>
           </div>
         </a>
       
       
         
-        <a href="../office31/" class="md-footer__link md-footer__link--next" aria-label="Next: office31" rel="next">
+        <a href="../deep_embedded_validator/" class="md-footer__link md-footer__link--next" aria-label="Next: deep_embedded_validator" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              office31
+              deep_embedded_validator
             </div>
           </div>
           <div class="md-footer__button md-icon">
