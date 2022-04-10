@@ -14,13 +14,13 @@ class Optimizers(BaseContainer):
     def __init__(self, *args, multipliers=None, **kwargs):
         """
         Arguments:
-            *args: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer] arguments.
+            *args: [```BaseContainer```][pytorch_adapt.containers.BaseContainer] arguments.
             multipliers: A dictionary mapping from
                 optimizer name to lr multiplier. Each
                 optimizer will have ```lr = lr * multiplier```
                 upon initialization. If ```None```,
                 then multiplier is 1.
-            **kwargs:  [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]
+            **kwargs:  [```BaseContainer```][pytorch_adapt.containers.BaseContainer]
                 keyword arguments.
         """
         self.multipliers = c_f.default(multipliers, {})

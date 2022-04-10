@@ -10,12 +10,12 @@ class LRSchedulers(BaseContainer):
     def __init__(self, store, scheduler_types=None, **kwargs):
         """
         Arguments:
-            store: See [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]
+            store: See [```BaseContainer```][pytorch_adapt.containers.BaseContainer]
             scheduler_types: A dictionary mapping from
                 scheduler type (```"per_step"``` or ```"per_epoch"```)
                 to a list of object names. If ```None```, then all
                 schedulers are assumed to be ```"per_step"```
-            **kwargs: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]
+            **kwargs: [```BaseContainer```][pytorch_adapt.containers.BaseContainer]
                 keyword arguments.
         """
         self.scheduler_types = scheduler_types
