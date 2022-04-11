@@ -7,10 +7,10 @@ from .domain_dataset import DomainDataset
 
 class PseudoLabeledDataset(DomainDataset):
     """
-    This wrapper returns a dictionary,
-    but it expects the wrapped dataset to return a tuple of ```(data, label)```.
-    The label returned by the wrapped dataset is discarded,
-    and the pseudo label is returned instead.
+    The wrapped dataset's ```__getitem__``` function 
+    should return a tuple of ```(data, label)```.
+    The label will then be discarded,
+    and the pseudo label will be returned instead. 
     """
 
     def __init__(self, dataset: Dataset, pseudo_labels: List[int], domain: int = 0):
@@ -33,7 +33,7 @@ class PseudoLabeledDataset(DomainDataset):
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         """
         Returns:
-            A dictionary with keys:
+            A dictionary with keys
 
             - "src_imgs" (the data)
 

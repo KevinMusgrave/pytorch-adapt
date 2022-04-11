@@ -28,18 +28,38 @@ class DataloaderCreator:
         Arguments:
             train_kwargs: The keyword arguments that will be
                 passed to every DataLoader constructor for train-time datasets.
+                If ```None```, it defaults to:
+                ```
+                {
+                    "batch_size": batch_size,
+                    "num_workers": num_workers,
+                    "shuffle": True,
+                    "drop_last": True,
+                },
+                ```
             val_kwargs: The keyword arguments that will be
                 passed to every DataLoader constructor for validation-time datasets.
+                If ```None```, it defaults to:
+                ```
+                {
+                    "batch_size": batch_size,
+                    "num_workers": num_workers,
+                    "shuffle": False,
+                    "drop_last": False,
+                }
+                ```
             train_names: A list of the dataset names that are used during training.
+                If ```None```, it defaults to ```["train"]```.
             val_names: A list of the dataset names that are used during validation.
+                If ```None```, it defaults to ```["src_train", "target_train", "src_val", "target_val"]```.
             all_train: If True, then all input datasets are assumed to be for training,
                 regardless of their names.
             all_val: If True, then all input datasets are assumed to be for validation,
                 regardless of their names.
-            batch_size: The default ```batch_size``` used in train_kwargs
-                (if not provided) and val_kwargs (if not provided)
-            num_workers: The default ```num_workers``` used in train_kwargs
-                (if not provided) and val_kwargs (if not provided)
+            batch_size: The ```batch_size``` used in the default ```train_kwargs```
+                and in the default ```val_kwargs```.
+            num_workers: The ```num_workers``` used in the default ```train_kwargs```
+                and in the default ```val_kwargs```.
         """
 
         self.train_kwargs = c_f.default(

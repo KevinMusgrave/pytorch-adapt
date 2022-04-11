@@ -7,8 +7,8 @@ from .domain_dataset import DomainDataset
 
 class TargetDataset(DomainDataset):
     """
-    This wrapper returns a dictionary,
-    but it expects the wrapped dataset to return a tuple of ```(data, label)```.
+    Wrap your target dataset with this. Your target dataset's
+    ```__getitem__``` function should return a tuple of ```(data, label)```.
     """
 
     def __init__(self, dataset: Dataset, domain: int = 1):
@@ -22,7 +22,7 @@ class TargetDataset(DomainDataset):
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         """
         Returns:
-            A dictionary with keys:
+            A dictionary with keys
 
             - "target_imgs" (the data)
 
