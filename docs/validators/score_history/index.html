@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.validators.score_history.ScoreHistory" class="md-skip">
+        <a href="#pytorch_adapt.validators.score_history.ScoreHistories" class="md-skip">
           Skip to content
         </a>
       
@@ -943,6 +943,20 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
     </li>
   
 
@@ -2001,6 +2015,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2158,6 +2186,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../multiple_validators/" class="md-nav__link">
+        multiple_validators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -2188,6 +2230,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch_adapt.validators.score_history.ScoreHistories" class="md-nav__link">
+    ScoreHistories
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#pytorch_adapt.validators.score_history.ScoreHistory" class="md-nav__link">
@@ -2338,6 +2387,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.validators.score_history.ScoreHistories" class="md-nav__link">
+    ScoreHistories
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.validators.score_history.ScoreHistory" class="md-nav__link">
     ScoreHistory
   </a>
@@ -2380,6 +2436,95 @@
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="pytorch_adapt.validators.score_history.ScoreHistories" class="doc doc-heading">
+        <code>
+ScoreHistories            (<a class="autorefs autorefs-internal" title="pytorch_adapt.validators.score_history.ScoreHistory" href="#pytorch_adapt.validators.score_history.ScoreHistory">ScoreHistory</a>)
+        </code>
+
+
+
+<a href="#pytorch_adapt.validators.score_history.ScoreHistories" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Like <a class="autorefs autorefs-internal" href="#pytorch_adapt.validators.score_history.ScoreHistory">ScoreHistory</a>, but it
+wraps a <a class="autorefs autorefs-internal" href="../multiple_validators/#pytorch_adapt.validators.multiple_validators.MultipleValidators">MultipleValidators</a> object
+and keeps track of sub-validator scores histories.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\validators\score_history.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ScoreHistories</span><span class="p">(</span><span class="n">ScoreHistory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Like [ScoreHistory][pytorch_adapt.validators.ScoreHistory], but it</span>
+<span class="sd">    wraps a [MultipleValidators][pytorch_adapt.validators.MultipleValidators] object</span>
+<span class="sd">    and keeps track of sub-validator scores histories.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validator</span><span class="p">,</span> <span class="n">MultipleValidators</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;validator must be of type MultipleValidators&quot;</span><span class="p">)</span>
+        <span class="n">validator</span><span class="o">.</span><span class="n">return_sub_scores</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histories</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">ScoreHistory</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">validator</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">pml_cf</span><span class="o">.</span><span class="n">add_to_recordable_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_of_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;histories&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">score</span><span class="p">,</span> <span class="n">sub_scores</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">append_to_history_and_normalize</span><span class="p">(</span><span class="n">sub_scores</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">epoch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">score</span>
+
+    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">c_f</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;histories&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;histories&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories</span><span class="o">.</span><span class="n">items</span><span class="p">()}}</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">):</span>
+        <span class="n">histories</span> <span class="o">=</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;histories&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+        <span class="n">c_f</span><span class="o">.</span><span class="n">assert_state_dict_keys</span><span class="p">(</span><span class="n">histories</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">histories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">histories</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -2396,20 +2541,15 @@ ScoreHistory            (<span title="abc.ABC">ABC</span>)
 
     <div class="doc doc-contents ">
 
-      <p>The parent class of all validators.</p>
-<p>The main purpose of validators is to give an estimate
-of target domain accuracy, without having access to
-class labels.</p>
+      <p>Wraps a <a class="autorefs autorefs-internal" href="../base_validator/#pytorch_adapt.validators.base_validator.BaseValidator">validator</a>
+and keeps track of the validator's score history as the epochs progress.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\validators\score_history.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ScoreHistory</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The parent class of all validators.</span>
-
-<span class="sd">    The main purpose of validators is to give an estimate</span>
-<span class="sd">    of target domain accuracy, without having access to</span>
-<span class="sd">    class labels.</span>
+<span class="sd">    Wraps a [validator][pytorch_adapt.validators.BaseValidator]</span>
+<span class="sd">    and keeps track of the validator&#39;s score history as the epochs progress.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -2425,8 +2565,7 @@ class labels.</p>
 <span class="sd">                score history. If ```None```, then it defaults to</span>
 <span class="sd">                no normalization.</span>
 <span class="sd">            ignore_epoch: This epoch will ignored when determining</span>
-<span class="sd">                the best scoring epoch. The default of 0 is meant to be</span>
-<span class="sd">                reserved for the initial model (before training has begun).</span>
+<span class="sd">                the best scoring epoch. If ```None```, then no epoch will be ignored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">validator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">normalizer</span><span class="p">,</span> <span class="n">return_raw</span><span class="p">)</span>
@@ -2443,14 +2582,8 @@ class labels.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Arguments:</span>
 <span class="sd">            epoch: The epoch to be scored.</span>
-<span class="sd">            **kwargs: A mapping from dataset split name to</span>
-<span class="sd">                dictionaries containing:</span>
-
-<span class="sd">                - ```&quot;features&quot;```</span>
-<span class="sd">                - ```&quot;logits&quot;```</span>
-<span class="sd">                - ```&quot;preds&quot;```</span>
-<span class="sd">                - ```&quot;domain&quot;```</span>
-<span class="sd">                - ```&quot;src_labels&quot;``` (if available)</span>
+<span class="sd">            **kwargs: Keyword arguments that get passed into the wrapped validator&#39;s</span>
+<span class="sd">                [```__call__```][pytorch_adapt.validators.BaseValidator.__call__] method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2"> has already been evaluated&quot;</span><span class="p">)</span>
@@ -2849,15 +2982,8 @@ Returns <code>None</code> if no epochs have been scored.</p></td>
       <tr>
         <td><code>**kwargs</code></td>
         <td><code>Dict[str, torch.Tensor]</code></td>
-        <td><p>A mapping from dataset split name to
-dictionaries containing:</p>
-<ul>
-<li><code>"features"</code></li>
-<li><code>"logits"</code></li>
-<li><code>"preds"</code></li>
-<li><code>"domain"</code></li>
-<li><code>"src_labels"</code> (if available)</li>
-</ul></td>
+        <td><p>Keyword arguments that get passed into the wrapped validator's
+<a class="autorefs autorefs-internal" href="../base_validator/#pytorch_adapt.validators.base_validator.BaseValidator.__call__"><code>__call__</code></a> method.</p></td>
         <td><code>{}</code></td>
       </tr>
   </tbody>
@@ -2868,14 +2994,8 @@ dictionaries containing:</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        epoch: The epoch to be scored.</span>
-<span class="sd">        **kwargs: A mapping from dataset split name to</span>
-<span class="sd">            dictionaries containing:</span>
-
-<span class="sd">            - ```&quot;features&quot;```</span>
-<span class="sd">            - ```&quot;logits&quot;```</span>
-<span class="sd">            - ```&quot;preds&quot;```</span>
-<span class="sd">            - ```&quot;domain&quot;```</span>
-<span class="sd">            - ```&quot;src_labels&quot;``` (if available)</span>
+<span class="sd">        **kwargs: Keyword arguments that get passed into the wrapped validator&#39;s</span>
+<span class="sd">            [```__call__```][pytorch_adapt.validators.BaseValidator.__call__] method.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2"> has already been evaluated&quot;</span><span class="p">)</span>
@@ -2935,8 +3055,7 @@ no normalization.</p></td>
         <td><code>ignore_epoch</code></td>
         <td><code>int</code></td>
         <td><p>This epoch will ignored when determining
-the best scoring epoch. The default of 0 is meant to be
-reserved for the initial model (before training has begun).</p></td>
+the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p></td>
         <td><code>None</code></td>
       </tr>
   </tbody>
@@ -2956,8 +3075,7 @@ reserved for the initial model (before training has begun).</p></td>
 <span class="sd">            score history. If ```None```, then it defaults to</span>
 <span class="sd">            no normalization.</span>
 <span class="sd">        ignore_epoch: This epoch will ignored when determining</span>
-<span class="sd">            the best scoring epoch. The default of 0 is meant to be</span>
-<span class="sd">            reserved for the initial model (before training has begun).</span>
+<span class="sd">            the best scoring epoch. If ```None```, then no epoch will be ignored.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">validator</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">normalizer</span><span class="p">,</span> <span class="n">return_raw</span><span class="p">)</span>
@@ -3018,7 +3136,7 @@ reserved for the initial model (before training has begun).</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../im_validator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: im_validator" rel="prev">
+        <a href="../multiple_validators/" class="md-footer__link md-footer__link--prev" aria-label="Previous: multiple_validators" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -3027,7 +3145,7 @@ reserved for the initial model (before training has begun).</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              im_validator
+              multiple_validators
             </div>
           </div>
         </a>

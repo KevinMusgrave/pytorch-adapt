@@ -1000,6 +1000,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2047,6 +2061,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2192,6 +2220,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2514,10 +2556,10 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 <span class="sd">            opts: List of optimizers for updating the models.</span>
 <span class="sd">            weighter: Weights the losses before backpropagation.</span>
 <span class="sd">                If ```None``` then it defaults to</span>
-<span class="sd">                [```MeanWeighter```][pytorch_adapt.weighters.mean_weighter.MeanWeighter]</span>
+<span class="sd">                [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter]</span>
 <span class="sd">            reducer: Reduces loss tensors.</span>
 <span class="sd">                If ```None``` then it defaults to</span>
-<span class="sd">                [```MeanReducer```][pytorch_adapt.hooks.reducers.MeanReducer]</span>
+<span class="sd">                [```MeanReducer```][pytorch_adapt.hooks.MeanReducer]</span>
 <span class="sd">            pre: List of hooks that will be executed at the very</span>
 <span class="sd">                beginning of each iteration.</span>
 <span class="sd">            pre_d: List of hooks that will be executed after</span>
@@ -2535,16 +2577,16 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 <span class="sd">                instead of the output of G.</span>
 <span class="sd">            f_hook: The hook used for computing features and logits.</span>
 <span class="sd">                If ```None``` then it defaults to</span>
-<span class="sd">                [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.domain.FeaturesForDomainLossHook]</span>
+<span class="sd">                [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.FeaturesForDomainLossHook]</span>
 <span class="sd">            d_hook: The hook used for computing discriminator logits.</span>
 <span class="sd">                If ```None``` then it defaults to</span>
-<span class="sd">                [```DLogitsHook```][pytorch_adapt.hooks.features.DLogitsHook]</span>
+<span class="sd">                [```DLogitsHook```][pytorch_adapt.hooks.DLogitsHook]</span>
 <span class="sd">            c_hook: The hook used for computing the classifiers&#39;s loss.</span>
 <span class="sd">                If ```None``` then it defaults to</span>
-<span class="sd">                [```CLossHook```][pytorch_adapt.hooks.classification.CLossHook]</span>
+<span class="sd">                [```CLossHook```][pytorch_adapt.hooks.CLossHook]</span>
 <span class="sd">            domain_loss_hook: The hook used for computing the domain loss.</span>
 <span class="sd">                If ```None``` then it defaults to</span>
-<span class="sd">                [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].</span>
+<span class="sd">                [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook].</span>
 <span class="sd">            d_hook_allowed: A regex string that specifies the allowed</span>
 <span class="sd">                output names of the discriminator block.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2765,10 +2807,10 @@ output names of the discriminator block.</p></td>
 <span class="sd">        opts: List of optimizers for updating the models.</span>
 <span class="sd">        weighter: Weights the losses before backpropagation.</span>
 <span class="sd">            If ```None``` then it defaults to</span>
-<span class="sd">            [```MeanWeighter```][pytorch_adapt.weighters.mean_weighter.MeanWeighter]</span>
+<span class="sd">            [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter]</span>
 <span class="sd">        reducer: Reduces loss tensors.</span>
 <span class="sd">            If ```None``` then it defaults to</span>
-<span class="sd">            [```MeanReducer```][pytorch_adapt.hooks.reducers.MeanReducer]</span>
+<span class="sd">            [```MeanReducer```][pytorch_adapt.hooks.MeanReducer]</span>
 <span class="sd">        pre: List of hooks that will be executed at the very</span>
 <span class="sd">            beginning of each iteration.</span>
 <span class="sd">        pre_d: List of hooks that will be executed after</span>
@@ -2786,16 +2828,16 @@ output names of the discriminator block.</p></td>
 <span class="sd">            instead of the output of G.</span>
 <span class="sd">        f_hook: The hook used for computing features and logits.</span>
 <span class="sd">            If ```None``` then it defaults to</span>
-<span class="sd">            [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.domain.FeaturesForDomainLossHook]</span>
+<span class="sd">            [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.FeaturesForDomainLossHook]</span>
 <span class="sd">        d_hook: The hook used for computing discriminator logits.</span>
 <span class="sd">            If ```None``` then it defaults to</span>
-<span class="sd">            [```DLogitsHook```][pytorch_adapt.hooks.features.DLogitsHook]</span>
+<span class="sd">            [```DLogitsHook```][pytorch_adapt.hooks.DLogitsHook]</span>
 <span class="sd">        c_hook: The hook used for computing the classifiers&#39;s loss.</span>
 <span class="sd">            If ```None``` then it defaults to</span>
-<span class="sd">            [```CLossHook```][pytorch_adapt.hooks.classification.CLossHook]</span>
+<span class="sd">            [```CLossHook```][pytorch_adapt.hooks.CLossHook]</span>
 <span class="sd">        domain_loss_hook: The hook used for computing the domain loss.</span>
 <span class="sd">            If ```None``` then it defaults to</span>
-<span class="sd">            [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].</span>
+<span class="sd">            [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook].</span>
 <span class="sd">        d_hook_allowed: A regex string that specifies the allowed</span>
 <span class="sd">            output names of the discriminator block.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

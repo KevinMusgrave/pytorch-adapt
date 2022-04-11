@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2096,6 +2110,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2241,6 +2269,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -3128,8 +3170,8 @@ and <a class="autorefs autorefs-internal" href="#pytorch_adapt.hooks.features.Lo
           <summary>Source code in <code>pytorch_adapt\hooks\features.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FeaturesAndLogitsHook</span><span class="p">(</span><span class="n">FeaturesChainHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Chains together [```FeaturesHook```][pytorch_adapt.hooks.features.FeaturesHook]</span>
-<span class="sd">    and [```LogitsHook```][pytorch_adapt.hooks.features.LogitsHook].</span>
+<span class="sd">    Chains together [```FeaturesHook```][pytorch_adapt.hooks.FeaturesHook]</span>
+<span class="sd">    and [```LogitsHook```][pytorch_adapt.hooks.LogitsHook].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -3293,7 +3335,7 @@ the previous sub-hook's <code>out_keys</code>.</p>
           <summary>Source code in <code>pytorch_adapt\hooks\features.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FeaturesChainHook</span><span class="p">(</span><span class="n">ChainHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A special [```ChainHook```][pytorch_adapt.hooks.utils.ChainHook]</span>
+<span class="sd">    A special [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">    for features hooks. It sets each sub-hook&#39;s ```in_keys``` using</span>
 <span class="sd">    the previous sub-hook&#39;s ```out_keys```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

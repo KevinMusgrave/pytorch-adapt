@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2001,6 +2015,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2185,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2396,17 +2438,30 @@ AccuracyValidator            (<a class="autorefs autorefs-internal" title="pytor
     <div class="doc doc-contents ">
 
       <p>Returns accuracy using the
-<a href="https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func">torchmetrics accuracy function</a></p>
+<a href="https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func">torchmetrics accuracy function</a>.</p>
+<p>The required dataset splits are <code>["src_val"]</code>.
+This can be changed using <a class="autorefs autorefs-internal" href="../base_validator/#pytorch_adapt.validators.base_validator.BaseValidator.__init__"><code>key_map</code></a>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\validators\accuracy_validator.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">AccuracyValidator</span><span class="p">(</span><span class="n">BaseValidator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns accuracy using the</span>
-<span class="sd">    [torchmetrics accuracy function](https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func)</span>
+<span class="sd">    [torchmetrics accuracy function](https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func).</span>
+
+<span class="sd">    The required dataset splits are ```[&quot;src_val&quot;]```.</span>
+<span class="sd">    This can be changed using [```key_map```][pytorch_adapt.validators.BaseValidator.__init__].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;preds&quot;</span><span class="p">,</span> <span class="n">torchmetric_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            layer: The name of the layer to pass into the accuracy function.</span>
+<span class="sd">                For example, ```&quot;preds&quot;``` refers to the softmaxed logits.</span>
+<span class="sd">            torchmetric_kwargs: A dictionary of keyword arguments to be</span>
+<span class="sd">                passed into the</span>
+<span class="sd">                [torchmetrics accuracy function](https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">torchmetric_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">torchmetric_kwargs</span><span class="p">,</span> <span class="p">{})</span>
@@ -2429,6 +2484,72 @@ AccuracyValidator            (<a class="autorefs autorefs-internal" title="pytor
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="pytorch_adapt.validators.accuracy_validator.AccuracyValidator.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;preds&#39;</span><span class="p">,</span> <span class="n">torchmetric_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.validators.accuracy_validator.AccuracyValidator.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>layer</code></td>
+        <td></td>
+        <td><p>The name of the layer to pass into the accuracy function.
+For example, <code>"preds"</code> refers to the softmaxed logits.</p></td>
+        <td><code>&#39;preds&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>torchmetric_kwargs</code></td>
+        <td></td>
+        <td><p>A dictionary of keyword arguments to be
+passed into the
+<a href="https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func">torchmetrics accuracy function</a>.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\validators\accuracy_validator.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;preds&quot;</span><span class="p">,</span> <span class="n">torchmetric_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        layer: The name of the layer to pass into the accuracy function.</span>
+<span class="sd">            For example, ```&quot;preds&quot;``` refers to the softmaxed logits.</span>
+<span class="sd">        torchmetric_kwargs: A dictionary of keyword arguments to be</span>
+<span class="sd">            passed into the</span>
+<span class="sd">            [torchmetrics accuracy function](https://torchmetrics.readthedocs.io/en/latest/references/functional.html#accuracy-func).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">torchmetric_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">torchmetric_kwargs</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_func</span> <span class="o">=</span> <span class="n">accuracy</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

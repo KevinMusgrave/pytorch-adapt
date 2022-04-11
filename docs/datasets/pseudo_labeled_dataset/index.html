@@ -993,6 +993,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2040,6 +2054,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2185,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2395,19 +2437,19 @@ PseudoLabeledDataset            (<span title="pytorch_adapt.datasets.domain_data
 
     <div class="doc doc-contents ">
 
-      <p>This wrapper returns a dictionary,
-but it expects the wrapped dataset to return a tuple of <code>(data, label)</code>.
-The label returned by the wrapped dataset is discarded,
-and the pseudo label is returned instead.</p>
+      <p>The wrapped dataset's <code>__getitem__</code> function
+should return a tuple of <code>(data, label)</code>.
+The label will then be discarded,
+and the pseudo label will be returned instead.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\datasets\pseudo_labeled_dataset.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PseudoLabeledDataset</span><span class="p">(</span><span class="n">DomainDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This wrapper returns a dictionary,</span>
-<span class="sd">    but it expects the wrapped dataset to return a tuple of ```(data, label)```.</span>
-<span class="sd">    The label returned by the wrapped dataset is discarded,</span>
-<span class="sd">    and the pseudo label is returned instead.</span>
+<span class="sd">    The wrapped dataset&#39;s ```__getitem__``` function</span>
+<span class="sd">    should return a tuple of ```(data, label)```.</span>
+<span class="sd">    The label will then be discarded,</span>
+<span class="sd">    and the pseudo label will be returned instead.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">pseudo_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
@@ -2430,7 +2472,7 @@ and the pseudo label is returned instead.</p>
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            A dictionary with keys:</span>
+<span class="sd">            A dictionary with keys</span>
 
 <span class="sd">            - &quot;src_imgs&quot; (the data)</span>
 
@@ -2489,8 +2531,9 @@ and the pseudo label is returned instead.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>A dictionary with keys</code></td>
-      <td><ul>
+      <td><code>Dict[str, Any]</code></td>
+      <td><p>A dictionary with keys</p>
+<ul>
 <li>
 <p>"src_imgs" (the data)</p>
 </li>
@@ -2512,7 +2555,7 @@ and the pseudo label is returned instead.</p>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A dictionary with keys:</span>
+<span class="sd">        A dictionary with keys</span>
 
 <span class="sd">        - &quot;src_imgs&quot; (the data)</span>
 

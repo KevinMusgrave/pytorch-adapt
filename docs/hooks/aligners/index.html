@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2061,6 +2075,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2206,6 +2234,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2459,7 +2501,7 @@ from two domains.</p>
 <span class="sd">        Arguments:</span>
 <span class="sd">            loss_fn: a function that computes a distance</span>
 <span class="sd">                between two tensors. If ```None```,</span>
-<span class="sd">                it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].</span>
+<span class="sd">                it defaults to [```MMDLoss```][pytorch_adapt.layers.MMDLoss].</span>
 <span class="sd">            hook: the hook for computing features</span>
 <span class="sd">            layer: the layer for which the loss is computed. Must be</span>
 <span class="sd">                either ```&quot;features&quot;``` or ```&quot;logits&quot;```.</span>
@@ -2563,7 +2605,7 @@ either <code>"features"</code> or <code>"logits"</code>.</p></td>
 <span class="sd">    Arguments:</span>
 <span class="sd">        loss_fn: a function that computes a distance</span>
 <span class="sd">            between two tensors. If ```None```,</span>
-<span class="sd">            it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].</span>
+<span class="sd">            it defaults to [```MMDLoss```][pytorch_adapt.layers.MMDLoss].</span>
 <span class="sd">        hook: the hook for computing features</span>
 <span class="sd">        layer: the layer for which the loss is computed. Must be</span>
 <span class="sd">            either ```&quot;features&quot;``` or ```&quot;logits&quot;```.</span>
@@ -2695,7 +2737,7 @@ FeaturesLogitsAlignerHook            (<a class="autorefs autorefs-internal" titl
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FeaturesLogitsAlignerHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This chains together an</span>
-<span class="sd">    [```AlignerHook```][pytorch_adapt.hooks.aligners.AlignerHook] for</span>
+<span class="sd">    [```AlignerHook```][pytorch_adapt.hooks.AlignerHook] for</span>
 <span class="sd">    ```&quot;features&quot;``` followed by an ```AlignerHook``` for ```&quot;logits&quot;```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2840,7 +2882,7 @@ from the source and target domains.</p>
 <span class="sd">        Arguments:</span>
 <span class="sd">            loss_fn: a function that computes a distance</span>
 <span class="sd">                between two **lists** of tensors. If ```None```,</span>
-<span class="sd">                it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].</span>
+<span class="sd">                it defaults to [```MMDLoss```][pytorch_adapt.layers.MMDLoss].</span>
 <span class="sd">            hook: the hook for computing features and logits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2933,7 +2975,7 @@ it defaults to <a class="autorefs autorefs-internal" href="../../layers/mmd_loss
 <span class="sd">    Arguments:</span>
 <span class="sd">        loss_fn: a function that computes a distance</span>
 <span class="sd">            between two **lists** of tensors. If ```None```,</span>
-<span class="sd">            it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].</span>
+<span class="sd">            it defaults to [```MMDLoss```][pytorch_adapt.layers.MMDLoss].</span>
 <span class="sd">        hook: the hook for computing features and logits</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

@@ -993,6 +993,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2040,6 +2054,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2185,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2395,15 +2437,15 @@ SourceDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
 
     <div class="doc doc-contents ">
 
-      <p>This wrapper returns a dictionary,
-but it expects the wrapped dataset to return a tuple of <code>(data, label)</code>.</p>
+      <p>Wrap your source dataset with this. Your source dataset's
+<code>__getitem__</code> function should return a tuple of <code>(data, label)</code>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\datasets\source_dataset.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SourceDataset</span><span class="p">(</span><span class="n">DomainDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This wrapper returns a dictionary,</span>
-<span class="sd">    but it expects the wrapped dataset to return a tuple of ```(data, label)```.</span>
+<span class="sd">    Wrap your source dataset with this. Your source dataset&#39;s</span>
+<span class="sd">    ```__getitem__``` function should return a tuple of ```(data, label)```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
@@ -2417,7 +2459,7 @@ but it expects the wrapped dataset to return a tuple of <code>(data, label)</cod
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            A dictionary with keys:</span>
+<span class="sd">            A dictionary with keys</span>
 
 <span class="sd">            - &quot;src_imgs&quot; (the data)</span>
 
@@ -2476,8 +2518,9 @@ but it expects the wrapped dataset to return a tuple of <code>(data, label)</cod
   </thead>
   <tbody>
     <tr>
-      <td><code>A dictionary with keys</code></td>
-      <td><ul>
+      <td><code>Dict[str, Any]</code></td>
+      <td><p>A dictionary with keys</p>
+<ul>
 <li>
 <p>"src_imgs" (the data)</p>
 </li>
@@ -2499,7 +2542,7 @@ but it expects the wrapped dataset to return a tuple of <code>(data, label)</cod
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A dictionary with keys:</span>
+<span class="sd">        A dictionary with keys</span>
 
 <span class="sd">        - &quot;src_imgs&quot; (the data)</span>
 

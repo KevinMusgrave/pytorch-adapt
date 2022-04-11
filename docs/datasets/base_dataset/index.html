@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="md-skip">
+        <a href="#pytorch_adapt.datasets.base_dataset.BaseDataset" class="md-skip">
           Skip to content
         </a>
       
@@ -708,6 +708,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.base_dataset.BaseDataset" class="md-nav__link">
+    BaseDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="md-nav__link">
     BaseDownloadableDataset
   </a>
@@ -982,6 +989,20 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
     </li>
   
 
@@ -2040,6 +2061,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2197,6 +2232,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../validators/score_history/" class="md-nav__link">
         score_history
       </a>
@@ -2338,6 +2387,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.datasets.base_dataset.BaseDataset" class="md-nav__link">
+    BaseDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="md-nav__link">
     BaseDownloadableDataset
   </a>
@@ -2380,6 +2436,75 @@
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="pytorch_adapt.datasets.base_dataset.BaseDataset" class="doc doc-heading">
+        <code>
+BaseDataset            (<span title="torch.utils.data.dataset.Dataset">Dataset</span>)
+        </code>
+
+
+
+<a href="#pytorch_adapt.datasets.base_dataset.BaseDataset" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Base dataset class</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\datasets\base_dataset.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base dataset class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">domain</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_paths</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_paths</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">label</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">extra_repr</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;domain=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="si">}</span><span class="se">\n</span><span class="s2">len=</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__len__</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">c_f</span><span class="o">.</span><span class="n">nice_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extra_repr</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;transform&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">})</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -2387,7 +2512,7 @@
 
 <h2 id="pytorch_adapt.datasets.base_dataset.BaseDownloadableDataset" class="doc doc-heading">
         <code>
-BaseDownloadableDataset            (<span title="pytorch_adapt.datasets.base_dataset.BaseDataset">BaseDataset</span>)
+BaseDownloadableDataset            (<a class="autorefs autorefs-internal" title="pytorch_adapt.datasets.base_dataset.BaseDataset" href="#pytorch_adapt.datasets.base_dataset.BaseDataset">BaseDataset</a>)
         </code>
 
 

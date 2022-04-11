@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2001,6 +2015,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2126,13 +2154,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.deep_embedded_validator.get_weights" class="md-nav__link">
-    get_weights()
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2192,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2351,13 +2386,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.validators.deep_embedded_validator.get_weights" class="md-nav__link">
-    get_weights()
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2503,132 +2531,6 @@ DeepEmbeddedValidator            (<a class="autorefs autorefs-internal" title="p
 
 
 
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h2 id="pytorch_adapt.validators.deep_embedded_validator.get_weights" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_weights</span><span class="p">(</span><span class="n">source_feature</span><span class="p">,</span> <span class="n">validation_feature</span><span class="p">,</span> <span class="n">target_feature</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">temp_folder</span><span class="p">,</span> <span class="n">framework_fn</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.validators.deep_embedded_validator.get_weights" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>:param source_feature: shape [N_tr, d], features from training set
-:param validation_feature: shape [N_v, d], features from validation set
-:param target_feature: shape [N_te, d], features from test set
-:return:</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\validators\deep_embedded_validator.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_weights</span><span class="p">(</span>
-    <span class="n">source_feature</span><span class="p">,</span>
-    <span class="n">validation_feature</span><span class="p">,</span>
-    <span class="n">target_feature</span><span class="p">,</span>
-    <span class="n">num_workers</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="p">,</span>
-    <span class="n">temp_folder</span><span class="p">,</span>
-    <span class="n">framework_fn</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    :param source_feature: shape [N_tr, d], features from training set</span>
-<span class="sd">    :param validation_feature: shape [N_v, d], features from validation set</span>
-<span class="sd">    :param target_feature: shape [N_te, d], features from test set</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">device</span> <span class="o">=</span> <span class="n">source_feature</span><span class="o">.</span><span class="n">device</span>
-    <span class="n">source_feature</span> <span class="o">=</span> <span class="n">source_feature</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-    <span class="n">validation_feature</span> <span class="o">=</span> <span class="n">validation_feature</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-    <span class="n">target_feature</span> <span class="o">=</span> <span class="n">target_feature</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-
-    <span class="n">N_s</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">source_feature</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">N_t</span><span class="p">,</span> <span class="n">_d</span> <span class="o">=</span> <span class="n">target_feature</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">source_feature</span> <span class="o">=</span> <span class="n">source_feature</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">target_feature</span> <span class="o">=</span> <span class="n">target_feature</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">all_feature</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">source_feature</span><span class="p">,</span> <span class="n">target_feature</span><span class="p">))</span>
-    <span class="n">all_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">N_s</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">N_t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-    <span class="p">(</span>
-        <span class="n">feature_for_train</span><span class="p">,</span>
-        <span class="n">feature_for_test</span><span class="p">,</span>
-        <span class="n">label_for_train</span><span class="p">,</span>
-        <span class="n">label_for_test</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">all_feature</span><span class="p">,</span> <span class="n">all_label</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-
-    <span class="n">train_set</span> <span class="o">=</span> <span class="n">SourceDataset</span><span class="p">(</span>
-        <span class="n">pml_cf</span><span class="o">.</span><span class="n">EmbeddingDataset</span><span class="p">(</span><span class="n">feature_for_train</span><span class="p">,</span> <span class="n">label_for_train</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">val_set</span> <span class="o">=</span> <span class="n">SourceDataset</span><span class="p">(</span><span class="n">pml_cf</span><span class="o">.</span><span class="n">EmbeddingDataset</span><span class="p">(</span><span class="n">feature_for_test</span><span class="p">,</span> <span class="n">label_for_test</span><span class="p">))</span>
-
-    <span class="n">decays</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-1</span><span class="p">,</span> <span class="mf">3e-2</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mf">3e-3</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">3e-4</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">3e-5</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">]</span>
-    <span class="n">val_acc</span><span class="p">,</span> <span class="n">trainers</span><span class="p">,</span> <span class="n">folders</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-    <span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="n">patience</span> <span class="o">=</span> <span class="mi">2</span>
-
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">decay</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">decays</span><span class="p">):</span>
-        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-        <span class="n">curr_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_folder</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DeepEmbeddedValidation</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">models</span> <span class="o">=</span> <span class="n">Models</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Identity</span><span class="p">(),</span>
-                <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">Discriminator</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">out_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-        <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="n">decay</span><span class="p">})</span>
-        <span class="p">)</span>
-        <span class="n">trainer</span> <span class="o">=</span> <span class="n">Finetuner</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
-        <span class="n">validator</span> <span class="o">=</span> <span class="n">AccuracyValidator</span><span class="p">(</span>
-            <span class="n">torchmetric_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;average&quot;</span><span class="p">:</span> <span class="s2">&quot;macro&quot;</span><span class="p">,</span> <span class="s2">&quot;num_classes&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-        <span class="p">)</span>
-        <span class="n">trainer</span> <span class="o">=</span> <span class="n">framework_fn</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">curr_folder</span><span class="p">)</span>
-        <span class="n">datasets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_set</span><span class="p">,</span> <span class="s2">&quot;src_val&quot;</span><span class="p">:</span> <span class="n">val_set</span><span class="p">}</span>
-        <span class="n">bs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">train_set</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_set</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">]))</span>
-
-        <span class="n">acc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="n">datasets</span><span class="p">,</span>
-            <span class="n">dataloader_creator</span><span class="o">=</span><span class="n">DataloaderCreator</span><span class="p">(</span>
-                <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">bs</span>
-            <span class="p">),</span>
-            <span class="n">max_epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
-            <span class="n">val_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">early_stopper_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;patience&quot;</span><span class="p">:</span> <span class="n">patience</span><span class="p">},</span>
-        <span class="p">)</span>
-        <span class="n">val_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
-        <span class="n">trainers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trainer</span><span class="p">)</span>
-        <span class="n">folders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_folder</span><span class="p">)</span>
-
-    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
-    <span class="n">D_accuracy_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">val_acc</span><span class="p">)</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">val_acc</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">D_accuracy_val</span><span class="p">)</span>
-
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_feature</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">validation_set</span> <span class="o">=</span> <span class="n">SourceDataset</span><span class="p">(</span><span class="n">pml_cf</span><span class="o">.</span><span class="n">EmbeddingDataset</span><span class="p">(</span><span class="n">validation_feature</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
-    <span class="n">trainer</span> <span class="o">=</span> <span class="n">trainers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">trainer</span><span class="o">.</span><span class="n">checkpoint_fn</span><span class="o">.</span><span class="n">load_best_checkpoint</span><span class="p">(</span>
-        <span class="p">{</span><span class="s2">&quot;models&quot;</span><span class="p">:</span> <span class="n">trainer</span><span class="o">.</span><span class="n">adapter</span><span class="o">.</span><span class="n">models</span><span class="p">},</span>
-    <span class="p">)</span>
-    <span class="n">bs</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_set</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">)</span>
-    <span class="n">dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
-        <span class="n">validation_set</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">bs</span>
-    <span class="p">)</span>
-    <span class="n">domain_out</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_all_outputs</span><span class="p">(</span><span class="n">dataloader</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="p">)</span>
-    <span class="n">domain_out</span> <span class="o">=</span> <span class="n">domain_out</span><span class="p">[</span><span class="s2">&quot;val&quot;</span><span class="p">][</span><span class="s2">&quot;preds&quot;</span><span class="p">]</span>
-    <span class="n">weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">domain_out</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">domain_out</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span> <span class="o">*</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">N_s</span><span class="p">)</span> <span class="o">/</span> <span class="n">N_t</span><span class="p">)</span>
-
-    <span class="p">[</span><span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">]</span>
-
-    <span class="n">D_accuracy_test</span> <span class="o">=</span> <span class="n">tmf_accuracy</span><span class="p">(</span><span class="n">domain_out</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">domain_out</span><span class="o">.</span><span class="n">device</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">weights</span><span class="p">,</span> <span class="n">D_accuracy_val</span><span class="p">,</span> <span class="n">D_accuracy_test</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
 
 
 

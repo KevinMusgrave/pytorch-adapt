@@ -1014,6 +1014,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2061,6 +2075,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2206,6 +2234,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2510,7 +2552,6 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
       <p>Implementation of
 <a href="https://arxiv.org/abs/1705.10667">Conditional Adversarial Domain Adaptation</a></p>
-<p>Extends <a class="autorefs autorefs-internal" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook"><code>GANHook</code></a>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
@@ -2518,8 +2559,6 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of</span>
 <span class="sd">    [Conditional Adversarial Domain Adaptation](https://arxiv.org/abs/1705.10667)</span>
-
-<span class="sd">    Extends [```GANHook```][pytorch_adapt.hooks.gan.GANHook].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">softmax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -2687,7 +2726,6 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
       <p>Implementation of
 <a href="https://arxiv.org/abs/1510.02192">Simultaneous Deep Transfer Across Domains and Tasks</a></p>
-<p>Extends <a class="autorefs autorefs-internal" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook"><code>GANHook</code></a>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
@@ -2695,8 +2733,6 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of</span>
 <span class="sd">    [Simultaneous Deep Transfer Across Domains and Tasks](https://arxiv.org/abs/1510.02192)</span>
-
-<span class="sd">    Extends [```GANHook```][pytorch_adapt.hooks.gan.GANHook].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -2870,13 +2906,13 @@ This includes the model optimization steps.</p>
 <span class="sd">            d_opts: List of optimizers for the D phase.</span>
 <span class="sd">            g_opts: List of optimizers for the G phase.</span>
 <span class="sd">            d_weighter: A loss weighter for the D phase.</span>
-<span class="sd">                If ```None``` then ```MeanWeighter``` is used.</span>
+<span class="sd">                If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
 <span class="sd">            d_reducer: A loss reducer for the D phase.</span>
-<span class="sd">                If ```None``` then ```MeanReducer``` is used.</span>
+<span class="sd">                If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
 <span class="sd">            g_weighter: A loss weighter for the G phase.</span>
-<span class="sd">                If ```None``` then ```MeanWeighter``` is used.</span>
+<span class="sd">                If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
 <span class="sd">            g_reducer: A loss reducer for the G phase.</span>
-<span class="sd">                If ```None``` then ```MeanReducer``` is used.</span>
+<span class="sd">                If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
 <span class="sd">            pre_d: List of hooks that will be executed at the very</span>
 <span class="sd">                beginning of the D phase.</span>
 <span class="sd">            post_d: List of hooks that will be executed at the end</span>
@@ -2888,18 +2924,18 @@ This includes the model optimization steps.</p>
 <span class="sd">            use_logits: If ```True```, then D receives the output of C</span>
 <span class="sd">                instead of the output of G.</span>
 <span class="sd">            disc_hook: The hook used for computing the discriminator&#39;s</span>
-<span class="sd">                domain loss. If ```None``` then ```DomainLossHook``` is used.</span>
+<span class="sd">                domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
 <span class="sd">            gen_hook: The hook used for computing the generator&#39;s</span>
-<span class="sd">                domain loss. If ```None``` then ```DomainLossHook``` is used.</span>
+<span class="sd">                domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
 <span class="sd">            c_hook: The hook used for computing the classifiers&#39;s loss.</span>
-<span class="sd">                If ```None``` then ```CLossHook``` is used.</span>
-<span class="sd">            disc_conditions: The condition hooks used in the ```ChainHook```</span>
+<span class="sd">                If ```None``` then [```CLossHook```][pytorch_adapt.hooks.CLossHook] is used.</span>
+<span class="sd">            disc_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">                for the D phase.</span>
-<span class="sd">            disc_alts: The alt hooks used in the ```ChainHook```</span>
+<span class="sd">            disc_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">                for the D phase.</span>
-<span class="sd">            gen_conditions: The condition hooks used in the ```ChainHook```</span>
+<span class="sd">            gen_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">                for the G phase.</span>
-<span class="sd">            gen_alts: The alt hooks used in the ```ChainHook```</span>
+<span class="sd">            gen_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">                for the G phase.</span>
 <span class="sd">            disc_domains: The domains used to compute the discriminator&#39;s</span>
 <span class="sd">                domain loss. If ```None```, then ```[&quot;src&quot;, &quot;target&quot;]``` is used.</span>
@@ -3027,28 +3063,28 @@ This includes the model optimization steps.</p>
         <td><code>d_weighter</code></td>
         <td></td>
         <td><p>A loss weighter for the D phase.
-If <code>None</code> then <code>MeanWeighter</code> is used.</p></td>
+If <code>None</code> then <a class="autorefs autorefs-internal" href="../../weighters/mean_weighter/#pytorch_adapt.weighters.mean_weighter.MeanWeighter"><code>MeanWeighter</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>d_reducer</code></td>
         <td></td>
         <td><p>A loss reducer for the D phase.
-If <code>None</code> then <code>MeanReducer</code> is used.</p></td>
+If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/reducers/#pytorch_adapt.hooks.reducers.MeanReducer"><code>MeanReducer</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>g_weighter</code></td>
         <td></td>
         <td><p>A loss weighter for the G phase.
-If <code>None</code> then <code>MeanWeighter</code> is used.</p></td>
+If <code>None</code> then <a class="autorefs autorefs-internal" href="../../weighters/mean_weighter/#pytorch_adapt.weighters.mean_weighter.MeanWeighter"><code>MeanWeighter</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>g_reducer</code></td>
         <td></td>
         <td><p>A loss reducer for the G phase.
-If <code>None</code> then <code>MeanReducer</code> is used.</p></td>
+If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/reducers/#pytorch_adapt.hooks.reducers.MeanReducer"><code>MeanReducer</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -3090,48 +3126,48 @@ instead of the output of G.</p></td>
         <td><code>disc_hook</code></td>
         <td></td>
         <td><p>The hook used for computing the discriminator's
-domain loss. If <code>None</code> then <code>DomainLossHook</code> is used.</p></td>
+domain loss. If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/domain/#pytorch_adapt.hooks.domain.DomainLossHook"><code>DomainLossHook</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>gen_hook</code></td>
         <td></td>
         <td><p>The hook used for computing the generator's
-domain loss. If <code>None</code> then <code>DomainLossHook</code> is used.</p></td>
+domain loss. If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/domain/#pytorch_adapt.hooks.domain.DomainLossHook"><code>DomainLossHook</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>c_hook</code></td>
         <td></td>
         <td><p>The hook used for computing the classifiers's loss.
-If <code>None</code> then <code>CLossHook</code> is used.</p></td>
+If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.CLossHook"><code>CLossHook</code></a> is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>disc_conditions</code></td>
         <td></td>
-        <td><p>The condition hooks used in the <code>ChainHook</code>
+        <td><p>The condition hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
 for the D phase.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>disc_alts</code></td>
         <td></td>
-        <td><p>The alt hooks used in the <code>ChainHook</code>
+        <td><p>The alt hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
 for the D phase.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>gen_conditions</code></td>
         <td></td>
-        <td><p>The condition hooks used in the <code>ChainHook</code>
+        <td><p>The condition hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
 for the G phase.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>gen_alts</code></td>
         <td></td>
-        <td><p>The alt hooks used in the <code>ChainHook</code>
+        <td><p>The alt hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
 for the G phase.</p></td>
         <td><code>None</code></td>
       </tr>
@@ -3204,13 +3240,13 @@ generator's domain loss. If <code>None</code> then
 <span class="sd">        d_opts: List of optimizers for the D phase.</span>
 <span class="sd">        g_opts: List of optimizers for the G phase.</span>
 <span class="sd">        d_weighter: A loss weighter for the D phase.</span>
-<span class="sd">            If ```None``` then ```MeanWeighter``` is used.</span>
+<span class="sd">            If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
 <span class="sd">        d_reducer: A loss reducer for the D phase.</span>
-<span class="sd">            If ```None``` then ```MeanReducer``` is used.</span>
+<span class="sd">            If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
 <span class="sd">        g_weighter: A loss weighter for the G phase.</span>
-<span class="sd">            If ```None``` then ```MeanWeighter``` is used.</span>
+<span class="sd">            If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
 <span class="sd">        g_reducer: A loss reducer for the G phase.</span>
-<span class="sd">            If ```None``` then ```MeanReducer``` is used.</span>
+<span class="sd">            If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
 <span class="sd">        pre_d: List of hooks that will be executed at the very</span>
 <span class="sd">            beginning of the D phase.</span>
 <span class="sd">        post_d: List of hooks that will be executed at the end</span>
@@ -3222,18 +3258,18 @@ generator's domain loss. If <code>None</code> then
 <span class="sd">        use_logits: If ```True```, then D receives the output of C</span>
 <span class="sd">            instead of the output of G.</span>
 <span class="sd">        disc_hook: The hook used for computing the discriminator&#39;s</span>
-<span class="sd">            domain loss. If ```None``` then ```DomainLossHook``` is used.</span>
+<span class="sd">            domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
 <span class="sd">        gen_hook: The hook used for computing the generator&#39;s</span>
-<span class="sd">            domain loss. If ```None``` then ```DomainLossHook``` is used.</span>
+<span class="sd">            domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
 <span class="sd">        c_hook: The hook used for computing the classifiers&#39;s loss.</span>
-<span class="sd">            If ```None``` then ```CLossHook``` is used.</span>
-<span class="sd">        disc_conditions: The condition hooks used in the ```ChainHook```</span>
+<span class="sd">            If ```None``` then [```CLossHook```][pytorch_adapt.hooks.CLossHook] is used.</span>
+<span class="sd">        disc_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">            for the D phase.</span>
-<span class="sd">        disc_alts: The alt hooks used in the ```ChainHook```</span>
+<span class="sd">        disc_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">            for the D phase.</span>
-<span class="sd">        gen_conditions: The condition hooks used in the ```ChainHook```</span>
+<span class="sd">        gen_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">            for the G phase.</span>
-<span class="sd">        gen_alts: The alt hooks used in the ```ChainHook```</span>
+<span class="sd">        gen_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
 <span class="sd">            for the G phase.</span>
 <span class="sd">        disc_domains: The domains used to compute the discriminator&#39;s</span>
 <span class="sd">            domain loss. If ```None```, then ```[&quot;src&quot;, &quot;target&quot;]``` is used.</span>

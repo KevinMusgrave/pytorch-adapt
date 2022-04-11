@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2061,6 +2075,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2206,6 +2234,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2633,7 +2675,7 @@ The entropy weights are derived from classifier logits.</p>
 <span class="sd">    Implementation of &quot;entropy conditioning&quot; from</span>
 <span class="sd">    [Conditional Adversarial Domain Adaptation](https://arxiv.org/abs/1705.10667).</span>
 <span class="sd">    It weights loss elements using</span>
-<span class="sd">    [```EntropyWeights```][pytorch_adapt.layers.entropy_weights.EntropyWeights].</span>
+<span class="sd">    [```EntropyWeights```][pytorch_adapt.layers.EntropyWeights].</span>
 <span class="sd">    The entropy weights are derived from classifier logits.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2951,15 +2993,15 @@ MultipleReducers            (<a class="autorefs autorefs-internal" title="pytorc
   </thead>
   <tbody>
       <tr>
-        <td><code>losses</code></td>
+        <td><code>inputs</code></td>
         <td></td>
-        <td><p>previously computed losses</p></td>
+        <td><p>holds data and models</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
-        <td><code>inputs</code></td>
+        <td><code>losses</code></td>
         <td></td>
-        <td><p>holds everything else: tensors, models etc.</p></td>
+        <td><p>previously computed losses</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -2975,7 +3017,7 @@ MultipleReducers            (<a class="autorefs autorefs-internal" title="pytorc
   <tbody>
     <tr>
       <td></td>
-      <td><p>Either a tuple of (outputs, losses) that will be merged with the input context,
+      <td><p>Either a tuple of <code>(outputs, losses)</code> that will be merged with the input context,
 or a boolean</p></td>
     </tr>
   </tbody>

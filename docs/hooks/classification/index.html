@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2068,6 +2082,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2213,6 +2241,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2707,7 +2749,7 @@ but it freezes the generator model ("G").</p>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FinetunerHook</span><span class="p">(</span><span class="n">ClassifierHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is the same as</span>
-<span class="sd">    [```ClassifierHook```][pytorch_adapt.hooks.classification.ClassifierHook],</span>
+<span class="sd">    [```ClassifierHook```][pytorch_adapt.hooks.ClassifierHook],</span>
 <span class="sd">    but it freezes the generator model (&quot;G&quot;).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2758,7 +2800,6 @@ SoftmaxHook            (<a class="autorefs autorefs-internal" title="pytorch_ada
 
       <p>Applies <code>torch.nn.Softmax(dim=1)</code> to the
 specified inputs.</p>
-<p>Extends <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.hooks.utils.ApplyFnHook"><code>ApplyFnHook</code></a></p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
@@ -2766,8 +2807,6 @@ specified inputs.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies ```torch.nn.Softmax(dim=1)``` to the</span>
 <span class="sd">    specified inputs.</span>
-
-<span class="sd">    Extends [```ApplyFnHook```][pytorch_adapt.hooks.utils.ApplyFnHook]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -2814,7 +2853,7 @@ SoftmaxLocallyHook            (<a class="autorefs autorefs-internal" title="pyto
     <div class="doc doc-contents ">
 
       <p>Applies <code>torch.nn.Softmax(dim=1)</code> to the
-specifieid inputs, which are overwritten, but
+specified inputs, which are overwritten, but
 only inside this hook.</p>
 
         <details class="quote">
@@ -2822,7 +2861,7 @@ only inside this hook.</p>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SoftmaxLocallyHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies ```torch.nn.Softmax(dim=1)``` to the</span>
-<span class="sd">    specifieid inputs, which are overwritten, but</span>
+<span class="sd">    specified inputs, which are overwritten, but</span>
 <span class="sd">    only inside this hook.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

@@ -993,6 +993,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2040,6 +2054,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2185,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2422,18 +2464,38 @@ and outputs a dictionary of dataloaders (one dataloader for each input dataset).
 <span class="sd">        Arguments:</span>
 <span class="sd">            train_kwargs: The keyword arguments that will be</span>
 <span class="sd">                passed to every DataLoader constructor for train-time datasets.</span>
+<span class="sd">                If ```None```, it defaults to:</span>
+<span class="sd">                ```python</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;batch_size&quot;: batch_size,</span>
+<span class="sd">                    &quot;num_workers&quot;: num_workers,</span>
+<span class="sd">                    &quot;shuffle&quot;: True,</span>
+<span class="sd">                    &quot;drop_last&quot;: True,</span>
+<span class="sd">                },</span>
+<span class="sd">                ```</span>
 <span class="sd">            val_kwargs: The keyword arguments that will be</span>
 <span class="sd">                passed to every DataLoader constructor for validation-time datasets.</span>
+<span class="sd">                If ```None```, it defaults to:</span>
+<span class="sd">                ```python</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;batch_size&quot;: batch_size,</span>
+<span class="sd">                    &quot;num_workers&quot;: num_workers,</span>
+<span class="sd">                    &quot;shuffle&quot;: False,</span>
+<span class="sd">                    &quot;drop_last&quot;: False,</span>
+<span class="sd">                }</span>
+<span class="sd">                ```</span>
 <span class="sd">            train_names: A list of the dataset names that are used during training.</span>
+<span class="sd">                If ```None```, it defaults to ```[&quot;train&quot;]```.</span>
 <span class="sd">            val_names: A list of the dataset names that are used during validation.</span>
+<span class="sd">                If ```None```, it defaults to ```[&quot;src_train&quot;, &quot;target_train&quot;, &quot;src_val&quot;, &quot;target_val&quot;]```.</span>
 <span class="sd">            all_train: If True, then all input datasets are assumed to be for training,</span>
 <span class="sd">                regardless of their names.</span>
 <span class="sd">            all_val: If True, then all input datasets are assumed to be for validation,</span>
 <span class="sd">                regardless of their names.</span>
-<span class="sd">            batch_size: The default ```batch_size``` used in train_kwargs</span>
-<span class="sd">                (if not provided) and val_kwargs (if not provided)</span>
-<span class="sd">            num_workers: The default ```num_workers``` used in train_kwargs</span>
-<span class="sd">                (if not provided) and val_kwargs (if not provided)</span>
+<span class="sd">            batch_size: The ```batch_size``` used in the default ```train_kwargs```</span>
+<span class="sd">                and in the default ```val_kwargs```.</span>
+<span class="sd">            num_workers: The ```num_workers``` used in the default ```train_kwargs```</span>
+<span class="sd">                and in the default ```val_kwargs```.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">train_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
@@ -2621,26 +2683,44 @@ and outputs a dictionary of dataloaders (one dataloader for each input dataset).
         <td><code>train_kwargs</code></td>
         <td><code>Dict[str, Any]</code></td>
         <td><p>The keyword arguments that will be
-passed to every DataLoader constructor for train-time datasets.</p></td>
+passed to every DataLoader constructor for train-time datasets.
+If <code>None</code>, it defaults to:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">batch_size</span><span class="p">,</span>
+    <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="n">num_workers</span><span class="p">,</span>
+    <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;drop_last&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">},</span>
+</code></pre></div></p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>val_kwargs</code></td>
         <td><code>Dict[str, Any]</code></td>
         <td><p>The keyword arguments that will be
-passed to every DataLoader constructor for validation-time datasets.</p></td>
+passed to every DataLoader constructor for validation-time datasets.
+If <code>None</code>, it defaults to:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">batch_size</span><span class="p">,</span>
+    <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="n">num_workers</span><span class="p">,</span>
+    <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;drop_last&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>train_names</code></td>
         <td><code>List[str]</code></td>
-        <td><p>A list of the dataset names that are used during training.</p></td>
+        <td><p>A list of the dataset names that are used during training.
+If <code>None</code>, it defaults to <code>["train"]</code>.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>val_names</code></td>
         <td><code>List[str]</code></td>
-        <td><p>A list of the dataset names that are used during validation.</p></td>
+        <td><p>A list of the dataset names that are used during validation.
+If <code>None</code>, it defaults to <code>["src_train", "target_train", "src_val", "target_val"]</code>.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -2660,15 +2740,15 @@ regardless of their names.</p></td>
       <tr>
         <td><code>batch_size</code></td>
         <td><code>int</code></td>
-        <td><p>The default <code>batch_size</code> used in train_kwargs
-(if not provided) and val_kwargs (if not provided)</p></td>
+        <td><p>The <code>batch_size</code> used in the default <code>train_kwargs</code>
+and in the default <code>val_kwargs</code>.</p></td>
         <td><code>32</code></td>
       </tr>
       <tr>
         <td><code>num_workers</code></td>
         <td><code>int</code></td>
-        <td><p>The default <code>num_workers</code> used in train_kwargs
-(if not provided) and val_kwargs (if not provided)</p></td>
+        <td><p>The <code>num_workers</code> used in the default <code>train_kwargs</code>
+and in the default <code>val_kwargs</code>.</p></td>
         <td><code>0</code></td>
       </tr>
   </tbody>
@@ -2690,18 +2770,38 @@ regardless of their names.</p></td>
 <span class="sd">    Arguments:</span>
 <span class="sd">        train_kwargs: The keyword arguments that will be</span>
 <span class="sd">            passed to every DataLoader constructor for train-time datasets.</span>
+<span class="sd">            If ```None```, it defaults to:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;batch_size&quot;: batch_size,</span>
+<span class="sd">                &quot;num_workers&quot;: num_workers,</span>
+<span class="sd">                &quot;shuffle&quot;: True,</span>
+<span class="sd">                &quot;drop_last&quot;: True,</span>
+<span class="sd">            },</span>
+<span class="sd">            ```</span>
 <span class="sd">        val_kwargs: The keyword arguments that will be</span>
 <span class="sd">            passed to every DataLoader constructor for validation-time datasets.</span>
+<span class="sd">            If ```None```, it defaults to:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;batch_size&quot;: batch_size,</span>
+<span class="sd">                &quot;num_workers&quot;: num_workers,</span>
+<span class="sd">                &quot;shuffle&quot;: False,</span>
+<span class="sd">                &quot;drop_last&quot;: False,</span>
+<span class="sd">            }</span>
+<span class="sd">            ```</span>
 <span class="sd">        train_names: A list of the dataset names that are used during training.</span>
+<span class="sd">            If ```None```, it defaults to ```[&quot;train&quot;]```.</span>
 <span class="sd">        val_names: A list of the dataset names that are used during validation.</span>
+<span class="sd">            If ```None```, it defaults to ```[&quot;src_train&quot;, &quot;target_train&quot;, &quot;src_val&quot;, &quot;target_val&quot;]```.</span>
 <span class="sd">        all_train: If True, then all input datasets are assumed to be for training,</span>
 <span class="sd">            regardless of their names.</span>
 <span class="sd">        all_val: If True, then all input datasets are assumed to be for validation,</span>
 <span class="sd">            regardless of their names.</span>
-<span class="sd">        batch_size: The default ```batch_size``` used in train_kwargs</span>
-<span class="sd">            (if not provided) and val_kwargs (if not provided)</span>
-<span class="sd">        num_workers: The default ```num_workers``` used in train_kwargs</span>
-<span class="sd">            (if not provided) and val_kwargs (if not provided)</span>
+<span class="sd">        batch_size: The ```batch_size``` used in the default ```train_kwargs```</span>
+<span class="sd">            and in the default ```val_kwargs```.</span>
+<span class="sd">        num_workers: The ```num_workers``` used in the default ```train_kwargs```</span>
+<span class="sd">            and in the default ```val_kwargs```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">train_kwargs</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>

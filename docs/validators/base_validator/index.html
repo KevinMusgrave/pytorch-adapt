@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2001,6 +2015,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2185,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2395,10 +2437,22 @@ BaseValidator            (<span title="abc.ABC">ABC</span>)
 
     <div class="doc doc-contents ">
 
+      <p>The parent class of all validators.</p>
+<p>The main purpose of validators is to give an estimate
+of target domain accuracy, usually without having access to
+class labels.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\validators\base_validator.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseValidator</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The parent class of all validators.</span>
+
+<span class="sd">    The main purpose of validators is to give an estimate</span>
+<span class="sd">    of target domain accuracy, usually without having access to</span>
+<span class="sd">    class labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Arguments:</span>
@@ -2434,7 +2488,20 @@ BaseValidator            (<span title="abc.ABC">ABC</span>)
     <span class="k">def</span> <span class="nf">compute_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            **kwargs: A mapping from dataset split name to</span>
+<span class="sd">                dictionaries containing:</span>
+
+<span class="sd">                - ```&quot;features&quot;```</span>
+<span class="sd">                - ```&quot;logits&quot;```</span>
+<span class="sd">                - ```&quot;preds&quot;```</span>
+<span class="sd">                - ```&quot;domain&quot;```</span>
+<span class="sd">                - ```&quot;labels&quot;``` (if available)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The validation score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs_check</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_score</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -2500,6 +2567,89 @@ BaseValidator            (<span title="abc.ABC">ABC</span>)
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="pytorch_adapt.validators.base_validator.BaseValidator.__call__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#pytorch_adapt.validators.base_validator.BaseValidator.__call__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td></td>
+        <td><p>A mapping from dataset split name to
+dictionaries containing:</p>
+<ul>
+<li><code>"features"</code></li>
+<li><code>"logits"</code></li>
+<li><code>"preds"</code></li>
+<li><code>"domain"</code></li>
+<li><code>"labels"</code> (if available)</li>
+</ul></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>float</code></td>
+      <td><p>The validation score.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\validators\base_validator.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        **kwargs: A mapping from dataset split name to</span>
+<span class="sd">            dictionaries containing:</span>
+
+<span class="sd">            - ```&quot;features&quot;```</span>
+<span class="sd">            - ```&quot;logits&quot;```</span>
+<span class="sd">            - ```&quot;preds&quot;```</span>
+<span class="sd">            - ```&quot;domain&quot;```</span>
+<span class="sd">            - ```&quot;labels&quot;``` (if available)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The validation score.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs_check</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_score</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

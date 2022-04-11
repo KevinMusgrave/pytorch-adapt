@@ -993,6 +993,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2040,6 +2054,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2185,6 +2213,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2427,7 +2469,10 @@ CombinedSourceAndTargetDataset            (<span title="torch.utils.data.dataset
 <span class="sd">            idx: The index of the target dataset. The source index is picked randomly.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A dictionary containing both source and target data.</span>
-<span class="sd">            The source keys start with &quot;src&quot;, and the target keys start with &quot;target&quot;.</span>
+<span class="sd">            The source keys start with ```&quot;src_&quot;```, and the target keys start with ```&quot;target_&quot;```.</span>
+<span class="sd">            See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and</span>
+<span class="sd">            [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]</span>
+<span class="sd">            for details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_src_idx</span><span class="p">()]</span>
@@ -2507,7 +2552,10 @@ CombinedSourceAndTargetDataset            (<span title="torch.utils.data.dataset
     <tr>
       <td><code>Dict[str, Any]</code></td>
       <td><p>A dictionary containing both source and target data.
-The source keys start with "src", and the target keys start with "target".</p></td>
+The source keys start with <code>"src_"</code>, and the target keys start with <code>"target_"</code>.
+See <a class="autorefs autorefs-internal" href="../source_dataset/#pytorch_adapt.datasets.source_dataset.SourceDataset.__getitem__"><code>SourceDataset.__getitem__</code></a> and
+<a class="autorefs autorefs-internal" href="../target_dataset/#pytorch_adapt.datasets.target_dataset.TargetDataset.__getitem__"><code>TargetDataset.__getitem__</code></a>
+for details.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2519,7 +2567,10 @@ The source keys start with "src", and the target keys start with "target".</p></
 <span class="sd">        idx: The index of the target dataset. The source index is picked randomly.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A dictionary containing both source and target data.</span>
-<span class="sd">        The source keys start with &quot;src&quot;, and the target keys start with &quot;target&quot;.</span>
+<span class="sd">        The source keys start with ```&quot;src_&quot;```, and the target keys start with ```&quot;target_&quot;```.</span>
+<span class="sd">        See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and</span>
+<span class="sd">        [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]</span>
+<span class="sd">        for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">target_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_src_idx</span><span class="p">()]</span>

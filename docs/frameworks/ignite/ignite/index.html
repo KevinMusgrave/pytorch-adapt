@@ -956,6 +956,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -2042,6 +2056,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2187,6 +2215,20 @@
     <li class="md-nav__item">
       <a href="../../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2396,7 +2438,7 @@ Ignite        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Wraps an <a href="../../../adapters/">Adapter</a> and takes
+      <p>Wraps an <a class="autorefs autorefs-internal" href="../../../adapters/base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter">Adapter</a> and takes
 care of validation, model saving, etc. by using
 the event handler system of PyTorch Ignite.</p>
 
@@ -2404,7 +2446,7 @@ the event handler system of PyTorch Ignite.</p>
           <summary>Source code in <code>pytorch_adapt\frameworks\ignite\ignite.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Ignite</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Wraps an [Adapter](../../adapters/index.md) and takes</span>
+<span class="sd">    Wraps an [Adapter][pytorch_adapt.adapters.BaseAdapter] and takes</span>
 <span class="sd">    care of validation, model saving, etc. by using</span>
 <span class="sd">    the event handler system of PyTorch Ignite.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2423,17 +2465,41 @@ the event handler system of PyTorch Ignite.</p>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Arguments:</span>
-<span class="sd">            adapter: An [adapter](../../adapters/index.md) object, which contains</span>
+<span class="sd">            adapter: An [```Adapter```][pytorch_adapt.adapters.BaseAdapter] object, which contains</span>
 <span class="sd">                the training and inference steps.</span>
-<span class="sd">            validator:</span>
-<span class="sd">            val_hooks:</span>
-<span class="sd">            checkpoint_fn:</span>
-<span class="sd">            logger:</span>
+<span class="sd">            validator: An optional [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory] object,</span>
+<span class="sd">                which is used to determine the best checkpoint.</span>
+<span class="sd">            val_hooks: A list of functions that are called during validation. Each function should</span>
+<span class="sd">                be one of the following types:</span>
+
+<span class="sd">                - [```Validator```][pytorch_adapt.validators.BaseValidator]</span>
+<span class="sd">                - [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory]</span>
+<span class="sd">                - A callable that accepts the following arguments:</span>
+<span class="sd">                    - ```epoch``` (an integer)</span>
+<span class="sd">                    - ```**kwargs```, keyword arguments mapping from dataset split name</span>
+<span class="sd">                        to dictionaries containing features, labels etc.</span>
+
+<span class="sd">                You can give your custom callable a list attribute named ```required_data```.</span>
+<span class="sd">                For example, setting ```self.required_data = [&quot;src_train&quot;, &quot;target_train&quot;]```,</span>
+<span class="sd">                will ensure that the validation runner gathers data for the</span>
+<span class="sd">                ```&quot;src_train&quot;``` and ```&quot;target_train&quot;``` splits.</span>
+
+
+<span class="sd">            checkpoint_fn: A [```CheckpointFnCreator```][pytorch_adapt.frameworks.ignite.CheckpointFnCreator] object.</span>
+<span class="sd">            logger: An object with the following functions:</span>
+
+<span class="sd">                - ```add_training(adapter)```</span>
+<span class="sd">                - ```add_validation(data, epoch)```, where ```data``` is ```{validator_name: validator}```,</span>
+<span class="sd">                    and ```validator_name``` is usually just ```&quot;validator&quot;```.</span>
+<span class="sd">                - ```write(engine)```</span>
+
 <span class="sd">            log_freq: The number of iterations between logging</span>
-<span class="sd">            with_pbars: If ```True```, progress bars are shown during</span>
-<span class="sd">                each epoch.</span>
-<span class="sd">            device:</span>
-<span class="sd">            auto_dist:</span>
+<span class="sd">            with_pbars: If ```True```, progress bars are shown during each epoch.</span>
+<span class="sd">            device: If ```None```, then it defaults to [```idist.device()```](https://pytorch.org/ignite/v0.4.8/distributed.html#ignite.distributed.utils.device).</span>
+<span class="sd">            auto_dist: If ```True``` and ```device == None``` then</span>
+<span class="sd">                [```auto_model```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html)</span>
+<span class="sd">                and [```auto_optim```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html) are applied</span>
+<span class="sd">                to the models and optimizers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">adapter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">validator</span>
@@ -2544,17 +2610,27 @@ the event handler system of PyTorch Ignite.</p>
         <span class="o">**</span><span class="n">trainer_kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Trains and validates on the input datasets.</span>
+<span class="sd">        Trains and optionally validates on the input datasets.</span>
 
 <span class="sd">        Arguments:</span>
-<span class="sd">            datasets:</span>
-<span class="sd">            dataloader_creator:</span>
-<span class="sd">            dataloaders:</span>
-<span class="sd">            val_interval:</span>
-<span class="sd">            patience:</span>
-<span class="sd">            resume:</span>
-<span class="sd">            check_initial_score:</span>
-<span class="sd">            **trainer_kwargs:</span>
+<span class="sd">            datasets: A dictionary mapping from dataset split names to datasets.</span>
+<span class="sd">            dataloader_creator: Creates dataloaders using ```datasets```,</span>
+<span class="sd">                when ```dataloaders == None```. Default value is</span>
+<span class="sd">                [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].</span>
+<span class="sd">            dataloaders: A dictionary mapping from dataset split names to</span>
+<span class="sd">                dataloaders. If ```None```, then ```datasets``` must be provided.</span>
+<span class="sd">            val_interval: ```self.validator``` and ```self.val_hooks``` will be called</span>
+<span class="sd">                every ```val_interval``` epochs.</span>
+<span class="sd">            early_stopper_kwargs: A dictionary of keyword arguments to be passed to</span>
+<span class="sd">                [```EarlyStopping```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.early_stopping.EarlyStopping.html).</span>
+<span class="sd">            resume: Resume training from a checkpoint. This should be either</span>
+<span class="sd">                a string representing a file path, or an integer representing a global step.</span>
+<span class="sd">            check_initial_score: If ```True```, then ```self.validator``` and ```self.val_hooks```</span>
+<span class="sd">                will be called before training starts. For example, you might use this to check the performance of</span>
+<span class="sd">                a pretrained model before finetuning.</span>
+<span class="sd">            **trainer_kwargs: Keyword arguments that are passed to the PyTorch Ignite</span>
+<span class="sd">                [```run()```](https://pytorch.org/ignite/v0.4.8/generated/ignite.engine.engine.Engine.html#ignite.engine.engine.Engine.run)</span>
+<span class="sd">                function.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A tuple of ```(best_score, best_epoch)``` or ```(None, None)```</span>
 <span class="sd">            if no validator is used.</span>
@@ -2653,7 +2729,22 @@ the event handler system of PyTorch Ignite.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_fn</span><span class="o">.</span><span class="n">load_objects</span><span class="p">(</span><span class="n">to_load</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">i_g</span><span class="o">.</span><span class="n">resume_checks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">evaluate_best_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">evaluate_best_model</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the best checkpoint and computes the score on the given datasets.</span>
+<span class="sd">            This requires ```self.checkpoint_fn``` to be not ```None```.</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            datasets: A dictionary mapping from dataset split names to datasets.</span>
+<span class="sd">            validator: A [Validator][pytorch_adapt.validators.BaseValidator]</span>
+<span class="sd">                or [ScoreHistory][pytorch_adapt.validators.ScoreHistory] object,</span>
+<span class="sd">                which will compute and return the score.</span>
+<span class="sd">            dataloader_creator: If ```None```, it will default to</span>
+<span class="sd">                [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The validator&#39;s score for the best checkpoint.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;***EVALUATING BEST MODEL***&quot;</span><span class="p">)</span>
         <span class="n">dataloader_creator</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">dataloader_creator</span><span class="p">,</span> <span class="n">DataloaderCreator</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">dataloaders</span> <span class="o">=</span> <span class="n">dataloader_creator</span><span class="p">(</span><span class="o">**</span><span class="n">datasets</span><span class="p">)</span>
@@ -2737,32 +2828,54 @@ the event handler system of PyTorch Ignite.</p>
       <tr>
         <td><code>adapter</code></td>
         <td></td>
-        <td><p>An <a href="../../../adapters/">adapter</a> object, which contains
+        <td><p>An <a class="autorefs autorefs-internal" href="../../../adapters/base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter"><code>Adapter</code></a> object, which contains
 the training and inference steps.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>validator</code></td>
         <td></td>
-        <td></td>
+        <td><p>An optional <a class="autorefs autorefs-internal" href="../../../validators/score_history/#pytorch_adapt.validators.score_history.ScoreHistory"><code>ScoreHistory</code></a> object,
+which is used to determine the best checkpoint.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>val_hooks</code></td>
         <td></td>
-        <td></td>
+        <td><p>A list of functions that are called during validation. Each function should
+be one of the following types:</p>
+<ul>
+<li><a class="autorefs autorefs-internal" href="../../../validators/base_validator/#pytorch_adapt.validators.base_validator.BaseValidator"><code>Validator</code></a></li>
+<li><a class="autorefs autorefs-internal" href="../../../validators/score_history/#pytorch_adapt.validators.score_history.ScoreHistory"><code>ScoreHistory</code></a></li>
+<li>A callable that accepts the following arguments:<ul>
+<li><code>epoch</code> (an integer)</li>
+<li><code>**kwargs</code>, keyword arguments mapping from dataset split name
+    to dictionaries containing features, labels etc.</li>
+</ul>
+</li>
+</ul>
+<p>You can give your custom callable a list attribute named <code>required_data</code>.
+For example, setting <code>self.required_data = ["src_train", "target_train"]</code>,
+will ensure that the validation runner gathers data for the
+<code>"src_train"</code> and <code>"target_train"</code> splits.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>checkpoint_fn</code></td>
         <td></td>
-        <td></td>
+        <td><p>A <a class="autorefs autorefs-internal" href="../checkpoint_utils/#pytorch_adapt.frameworks.ignite.checkpoint_utils.CheckpointFnCreator"><code>CheckpointFnCreator</code></a> object.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>logger</code></td>
         <td></td>
-        <td></td>
+        <td><p>An object with the following functions:</p>
+<ul>
+<li><code>add_training(adapter)</code></li>
+<li><code>add_validation(data, epoch)</code>, where <code>data</code> is <code>{validator_name: validator}</code>,
+    and <code>validator_name</code> is usually just <code>"validator"</code>.</li>
+<li><code>write(engine)</code></li>
+</ul></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -2774,20 +2887,22 @@ the training and inference steps.</p></td>
       <tr>
         <td><code>with_pbars</code></td>
         <td></td>
-        <td><p>If <code>True</code>, progress bars are shown during
-each epoch.</p></td>
+        <td><p>If <code>True</code>, progress bars are shown during each epoch.</p></td>
         <td><code>True</code></td>
       </tr>
       <tr>
         <td><code>device</code></td>
         <td></td>
-        <td></td>
+        <td><p>If <code>None</code>, then it defaults to <a href="https://pytorch.org/ignite/v0.4.8/distributed.html#ignite.distributed.utils.device"><code>idist.device()</code></a>.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>auto_dist</code></td>
         <td></td>
-        <td></td>
+        <td><p>If <code>True</code> and <code>device == None</code> then
+<a href="https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html"><code>auto_model</code></a>
+and <a href="https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html"><code>auto_optim</code></a> are applied
+to the models and optimizers.</p></td>
         <td><code>True</code></td>
       </tr>
   </tbody>
@@ -2808,17 +2923,41 @@ each epoch.</p></td>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        adapter: An [adapter](../../adapters/index.md) object, which contains</span>
+<span class="sd">        adapter: An [```Adapter```][pytorch_adapt.adapters.BaseAdapter] object, which contains</span>
 <span class="sd">            the training and inference steps.</span>
-<span class="sd">        validator:</span>
-<span class="sd">        val_hooks:</span>
-<span class="sd">        checkpoint_fn:</span>
-<span class="sd">        logger:</span>
+<span class="sd">        validator: An optional [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory] object,</span>
+<span class="sd">            which is used to determine the best checkpoint.</span>
+<span class="sd">        val_hooks: A list of functions that are called during validation. Each function should</span>
+<span class="sd">            be one of the following types:</span>
+
+<span class="sd">            - [```Validator```][pytorch_adapt.validators.BaseValidator]</span>
+<span class="sd">            - [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory]</span>
+<span class="sd">            - A callable that accepts the following arguments:</span>
+<span class="sd">                - ```epoch``` (an integer)</span>
+<span class="sd">                - ```**kwargs```, keyword arguments mapping from dataset split name</span>
+<span class="sd">                    to dictionaries containing features, labels etc.</span>
+
+<span class="sd">            You can give your custom callable a list attribute named ```required_data```.</span>
+<span class="sd">            For example, setting ```self.required_data = [&quot;src_train&quot;, &quot;target_train&quot;]```,</span>
+<span class="sd">            will ensure that the validation runner gathers data for the</span>
+<span class="sd">            ```&quot;src_train&quot;``` and ```&quot;target_train&quot;``` splits.</span>
+
+
+<span class="sd">        checkpoint_fn: A [```CheckpointFnCreator```][pytorch_adapt.frameworks.ignite.CheckpointFnCreator] object.</span>
+<span class="sd">        logger: An object with the following functions:</span>
+
+<span class="sd">            - ```add_training(adapter)```</span>
+<span class="sd">            - ```add_validation(data, epoch)```, where ```data``` is ```{validator_name: validator}```,</span>
+<span class="sd">                and ```validator_name``` is usually just ```&quot;validator&quot;```.</span>
+<span class="sd">            - ```write(engine)```</span>
+
 <span class="sd">        log_freq: The number of iterations between logging</span>
-<span class="sd">        with_pbars: If ```True```, progress bars are shown during</span>
-<span class="sd">            each epoch.</span>
-<span class="sd">        device:</span>
-<span class="sd">        auto_dist:</span>
+<span class="sd">        with_pbars: If ```True```, progress bars are shown during each epoch.</span>
+<span class="sd">        device: If ```None```, then it defaults to [```idist.device()```](https://pytorch.org/ignite/v0.4.8/distributed.html#ignite.distributed.utils.device).</span>
+<span class="sd">        auto_dist: If ```True``` and ```device == None``` then</span>
+<span class="sd">            [```auto_model```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html)</span>
+<span class="sd">            and [```auto_optim```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html) are applied</span>
+<span class="sd">            to the models and optimizers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">adapter</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">validator</span>
@@ -2848,6 +2987,103 @@ each epoch.</p></td>
 
 
 
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="pytorch_adapt.frameworks.ignite.ignite.Ignite.evaluate_best_model" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">evaluate_best_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a href="#pytorch_adapt.frameworks.ignite.ignite.Ignite.evaluate_best_model" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Loads the best checkpoint and computes the score on the given datasets.
+    This requires <code>self.checkpoint_fn</code> to be not <code>None</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>datasets</code></td>
+        <td></td>
+        <td><p>A dictionary mapping from dataset split names to datasets.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>validator</code></td>
+        <td></td>
+        <td><p>A <a class="autorefs autorefs-internal" href="../../../validators/base_validator/#pytorch_adapt.validators.base_validator.BaseValidator">Validator</a>
+or <a class="autorefs autorefs-internal" href="../../../validators/score_history/#pytorch_adapt.validators.score_history.ScoreHistory">ScoreHistory</a> object,
+which will compute and return the score.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>dataloader_creator</code></td>
+        <td></td>
+        <td><p>If <code>None</code>, it will default to
+<a class="autorefs autorefs-internal" href="../../../datasets/dataloader_creator/#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator"><code>DataloaderCreator()</code></a>.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>float</code></td>
+      <td><p>The validator's score for the best checkpoint.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pytorch_adapt\frameworks\ignite\ignite.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_best_model</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">dataloader_creator</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the best checkpoint and computes the score on the given datasets.</span>
+<span class="sd">        This requires ```self.checkpoint_fn``` to be not ```None```.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        datasets: A dictionary mapping from dataset split names to datasets.</span>
+<span class="sd">        validator: A [Validator][pytorch_adapt.validators.BaseValidator]</span>
+<span class="sd">            or [ScoreHistory][pytorch_adapt.validators.ScoreHistory] object,</span>
+<span class="sd">            which will compute and return the score.</span>
+<span class="sd">        dataloader_creator: If ```None```, it will default to</span>
+<span class="sd">            [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The validator&#39;s score for the best checkpoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;***EVALUATING BEST MODEL***&quot;</span><span class="p">)</span>
+    <span class="n">dataloader_creator</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">dataloader_creator</span><span class="p">,</span> <span class="n">DataloaderCreator</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">dataloaders</span> <span class="o">=</span> <span class="n">dataloader_creator</span><span class="p">(</span><span class="o">**</span><span class="n">datasets</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_fn</span><span class="o">.</span><span class="n">load_best_checkpoint</span><span class="p">({</span><span class="s2">&quot;models&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span><span class="o">.</span><span class="n">models</span><span class="p">})</span>
+    <span class="n">collected_data</span> <span class="o">=</span> <span class="n">i_g</span><span class="o">.</span><span class="n">collect_from_dataloaders</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collector</span><span class="p">,</span> <span class="n">dataloaders</span><span class="p">,</span> <span class="n">validator</span><span class="o">.</span><span class="n">required_data</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">val_utils</span><span class="o">.</span><span class="n">call_val_hook</span><span class="p">(</span><span class="n">validator</span><span class="p">,</span> <span class="n">collected_data</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
 
 
 
@@ -2867,7 +3103,7 @@ each epoch.</p></td>
 
     <div class="doc doc-contents ">
 
-      <p>Trains and validates on the input datasets.</p>
+      <p>Trains and optionally validates on the input datasets.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -2883,49 +3119,59 @@ each epoch.</p></td>
       <tr>
         <td><code>datasets</code></td>
         <td></td>
-        <td></td>
+        <td><p>A dictionary mapping from dataset split names to datasets.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>dataloader_creator</code></td>
         <td></td>
-        <td></td>
+        <td><p>Creates dataloaders using <code>datasets</code>,
+when <code>dataloaders == None</code>. Default value is
+<a class="autorefs autorefs-internal" href="../../../datasets/dataloader_creator/#pytorch_adapt.datasets.dataloader_creator.DataloaderCreator"><code>DataloaderCreator()</code></a>.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>dataloaders</code></td>
         <td></td>
-        <td></td>
+        <td><p>A dictionary mapping from dataset split names to
+dataloaders. If <code>None</code>, then <code>datasets</code> must be provided.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>val_interval</code></td>
         <td></td>
-        <td></td>
+        <td><p><code>self.validator</code> and <code>self.val_hooks</code> will be called
+every <code>val_interval</code> epochs.</p></td>
         <td><code>1</code></td>
       </tr>
       <tr>
-        <td><code>patience</code></td>
+        <td><code>early_stopper_kwargs</code></td>
         <td></td>
-        <td></td>
-        <td><em>required</em></td>
+        <td><p>A dictionary of keyword arguments to be passed to
+<a href="https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.early_stopping.EarlyStopping.html"><code>EarlyStopping</code></a>.</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>resume</code></td>
         <td></td>
-        <td></td>
+        <td><p>Resume training from a checkpoint. This should be either
+a string representing a file path, or an integer representing a global step.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>check_initial_score</code></td>
         <td></td>
-        <td></td>
+        <td><p>If <code>True</code>, then <code>self.validator</code> and <code>self.val_hooks</code>
+will be called before training starts. For example, you might use this to check the performance of
+a pretrained model before finetuning.</p></td>
         <td><code>False</code></td>
       </tr>
       <tr>
         <td><code>**trainer_kwargs</code></td>
         <td></td>
-        <td></td>
+        <td><p>Keyword arguments that are passed to the PyTorch Ignite
+<a href="https://pytorch.org/ignite/v0.4.8/generated/ignite.engine.engine.Engine.html#ignite.engine.engine.Engine.run"><code>run()</code></a>
+function.</p></td>
         <td><code>{}</code></td>
       </tr>
   </tbody>
@@ -2960,17 +3206,27 @@ if no validator is used.</p></td>
     <span class="o">**</span><span class="n">trainer_kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Trains and validates on the input datasets.</span>
+<span class="sd">    Trains and optionally validates on the input datasets.</span>
 
 <span class="sd">    Arguments:</span>
-<span class="sd">        datasets:</span>
-<span class="sd">        dataloader_creator:</span>
-<span class="sd">        dataloaders:</span>
-<span class="sd">        val_interval:</span>
-<span class="sd">        patience:</span>
-<span class="sd">        resume:</span>
-<span class="sd">        check_initial_score:</span>
-<span class="sd">        **trainer_kwargs:</span>
+<span class="sd">        datasets: A dictionary mapping from dataset split names to datasets.</span>
+<span class="sd">        dataloader_creator: Creates dataloaders using ```datasets```,</span>
+<span class="sd">            when ```dataloaders == None```. Default value is</span>
+<span class="sd">            [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].</span>
+<span class="sd">        dataloaders: A dictionary mapping from dataset split names to</span>
+<span class="sd">            dataloaders. If ```None```, then ```datasets``` must be provided.</span>
+<span class="sd">        val_interval: ```self.validator``` and ```self.val_hooks``` will be called</span>
+<span class="sd">            every ```val_interval``` epochs.</span>
+<span class="sd">        early_stopper_kwargs: A dictionary of keyword arguments to be passed to</span>
+<span class="sd">            [```EarlyStopping```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.early_stopping.EarlyStopping.html).</span>
+<span class="sd">        resume: Resume training from a checkpoint. This should be either</span>
+<span class="sd">            a string representing a file path, or an integer representing a global step.</span>
+<span class="sd">        check_initial_score: If ```True```, then ```self.validator``` and ```self.val_hooks```</span>
+<span class="sd">            will be called before training starts. For example, you might use this to check the performance of</span>
+<span class="sd">            a pretrained model before finetuning.</span>
+<span class="sd">        **trainer_kwargs: Keyword arguments that are passed to the PyTorch Ignite</span>
+<span class="sd">            [```run()```](https://pytorch.org/ignite/v0.4.8/generated/ignite.engine.engine.Engine.html#ignite.engine.engine.Engine.run)</span>
+<span class="sd">            function.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A tuple of ```(best_score, best_epoch)``` or ```(None, None)```</span>
 <span class="sd">        if no validator is used.</span>
@@ -3055,7 +3311,7 @@ if no validator is used.</p></td>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../loggers/ignite_record_keeper_logger/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ignite_record_keeper_logger" rel="prev">
+        <a href="../checkpoint_utils/" class="md-footer__link md-footer__link--prev" aria-label="Previous: checkpoint_utils" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -3064,7 +3320,7 @@ if no validator is used.</p></td>
               <span class="md-footer__direction">
                 Previous
               </span>
-              ignite_record_keeper_logger
+              checkpoint_utils
             </div>
           </div>
         </a>

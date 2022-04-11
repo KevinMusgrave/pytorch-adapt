@@ -954,6 +954,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../frameworks/ignite/checkpoint_utils/" class="md-nav__link">
+        checkpoint_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../frameworks/ignite/ignite/" class="md-nav__link">
         ignite
       </a>
@@ -2001,6 +2015,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/pretrained/" class="md-nav__link">
+        pretrained
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2146,6 +2174,20 @@
     <li class="md-nav__item">
       <a href="../../validators/im_validator/" class="md-nav__link">
         im_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/multiple_validators/" class="md-nav__link">
+        multiple_validators
       </a>
     </li>
   
@@ -2427,9 +2469,12 @@ BaseWeighter        </code>
 <span class="sd">        Arguments:</span>
 <span class="sd">            loss_dict: A mapping from loss names to loss values.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            A tuple where ```tuple[0]``` is the loss that ```.backward()``` can be called on,</span>
-<span class="sd">            and ```tuple[1]``` is a dictionary of floats (detached from the autograd graph)</span>
-<span class="sd">            that contains the weighted loss components.</span>
+<span class="sd">            A tuple consisting of</span>
+
+<span class="sd">            - the loss that .backward() can be called on</span>
+
+<span class="sd">            - a dictionary of floats (detached from the autograd graph)</span>
+<span class="sd">                    that contains the weighted loss components.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">weight_losses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">loss_dict</span><span class="p">)</span>
 
@@ -2496,9 +2541,16 @@ BaseWeighter        </code>
   <tbody>
     <tr>
       <td><code>Tuple[torch.Tensor, Dict[str, float]]</code></td>
-      <td><p>A tuple where <code>tuple[0]</code> is the loss that <code>.backward()</code> can be called on,
-and <code>tuple[1]</code> is a dictionary of floats (detached from the autograd graph)
-that contains the weighted loss components.</p></td>
+      <td><p>A tuple consisting of</p>
+<ul>
+<li>
+<p>the loss that .backward() can be called on</p>
+</li>
+<li>
+<p>a dictionary of floats (detached from the autograd graph)
+        that contains the weighted loss components.</p>
+</li>
+</ul></td>
     </tr>
   </tbody>
 </table>
@@ -2511,9 +2563,12 @@ that contains the weighted loss components.</p></td>
 <span class="sd">    Arguments:</span>
 <span class="sd">        loss_dict: A mapping from loss names to loss values.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A tuple where ```tuple[0]``` is the loss that ```.backward()``` can be called on,</span>
-<span class="sd">        and ```tuple[1]``` is a dictionary of floats (detached from the autograd graph)</span>
-<span class="sd">        that contains the weighted loss components.</span>
+<span class="sd">        A tuple consisting of</span>
+
+<span class="sd">        - the loss that .backward() can be called on</span>
+
+<span class="sd">        - a dictionary of floats (detached from the autograd graph)</span>
+<span class="sd">                that contains the weighted loss components.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">weight_losses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">loss_dict</span><span class="p">)</span>
 </code></pre></div>
