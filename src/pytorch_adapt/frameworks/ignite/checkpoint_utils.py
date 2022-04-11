@@ -28,7 +28,18 @@ def adapter_to_dict(adapter):
 
 
 class CheckpointFnCreator:
+    """
+    This class creates a checkpointing function
+    for use with the [```Ignite```][pytorch_adapt.frameworks.ignite.Ignite] wrapper.
+    """
+
     def __init__(self, **kwargs):
+        """
+        Arguments:
+            **kwargs: Optional arguments that will be passed to PyTorch Ignite's
+                [```ModelCheckpoint```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.checkpoint.ModelCheckpoint.html#modelcheckpoint)
+                class.
+        """
         self.kwargs = {
             "filename_prefix": "",
             "global_step_transform": global_step_transform,
@@ -42,7 +53,19 @@ class CheckpointFnCreator:
         # For saving self.objs. Only save the very latest (n_saved = 1)
         self.ckpter = ModelCheckpoint(**{**self.kwargs, "n_saved": 1})
 
-    def __call__(self, adapter=None, validator=None, val_hooks=None, **kwargs):
+    def __call__(
+        self,
+        adapter: "Adapter" = None,
+        validator: "Validator" = None,
+        val_hooks=None,
+        **kwargs,
+    ):
+        """
+        Creates the checkpointing function.
+        Arguments:
+            adapter: An [Adapter][pytorch_adapt.adapters.BaseAdapter] object.
+            validator: A [Validator][pytorch_adapt.validators.BaseValidator] object.
+        """
         self.objs = ModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {}
         if adapter:

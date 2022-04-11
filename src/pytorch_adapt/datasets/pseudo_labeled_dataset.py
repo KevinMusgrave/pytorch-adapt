@@ -7,10 +7,10 @@ from .domain_dataset import DomainDataset
 
 class PseudoLabeledDataset(DomainDataset):
     """
-    The wrapped dataset's ```__getitem__``` function 
+    The wrapped dataset's ```__getitem__``` function
     should return a tuple of ```(data, label)```.
     The label will then be discarded,
-    and the pseudo label will be returned instead. 
+    and the pseudo label will be returned instead.
     """
 
     def __init__(self, dataset: Dataset, pseudo_labels: List[int], domain: int = 0):
