@@ -65,8 +65,8 @@ class Ignite:
             with_pbars: If ```True```, progress bars are shown during each epoch.
             device: If ```None```, then it defaults to [```idist.device()```](https://pytorch.org/ignite/v0.4.8/distributed.html#ignite.distributed.utils.device).
             auto_dist: If ```True``` and ```device == None``` then
-                [```auto_model```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html#auto-model)
-                and [```auto_optim```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html#auto-optim) are applied
+                [```auto_model```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html)
+                and [```auto_optim```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html) are applied
                 to the models and optimizers.
         """
         self.adapter = adapter
@@ -178,17 +178,27 @@ class Ignite:
         **trainer_kwargs,
     ) -> Union[Tuple[float, int], Tuple[None, None]]:
         """
-        Trains and validates on the input datasets.
+        Trains and optionally validates on the input datasets.
 
         Arguments:
-            datasets:
-            dataloader_creator:
-            dataloaders:
-            val_interval:
-            patience:
-            resume:
-            check_initial_score:
-            **trainer_kwargs:
+            datasets: A dictionary mapping from dataset split names to datasets.
+            dataloader_creator: Creates dataloaders using ```datasets```,
+                when ```dataloaders == None```. Default value is
+                [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].
+            dataloaders: A dictionary mapping from dataset split names to
+                dataloaders. If ```None```, then ```datasets``` must be provided.
+            val_interval: ```self.validator``` and ```self.val_hooks``` will be called
+                every ```val_interval``` epochs.
+            early_stopper_kwargs: A dictionary of keyword arguments to be passed to
+                [```EarlyStopping```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.early_stopping.EarlyStopping.html).
+            resume: Resume training from a checkpoint. This should be either
+                a string representing a file path, or an integer representing a global step.
+            check_initial_score: If ```True```, then ```self.validator``` and ```self.val_hooks```
+                will be called before training starts. For example, you might use this to check the performance of
+                a pretrained model before finetuning.
+            **trainer_kwargs: Keyword arguments that are passed to the PyTorch Ignite
+                [```run()```](https://pytorch.org/ignite/v0.4.8/generated/ignite.engine.engine.Engine.html#ignite.engine.engine.Engine.run)
+                function.
         Returns:
             A tuple of ```(best_score, best_epoch)``` or ```(None, None)```
             if no validator is used.

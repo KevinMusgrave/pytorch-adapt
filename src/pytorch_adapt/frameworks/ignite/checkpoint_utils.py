@@ -37,7 +37,7 @@ class CheckpointFnCreator:
         """
         Arguments:
             **kwargs: Optional arguments that will be passed to PyTorch Ignite's
-                [```ModelCheckpoint```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.checkpoint.ModelCheckpoint.html#modelcheckpoint)
+                [```ModelCheckpoint```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.checkpoint.ModelCheckpoint.html)
                 class.
         """
         self.kwargs = {
