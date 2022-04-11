@@ -297,7 +297,20 @@ class Ignite:
         self.checkpoint_fn.load_objects(to_load, **kwargs)
         i_g.resume_checks(self.trainer, self.validator)
 
-    def evaluate_best_model(self, datasets, validator, dataloader_creator=None):
+    def evaluate_best_model(self, datasets, validator, dataloader_creator=None) -> float:
+        """
+        Loads the best checkpoint and computes the score on the given datasets.
+            This requires ```self.checkpoint_fn``` to be not ```None```.
+        Arguments:
+            datasets: A dictionary mapping from dataset split names to datasets.
+            validator: A [Validator][pytorch_adapt.validators.BaseValidator] 
+                or [ScoreHistory][pytorch_adapt.validators.ScoreHistory] object, 
+                which will compute and return the score.
+            dataloader_creator: If ```None```, it will default to 
+                [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].
+        Returns:
+            The validator's score for the best checkpoint.
+        """
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)
