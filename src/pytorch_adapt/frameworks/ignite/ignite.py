@@ -14,7 +14,7 @@ from . import utils as i_g
 
 class Ignite:
     """
-    Wraps an [Adapter](../../adapters/index.md) and takes
+    Wraps an [Adapter][pytorch_adapt.adapters.BaseAdapter] and takes
     care of validation, model saving, etc. by using
     the event handler system of PyTorch Ignite.
     """
@@ -33,17 +33,41 @@ class Ignite:
     ):
         """
         Arguments:
-            adapter: An [adapter](../../adapters/index.md) object, which contains
+            adapter: An [```Adapter```][pytorch_adapt.adapters.BaseAdapter] object, which contains
                 the training and inference steps.
-            validator:
-            val_hooks:
-            checkpoint_fn:
-            logger:
+            validator: An optional [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory] object,
+                which is used to determine the best checkpoint.
+            val_hooks: A list of functions that are called during validation. Each function should
+                be one of the following types:
+
+                - [```Validator```][pytorch_adapt.validators.BaseValidator]
+                - [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory]
+                - A callable that accepts the following arguments:
+                    - ```epoch``` (an integer)
+                    - ```**kwargs```, keyword arguments mapping from dataset split name
+                        to dictionaries containing features, labels etc.
+
+                You can give your custom callable a list attribute named ```required_data```.
+                For example, setting ```self.required_data = ["src_train", "target_train"]```,
+                will ensure that the validation runner gathers data for the
+                ```"src_train"``` and ```"target_train"``` splits.
+
+
+            checkpoint_fn: A [```CheckpointFnCreator```][pytorch_adapt.frameworks.ignite.CheckpointFnCreator] object.
+            logger: An object with the following functions:
+
+                - ```add_training(adapter)```
+                - ```add_validation(data, epoch)```, where ```data``` is ```{validator_name: validator}```,
+                    and ```validator_name``` is usually just ```"validator"```.
+                - ```write(engine)```
+
             log_freq: The number of iterations between logging
-            with_pbars: If ```True```, progress bars are shown during
-                each epoch.
-            device:
-            auto_dist:
+            with_pbars: If ```True```, progress bars are shown during each epoch.
+            device: If ```None```, then it defaults to [```idist.device()```](https://pytorch.org/ignite/v0.4.8/distributed.html#ignite.distributed.utils.device).
+            auto_dist: If ```True``` and ```device == None``` then
+                [```auto_model```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html#auto-model)
+                and [```auto_optim```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html#auto-optim) are applied
+                to the models and optimizers.
         """
         self.adapter = adapter
         self.validator = validator

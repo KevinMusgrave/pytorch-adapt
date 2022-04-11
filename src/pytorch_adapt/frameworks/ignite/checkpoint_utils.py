@@ -63,10 +63,10 @@ class CheckpointFnCreator:
         """
         Creates the checkpointing function.
         Arguments:
-            adapter: An [Adapter][pytorch_adapt.adapters.BaseAdapter] object.
-            validator: A [Validator][pytorch_adapt.validators.BaseValidator] object.
+            adapter: An [```Adapter```][pytorch_adapt.adapters.BaseAdapter] object.
+            validator: A [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory] object.
             val_hooks: A list of functions called during validation.
-                See [Ignite][pytorch_adapt.frameworks.ignite.Ignite] for details.
+                See [```Ignite```][pytorch_adapt.frameworks.ignite.Ignite] for details.
         """
         self.objs = ModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {}
