@@ -2437,8 +2437,7 @@ CDAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.gan.GAN">GAN</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/cdan/#pytorch_adapt.hooks.cdan.CDANHook">CDANHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/cdan/#pytorch_adapt.hooks.cdan.CDANHook">CDANHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2466,8 +2465,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/cdan/#pytorch_
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CDAN</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [GAN][pytorch_adapt.adapters.GAN]</span>
-<span class="sd">    and wraps [CDANHook][pytorch_adapt.hooks.CDANHook].</span>
+<span class="sd">    Wraps [CDANHook][pytorch_adapt.hooks.CDANHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2626,8 +2624,7 @@ DomainConfusion            (<a class="autorefs autorefs-internal" title="pytorch
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.gan.GAN">GAN</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/domain_confusion/#pytorch_adapt.hooks.domain_confusion.DomainConfusionHook">DomainConfusionHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/domain_confusion/#pytorch_adapt.hooks.domain_confusion.DomainConfusionHook">DomainConfusionHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2651,8 +2648,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/domain_confusi
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DomainConfusion</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [GAN][pytorch_adapt.adapters.GAN]</span>
-<span class="sd">    and wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].</span>
+<span class="sd">    Wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2762,8 +2758,7 @@ GAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter">BaseGCDAdapter</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2787,8 +2782,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/gan/#pytorch_a
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">BaseGCDAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [BaseGCDAdapter][pytorch_adapt.adapters.base_adapter.BaseGCDAdapter]</span>
-<span class="sd">    and wraps [GANHook][pytorch_adapt.hooks.GANHook].</span>
+<span class="sd">    Wraps [GANHook][pytorch_adapt.hooks.GANHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -3383,8 +3377,7 @@ VADA            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.gan.GAN">GAN</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/vada/#pytorch_adapt.hooks.vada.VADAHook">VADAHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/vada/#pytorch_adapt.hooks.vada.VADAHook">VADAHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -3415,8 +3408,7 @@ automatically during initialization.</p>
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VADA</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [GAN][pytorch_adapt.adapters.GAN]</span>
-<span class="sd">    and wraps [VADAHook][pytorch_adapt.hooks.VADAHook].</span>
+<span class="sd">    Wraps [VADAHook][pytorch_adapt.hooks.VADAHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -3566,7 +3558,8 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
     <div class="doc doc-contents ">
 
-      <p>Called in <code>__init__</code>.</p>
+      <p>Called in <code>__init__</code> before
+<a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook"><code>init_hook</code></a>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>

@@ -2599,9 +2599,10 @@ and update its BatchNorm parameters itself.</p>
   <tbody>
     <tr>
       <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. This will create
-an Adam optimizer with lr 0.0001 for
-each model that is passed into <code>__init__</code>.</p></td>
+      <td><p>The default set of containers. Consists of an
+<a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
+container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a>
+of Adam with lr 0.0001.</p></td>
     </tr>
   </tbody>
 </table>

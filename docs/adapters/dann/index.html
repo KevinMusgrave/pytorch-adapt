@@ -2410,8 +2410,7 @@ DANN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter">BaseGCDAdapter</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/dann/#pytorch_adapt.hooks.dann.DANNHook">DANNHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/dann/#pytorch_adapt.hooks.dann.DANNHook">DANNHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2435,8 +2434,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/dann/#pytorch_
           <summary>Source code in <code>pytorch_adapt\adapters\dann.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DANN</span><span class="p">(</span><span class="n">BaseGCDAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [BaseGCDAdapter][pytorch_adapt.adapters.base_adapter.BaseGCDAdapter]</span>
-<span class="sd">    and wraps [DANNHook][pytorch_adapt.hooks.DANNHook].</span>
+<span class="sd">    Wraps [DANNHook][pytorch_adapt.hooks.DANNHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2909,8 +2907,7 @@ GVB            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.dann.DANN">DANN</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/gvb/#pytorch_adapt.hooks.gvb.GVBHook">GVBHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/gvb/#pytorch_adapt.hooks.gvb.GVBHook">GVBHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2937,8 +2934,7 @@ with each bridge being a re-initialized copy of each model.</p>
           <summary>Source code in <code>pytorch_adapt\adapters\dann.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GVB</span><span class="p">(</span><span class="n">DANN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [DANN][pytorch_adapt.adapters.DANN]</span>
-<span class="sd">    and wraps [GVBHook][pytorch_adapt.hooks.GVBHook].</span>
+<span class="sd">    Wraps [GVBHook][pytorch_adapt.hooks.GVBHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -3062,7 +3058,8 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
     <div class="doc doc-contents ">
 
-      <p>Called in <code>__init__</code>.</p>
+      <p>Called in <code>__init__</code> before
+<a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook"><code>init_hook</code></a>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\dann.py</code></summary>

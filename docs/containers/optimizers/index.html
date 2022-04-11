@@ -2407,13 +2407,13 @@ Optimizers            (<a class="autorefs autorefs-internal" title="pytorch_adap
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">multipliers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Arguments:</span>
-<span class="sd">            *args: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer] arguments.</span>
+<span class="sd">            *args: [```BaseContainer```][pytorch_adapt.containers.BaseContainer] arguments.</span>
 <span class="sd">            multipliers: A dictionary mapping from</span>
 <span class="sd">                optimizer name to lr multiplier. Each</span>
 <span class="sd">                optimizer will have ```lr = lr * multiplier```</span>
 <span class="sd">                upon initialization. If ```None```,</span>
 <span class="sd">                then multiplier is 1.</span>
-<span class="sd">            **kwargs:  [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]</span>
+<span class="sd">            **kwargs:  [```BaseContainer```][pytorch_adapt.containers.BaseContainer]</span>
 <span class="sd">                keyword arguments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multipliers</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">multipliers</span><span class="p">,</span> <span class="p">{})</span>
@@ -2535,13 +2535,13 @@ keyword arguments.</p></td>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">multipliers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
-<span class="sd">        *args: [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer] arguments.</span>
+<span class="sd">        *args: [```BaseContainer```][pytorch_adapt.containers.BaseContainer] arguments.</span>
 <span class="sd">        multipliers: A dictionary mapping from</span>
 <span class="sd">            optimizer name to lr multiplier. Each</span>
 <span class="sd">            optimizer will have ```lr = lr * multiplier```</span>
 <span class="sd">            upon initialization. If ```None```,</span>
 <span class="sd">            then multiplier is 1.</span>
-<span class="sd">        **kwargs:  [```BaseContainer```][pytorch_adapt.containers.base_container.BaseContainer]</span>
+<span class="sd">        **kwargs:  [```BaseContainer```][pytorch_adapt.containers.BaseContainer]</span>
 <span class="sd">            keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">multipliers</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">multipliers</span><span class="p">,</span> <span class="p">{})</span>

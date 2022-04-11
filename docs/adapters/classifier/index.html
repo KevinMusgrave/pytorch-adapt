@@ -2409,8 +2409,7 @@ Classifier            (<a class="autorefs autorefs-internal" title="pytorch_adap
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.ClassifierHook">ClassifierHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.ClassifierHook">ClassifierHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2434,8 +2433,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/classification
           <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Classifier</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]</span>
-<span class="sd">    and wraps [ClassifierHook][pytorch_adapt.hooks.ClassifierHook].</span>
+<span class="sd">    Wraps [ClassifierHook][pytorch_adapt.hooks.ClassifierHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2586,8 +2584,7 @@ Finetuner            (<a class="autorefs autorefs-internal" title="pytorch_adapt
 
     <div class="doc doc-contents ">
 
-      <p>Extends <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.classifier.Classifier">Classifier</a>
-and wraps <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.FinetunerHook">FinetunerHook</a>.</p>
+      <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.FinetunerHook">FinetunerHook</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2611,8 +2608,7 @@ and wraps <a class="autorefs autorefs-internal" href="../../hooks/classification
           <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Finetuner</span><span class="p">(</span><span class="n">Classifier</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extends [Classifier][pytorch_adapt.adapters.Classifier]</span>
-<span class="sd">    and wraps [FinetunerHook][pytorch_adapt.hooks.FinetunerHook].</span>
+<span class="sd">    Wraps [FinetunerHook][pytorch_adapt.hooks.FinetunerHook].</span>
 
 <span class="sd">    |Container|Required keys|</span>
 <span class="sd">    |---|---|</span>
@@ -2727,9 +2723,10 @@ but it freezes the generator model ("G").</p>
   <tbody>
     <tr>
       <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. This will create
-an Adam optimizer with lr 0.0001 for
-each model that is passed into <code>__init__</code>.</p></td>
+      <td><p>The default set of containers. Consists of an
+<a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
+container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a>
+of Adam with lr 0.0001.</p></td>
     </tr>
   </tbody>
 </table>

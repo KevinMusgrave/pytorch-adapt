@@ -2396,12 +2396,17 @@ BaseContainer            (<span title="collections.abc.MutableMapping">MutableMa
     <div class="doc doc-contents ">
 
       <p>The parent class of all containers.</p>
+<p>Containers are dictionaries with extra functionality
+that simplify object creation.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\containers\base_container.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseContainer</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The parent class of all containers.</span>
+
+<span class="sd">    Containers are dictionaries with extra functionality</span>
+<span class="sd">    that simplify object creation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

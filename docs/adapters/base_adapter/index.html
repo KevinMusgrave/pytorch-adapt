@@ -2450,13 +2450,13 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
 <span class="sd">                The models will be passed to the wrapped hook at each</span>
 <span class="sd">                training iteration.</span>
 <span class="sd">            optimizers: An [```Optimizers```][pytorch_adapt.containers.Optimizers] container.</span>
-<span class="sd">                The optimizers will be passed into the wrapped hook during</span>
-<span class="sd">                initialization. The hook uses the optimizers at each training iteration.</span>
+<span class="sd">                The optimizers will be passed to the wrapped hook at each</span>
+<span class="sd">                training iteration.</span>
 <span class="sd">            lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.LRSchedulers] container.</span>
 <span class="sd">                The lr schedulers are called automatically by the</span>
 <span class="sd">                [```framework```](../frameworks/index.md) that wrap this adapter.</span>
 <span class="sd">            misc: A [```Misc```][pytorch_adapt.containers.Misc] container for models</span>
-<span class="sd">                that don&#39;t require optimizers and other miscellaneous objects.</span>
+<span class="sd">                that don&#39;t require optimizers, and other miscellaneous objects.</span>
 <span class="sd">                These are passed into the wrapped hook at each training iteration.</span>
 <span class="sd">            default_containers: The default set of containers to use, wrapped in a</span>
 <span class="sd">                [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.</span>
@@ -2465,8 +2465,13 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
 <span class="sd">            key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.KeyEnforcer] object.</span>
 <span class="sd">                If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]</span>
 <span class="sd">                is used.</span>
-<span class="sd">            inference: A function that takes in this adapter and returns another function</span>
-<span class="sd">                that will be used for inference (i.e. during testing).</span>
+<span class="sd">            inference_fn: A function that takes in:</span>
+
+<span class="sd">                - ```x```: the input to the model</span>
+<span class="sd">                - ```domain```: an integer representing the domain of the data</span>
+<span class="sd">                - ```models```: a dictionary of models, i.e. ```self.models```</span>
+<span class="sd">                - ```misc```: a dictionary of misc objects, i.e. ```self.misc```</span>
+
 <span class="sd">            before_training_starts: A function that takes in this adapter and returns another</span>
 <span class="sd">                function that is optionally called by a framework wrapper before training starts.</span>
 <span class="sd">            hook_kwargs: A dictionary of keyword arguments that will be</span>
@@ -2497,8 +2502,9 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
 <span class="sd">        Calls the wrapped hook at each iteration during training.</span>
 <span class="sd">        Arguments:</span>
 <span class="sd">            batch: A dictionary containing training data.</span>
+<span class="sd">            **kwargs: Any other data that will be passed into the hook.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            A two-level dictionary:</span>
+<span class="sd">            A two-level dictionary</span>
 
 <span class="sd">            - the outer level is associated with a particular optimization step</span>
 <span class="sd">                (relevant for GAN architectures),</span>
@@ -2532,9 +2538,10 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
     <span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            The default set of containers. This will create</span>
-<span class="sd">            an Adam optimizer with lr 0.0001 for</span>
-<span class="sd">            each model that is passed into ```__init__```.</span>
+<span class="sd">            The default set of containers. Consists of an</span>
+<span class="sd">            [Optimizers][pytorch_adapt.containers.Optimizers]</span>
+<span class="sd">            container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">            of Adam with lr 0.0001.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -2556,7 +2563,8 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
 
     <span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Called in ```__init__```.</span>
+<span class="sd">        Called in ```__init__``` before</span>
+<span class="sd">        [```init_hook```][pytorch_adapt.adapters.BaseAdapter.init_hook].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">containers</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key_enforcer</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">containers</span><span class="p">)</span>
@@ -2623,8 +2631,8 @@ training iteration.</p></td>
         <td><code>optimizers</code></td>
         <td><code>Optimizers</code></td>
         <td><p>An <a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers"><code>Optimizers</code></a> container.
-The optimizers will be passed into the wrapped hook during
-initialization. The hook uses the optimizers at each training iteration.</p></td>
+The optimizers will be passed to the wrapped hook at each
+training iteration.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -2639,7 +2647,7 @@ The lr schedulers are called automatically by the
         <td><code>misc</code></td>
         <td><code>Misc</code></td>
         <td><p>A <a class="autorefs autorefs-internal" href="../../containers/misc/#pytorch_adapt.containers.misc.Misc"><code>Misc</code></a> container for models
-that don't require optimizers and other miscellaneous objects.
+that don't require optimizers, and other miscellaneous objects.
 These are passed into the wrapped hook at each training iteration.</p></td>
         <td><code>None</code></td>
       </tr>
@@ -2661,11 +2669,16 @@ is used.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
-        <td><code>inference</code></td>
+        <td><code>inference_fn</code></td>
         <td></td>
-        <td><p>A function that takes in this adapter and returns another function
-that will be used for inference (i.e. during testing).</p></td>
-        <td><em>required</em></td>
+        <td><p>A function that takes in:</p>
+<ul>
+<li><code>x</code>: the input to the model</li>
+<li><code>domain</code>: an integer representing the domain of the data</li>
+<li><code>models</code>: a dictionary of models, i.e. <code>self.models</code></li>
+<li><code>misc</code>: a dictionary of misc objects, i.e. <code>self.misc</code></li>
+</ul></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>before_training_starts</code></td>
@@ -2703,13 +2716,13 @@ passed into the wrapped hook during initialization.</p></td>
 <span class="sd">            The models will be passed to the wrapped hook at each</span>
 <span class="sd">            training iteration.</span>
 <span class="sd">        optimizers: An [```Optimizers```][pytorch_adapt.containers.Optimizers] container.</span>
-<span class="sd">            The optimizers will be passed into the wrapped hook during</span>
-<span class="sd">            initialization. The hook uses the optimizers at each training iteration.</span>
+<span class="sd">            The optimizers will be passed to the wrapped hook at each</span>
+<span class="sd">            training iteration.</span>
 <span class="sd">        lr_schedulers: An [```LRSchedulers```][pytorch_adapt.containers.LRSchedulers] container.</span>
 <span class="sd">            The lr schedulers are called automatically by the</span>
 <span class="sd">            [```framework```](../frameworks/index.md) that wrap this adapter.</span>
 <span class="sd">        misc: A [```Misc```][pytorch_adapt.containers.Misc] container for models</span>
-<span class="sd">            that don&#39;t require optimizers and other miscellaneous objects.</span>
+<span class="sd">            that don&#39;t require optimizers, and other miscellaneous objects.</span>
 <span class="sd">            These are passed into the wrapped hook at each training iteration.</span>
 <span class="sd">        default_containers: The default set of containers to use, wrapped in a</span>
 <span class="sd">            [```MultipleContainers```][pytorch_adapt.containers.MultipleContainers] object.</span>
@@ -2718,8 +2731,13 @@ passed into the wrapped hook during initialization.</p></td>
 <span class="sd">        key_enforcer: A [```KeyEnforcer```][pytorch_adapt.containers.KeyEnforcer] object.</span>
 <span class="sd">            If ```None```, then [```self.get_key_enforcer```][pytorch_adapt.adapters.BaseAdapter.get_key_enforcer]</span>
 <span class="sd">            is used.</span>
-<span class="sd">        inference: A function that takes in this adapter and returns another function</span>
-<span class="sd">            that will be used for inference (i.e. during testing).</span>
+<span class="sd">        inference_fn: A function that takes in:</span>
+
+<span class="sd">            - ```x```: the input to the model</span>
+<span class="sd">            - ```domain```: an integer representing the domain of the data</span>
+<span class="sd">            - ```models```: a dictionary of models, i.e. ```self.models```</span>
+<span class="sd">            - ```misc```: a dictionary of misc objects, i.e. ```self.misc```</span>
+
 <span class="sd">        before_training_starts: A function that takes in this adapter and returns another</span>
 <span class="sd">            function that is optionally called by a framework wrapper before training starts.</span>
 <span class="sd">        hook_kwargs: A dictionary of keyword arguments that will be</span>
@@ -2775,9 +2793,10 @@ passed into the wrapped hook during initialization.</p></td>
   <tbody>
     <tr>
       <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. This will create
-an Adam optimizer with lr 0.0001 for
-each model that is passed into <code>__init__</code>.</p></td>
+      <td><p>The default set of containers. Consists of an
+<a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
+container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a>
+of Adam with lr 0.0001.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2786,9 +2805,10 @@ each model that is passed into <code>__init__</code>.</p></td>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        The default set of containers. This will create</span>
-<span class="sd">        an Adam optimizer with lr 0.0001 for</span>
-<span class="sd">        each model that is passed into ```__init__```.</span>
+<span class="sd">        The default set of containers. Consists of an</span>
+<span class="sd">        [Optimizers][pytorch_adapt.containers.Optimizers]</span>
+<span class="sd">        container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">        of Adam with lr 0.0001.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -2937,13 +2957,15 @@ each model that is passed into <code>__init__</code>.</p></td>
 
     <div class="doc doc-contents ">
 
-      <p>Called in <code>__init__</code>.</p>
+      <p>Called in <code>__init__</code> before
+<a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook"><code>init_hook</code></a>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Called in ```__init__```.</span>
+<span class="sd">    Called in ```__init__``` before</span>
+<span class="sd">    [```init_hook```][pytorch_adapt.adapters.BaseAdapter.init_hook].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">containers</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">key_enforcer</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">containers</span><span class="p">)</span>
@@ -3018,6 +3040,12 @@ each model that is passed into <code>__init__</code>.</p></td>
         <td><p>A dictionary containing training data.</p></td>
         <td><em>required</em></td>
       </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td></td>
+        <td><p>Any other data that will be passed into the hook.</p></td>
+        <td><code>{}</code></td>
+      </tr>
   </tbody>
 </table>
 <p><strong>Returns:</strong></p>
@@ -3030,8 +3058,9 @@ each model that is passed into <code>__init__</code>.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td><code>A two-level dictionary</code></td>
-      <td><ul>
+      <td><code>Dict[str, Dict[str, float]]</code></td>
+      <td><p>A two-level dictionary</p>
+<ul>
 <li>
 <p>the outer level is associated with a particular optimization step
     (relevant for GAN architectures),</p>
@@ -3052,8 +3081,9 @@ each model that is passed into <code>__init__</code>.</p></td>
 <span class="sd">    Calls the wrapped hook at each iteration during training.</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        batch: A dictionary containing training data.</span>
+<span class="sd">        **kwargs: Any other data that will be passed into the hook.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A two-level dictionary:</span>
+<span class="sd">        A two-level dictionary</span>
 
 <span class="sd">        - the outer level is associated with a particular optimization step</span>
 <span class="sd">            (relevant for GAN architectures),</span>
