@@ -4,6 +4,11 @@ from .utils import download_weights
 
 
 def mnistG(pretrained=False, progress=True):
+    """
+    Returns:
+        An [```MNISTFeatures```][pytorch_adapt.models.MNISTFeatures] model
+        trained on the MNIST dataset, if ```pretrained == True```.
+    """
     model = MNISTFeatures()
     url = "https://cornell.box.com/shared/static/tdx0ts24e273j7mf3r2ox7a12xh4fdfy"
     h = "68ee79452f1d5301be2329dfa542ac6fa18de99e09d6540838606d9d700b09c8"
@@ -12,6 +17,11 @@ def mnistG(pretrained=False, progress=True):
 
 
 def mnistC(num_classes=10, in_size=1200, h=256, pretrained=False, progress=True):
+    """
+    Returns:
+        A [```Classifier```][pytorch_adapt.models.Classifier] model
+        trained on the MNIST dataset, if ```pretrained == True```.
+    """
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
     url = "https://cornell.box.com/shared/static/j4zrogronmievq1csulrkai7zjm27gcq"
     h = "ac7b5a13df2ef3522b6550a147eb44dde8ff4fead3ddedc540d9fe63c9d597c1"
@@ -33,12 +43,26 @@ def resnet50(pretrained=False, progress=True):
 
 
 def office31G(*args, **kwargs):
+    """
+    Returns:
+        A ResNet50 model trained on ImageNet, if ```pretrained == True```.
+    """
     return resnet50(*args, **kwargs)
 
 
 def office31C(
     domain=None, num_classes=31, in_size=2048, h=256, pretrained=False, progress=True
 ):
+    """
+    Returns:
+        A [```Classifier```][pytorch_adapt.models.Classifier] model
+        trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31] 
+        dataset, if ```pretrained == True```. For example
+
+        ```python
+        model = office31(domain="amazon", pretrained=True)
+        ```
+    """
     if pretrained and not domain:
         raise ValueError("if pretrained, domain must be specified")
 
@@ -60,12 +84,26 @@ def office31C(
 
 
 def officehomeG(*args, **kwargs):
+    """
+    Returns:
+        A ResNet50 model trained on ImageNet, if ```pretrained == True```.
+    """
     return resnet50(*args, **kwargs)
 
 
 def officehomeC(
     domain=None, num_classes=65, in_size=2048, h=256, pretrained=False, progress=True
 ):
+    """
+    Returns:
+        A [```Classifier```][pytorch_adapt.models.Classifier] model
+        trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome] 
+        dataset, if ```pretrained == True```. For example
+
+        ```python
+        model = officehomeC(domain="art", pretrained=True)
+        ```
+    """
     if pretrained and not domain:
         raise ValueError("if pretrained, domain must be specified")
 
