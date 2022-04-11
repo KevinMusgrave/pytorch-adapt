@@ -10,8 +10,6 @@ class StrongDHook(BaseConditionHook):
     """
     Returns ```True``` if the discriminator's
     accuracy is higher than some threshold.
-
-    Extends [```BaseConditionHook```][pytorch_adapt.hooks.base.BaseConditionHook]
     """
 
     def __init__(self, threshold: float = 0.6, **kwargs):

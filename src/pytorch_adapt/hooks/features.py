@@ -303,7 +303,7 @@ class LogitsHook(BaseFeaturesHook):
 
 class FeaturesChainHook(ChainHook):
     """
-    A special [```ChainHook```][pytorch_adapt.hooks.utils.ChainHook]
+    A special [```ChainHook```][pytorch_adapt.hooks.ChainHook]
     for features hooks. It sets each sub-hook's ```in_keys``` using
     the previous sub-hook's ```out_keys```.
     """
@@ -320,8 +320,8 @@ class FeaturesChainHook(ChainHook):
 
 class FeaturesAndLogitsHook(FeaturesChainHook):
     """
-    Chains together [```FeaturesHook```][pytorch_adapt.hooks.features.FeaturesHook]
-    and [```LogitsHook```][pytorch_adapt.hooks.features.LogitsHook].
+    Chains together [```FeaturesHook```][pytorch_adapt.hooks.FeaturesHook]
+    and [```LogitsHook```][pytorch_adapt.hooks.LogitsHook].
     """
 
     def __init__(

@@ -79,10 +79,10 @@ class DANNHook(BaseWrapperHook):
             opts: List of optimizers for updating the models.
             weighter: Weights the losses before backpropagation.
                 If ```None``` then it defaults to
-                [```MeanWeighter```][pytorch_adapt.weighters.mean_weighter.MeanWeighter]
+                [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter]
             reducer: Reduces loss tensors.
                 If ```None``` then it defaults to
-                [```MeanReducer```][pytorch_adapt.hooks.reducers.MeanReducer]
+                [```MeanReducer```][pytorch_adapt.hooks.MeanReducer]
             pre: List of hooks that will be executed at the very
                 beginning of each iteration.
             pre_d: List of hooks that will be executed after
@@ -100,16 +100,16 @@ class DANNHook(BaseWrapperHook):
                 instead of the output of G.
             f_hook: The hook used for computing features and logits.
                 If ```None``` then it defaults to
-                [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.domain.FeaturesForDomainLossHook]
+                [```FeaturesForDomainLossHook```][pytorch_adapt.hooks.FeaturesForDomainLossHook]
             d_hook: The hook used for computing discriminator logits.
                 If ```None``` then it defaults to
-                [```DLogitsHook```][pytorch_adapt.hooks.features.DLogitsHook]
+                [```DLogitsHook```][pytorch_adapt.hooks.DLogitsHook]
             c_hook: The hook used for computing the classifiers's loss.
                 If ```None``` then it defaults to
-                [```CLossHook```][pytorch_adapt.hooks.classification.CLossHook]
+                [```CLossHook```][pytorch_adapt.hooks.CLossHook]
             domain_loss_hook: The hook used for computing the domain loss.
                 If ```None``` then it defaults to
-                [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].
+                [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook].
             d_hook_allowed: A regex string that specifies the allowed
                 output names of the discriminator block.
         """

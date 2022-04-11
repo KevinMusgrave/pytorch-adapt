@@ -10,7 +10,7 @@ class FeaturesForDomainLossHook(FeaturesChainHook):
     """
     A [```FeaturesChainHook```][pytorch_adapt.hooks.features.FeaturesChainHook]
     that has options specific to
-    [```DomainLossHook```][pytorch_adapt.hooks.domain.DomainLossHook].
+    [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook].
     """
 
     def __init__(

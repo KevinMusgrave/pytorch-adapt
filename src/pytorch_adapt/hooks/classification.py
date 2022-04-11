@@ -19,8 +19,6 @@ class SoftmaxHook(ApplyFnHook):
     """
     Applies ```torch.nn.Softmax(dim=1)``` to the
     specified inputs.
-
-    Extends [```ApplyFnHook```][pytorch_adapt.hooks.utils.ApplyFnHook]
     """
 
     def __init__(self, **kwargs):
@@ -30,7 +28,7 @@ class SoftmaxHook(ApplyFnHook):
 class SoftmaxLocallyHook(BaseWrapperHook):
     """
     Applies ```torch.nn.Softmax(dim=1)``` to the
-    specifieid inputs, which are overwritten, but
+    specified inputs, which are overwritten, but
     only inside this hook.
     """
 
@@ -124,7 +122,7 @@ class ClassifierHook(BaseWrapperHook):
 class FinetunerHook(ClassifierHook):
     """
     This is the same as
-    [```ClassifierHook```][pytorch_adapt.hooks.classification.ClassifierHook],
+    [```ClassifierHook```][pytorch_adapt.hooks.ClassifierHook],
     but it freezes the generator model ("G").
     """
 
