@@ -56,7 +56,7 @@ def office31C(
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
-        trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31] 
+        trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31]
         dataset, if ```pretrained == True```. For example
 
         ```python
@@ -97,7 +97,7 @@ def officehomeC(
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
-        trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome] 
+        trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome]
         dataset, if ```pretrained == True```. For example
 
         ```python
