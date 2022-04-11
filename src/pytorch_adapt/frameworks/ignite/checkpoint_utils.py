@@ -55,8 +55,8 @@ class CheckpointFnCreator:
 
     def __call__(
         self,
-        adapter: "Adapter" = None,
-        validator: "Validator" = None,
+        adapter=None,
+        validator=None,
         val_hooks=None,
         **kwargs,
     ):
@@ -65,6 +65,8 @@ class CheckpointFnCreator:
         Arguments:
             adapter: An [Adapter][pytorch_adapt.adapters.BaseAdapter] object.
             validator: A [Validator][pytorch_adapt.validators.BaseValidator] object.
+            val_hooks: A list of functions called during validation.
+                See [Ignite][pytorch_adapt.frameworks.ignite.Ignite] for details.
         """
         self.objs = ModelCheckpoint(**{**self.kwargs, **kwargs})
         dict_to_save = {}
