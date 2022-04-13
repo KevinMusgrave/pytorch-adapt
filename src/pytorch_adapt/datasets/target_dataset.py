@@ -36,10 +36,15 @@ class TargetDataset(DomainDataset):
 
             - "target_labels (the class label)
         """
-        
+
+        has_labels = False
         img = self.dataset[idx]
         if isinstance(img, (list, tuple)):
+            has_labels = True
             img, labels = img
+
+        if self.supervised and not has_labels:
+            raise ValueError("if TargetDataset is instantiated with supervised=True constructor data must include labels")
 
         item = {
             "target_imgs": img,
