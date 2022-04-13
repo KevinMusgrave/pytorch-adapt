@@ -11,13 +11,13 @@ class TargetDataset(DomainDataset):
     ```__getitem__``` function should return a tuple of ```(data, label)```.
     """
 
-    def __init__(self, dataset: Dataset, domain: int = 1):
+    def __init__(self, dataset: Dataset, domain: int = 1, supervised: bool = False):
         """
         Arguments:
             dataset: The dataset to wrap
             domain: An integer representing the domain.
         """
-        super().__init__(dataset, domain)
+        super().__init__(dataset, domain, supervised)
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         """
@@ -29,11 +29,23 @@ class TargetDataset(DomainDataset):
             - "target_domain" (the integer representing the domain)
 
             - "target_sample_idx" (idx)
-        """
 
-        img, _ = self.dataset[idx]
-        return {
+            If supervised = True it return an extra key
+
+            - "target_labels (the class label)
+        """
+        
+        img = self.dataset[idx]
+        if isinstance(img, (list, tuple)):
+            img, labels = img
+
+        item = {
             "target_imgs": img,
             "target_domain": self.domain,
             "target_sample_idx": idx,
         }
+
+        if self.supervised:
+            item["target_labels"] = labels
+
+        return item
