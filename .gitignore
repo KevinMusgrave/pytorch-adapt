@@ -18,4 +18,3 @@ examples/**/officehome
 examples/**/saved_models
 examples/**/lightning_logs
 zzz_pytorch_adapt_dataset_test_folder
-requirements.txt
