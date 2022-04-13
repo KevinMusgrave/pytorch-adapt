@@ -17,7 +17,7 @@ class SourceDataset(DomainDataset):
             dataset: The dataset to wrap
             domain: An integer representing the domain.
         """
-        super().__init__(dataset, domain, supervised=True)
+        super().__init__(dataset, domain)
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         """
