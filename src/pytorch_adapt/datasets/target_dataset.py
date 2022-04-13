@@ -16,6 +16,7 @@ class TargetDataset(DomainDataset):
         Arguments:
             dataset: The dataset to wrap
             domain: An integer representing the domain.
+            supervised: A boolean for if the target dataset should return labels.
         """
         super().__init__(dataset, domain, supervised)
 
