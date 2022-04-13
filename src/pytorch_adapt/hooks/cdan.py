@@ -78,8 +78,6 @@ class CDANHook(GANHook):
     """
     Implementation of
     [Conditional Adversarial Domain Adaptation](https://arxiv.org/abs/1705.10667)
-
-    Extends [```GANHook```][pytorch_adapt.hooks.gan.GANHook].
     """
 
     def __init__(self, softmax=True, **kwargs):

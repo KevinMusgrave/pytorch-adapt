@@ -9,7 +9,7 @@ from .utils import ChainHook
 
 class VATHook(BaseWrapperHook):
     """
-    Applies the [```VATLoss```][pytorch_adapt.layers.vat_loss.VATLoss].
+    Applies the [```VATLoss```][pytorch_adapt.layers.VATLoss].
     """
 
     def __init__(self, loss_fn=None, **kwargs):

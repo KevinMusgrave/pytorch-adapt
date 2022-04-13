@@ -3,7 +3,7 @@ import torch.nn as nn
 
 class Classifier(nn.Module):
     """
-    A 3-layer MLP for clasification.
+    A 3-layer MLP for classification.
     """
 
     def __init__(self, num_classes, in_size=2048, h=1024):

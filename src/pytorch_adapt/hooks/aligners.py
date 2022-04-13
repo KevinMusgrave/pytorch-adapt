@@ -28,7 +28,7 @@ class AlignerHook(BaseWrapperHook):
         Arguments:
             loss_fn: a function that computes a distance
                 between two tensors. If ```None```,
-                it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].
+                it defaults to [```MMDLoss```][pytorch_adapt.layers.MMDLoss].
             hook: the hook for computing features
             layer: the layer for which the loss is computed. Must be
                 either ```"features"``` or ```"logits"```.
@@ -77,7 +77,7 @@ class JointAlignerHook(BaseWrapperHook):
         Arguments:
             loss_fn: a function that computes a distance
                 between two **lists** of tensors. If ```None```,
-                it defaults to [```MMDLoss```][pytorch_adapt.layers.mmd_loss.MMDLoss].
+                it defaults to [```MMDLoss```][pytorch_adapt.layers.MMDLoss].
             hook: the hook for computing features and logits
         """
         super().__init__(**kwargs)
@@ -103,7 +103,7 @@ class JointAlignerHook(BaseWrapperHook):
 class FeaturesLogitsAlignerHook(BaseWrapperHook):
     """
     This chains together an
-    [```AlignerHook```][pytorch_adapt.hooks.aligners.AlignerHook] for
+    [```AlignerHook```][pytorch_adapt.hooks.AlignerHook] for
     ```"features"``` followed by an ```AlignerHook``` for ```"logits"```.
     """
 

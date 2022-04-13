@@ -9,8 +9,6 @@ class ADDAHook(GANHook):
     """
     Implementation of
     [Adversarial Discriminative Domain Adaptation](https://arxiv.org/abs/1702.05464).
-
-    Extends [```GANHook```][pytorch_adapt.hooks.gan.GANHook].
     """
 
     def __init__(self, threshold: float = 0.6, pre_g=None, post_g=None, **kwargs):

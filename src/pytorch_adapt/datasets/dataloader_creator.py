@@ -29,7 +29,7 @@ class DataloaderCreator:
             train_kwargs: The keyword arguments that will be
                 passed to every DataLoader constructor for train-time datasets.
                 If ```None```, it defaults to:
-                ```
+                ```python
                 {
                     "batch_size": batch_size,
                     "num_workers": num_workers,
@@ -40,7 +40,7 @@ class DataloaderCreator:
             val_kwargs: The keyword arguments that will be
                 passed to every DataLoader constructor for validation-time datasets.
                 If ```None```, it defaults to:
-                ```
+                ```python
                 {
                     "batch_size": batch_size,
                     "num_workers": num_workers,

@@ -8,8 +8,6 @@ class DomainConfusionHook(GANHook):
     """
     Implementation of
     [Simultaneous Deep Transfer Across Domains and Tasks](https://arxiv.org/abs/1510.02192)
-
-    Extends [```GANHook```][pytorch_adapt.hooks.gan.GANHook].
     """
 
     def __init__(self, **kwargs):

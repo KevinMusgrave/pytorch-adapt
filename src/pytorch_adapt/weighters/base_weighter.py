@@ -56,9 +56,12 @@ class BaseWeighter:
         Arguments:
             loss_dict: A mapping from loss names to loss values.
         Returns:
-            A tuple where ```tuple[0]``` is the loss that ```.backward()``` can be called on,
-            and ```tuple[1]``` is a dictionary of floats (detached from the autograd graph)
-            that contains the weighted loss components.
+            A tuple consisting of
+
+            - the loss that .backward() can be called on
+
+            - a dictionary of floats (detached from the autograd graph)
+                    that contains the weighted loss components.
         """
         return weight_losses(self.reduction, self.weights, self.scale, loss_dict)
 

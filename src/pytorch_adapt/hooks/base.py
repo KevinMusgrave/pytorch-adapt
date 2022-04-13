@@ -73,15 +73,15 @@ class BaseHook(ABC):
 
     @abstractmethod
     def call(
-        self, losses: Dict[str, Any], inputs: Dict[str, Any]
+        self, inputs: Dict[str, Any], losses: Dict[str, Any]
     ) -> Union[Tuple[Dict[str, Any], Dict[str, Any]], bool]:
         """
         This gets called by ```__call__``` and must be implemented by the child class.
         Arguments:
+            inputs: holds data and models
             losses: previously computed losses
-            inputs: holds everything else: tensors, models etc.
         Returns:
-            Either a tuple of (outputs, losses) that will be merged with the input context,
+            Either a tuple of ```(outputs, losses)``` that will be merged with the input context,
             or a boolean
         """
         pass
