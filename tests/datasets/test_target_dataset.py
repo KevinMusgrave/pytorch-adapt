@@ -23,7 +23,6 @@ class TestTargetDataset(unittest.TestCase):
             | Real world unsupervised  | unlabelled | false       | images         |
             | Academic unsupervised    | labelled   | false       | images, _      |
             | Real/Academic supervised | labelled   | true        | images, labels |
-            | Error state              | unlabelled | true        | Error          |
             +--------------------------+------------+-------------+----------------+
 
         """
