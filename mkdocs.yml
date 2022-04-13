@@ -2,50 +2,47 @@ site_name: PyTorch Adapt
 theme:
   name: 'material'
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: 'green'
-      accent: 'green'
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: 'green'
       accent: 'green'
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
   logo: imgs/TinyLogo.png
   favicon: imgs/Favicon.png
+  # features:
+    # - navigation.tabs
+    # - toc.integrate # gets rid of table of contents on the right side of the page
+
+nav:
+- Overview: index.md
+- Getting started: getting_started.md
+- Papers implemented:
+  - Unsupervised Domain Adaptation: algorithms/uda.md
+  - Validators: algorithms/validators.md
+- Documentation: docs/
 
 
 plugins:
 - search
-- section-index
-- literate-nav:
-    nav_file: SUMMARY.md
+- gen-files:
+    scripts:
+    - docs/gen_ref_pages.py
 - mkdocstrings:
-    default_handler: python
+    watch:
+    - src/pytorch_adapt
     handlers:
       python:
-        selection:
-          filters: []
-        rendering:
-          show_root_heading: true
-          show_source: true
-          heading_level: 3
         setup_commands:
           - import sys
           - sys.path.insert(0, "src")
-      watch:
-      - src/pytorch_adapt
-      selection:
-        new_path_syntax: yes
+        rendering:
+          show_root_toc_entry: false
+- section-index
+- literate-nav:
+    nav_file: SUMMARY.md
 
 markdown_extensions:
 - toc:
     permalink: True
+    toc_depth: 2
 - pymdownx.highlight
 - pymdownx.superfences
 

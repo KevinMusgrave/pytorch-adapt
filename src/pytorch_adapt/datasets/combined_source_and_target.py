@@ -36,7 +36,10 @@ class CombinedSourceAndTargetDataset(torch.utils.data.Dataset):
             idx: The index of the target dataset. The source index is picked randomly.
         Returns:
             A dictionary containing both source and target data.
-            The source keys start with "src", and the target keys start with "target".
+            The source keys start with ```"src_"```, and the target keys start with ```"target_"```.
+            See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and
+            [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]
+            for details.
         """
         target_data = self.target_dataset[idx]
         src_data = self.source_dataset[self.get_random_src_idx()]

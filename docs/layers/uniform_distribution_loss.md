@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.uniform_distribution_loss

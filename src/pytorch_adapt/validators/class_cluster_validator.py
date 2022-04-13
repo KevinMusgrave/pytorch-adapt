@@ -103,14 +103,6 @@ def get_clustering_performance(
     centroid_init=None,
     feat_normalizer=None,
 ):
-    """
-    :param feats: N x out numpy vector
-    :param labels:  N numpy vector
-    :param num_classes: int
-    :param src_feats
-    :param pca_size
-    :return: silhouette and calinski harabasz scores
-    """
     num_target_feats = feats.shape[0]
 
     if src_feats is not None:

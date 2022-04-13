@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 
 import torch
 
@@ -19,7 +19,7 @@ class OptimizerHook(BaseHook):
     def __init__(
         self,
         hook: BaseHook,
-        optimizers: List[torch.optim.Optimizer],
+        optimizers: Union[List[torch.optim.Optimizer], List[str]],
         weighter: BaseWeighter = None,
         reducer: BaseReducer = None,
         **kwargs
@@ -27,15 +27,17 @@ class OptimizerHook(BaseHook):
         """
         Arguments:
             hook: the hook that computes the losses
-            optimizers: a list of optimizers that will be used
-                to update model weights
+            optimizers: either a list of optimizers that will be used
+                to update model weights, or a list of optimizer names.
+                If it's the latter, then the optimizers must be passed
+                into the hook as one of the ```inputs```.
             weighter: weights the returned losses and outputs a
                 single value on which ```.backward()``` is called.
                 If ```None```, then it defaults to
-                [```MeanWeighter```][pytorch_adapt.weighters.mean_weighter.MeanWeighter].
+                [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter].
             reducer: a hook that reduces any unreduced losses to a single value.
                 If ```None```, then it defaults to
-                [```MeanReducer```][pytorch_adapt.hooks.reducers.MeanReducer].
+                [```MeanReducer```][pytorch_adapt.hooks.MeanReducer].
         """
         super().__init__(**kwargs)
         self.hook = hook
@@ -74,7 +76,7 @@ class SummaryHook(BaseHook):
     Repackages losses into a dictionary format useful for logging.
     This should be used only at the very end of each
     iteration, i.e. it should be the last sub-hook
-    in a [ChainHook][pytorch_adapt.hooks.utils.ChainHook].
+    in a [ChainHook][pytorch_adapt.hooks.ChainHook].
     """
 
     def __init__(self, optimizers: Dict[str, OptimizerHook], **kwargs):

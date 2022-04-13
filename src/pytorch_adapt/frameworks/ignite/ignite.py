@@ -14,7 +14,7 @@ from . import utils as i_g
 
 class Ignite:
     """
-    Wraps an [Adapter](../../adapters/index.md) and takes
+    Wraps an [Adapter][pytorch_adapt.adapters.BaseAdapter] and takes
     care of validation, model saving, etc. by using
     the event handler system of PyTorch Ignite.
     """
@@ -33,17 +33,41 @@ class Ignite:
     ):
         """
         Arguments:
-            adapter: An [adapter](../../adapters/index.md) object, which contains
+            adapter: An [```Adapter```][pytorch_adapt.adapters.BaseAdapter] object, which contains
                 the training and inference steps.
-            validator:
-            val_hooks:
-            checkpoint_fn:
-            logger:
+            validator: An optional [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory] object,
+                which is used to determine the best checkpoint.
+            val_hooks: A list of functions that are called during validation. Each function should
+                be one of the following types:
+
+                - [```Validator```][pytorch_adapt.validators.BaseValidator]
+                - [```ScoreHistory```][pytorch_adapt.validators.ScoreHistory]
+                - A callable that accepts the following arguments:
+                    - ```epoch``` (an integer)
+                    - ```**kwargs```, keyword arguments mapping from dataset split name
+                        to dictionaries containing features, labels etc.
+
+                You can give your custom callable a list attribute named ```required_data```.
+                For example, setting ```self.required_data = ["src_train", "target_train"]```,
+                will ensure that the validation runner gathers data for the
+                ```"src_train"``` and ```"target_train"``` splits.
+
+
+            checkpoint_fn: A [```CheckpointFnCreator```][pytorch_adapt.frameworks.ignite.CheckpointFnCreator] object.
+            logger: An object with the following functions:
+
+                - ```add_training(adapter)```
+                - ```add_validation(data, epoch)```, where ```data``` is ```{validator_name: validator}```,
+                    and ```validator_name``` is usually just ```"validator"```.
+                - ```write(engine)```
+
             log_freq: The number of iterations between logging
-            with_pbars: If ```True```, progress bars are shown during
-                each epoch.
-            device:
-            auto_dist:
+            with_pbars: If ```True```, progress bars are shown during each epoch.
+            device: If ```None```, then it defaults to [```idist.device()```](https://pytorch.org/ignite/v0.4.8/distributed.html#ignite.distributed.utils.device).
+            auto_dist: If ```True``` and ```device == None``` then
+                [```auto_model```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_model.html)
+                and [```auto_optim```](https://pytorch.org/ignite/v0.4.8/generated/ignite.distributed.auto.auto_optim.html) are applied
+                to the models and optimizers.
         """
         self.adapter = adapter
         self.validator = validator
@@ -154,17 +178,27 @@ class Ignite:
         **trainer_kwargs,
     ) -> Union[Tuple[float, int], Tuple[None, None]]:
         """
-        Trains and validates on the input datasets.
+        Trains and optionally validates on the input datasets.
 
         Arguments:
-            datasets:
-            dataloader_creator:
-            dataloaders:
-            val_interval:
-            patience:
-            resume:
-            check_initial_score:
-            **trainer_kwargs:
+            datasets: A dictionary mapping from dataset split names to datasets.
+            dataloader_creator: Creates dataloaders using ```datasets```,
+                when ```dataloaders == None```. Default value is
+                [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].
+            dataloaders: A dictionary mapping from dataset split names to
+                dataloaders. If ```None```, then ```datasets``` must be provided.
+            val_interval: ```self.validator``` and ```self.val_hooks``` will be called
+                every ```val_interval``` epochs.
+            early_stopper_kwargs: A dictionary of keyword arguments to be passed to
+                [```EarlyStopping```](https://pytorch.org/ignite/v0.4.8/generated/ignite.handlers.early_stopping.EarlyStopping.html).
+            resume: Resume training from a checkpoint. This should be either
+                a string representing a file path, or an integer representing a global step.
+            check_initial_score: If ```True```, then ```self.validator``` and ```self.val_hooks```
+                will be called before training starts. For example, you might use this to check the performance of
+                a pretrained model before finetuning.
+            **trainer_kwargs: Keyword arguments that are passed to the PyTorch Ignite
+                [```run()```](https://pytorch.org/ignite/v0.4.8/generated/ignite.engine.engine.Engine.html#ignite.engine.engine.Engine.run)
+                function.
         Returns:
             A tuple of ```(best_score, best_epoch)``` or ```(None, None)```
             if no validator is used.
@@ -263,7 +297,22 @@ class Ignite:
         self.checkpoint_fn.load_objects(to_load, **kwargs)
         i_g.resume_checks(self.trainer, self.validator)
 
-    def evaluate_best_model(self, datasets, validator, dataloader_creator=None):
+    def evaluate_best_model(
+        self, datasets, validator, dataloader_creator=None
+    ) -> float:
+        """
+        Loads the best checkpoint and computes the score on the given datasets.
+            This requires ```self.checkpoint_fn``` to be not ```None```.
+        Arguments:
+            datasets: A dictionary mapping from dataset split names to datasets.
+            validator: A [Validator][pytorch_adapt.validators.BaseValidator]
+                or [ScoreHistory][pytorch_adapt.validators.ScoreHistory] object,
+                which will compute and return the score.
+            dataloader_creator: If ```None```, it will default to
+                [```DataloaderCreator()```][pytorch_adapt.datasets.DataloaderCreator].
+        Returns:
+            The validator's score for the best checkpoint.
+        """
         c_f.LOGGER.info("***EVALUATING BEST MODEL***")
         dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator, {})
         dataloaders = dataloader_creator(**datasets)

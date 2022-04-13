@@ -6,6 +6,14 @@ from ..utils import common_functions as c_f
 
 
 class BaseValidator(ABC):
+    """
+    The parent class of all validators.
+
+    The main purpose of validators is to give an estimate
+    of target domain accuracy, usually without having access to
+    class labels.
+    """
+
     def __init__(self, key_map: Dict[str, str] = None):
         """
         Arguments:
@@ -41,7 +49,20 @@ class BaseValidator(ABC):
     def compute_score(self):
         pass
 
-    def __call__(self, **kwargs):
+    def __call__(self, **kwargs) -> float:
+        """
+        Arguments:
+            **kwargs: A mapping from dataset split name to
+                dictionaries containing:
+
+                - ```"features"```
+                - ```"logits"```
+                - ```"preds"```
+                - ```"domain"```
+                - ```"labels"``` (if available)
+        Returns:
+            The validation score.
+        """
         kwargs = self.kwargs_check(kwargs)
         return self.compute_score(**kwargs)
 

@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.adaptive_feature_norm

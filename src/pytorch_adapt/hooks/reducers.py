@@ -96,7 +96,7 @@ class EntropyReducer(BaseReducer):
     Implementation of "entropy conditioning" from
     [Conditional Adversarial Domain Adaptation](https://arxiv.org/abs/1705.10667).
     It weights loss elements using
-    [```EntropyWeights```][pytorch_adapt.layers.entropy_weights.EntropyWeights].
+    [```EntropyWeights```][pytorch_adapt.layers.EntropyWeights].
     The entropy weights are derived from classifier logits.
     """
 

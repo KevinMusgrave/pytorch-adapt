@@ -8,8 +8,7 @@ from .utils import with_opt
 
 class Aligner(BaseGCAdapter):
     """
-    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]
-    and wraps [AlignerPlusCHook][pytorch_adapt.hooks.AlignerPlusCHook].
+    Wraps [AlignerPlusCHook][pytorch_adapt.hooks.AlignerPlusCHook].
 
     |Container|Required keys|
     |---|---|
@@ -26,8 +25,7 @@ class Aligner(BaseGCAdapter):
 
 class RTN(Aligner):
     """
-    Extends [Aligner][pytorch_adapt.adapters.Aligner]
-    and wraps [RTNHook][pytorch_adapt.hooks.RTNHook].
+    Wraps [RTNHook][pytorch_adapt.hooks.RTNHook].
 
     |Container|Required keys|
     |---|---|
@@ -39,6 +37,10 @@ class RTN(Aligner):
     hook_cls = RTNHook
 
     def __init__(self, *args, inference_fn=None, **kwargs):
+        """
+        Arguments:
+            inference_fn: Default is [rtn_fn][pytorch_adapt.inference.rtn_fn]
+        """
         inference_fn = c_f.default(inference_fn, rtn_fn)
         super().__init__(*args, inference_fn=inference_fn, **kwargs)
 

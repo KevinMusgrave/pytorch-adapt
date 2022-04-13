@@ -1,1 +1,0 @@
-::: pytorch_adapt.layers.mcd_loss

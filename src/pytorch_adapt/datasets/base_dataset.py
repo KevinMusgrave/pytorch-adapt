@@ -9,7 +9,11 @@ from ..utils import common_functions as c_f
 
 
 class BaseDataset(torch.utils.data.Dataset):
-    def __init__(self, domain):
+    """
+    Base dataset class
+    """
+
+    def __init__(self, domain: str):
         super().__init__()
         self.domain = domain
 
@@ -29,6 +33,10 @@ class BaseDataset(torch.utils.data.Dataset):
 
 
 class BaseDownloadableDataset(BaseDataset):
+    """
+    Allows automatic downloading of datasets.
+    """
+
     def __init__(self, root: str, download: bool = False, **kwargs):
         """
         Arguments:

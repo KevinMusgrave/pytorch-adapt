@@ -6,8 +6,7 @@ from .utils import default_optimizer_tuple, with_opt
 
 class Classifier(BaseGCAdapter):
     """
-    Extends [BaseGCAdapter][pytorch_adapt.adapters.base_adapter.BaseGCAdapter]
-    and wraps [ClassifierHook][pytorch_adapt.hooks.ClassifierHook].
+    Wraps [ClassifierHook][pytorch_adapt.hooks.ClassifierHook].
 
     |Container|Required keys|
     |---|---|
@@ -24,8 +23,7 @@ class Classifier(BaseGCAdapter):
 
 class Finetuner(Classifier):
     """
-    Extends [Classifier][pytorch_adapt.adapters.Classifier]
-    and wraps [FinetunerHook][pytorch_adapt.hooks.FinetunerHook].
+    Wraps [FinetunerHook][pytorch_adapt.hooks.FinetunerHook].
 
     |Container|Required keys|
     |---|---|

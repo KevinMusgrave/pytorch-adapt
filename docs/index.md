@@ -1,6 +1,6 @@
 # PyTorch Adapt
 
-## Getting started
+## Examples
 See the **[examples folder](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/examples/README.md)** for notebooks you can download or run on Google Colab.
 
 ## How to...
@@ -134,10 +134,4 @@ pip install pytorch-adapt[ignite]
 Coming soon...
 
 ### Dependencies
-Required dependencies:
-
-- numpy
-- torch >= 1.6
-- torchvision
-- torchmetrics
-- pytorch-metric-learning >= 1.0.0.dev5
+See [setup.py](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/setup.py)

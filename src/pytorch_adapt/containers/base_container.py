@@ -7,6 +7,9 @@ from ..utils import common_functions as c_f
 class BaseContainer(MutableMapping):
     """
     The parent class of all containers.
+
+    Containers are dictionaries with extra functionality
+    that simplify object creation.
     """
 
     def __init__(self, store, other=None, keys=None):

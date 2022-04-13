@@ -11,11 +11,8 @@ from .multiple_validators import MultipleValidators
 
 class ScoreHistory(ABC):
     """
-    The parent class of all validators.
-
-    The main purpose of validators is to give an estimate
-    of target domain accuracy, without having access to
-    class labels.
+    Wraps a [validator][pytorch_adapt.validators.BaseValidator]
+    and keeps track of the validator's score history as the epochs progress.
     """
 
     def __init__(
@@ -31,8 +28,7 @@ class ScoreHistory(ABC):
                 score history. If ```None```, then it defaults to
                 no normalization.
             ignore_epoch: This epoch will ignored when determining
-                the best scoring epoch. The default of 0 is meant to be
-                reserved for the initial model (before training has begun).
+                the best scoring epoch. If ```None```, then no epoch will be ignored.
         """
         self.validator = validator
         self.normalizer = c_f.default(normalizer, return_raw)
@@ -49,14 +45,8 @@ class ScoreHistory(ABC):
         """
         Arguments:
             epoch: The epoch to be scored.
-            **kwargs: A mapping from dataset split name to
-                dictionaries containing:
-
-                - ```"features"```
-                - ```"logits"```
-                - ```"preds"```
-                - ```"domain"```
-                - ```"src_labels"``` (if available)
+            **kwargs: Keyword arguments that get passed into the wrapped validator's
+                [```__call__```][pytorch_adapt.validators.BaseValidator.__call__] method.
         """
         if epoch in self.epochs:
             raise ValueError(f"Epoch {epoch} has already been evaluated")
@@ -175,6 +165,12 @@ class ScoreHistory(ABC):
 
 
 class ScoreHistories(ScoreHistory):
+    """
+    Like [ScoreHistory][pytorch_adapt.validators.ScoreHistory], but it
+    wraps a [MultipleValidators][pytorch_adapt.validators.MultipleValidators] object
+    and keeps track of sub-validator scores histories.
+    """
+
     def __init__(self, validator, **kwargs):
         super().__init__(validator=validator, **kwargs)
         if not isinstance(validator, MultipleValidators):

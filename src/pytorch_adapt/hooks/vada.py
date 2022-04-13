@@ -9,7 +9,7 @@ from .utils import ChainHook
 
 class VATHook(BaseWrapperHook):
     """
-    Applies the [```VATLoss```][pytorch_adapt.layers.vat_loss.VATLoss].
+    Applies the [```VATLoss```][pytorch_adapt.layers.VATLoss].
     """
 
     def __init__(self, loss_fn=None, **kwargs):
@@ -28,10 +28,13 @@ class VATHook(BaseWrapperHook):
         )
         src_vat_loss = self.loss_fn(src_imgs, src_logits, combined_model)
         target_vat_loss = self.loss_fn(target_imgs, target_logits, combined_model)
-        return outputs, {
-            "src_vat_loss": src_vat_loss,
-            "target_vat_loss": target_vat_loss,
-        }
+        return (
+            outputs,
+            {
+                "src_vat_loss": src_vat_loss,
+                "target_vat_loss": target_vat_loss,
+            },
+        )
 
     def _loss_keys(self):
         return ["src_vat_loss", "target_vat_loss"]

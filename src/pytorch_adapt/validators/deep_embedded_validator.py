@@ -139,13 +139,6 @@ def get_weights(
     temp_folder,
     framework_fn,
 ):
-    """
-    :param source_feature: shape [N_tr, d], features from training set
-    :param validation_feature: shape [N_v, d], features from validation set
-    :param target_feature: shape [N_te, d], features from test set
-    :return:
-    """
-
     device = source_feature.device
     source_feature = source_feature.cpu().numpy()
     validation_feature = validation_feature.cpu().numpy()
