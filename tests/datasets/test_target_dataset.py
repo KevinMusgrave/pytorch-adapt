@@ -57,4 +57,9 @@ class TestTargetDataset(unittest.TestCase):
             "target_domain": 1,
             "target_sample_idx": sample_idx,
             "target_labels": sample_idx
-        })            
+        })
+
+        sample_idx = torch.randint(len(tgt), size=(1,)).item()
+        error_dataset = TargetDataset(tgt_unlabelled, supervised=True)
+        with self.assertRaises(ValueError):
+            error_dataset[sample_idx]
