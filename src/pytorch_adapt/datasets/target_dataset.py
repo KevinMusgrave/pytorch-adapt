@@ -18,7 +18,8 @@ class TargetDataset(DomainDataset):
             domain: An integer representing the domain.
             supervised: A boolean for if the target dataset should return labels.
         """
-        super().__init__(dataset, domain, supervised)
+        super().__init__(dataset, domain) 
+        self.supervised = supervised
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         """
