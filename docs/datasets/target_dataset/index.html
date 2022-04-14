@@ -2437,24 +2437,31 @@ TargetDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
 
     <div class="doc doc-contents ">
 
-      <p>Wrap your target dataset with this. Your target dataset's
-<code>__getitem__</code> function should return a tuple of <code>(data, label)</code>.</p>
+      <p>Wrap your target dataset with this.</p>
+<p>If <code>supervised = True</code>, the wrapped dataset's <code>__getitem__</code>
+must return a tuple of <code>(data, label)</code>.
+Otherwise it can return either <code>(data, label)</code> or <code>data</code>.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\datasets\target_dataset.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TargetDataset</span><span class="p">(</span><span class="n">DomainDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Wrap your target dataset with this. Your target dataset&#39;s</span>
-<span class="sd">    ```__getitem__``` function should return a tuple of ```(data, label)```.</span>
+<span class="sd">    Wrap your target dataset with this.</span>
+
+<span class="sd">    If ```supervised = True```, the wrapped dataset&#39;s ```__getitem__```</span>
+<span class="sd">    must return a tuple of ```(data, label)```.</span>
+<span class="sd">    Otherwise it can return either ```(data, label)``` or ```data```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">supervised</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Arguments:</span>
 <span class="sd">            dataset: The dataset to wrap</span>
 <span class="sd">            domain: An integer representing the domain.</span>
+<span class="sd">            supervised: A boolean for if the target dataset should return labels.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supervised</span> <span class="o">=</span> <span class="n">supervised</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2466,14 +2473,33 @@ TargetDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
 <span class="sd">            - &quot;target_domain&quot; (the integer representing the domain)</span>
 
 <span class="sd">            - &quot;target_sample_idx&quot; (idx)</span>
+
+<span class="sd">            If ```supervised = True``` it returns an extra key</span>
+
+<span class="sd">            - &quot;target_labels&quot; (the class label)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">{</span>
+        <span class="n">has_labels</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">has_labels</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">img</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">img</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">supervised</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_labels</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;if TargetDataset is instantiated with supervised=True, the wrapped dataset must include labels&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;target_imgs&quot;</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span>
             <span class="s2">&quot;target_domain&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
             <span class="s2">&quot;target_sample_idx&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
         <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">supervised</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s2">&quot;target_labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+
+        <span class="k">return</span> <span class="n">item</span>
 </code></pre></div>
         </details>
 
@@ -2527,6 +2553,10 @@ TargetDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
 <li>
 <p>"target_sample_idx" (idx)</p>
 </li>
+</ul>
+<p>If <code>supervised = True</code> it returns an extra key</p>
+<ul>
+<li>"target_labels" (the class label)</li>
 </ul></td>
     </tr>
   </tbody>
@@ -2543,14 +2573,33 @@ TargetDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
 <span class="sd">        - &quot;target_domain&quot; (the integer representing the domain)</span>
 
 <span class="sd">        - &quot;target_sample_idx&quot; (idx)</span>
+
+<span class="sd">        If ```supervised = True``` it returns an extra key</span>
+
+<span class="sd">        - &quot;target_labels&quot; (the class label)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-    <span class="k">return</span> <span class="p">{</span>
+    <span class="n">has_labels</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">has_labels</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">img</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">img</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">supervised</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_labels</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;if TargetDataset is instantiated with supervised=True, the wrapped dataset must include labels&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">item</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;target_imgs&quot;</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span>
         <span class="s2">&quot;target_domain&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
         <span class="s2">&quot;target_sample_idx&quot;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
     <span class="p">}</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">supervised</span><span class="p">:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;target_labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+
+    <span class="k">return</span> <span class="n">item</span>
 </code></pre></div>
         </details>
     </div>
@@ -2564,7 +2613,7 @@ TargetDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
 
 
 <h3 id="pytorch_adapt.datasets.target_dataset.TargetDataset.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">supervised</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -2598,17 +2647,25 @@ TargetDataset            (<span title="pytorch_adapt.datasets.domain_dataset.Dom
         <td><p>An integer representing the domain.</p></td>
         <td><code>1</code></td>
       </tr>
+      <tr>
+        <td><code>supervised</code></td>
+        <td><code>bool</code></td>
+        <td><p>A boolean for if the target dataset should return labels.</p></td>
+        <td><code>False</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\datasets\target_dataset.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">supervised</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        dataset: The dataset to wrap</span>
 <span class="sd">        domain: An integer representing the domain.</span>
+<span class="sd">        supervised: A boolean for if the target dataset should return labels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">supervised</span> <span class="o">=</span> <span class="n">supervised</span>
 </code></pre></div>
         </details>
     </div>
