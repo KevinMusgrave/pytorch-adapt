@@ -50,11 +50,11 @@ def get_datasets(
         output["target_train"] = TargetDataset(getter(target_domains, True, False))
         output["target_val"] = TargetDataset(getter(target_domains, False, False))
         if return_target_with_labels:
-            output["target_train_with_labels"] = SourceDataset(
-                getter(target_domains, True, False), domain=1
+            output["target_train_with_labels"] = TargetDataset(
+                getter(target_domains, True, False), domain=1, supervised=True
             )
-            output["target_val_with_labels"] = SourceDataset(
-                getter(target_domains, False, False), domain=1
+            output["target_val_with_labels"] = TargetDataset(
+                getter(target_domains, False, False), domain=1, supervised=True
             )
     if src_domains and target_domains:
         output["train"] = CombinedSourceAndTargetDataset(
