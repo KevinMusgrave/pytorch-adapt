@@ -18,13 +18,18 @@ from .utils import skip_reason
 
 
 class TestGetters(unittest.TestCase):
-    def helper(self, datasets, src_class, target_class, sizes):
+    def helper(self, datasets, src_class, target_class, sizes, target_with_labels=False):
         for k in ["src_train", "src_val"]:
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], src_class))
             self.assertTrue(len(datasets[k]) == sizes[k])
-        for k in ["target_train", "target_val"]:
-            self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
-            self.assertTrue(len(datasets[k]) == sizes[k])
+        if target_with_labels:
+            for k in ["target_train", "target_val", "target_train_with_labels", "target_val_with_labels"]:
+                self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
+                self.assertTrue(len(datasets[k]) == sizes[k])
+        else:
+            for k in ["target_train", "target_val"]:
+                self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
+                self.assertTrue(len(datasets[k]) == sizes[k])
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_empty_array(self):
@@ -54,7 +59,27 @@ class TestGetters(unittest.TestCase):
                 "src_val": 10000,
                 "target_train": 59001,
                 "target_val": 9001,
+            }
+        )
+
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
+    def test_get_mnist_mnistm_target_with_labels(self):
+        datasets = get_mnist_mnistm(
+            ["mnist"], ["mnistm"], folder=DATASET_FOLDER, download=True, return_target_with_labels=True
+        )
+        self.helper(
+            datasets,
+            MNIST,
+            MNISTM,
+            {
+                "src_train": 60000,
+                "src_val": 10000,
+                "target_train": 59001,
+                "target_val": 9001,
+                "target_train_with_labels": 59001,
+                "target_val_with_labels": 9001
             },
+            True
         )
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
