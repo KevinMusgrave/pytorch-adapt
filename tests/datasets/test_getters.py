@@ -23,24 +23,20 @@ class TestGetters(unittest.TestCase):
     ):
         for k in ["src_train", "src_val"]:
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], src_class))
+            self.assertTrue(isinstance(datasets[k], SourceDataset))
             self.assertTrue(len(datasets[k]) == sizes[k])
+
+        target_splits = ["target_train", "target_val"]
         if target_with_labels:
-            for k in [
-                "target_train",
-                "target_val",
-                "target_train_with_labels",
-                "target_val_with_labels",
-            ]:
-                self.assertTrue(
-                    isinstance(datasets[k].dataset.datasets[0], target_class)
-                )
-                self.assertTrue(len(datasets[k]) == sizes[k])
-        else:
-            for k in ["target_train", "target_val"]:
-                self.assertTrue(
-                    isinstance(datasets[k].dataset.datasets[0], target_class)
-                )
-                self.assertTrue(len(datasets[k]) == sizes[k])
+            target_splits += ["target_train_with_labels", "target_val_with_labels"]
+        target_sizes = {k for k in sizes.keys() if k.startswith("target")}
+
+        self.assertTrue(set(target_splits) == target_sizes)
+        for k in target_splits:
+            self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
+            self.assertTrue(isinstance(datasets[k], TargetDataset))
+            self.assertTrue(len(datasets[k]) == sizes[k])
+            self.assertTrue(datasets[k].supervised == k.endswith("with_labels"))
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_empty_array(self):
