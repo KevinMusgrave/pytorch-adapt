@@ -19,7 +19,7 @@ from .utils import skip_reason
 
 class TestGetters(unittest.TestCase):
     def helper(
-        self, datasets, src_class, target_class, sizes, target_with_labels=False
+        self, datasets, src_class, target_class, sizes, target_with_labels=False, supervised=False
     ):
         for k in ["src_train", "src_val"]:
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], src_class))
@@ -36,7 +36,10 @@ class TestGetters(unittest.TestCase):
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
             self.assertTrue(isinstance(datasets[k], TargetDataset))
             self.assertTrue(len(datasets[k]) == sizes[k])
-            self.assertTrue(datasets[k].supervised == k.endswith("with_labels"))
+            if supervised and not target_with_labels:
+                self.assertTrue(datasets[k].supervised != k.endswith("with_labels"))
+            else:
+                self.assertTrue(datasets[k].supervised == k.endswith("with_labels"))
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_empty_array(self):
@@ -53,14 +56,14 @@ class TestGetters(unittest.TestCase):
         self.assertTrue(isinstance(datasets["train"], TargetDataset))
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
-    def test_get_mnist_mnistm(self):
+    def test_get_mnist_mnistm_return_targets(self):
         for target_with_labels in [False, True]:
             datasets = get_mnist_mnistm(
                 ["mnist"],
                 ["mnistm"],
                 folder=DATASET_FOLDER,
                 download=True,
-                return_target_with_labels=target_with_labels,
+                return_target_with_labels=target_with_labels
             )
             len_dict = {
                 "src_train": 60000,
@@ -73,6 +76,25 @@ class TestGetters(unittest.TestCase):
                 len_dict["target_val_with_labels"] = len_dict["target_val"]
 
             self.helper(datasets, MNIST, MNISTM, len_dict, target_with_labels)
+
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
+    def test_get_mnist_mnistm_supervised(self):
+        for supervised in [False, True]:
+            datasets = get_mnist_mnistm(
+                ["mnist"],
+                ["mnistm"],
+                folder=DATASET_FOLDER,
+                download=True,
+                supervised=supervised
+            )
+            len_dict = {
+                "src_train": 60000,
+                "src_val": 10000,
+                "target_train": 59001,
+                "target_val": 9001,
+            }
+
+            self.helper(datasets, MNIST, MNISTM, len_dict, supervised=supervised)
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_officehome(self):
