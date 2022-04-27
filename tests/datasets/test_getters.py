@@ -19,7 +19,13 @@ from .utils import skip_reason
 
 class TestGetters(unittest.TestCase):
     def helper(
-        self, datasets, src_class, target_class, sizes, target_with_labels=False, supervised=False
+        self,
+        datasets,
+        src_class,
+        target_class,
+        sizes,
+        target_with_labels=False,
+        supervised=False,
     ):
         for k in ["src_train", "src_val"]:
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], src_class))
@@ -36,9 +42,12 @@ class TestGetters(unittest.TestCase):
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], target_class))
             self.assertTrue(isinstance(datasets[k], TargetDataset))
             self.assertTrue(len(datasets[k]) == sizes[k])
-            if supervised and not target_with_labels:
-                self.assertTrue(datasets[k].supervised != k.endswith("with_labels"))
+            if supervised:
+                # target_train and target_val will be supervised
+                # and if target_with_labels is true, the with_labels will also be supervised
+                self.assertTrue(datasets[k].supervised)
             else:
+                # otherwise, only the ones with labels are supervised
                 self.assertTrue(datasets[k].supervised == k.endswith("with_labels"))
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
@@ -58,43 +67,28 @@ class TestGetters(unittest.TestCase):
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_get_mnist_mnistm_return_targets(self):
         for target_with_labels in [False, True]:
-            datasets = get_mnist_mnistm(
-                ["mnist"],
-                ["mnistm"],
-                folder=DATASET_FOLDER,
-                download=True,
-                return_target_with_labels=target_with_labels
-            )
-            len_dict = {
-                "src_train": 60000,
-                "src_val": 10000,
-                "target_train": 59001,
-                "target_val": 9001,
-            }
-            if target_with_labels:
-                len_dict["target_train_with_labels"] = len_dict["target_train"]
-                len_dict["target_val_with_labels"] = len_dict["target_val"]
+            for supervised in [False, True]:
+                datasets = get_mnist_mnistm(
+                    ["mnist"],
+                    ["mnistm"],
+                    folder=DATASET_FOLDER,
+                    download=True,
+                    return_target_with_labels=target_with_labels,
+                    supervised=supervised,
+                )
+                len_dict = {
+                    "src_train": 60000,
+                    "src_val": 10000,
+                    "target_train": 59001,
+                    "target_val": 9001,
+                }
+                if target_with_labels:
+                    len_dict["target_train_with_labels"] = len_dict["target_train"]
+                    len_dict["target_val_with_labels"] = len_dict["target_val"]
 
-            self.helper(datasets, MNIST, MNISTM, len_dict, target_with_labels)
-
-    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
-    def test_get_mnist_mnistm_supervised(self):
-        for supervised in [False, True]:
-            datasets = get_mnist_mnistm(
-                ["mnist"],
-                ["mnistm"],
-                folder=DATASET_FOLDER,
-                download=True,
-                supervised=supervised
-            )
-            len_dict = {
-                "src_train": 60000,
-                "src_val": 10000,
-                "target_train": 59001,
-                "target_val": 9001,
-            }
-
-            self.helper(datasets, MNIST, MNISTM, len_dict, supervised=supervised)
+                self.helper(
+                    datasets, MNIST, MNISTM, len_dict, target_with_labels, supervised
+                )
 
     @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_officehome(self):
