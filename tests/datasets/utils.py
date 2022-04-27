@@ -6,6 +6,7 @@ import tqdm
 from torchvision import transforms as torch_transforms
 
 skip_reason = "RUN_DATASET_TESTS is False"
+skip_reason_domainnet = "RUN_DOMAINNET_DATASET_TESTS is False"
 
 
 def simple_transform():

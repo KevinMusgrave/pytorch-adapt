@@ -4,18 +4,18 @@ from torchvision import transforms as torch_transforms
 
 from pytorch_adapt.datasets import DomainNet, DomainNet126, DomainNet126Full
 
-from .. import DATASET_FOLDER, RUN_DATASET_TESTS
+from .. import DATASET_FOLDER, RUN_DOMAINNET_DATASET_TESTS
 from .utils import (
     check_full,
     check_train_test_disjoint,
     check_train_test_matches_full,
     loop_through_dataset,
-    skip_reason,
+    skip_reason_domainnet,
 )
 
 
 class TestDomainNet(unittest.TestCase):
-    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
+    @unittest.skipIf(not RUN_DOMAINNET_DATASET_TESTS, skip_reason_domainnet)
     def test_domainnet(self):
         transform = torch_transforms.Compose(
             [
@@ -39,7 +39,7 @@ class TestDomainNet(unittest.TestCase):
             self.assertTrue(len(dataset) == length)
             loop_through_dataset(dataset)
 
-    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
+    @unittest.skipIf(not RUN_DOMAINNET_DATASET_TESTS, skip_reason_domainnet)
     def test_domainnet126(self):
         check_train_test_matches_full(
             self,
@@ -50,7 +50,7 @@ class TestDomainNet(unittest.TestCase):
             DATASET_FOLDER,
         )
 
-    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
+    @unittest.skipIf(not RUN_DOMAINNET_DATASET_TESTS, skip_reason_domainnet)
     def test_domainnet126_full(self):
         check_full(
             self,

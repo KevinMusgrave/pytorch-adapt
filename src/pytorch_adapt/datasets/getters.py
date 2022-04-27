@@ -24,6 +24,7 @@ def get_datasets(
     folder,
     download=False,
     return_target_with_labels=False,
+    supervised=False,
     transform_getter=None,
 ):
     def getter(domains, train, is_training):
@@ -47,14 +48,19 @@ def get_datasets(
         output["src_train"] = SourceDataset(getter(src_domains, True, False))
         output["src_val"] = SourceDataset(getter(src_domains, False, False))
     if target_domains:
-        output["target_train"] = TargetDataset(getter(target_domains, True, False))
-        output["target_val"] = TargetDataset(getter(target_domains, False, False))
+        output["target_train"] = TargetDataset(
+            getter(target_domains, True, False), supervised=supervised
+        )
+        output["target_val"] = TargetDataset(
+            getter(target_domains, False, False), supervised=supervised
+        )
+        # For academic setting: unsupervised learning w/ seperate target datasets that have gt lables for eval.
         if return_target_with_labels:
-            output["target_train_with_labels"] = SourceDataset(
-                getter(target_domains, True, False), domain=1
+            output["target_train_with_labels"] = TargetDataset(
+                getter(target_domains, True, False), domain=1, supervised=True
             )
-            output["target_val_with_labels"] = SourceDataset(
-                getter(target_domains, False, False), domain=1
+            output["target_val_with_labels"] = TargetDataset(
+                getter(target_domains, False, False), domain=1, supervised=True
             )
     if src_domains and target_domains:
         output["train"] = CombinedSourceAndTargetDataset(
