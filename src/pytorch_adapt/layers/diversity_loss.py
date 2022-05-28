@@ -27,8 +27,10 @@ class DiversityLoss(torch.nn.Module):
 
     def forward(self, logits):
         """"""
+        if not self.after_softmax:
+            logits = torch.softmax(logits, dim=1)
         logits = torch.mean(logits, dim=0, keepdim=True)
-        return -torch.mean(get_entropy(logits, self.after_softmax))
+        return -torch.mean(get_entropy(logits, after_softmax=True))
 
     def extra_repr(self):
         """"""
