@@ -34,7 +34,7 @@ class TestISTLoss(unittest.TestCase):
                         y = torch.randint(0, 2, size=(batch_size,), device=TEST_DEVICE)
                         loss = loss_fn(x, y)
 
-                        ents, all_logits = [], []
+                        ents, all_preds = [], []
                         for i in range(len(x)):
                             curr_x = x[i].unsqueeze(0)
                             mask = torch.ones(len(x), dtype=torch.bool)
@@ -60,24 +60,24 @@ class TestISTLoss(unittest.TestCase):
                             )
                             ents.append(ent)
 
-                            logits = torch.stack(
+                            preds = torch.stack(
                                 [src_prob.unsqueeze(0), target_prob.unsqueeze(0)], dim=1
                             )
-                            all_logits.append(logits)
+                            all_preds.append(preds)
 
                         correct_loss = 0
 
                         if with_ent:
                             correct_loss += -(sum(ents) / len(ents))
                         if with_div:
-                            all_logits = torch.cat(all_logits, dim=0)
-                            mean_logits = torch.mean(all_logits, dim=0)
-                            div = mean_logits[0] * torch.log(
-                                mean_logits[0]
-                            ) + mean_logits[1] * torch.log(mean_logits[1])
+                            all_preds = torch.cat(all_preds, dim=0)
+                            mean_preds = torch.mean(all_preds, dim=0)
+                            div = mean_preds[0] * torch.log(mean_preds[0]) + mean_preds[
+                                1
+                            ] * torch.log(mean_preds[1])
                             correct_loss += -div
 
-                        self.assertTrue(torch.isclose(loss, correct_loss, rtol=1e-3))
+                        self.assertTrue(torch.isclose(loss, correct_loss))
 
                         loss.backward()
                         grad1 = x.grad.clone()

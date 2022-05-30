@@ -1,6 +1,5 @@
 import unittest
 
-import numpy as np
 import torch
 
 from pytorch_adapt.layers import DiversityLoss, EntropyLoss
@@ -16,8 +15,8 @@ from pytorch_adapt.validators import (
 class TestEntropyDiversity(unittest.TestCase):
     def test_entropy_diversity(self):
         results = []
-        _logits1 = torch.tensor([[1, 0, 0], [1, 0, 0], [1, 0, 0]], dtype=float)
-        _logits2 = torch.tensor([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float)
+        _logits1 = torch.tensor([[2, 0, 0], [1, 0, 0], [0.5, 0, 0]], dtype=float)
+        _logits2 = torch.tensor([[1, 0, 0], [0, 0.5, 0], [0, 0, 2]], dtype=float)
         _logits3 = torch.tensor(
             [[100, -100, -100], [-100, 100, -100], [-100, -100, 100]],
             dtype=float,
@@ -31,8 +30,10 @@ class TestEntropyDiversity(unittest.TestCase):
         correct_diversities = [
             torch.mean(
                 torch.sum(
-                    torch.softmax(torch.mean(x, dim=0, keepdims=True), dim=1)
-                    * torch.log_softmax(torch.mean(x, dim=0, keepdims=True), dim=1),
+                    torch.mean(torch.softmax(x, dim=1), dim=0, keepdims=True)
+                    * torch.log(
+                        torch.mean(torch.softmax(x, dim=1), dim=0, keepdims=True)
+                    ),
                     dim=1,
                 )
             )
@@ -96,11 +97,9 @@ class TestEntropyDiversity(unittest.TestCase):
                         )
                     )
                     self.assertTrue(
-                        np.isclose(
-                            score,
-                            -correct_entropies[idx].item()
-                            - correct_diversities[idx].item(),
-                        )
+                        score
+                        == -correct_entropies[idx].item()
+                        - correct_diversities[idx].item()
                     )
 
         # assert that all results are the same
