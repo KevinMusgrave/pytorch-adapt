@@ -3,7 +3,7 @@ from .mnist import MNISTFeatures
 from .utils import download_weights
 
 
-def mnistG(pretrained=False, progress=True):
+def mnistG(pretrained=False, progress=True, **kwargs):
     """
     Returns:
         An [```MNISTFeatures```][pytorch_adapt.models.MNISTFeatures] model
@@ -12,11 +12,15 @@ def mnistG(pretrained=False, progress=True):
     model = MNISTFeatures()
     url = "https://cornell.box.com/shared/static/tdx0ts24e273j7mf3r2ox7a12xh4fdfy"
     h = "68ee79452f1d5301be2329dfa542ac6fa18de99e09d6540838606d9d700b09c8"
-    filename = f"mnistG-{h[:8]}.pth"
-    return download_weights(model, url, pretrained, progress, filename)
+    file_name = f"mnistG-{h[:8]}.pth"
+    return download_weights(
+        model, url, pretrained, progress=progress, file_name=file_name, **kwargs
+    )
 
 
-def mnistC(num_classes=10, in_size=1200, h=256, pretrained=False, progress=True):
+def mnistC(
+    num_classes=10, in_size=1200, h=256, pretrained=False, progress=True, **kwargs
+):
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
@@ -25,11 +29,13 @@ def mnistC(num_classes=10, in_size=1200, h=256, pretrained=False, progress=True)
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
     url = "https://cornell.box.com/shared/static/j4zrogronmievq1csulrkai7zjm27gcq"
     h = "ac7b5a13df2ef3522b6550a147eb44dde8ff4fead3ddedc540d9fe63c9d597c1"
-    filename = f"mnistC-{h[:8]}.pth"
-    return download_weights(model, url, pretrained, progress, filename)
+    file_name = f"mnistC-{h[:8]}.pth"
+    return download_weights(
+        model, url, pretrained, progress=progress, file_name=file_name, **kwargs
+    )
 
 
-def resnet50(pretrained=False, progress=True):
+def resnet50(pretrained=False, progress=True, **kwargs):
     import timm
 
     model = timm.create_model("resnet50", pretrained=False, num_classes=0)
@@ -38,8 +44,10 @@ def resnet50(pretrained=False, progress=True):
     # So the model for all 3 domains is the same
     url = "https://cornell.box.com/shared/static/1oxb5xk5dq3od1d3gprigznxmqb3wgr1"
     h = "a567ecd6ea5addf29ccfa8bf706be78a35adff7cd5cf5a3a99d89b19807454ae"
-    filename = f"resnet50MusgraveUDA-{h[:8]}.pth"
-    return download_weights(model, url, pretrained, progress, filename)
+    file_name = f"resnet50MusgraveUDA-{h[:8]}.pth"
+    return download_weights(
+        model, url, pretrained, progress=progress, file_name=file_name, **kwargs
+    )
 
 
 def office31G(*args, **kwargs):
@@ -51,7 +59,13 @@ def office31G(*args, **kwargs):
 
 
 def office31C(
-    domain=None, num_classes=31, in_size=2048, h=256, pretrained=False, progress=True
+    domain=None,
+    num_classes=31,
+    in_size=2048,
+    h=256,
+    pretrained=False,
+    progress=True,
+    **kwargs,
 ):
     """
     Returns:
@@ -79,8 +93,10 @@ def office31C(
         "dslr": "fc0acd7a71eb5f12d4af619e5c63bcc42e5a23441bbd105fe0f7a37c26f37d80",
         "webcam": "b2bb55978380fa9ca6452cba30e0ac2a19b7166d8348bcc1554fdabd185e4cdd",
     }[domain]
-    filename = f"office31C{domain}-{h[:8]}.pth"
-    return download_weights(model, url, pretrained, progress, filename)
+    file_name = f"office31C{domain}-{h[:8]}.pth"
+    return download_weights(
+        model, url, pretrained, progress=progress, file_name=file_name, **kwargs
+    )
 
 
 def officehomeG(*args, **kwargs):
@@ -92,7 +108,13 @@ def officehomeG(*args, **kwargs):
 
 
 def officehomeC(
-    domain=None, num_classes=65, in_size=2048, h=256, pretrained=False, progress=True
+    domain=None,
+    num_classes=65,
+    in_size=2048,
+    h=256,
+    pretrained=False,
+    progress=True,
+    **kwargs,
 ):
     """
     Returns:
@@ -122,5 +144,7 @@ def officehomeC(
         "product": "472ff36fdf13ec6c1fa1236d1d0800e2a5cf2e3d366b6b63ff5807dff6a761d8",
         "real": "f0c8d6e941d4f488ff2438eb5cccdc59e78f35961e48f03d2186752e5878c697",
     }[domain]
-    filename = f"officehomeC{domain}-{h[:8]}.pth"
-    return download_weights(model, url, pretrained, progress, filename)
+    file_name = f"officehomeC{domain}-{h[:8]}.pth"
+    return download_weights(
+        model, url, pretrained, progress=progress, file_name=file_name, **kwargs
+    )
