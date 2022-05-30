@@ -10,6 +10,7 @@ from .utils import assertRequiresGrad, get_models_and_data
 
 class TestITL(unittest.TestCase):
     def test_ist_loss_hook(self):
+        torch.manual_seed(334)
         h = ISTLossHook()
         (
             G,

@@ -14,6 +14,7 @@ from .utils import get_models_and_data, get_opts
 
 class TestReducers(unittest.TestCase):
     def test_entropy_reducer(self):
+        torch.manual_seed(1335)
         (
             G,
             C,

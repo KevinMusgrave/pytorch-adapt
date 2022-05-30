@@ -36,6 +36,7 @@ class Net(torch.nn.Module):
 
 class TestAdaBN(unittest.TestCase):
     def test_adabn_hook(self):
+        torch.manual_seed(530)
         src_imgs = torch.randn(100, 32, 8, 8)
         target_imgs = torch.randn(100, 32, 8, 8)
         src_domain = torch.zeros(100)

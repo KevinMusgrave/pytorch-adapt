@@ -10,6 +10,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestEntropy(unittest.TestCase):
     def test_entropy_hook(self):
+        torch.manual_seed(1332)
         h = TargetEntropyHook()
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)

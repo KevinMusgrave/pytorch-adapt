@@ -150,7 +150,7 @@ class TestADDA(unittest.TestCase):
                 )
 
                 total_loss = sum(total_loss) / len(total_loss)
-                self.assertTrue(np.isclose(total_loss.item(), losses["g_loss"]["total"]))
+                self.assertTrue(total_loss == losses["g_loss"]["total"])
                 g_opts.zero_grad()
                 total_loss.backward()
                 g_opts.step()

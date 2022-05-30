@@ -87,6 +87,7 @@ def get_correct_domain_losses(
 
 class TestCDAN(unittest.TestCase):
     def test_cdan_domain_hooks(self):
+        torch.manual_seed(109483)
         for fc_out_size in [15, 32, 16]:
             bad_fc_size = fc_out_size in [15, 32]
             for softmax in [False, True]:

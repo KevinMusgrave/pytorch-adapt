@@ -49,6 +49,7 @@ def get_disc_loss(loss_fn, target_logits):
 
 class TestMCD(unittest.TestCase):
     def test_multiple_c_loss_hook(self):
+        torch.manual_seed(435)
         for detach in [False, True]:
             h = MultipleCLossHook(num_c=3, detach_features=detach)
             batch_size = 32
@@ -91,6 +92,7 @@ class TestMCD(unittest.TestCase):
             )
 
     def test_mcd_loss_hook(self):
+        torch.manual_seed(242)
         for detach in [False, True]:
             h = MCDLossHook(detach_features=detach)
             batch_size = 32
