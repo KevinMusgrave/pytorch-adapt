@@ -14,7 +14,7 @@ class TestSilhouetteScore(unittest.TestCase):
     def test_silhouette_score(self):
         fn = SilhouetteScore()
         for embedding_size in [10, 100]:
-            for num_embeddings in [1000, 10000]:
+            for num_embeddings in [1000, 2000]:
                 for num_classes in [1, 12, 123, num_embeddings]:
                     features = torch.randn(
                         num_embeddings, embedding_size, device=TEST_DEVICE
