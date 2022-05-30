@@ -7,7 +7,7 @@ from pytorch_adapt.validators import KNNValidator, ScoreHistory
 from pytorch_adapt.validators.knn_validator import BatchedAccuracyCalculator
 
 from .. import TEST_DEVICE
-from .utils import get_knn_func
+from .utils import get_knn_func, kmeans_func
 
 
 class TestKNNValidator(unittest.TestCase):
@@ -15,7 +15,9 @@ class TestKNNValidator(unittest.TestCase):
         torch.cuda.empty_cache()
         knn_func = get_knn_func()
         knn_validator = ScoreHistory(KNNValidator(knn_func=knn_func))
-        cluster_validator = ScoreHistory(KNNValidator(metric="AMI", knn_func=knn_func))
+        cluster_validator = ScoreHistory(
+            KNNValidator(metric="AMI", knn_func=knn_func, kmeans_func=kmeans_func)
+        )
         for epoch in [1, 2]:
             for validator in [knn_validator, cluster_validator]:
                 dataset_size = 10000

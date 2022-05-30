@@ -135,7 +135,7 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
             correct_score = get_correct_score(self, src_train, target_train, src_val)
             correct_score = -correct_score
             self.assertTrue(
-                np.isclose(score, correct_score, rtol=0.2),
+                np.isclose(score, correct_score, rtol=0.5),
                 msg=f"score={score}, correct_score={correct_score}",
             )
 

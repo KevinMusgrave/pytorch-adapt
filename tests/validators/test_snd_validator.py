@@ -81,6 +81,7 @@ class TestSNDValidator(unittest.TestCase):
             adapter = wrapper_type(
                 Classifier(models=models, optimizers=optimizers),
                 validator=ScoreHistory(SNDValidator()),
+                device=TEST_DEVICE,
             )
             score, _ = adapter.run(
                 {"train": train_dataset, "target_train": target_train},
