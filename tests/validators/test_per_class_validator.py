@@ -13,6 +13,7 @@ from pytorch_adapt.validators import (
 from pytorch_adapt.validators.per_class_validator import get_common_labels
 
 from .. import TEST_DEVICE
+from .utils import get_knn_func
 
 
 def get_data(dataset_size, domain, label_range=None):
@@ -58,10 +59,14 @@ class TestPerClassValidator(unittest.TestCase):
     def test_per_class_validator(self):
         torch.manual_seed(204)
         dataset_size = 256
+        knn_func = get_knn_func()
         inner_validators = [
-            KNNValidator(key_map={"src_val": "src_train"}, metric="AMI"),
             KNNValidator(
-                key_map={"src_val": "src_train", "target_val": "target_train"}
+                key_map={"src_val": "src_train"}, metric="AMI", knn_func=knn_func
+            ),
+            KNNValidator(
+                key_map={"src_val": "src_train", "target_val": "target_train"},
+                knn_func=knn_func,
             ),
             MMDValidator(mmd_kwargs={"mmd_type": "quadratic"}),
             SNDValidator(),

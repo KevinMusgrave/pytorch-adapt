@@ -100,6 +100,7 @@ def get_correct_score(cls, src_train, target_train, src_val):
 
 class TestDeepEmbeddedValidator(unittest.TestCase):
     def test_deep_embedded_validator(self):
+        self.longMessage = True
         torch.manual_seed(1234)
         np.random.seed(1234)
         validator = DeepEmbeddedValidator(
@@ -133,7 +134,10 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
 
             correct_score = get_correct_score(self, src_train, target_train, src_val)
             correct_score = -correct_score
-            self.assertTrue(np.isclose(score, correct_score, rtol=0.2))
+            self.assertTrue(
+                np.isclose(score, correct_score, rtol=0.2),
+                msg=f"score={score}, correct_score={correct_score}",
+            )
 
         shutil.rmtree(TEST_FOLDER)
 

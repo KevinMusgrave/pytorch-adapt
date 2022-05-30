@@ -5,6 +5,7 @@ import torch
 from pytorch_adapt.validators import TargetKNNValidator
 
 from .. import TEST_DEVICE
+from .utils import get_knn_func
 
 
 def target_label_fn(x):
@@ -26,9 +27,12 @@ class TestTargetKNNValidator(unittest.TestCase):
             "target_train": {"features": target_features, "labels": target_labels},
         }
 
+        knn_func = get_knn_func()
         for add_target_to_ref in [False, True]:
             validator = TargetKNNValidator(
-                add_target_to_ref=add_target_to_ref, target_label_fn=target_label_fn
+                add_target_to_ref=add_target_to_ref,
+                target_label_fn=target_label_fn,
+                knn_func=knn_func,
             )
 
             score = validator(**data)

@@ -7,13 +7,15 @@ from pytorch_adapt.validators import KNNValidator, ScoreHistory
 from pytorch_adapt.validators.knn_validator import BatchedAccuracyCalculator
 
 from .. import TEST_DEVICE
+from .utils import get_knn_func
 
 
 class TestKNNValidator(unittest.TestCase):
     def test_knn_validator(self):
         torch.cuda.empty_cache()
-        knn_validator = ScoreHistory(KNNValidator())
-        cluster_validator = ScoreHistory(KNNValidator(metric="AMI"))
+        knn_func = get_knn_func()
+        knn_validator = ScoreHistory(KNNValidator(knn_func=knn_func))
+        cluster_validator = ScoreHistory(KNNValidator(metric="AMI", knn_func=knn_func))
         for epoch in [1, 2]:
             for validator in [knn_validator, cluster_validator]:
                 dataset_size = 10000
@@ -46,6 +48,7 @@ class TestKNNValidator(unittest.TestCase):
 
     def test_batched_vs_regular(self):
         metric = "mean_average_precision"
+        knn_func = get_knn_func()
         for batch_size in [None, 10, 99, 128, 500, 512]:
             for dataset_size in [10, 100, 1000, 10000]:
                 src_features = torch.randn(dataset_size, 64, device=TEST_DEVICE)
@@ -56,8 +59,10 @@ class TestKNNValidator(unittest.TestCase):
                 src_train = {"features": src_features, "domain": src_domain}
                 target_train = {"features": target_features, "domain": target_domain}
 
-                v1 = KNNValidator(metric=metric)
-                v2 = KNNValidator(batch_size=batch_size, metric=metric)
+                v1 = KNNValidator(metric=metric, knn_func=knn_func)
+                v2 = KNNValidator(
+                    batch_size=batch_size, metric=metric, knn_func=knn_func
+                )
 
                 if batch_size is not None:
                     self.assertTrue(isinstance(v1.acc_fn, AccuracyCalculator))
