@@ -2,7 +2,7 @@ name: meta_validators
 
 on:
   pull_request:
-    branches: [ master, dev ]
+    branches: [ main, dev ]
     paths:
       - 'src/**'
       - 'tests/**'

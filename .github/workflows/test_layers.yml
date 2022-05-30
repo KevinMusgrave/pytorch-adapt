@@ -2,7 +2,7 @@ name: layers
 
 on:
   pull_request:
-    branches: [ master, dev ]
+    branches: [ main, dev ]
     paths:
       - 'src/**'
       - 'tests/**'
