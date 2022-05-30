@@ -12,6 +12,7 @@ with open("README.md", "r") as fh:
 extras_require_ignite = ["pytorch-ignite == 0.5.0.dev20220221"]
 extras_require_lightning = ["pytorch-lightning"]
 extras_require_record_keeper = ["record-keeper >= 0.9.31"]
+extras_require_timm = ["timm"]
 
 
 setuptools.setup(
@@ -41,5 +42,6 @@ setuptools.setup(
         "ignite": extras_require_ignite,
         "lightning": extras_require_lightning,
         "record-keeper": extras_require_record_keeper,
+        "timm": extras_require_timm,
     },
 )

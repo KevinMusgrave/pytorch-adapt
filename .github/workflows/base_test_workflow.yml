@@ -26,7 +26,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install .[ignite,lightning,record-keeper]
+        pip install .[ignite,lightning,record-keeper,timm]
     - name: Run unit tests
       run: |
         TEST_DTYPES=float32,float64 TEST_DEVICE=cpu python -m unittest discover -t . -s tests/${{ inputs.module-to-test }} 
