@@ -9,6 +9,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestDomain(unittest.TestCase):
     def test_domain_loss_hook(self):
+        torch.manual_seed(493929)
         for detach_features in [False, True]:
             for use_logits in [True, False]:
                 if use_logits:

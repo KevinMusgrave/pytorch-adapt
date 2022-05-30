@@ -33,6 +33,7 @@ def test_equivalent_adapter(G, C, data, aligner_hook, loss_fn):
 
 class TestAligners(unittest.TestCase):
     def test_aligner_plus_classifier_hook(self):
+        torch.manual_seed(10)
         for loss_fn in [MMDLoss, CORALLoss]:
             for joint in [False, True]:
                 if loss_fn == CORALLoss and joint:

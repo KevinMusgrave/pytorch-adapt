@@ -10,6 +10,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestDiversity(unittest.TestCase):
     def test_diversity_hook(self):
+        torch.manual_seed(1123)
         h = TargetDiversityHook()
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)

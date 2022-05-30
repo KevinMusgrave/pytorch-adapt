@@ -10,6 +10,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestVADA(unittest.TestCase):
     def test_vat_hook(self):
+        torch.manual_seed(87948)
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)
@@ -36,6 +37,7 @@ class TestVADA(unittest.TestCase):
         self.assertTrue(losses.keys() == {"src_vat_loss", "target_vat_loss"})
 
     def test_vat_plus_entropy_hook(self):
+        torch.manual_seed(27391)
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)

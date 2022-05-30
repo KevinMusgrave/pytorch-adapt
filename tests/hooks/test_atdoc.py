@@ -22,6 +22,7 @@ def get_data(dataset_size, feature_dim, num_classes, batch_size):
 
 class TestATDOC(unittest.TestCase):
     def test_atdoc_hook(self):
+        torch.manual_seed(922)
         dataset_size = 10000
         feature_dim = 128
         num_classes = 10

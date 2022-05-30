@@ -21,7 +21,7 @@ from pytorch_adapt.frameworks.ignite.loggers import BasicLossLogger
 from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import AccuracyValidator, EntropyValidator, ScoreHistory
 
-from .. import TEST_FOLDER
+from .. import TEST_DEVICE, TEST_FOLDER
 
 
 class NanModel(nn.Module):
@@ -57,7 +57,6 @@ def helper(
     with_checkpoint_fn=False,
     use_nan_model=False,
 ):
-    device = torch.device("cuda")
     datasets = {}
     for k in ["src_train", "target_train"]:
         datasets[k] = EmbeddingDataset(
@@ -72,7 +71,7 @@ def helper(
         datasets["src_train"], datasets["target_train"]
     )
 
-    C = nn.Linear(32, 16, device=device)
+    C = nn.Linear(32, 16, device=TEST_DEVICE)
     if use_nan_model:
         C = NanModel(C)
     models = Models({"G": nn.Identity(), "C": C})
@@ -103,7 +102,7 @@ def helper(
         logger=logger,
         log_freq=1,
         with_pbars=False,
-        device=device,
+        device=TEST_DEVICE,
     )
     return adapter, datasets
 

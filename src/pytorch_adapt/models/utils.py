@@ -1,10 +1,8 @@
 from torch.hub import load_state_dict_from_url
 
 
-def download_weights(model, url, pretrained, progress, file_name):
+def download_weights(model, url, pretrained, **kwargs):
     if pretrained:
-        state_dict = load_state_dict_from_url(
-            url, progress=progress, check_hash=True, file_name=file_name
-        )
+        state_dict = load_state_dict_from_url(url, check_hash=True, **kwargs)
         model.load_state_dict(state_dict)
     return model

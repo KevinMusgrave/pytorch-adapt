@@ -9,17 +9,19 @@ from pytorch_adapt.models import (
     officehomeG,
 )
 
+from .. import TEST_DEVICE
+
 
 class TestPretrainedDownload(unittest.TestCase):
     def test_pretrained_download(self):
         for x in [mnistC, mnistG, office31G, officehomeG]:
-            x(pretrained=True)
+            x(pretrained=True, map_location=TEST_DEVICE)
 
         for domain in ["amazon", "dslr", "webcam"]:
-            office31C(domain=domain, pretrained=True)
+            office31C(domain=domain, pretrained=True, map_location=TEST_DEVICE)
 
         for domain in ["art", "clipart", "product", "real"]:
-            officehomeC(domain=domain, pretrained=True)
+            officehomeC(domain=domain, pretrained=True, map_location=TEST_DEVICE)
 
     def test_not_pretrained(self):
         office31C(pretrained=False)
