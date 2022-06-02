@@ -33,8 +33,8 @@ plugins:
         setup_commands:
           - import sys
           - sys.path.insert(0, "src")
-        rendering:
-          show_root_toc_entry: false
+        options:
+          show_root_toc_entry: no
 - section-index
 - literate-nav:
     nav_file: SUMMARY.md

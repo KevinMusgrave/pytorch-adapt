@@ -13,7 +13,15 @@ extras_require_ignite = ["pytorch-ignite == 0.5.0.dev20220221"]
 extras_require_lightning = ["pytorch-lightning"]
 extras_require_record_keeper = ["record-keeper >= 0.9.31"]
 extras_require_timm = ["timm"]
-
+extras_require_docs = [
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "griffe",
+    "mkdocs-gen-files",
+    "mkdocs-section-index",
+    "mkdocs-literate-nav",
+]
+extras_require_dev = ["black", "isort", "nbqa", "flake8"]
 
 setuptools.setup(
     name="pytorch-adapt",
@@ -43,5 +51,7 @@ setuptools.setup(
         "lightning": extras_require_lightning,
         "record-keeper": extras_require_record_keeper,
         "timm": extras_require_timm,
+        "docs": extras_require_docs,
+        "dev": extras_require_dev,
     },
 )
