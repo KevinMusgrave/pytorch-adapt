@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2423,10 +2423,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2436,21 +2436,23 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.aligner.Aligner" class="doc doc-heading">
-        <code>
-Aligner            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseGCAdapter" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>)
-        </code>
-
+        <code>Aligner</code>
 
 
 <a href="#pytorch_adapt.adapters.aligner.Aligner" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseGCAdapter" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/aligners/#pytorch_adapt.hooks.aligners.AlignerPlusCHook">AlignerPlusCHook</a>.</p>
 <table>
 <thead>
@@ -2471,9 +2473,24 @@ Aligner            (<a class="autorefs autorefs-internal" title="pytorch_adapt.a
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Aligner</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Aligner</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [AlignerPlusCHook][pytorch_adapt.hooks.AlignerPlusCHook].</span>
 
@@ -2488,70 +2505,10 @@ Aligner            (<a class="autorefs autorefs-internal" title="pytorch_adapt.a
     <span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
         <span class="n">opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.aligner.Aligner.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../../hooks/base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.aligner.Aligner.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Computes an alignment loss plus a classification loss,
-and then optimizes the models.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">AlignerPlusCHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Computes an alignment loss plus a classification loss,</span>
-<span class="sd">    and then optimizes the models.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">opts</span><span class="p">,</span>
-        <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">aligner_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">post</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">softmax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="p">[</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">many_default</span><span class="p">([</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">],</span> <span class="p">[[],</span> <span class="p">[]])</span>
-        <span class="n">aligner_hook</span> <span class="o">=</span> <span class="n">ManyAlignerHook</span><span class="p">(</span>
-            <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">aligner_hook</span><span class="o">=</span><span class="n">aligner_hook</span><span class="p">,</span> <span class="n">softmax</span><span class="o">=</span><span class="n">softmax</span>
-        <span class="p">)</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="o">*</span><span class="n">pre</span><span class="p">,</span> <span class="n">aligner_hook</span><span class="p">,</span> <span class="n">CLossHook</span><span class="p">(),</span> <span class="o">*</span><span class="n">post</span><span class="p">)</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
-        <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -2565,69 +2522,28 @@ and then optimizes the models.</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.aligner.Aligner.init_hook" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.aligner.Aligner.init_hook" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p><code>self.hook</code> is initialized here.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
-    <span class="n">opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.aligner.RTN" class="doc doc-heading">
-        <code>
-RTN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.aligner.Aligner" href="#pytorch_adapt.adapters.aligner.Aligner">Aligner</a>)
-        </code>
-
+        <code>RTN</code>
 
 
 <a href="#pytorch_adapt.adapters.aligner.RTN" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.aligner.Aligner" href="#pytorch_adapt.adapters.aligner.Aligner">Aligner</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/rtn/#pytorch_adapt.hooks.rtn.RTNHook">RTNHook</a>.</p>
 <table>
 <thead>
@@ -2652,9 +2568,36 @@ RTN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RTN</span><span class="p">(</span><span class="n">Aligner</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RTN</span><span class="p">(</span><span class="n">Aligner</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [RTNHook][pytorch_adapt.hooks.RTNHook].</span>
 
@@ -2681,65 +2624,10 @@ RTN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
         <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
         <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.aligner.RTN.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../../hooks/base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.aligner.RTN.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Implementation of
-<a href="https://arxiv.org/abs/1602.04433">Unsupervised Domain Adaptation with Residual Transfer Networks</a>.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RTNHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Implementation of</span>
-<span class="sd">    [Unsupervised Domain Adaptation with Residual Transfer Networks](https://arxiv.org/abs/1602.04433).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">opts</span><span class="p">,</span>
-        <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">post</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">aligner_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="p">[</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">many_default</span><span class="p">([</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">],</span> <span class="p">[[],</span> <span class="p">[]])</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="o">*</span><span class="n">pre</span><span class="p">,</span> <span class="n">RTNAlignerHook</span><span class="p">(</span><span class="n">aligner_loss_fn</span><span class="p">),</span> <span class="n">RTNLogitsHook</span><span class="p">(),</span> <span class="o">*</span><span class="n">post</span><span class="p">)</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
-        <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -2751,134 +2639,79 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.aligner.RTN.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.adapters.aligner.RTN.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>inference_fn</code></td>
-        <td></td>
-        <td><p>Default is <a class="autorefs autorefs-internal" href="../../inference/inference/#pytorch_adapt.inference.inference.rtn_fn">rtn_fn</a></p></td>
-        <td><code>None</code></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>inference_fn</code></td>
+          <td>
+          </td>
+          <td><p>Default is <a class="autorefs autorefs-internal" href="../../inference/inference/#pytorch_adapt.inference.inference.rtn_fn">rtn_fn</a></p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        inference_fn: Default is [rtn_fn][pytorch_adapt.inference.rtn_fn]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">rtn_fn</span><span class="p">)</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="n">inference_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
 
   </div>
 
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.aligner.RTN.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\aligner.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;residual_model&quot;</span><span class="p">)</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
-        </details>
-    </div>
-
   </div>
 
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
 
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
+</div>
 
               
             </article>
@@ -2947,7 +2780,7 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

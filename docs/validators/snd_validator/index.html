@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2409,10 +2409,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2422,27 +2422,52 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.validators.snd_validator.SNDValidator" class="doc doc-heading">
-        <code>
-SNDValidator            (<a class="autorefs autorefs-internal" title="pytorch_adapt.validators.base_validator.BaseValidator" href="../base_validator/#pytorch_adapt.validators.base_validator.BaseValidator">BaseValidator</a>)
-        </code>
-
+        <code>SNDValidator</code>
 
 
 <a href="#pytorch_adapt.validators.snd_validator.SNDValidator" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.validators.base_validator.BaseValidator" href="../base_validator/#pytorch_adapt.validators.base_validator.BaseValidator">BaseValidator</a></code></p>
+
+  
       <p>Implementation of
 <a href="https://arxiv.org/abs/2108.10860">Tune it the Right Way: Unsupervised Validation of Domain Adaptation via Soft Neighborhood Density</a></p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\validators\snd_validator.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SNDValidator</span><span class="p">(</span><span class="n">BaseValidator</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SNDValidator</span><span class="p">(</span><span class="n">BaseValidator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of</span>
 <span class="sd">    [Tune it the Right Way: Unsupervised Validation of Domain Adaptation via Soft Neighborhood Density](https://arxiv.org/abs/2108.10860)</span>
@@ -2465,10 +2490,10 @@ SNDValidator            (<a class="autorefs autorefs-internal" title="pytorch_ad
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_entropies</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all_entropies should have same length as input features&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_entropies</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2482,26 +2507,20 @@ SNDValidator            (<a class="autorefs autorefs-internal" title="pytorch_ad
 
 
 
-
+  </div>
 
   </div>
 
-    </div>
-
-  </div>
-
-
-
-
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
+
+</div>
 
               
             </article>
@@ -2570,7 +2589,7 @@ SNDValidator            (<a class="autorefs autorefs-internal" title="pytorch_ad
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

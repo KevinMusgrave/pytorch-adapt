@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2423,10 +2423,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2436,27 +2436,39 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.vada.VADAHook" class="doc doc-heading">
-        <code>
-VADAHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.gan.GANHook" href="../gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>)
-        </code>
-
+        <code>VADAHook</code>
 
 
 <a href="#pytorch_adapt.hooks.vada.VADAHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.gan.GANHook" href="../gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a></code></p>
+
+  
       <p>Implementation of VADA from
 <a href="https://arxiv.org/abs/1802.08735">A DIRT-T Approach to Unsupervised Domain Adaptation</a>.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\vada.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VADAHook</span><span class="p">(</span><span class="n">GANHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">VADAHook</span><span class="p">(</span><span class="n">GANHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of VADA from</span>
 <span class="sd">    [A DIRT-T Approach to Unsupervised Domain Adaptation](https://arxiv.org/abs/1802.08735).</span>
@@ -2466,10 +2478,10 @@ VADAHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
         <span class="n">post_g</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">post_g</span><span class="p">,</span> <span class="p">[])</span>
         <span class="n">post_g</span> <span class="o">+=</span> <span class="p">[</span><span class="n">VATPlusEntropyHook</span><span class="p">(</span><span class="n">vat_loss_fn</span><span class="p">,</span> <span class="n">entropy_loss_fn</span><span class="p">)]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">post_g</span><span class="o">=</span><span class="n">post_g</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2483,35 +2495,64 @@ VADAHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.vada.VATHook" class="doc doc-heading">
-        <code>
-VATHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
+        <code>VATHook</code>
 
 
 <a href="#pytorch_adapt.hooks.vada.VATHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
+
+  
       <p>Applies the <a class="autorefs autorefs-internal" href="../../layers/vat_loss/#pytorch_adapt.layers.vat_loss.VATLoss"><code>VATLoss</code></a>.</p>
+
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\vada.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VATHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">VATHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies the [```VATLoss```][pytorch_adapt.layers.VATLoss].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2542,10 +2583,10 @@ VATHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.h
 
     <span class="k">def</span> <span class="nf">_loss_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;src_vat_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;target_vat_loss&quot;</span><span class="p">]</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2559,26 +2600,20 @@ VATHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.h
 
 
 
-
+  </div>
 
   </div>
 
-    </div>
-
-  </div>
-
-
-
-
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
+
+</div>
 
               
             </article>
@@ -2647,7 +2682,7 @@ VATHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.h
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

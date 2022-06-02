@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2451,10 +2451,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2464,21 +2464,23 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.gan.CDAN" class="doc doc-heading">
-        <code>
-CDAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.gan.GAN" href="#pytorch_adapt.adapters.gan.GAN">GAN</a>)
-        </code>
-
+        <code>CDAN</code>
 
 
 <a href="#pytorch_adapt.adapters.gan.CDAN" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.gan.GAN" href="#pytorch_adapt.adapters.gan.GAN">GAN</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/cdan/#pytorch_adapt.hooks.cdan.CDANHook">CDANHook</a>.</p>
 <table>
 <thead>
@@ -2503,9 +2505,26 @@ CDAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CDAN</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CDAN</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [CDANHook][pytorch_adapt.hooks.CDANHook].</span>
 
@@ -2522,55 +2541,10 @@ CDAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
         <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
         <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.CDAN.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.gan.GANHook" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.gan.CDAN.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Implementation of
-<a href="https://arxiv.org/abs/1705.10667">Conditional Adversarial Domain Adaptation</a></p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CDANHook</span><span class="p">(</span><span class="n">GANHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Implementation of</span>
-<span class="sd">    [Conditional Adversarial Domain Adaptation](https://arxiv.org/abs/1705.10667)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">softmax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">disc_hook</span><span class="o">=</span><span class="n">CDANDomainHookD</span><span class="p">(</span><span class="n">softmax</span><span class="o">=</span><span class="n">softmax</span><span class="p">),</span>
-            <span class="n">gen_hook</span><span class="o">=</span><span class="n">CDANDomainHookG</span><span class="p">(</span><span class="n">softmax</span><span class="o">=</span><span class="n">softmax</span><span class="p">),</span>
-            <span class="o">**</span><span class="n">kwargs</span>
-        <span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -2584,85 +2558,28 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.CDAN.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.gan.CDAN.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_combiner&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.gan.DomainConfusion" class="doc doc-heading">
-        <code>
-DomainConfusion            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.gan.GAN" href="#pytorch_adapt.adapters.gan.GAN">GAN</a>)
-        </code>
-
+        <code>DomainConfusion</code>
 
 
 <a href="#pytorch_adapt.adapters.gan.DomainConfusion" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.gan.GAN" href="#pytorch_adapt.adapters.gan.GAN">GAN</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/domain_confusion/#pytorch_adapt.hooks.domain_confusion.DomainConfusionHook">DomainConfusionHook</a>.</p>
 <table>
 <thead>
@@ -2683,9 +2600,20 @@ DomainConfusion            (<a class="autorefs autorefs-internal" title="pytorch
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DomainConfusion</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DomainConfusion</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].</span>
 
@@ -2696,55 +2624,10 @@ DomainConfusion            (<a class="autorefs autorefs-internal" title="pytorch
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">DomainConfusionHook</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.DomainConfusion.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.gan.GANHook" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.gan.DomainConfusion.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Implementation of
-<a href="https://arxiv.org/abs/1510.02192">Simultaneous Deep Transfer Across Domains and Tasks</a></p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DomainConfusionHook</span><span class="p">(</span><span class="n">GANHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Implementation of</span>
-<span class="sd">    [Simultaneous Deep Transfer Across Domains and Tasks](https://arxiv.org/abs/1510.02192)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">disc_domain_loss_fn</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">),</span>
-            <span class="n">gen_domain_loss_fn</span><span class="o">=</span><span class="n">UniformDistributionLoss</span><span class="p">(),</span>
-            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -2758,42 +2641,28 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.gan.GAN" class="doc doc-heading">
-        <code>
-GAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseGCDAdapter" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter">BaseGCDAdapter</a>)
-        </code>
-
+        <code>GAN</code>
 
 
 <a href="#pytorch_adapt.adapters.gan.GAN" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseGCDAdapter" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter">BaseGCDAdapter</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>.</p>
 <table>
 <thead>
@@ -2814,9 +2683,25 @@ GAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">BaseGCDAdapter</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">BaseGCDAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [GANHook][pytorch_adapt.hooks.GANHook].</span>
 
@@ -2832,183 +2717,10 @@ GAN            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapt
         <span class="n">g_opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
         <span class="n">d_opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">d_opts</span><span class="o">=</span><span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.GAN.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../../hooks/base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.gan.GAN.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>A generic GAN architecture for domain adaptation.
-This includes the model optimization steps.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GANHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A generic GAN architecture for domain adaptation.</span>
-<span class="sd">    This includes the model optimization steps.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">d_opts</span><span class="p">,</span>
-        <span class="n">g_opts</span><span class="p">,</span>
-        <span class="n">d_weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">d_reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">g_weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">g_reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">disc_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">disc_f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">disc_d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">disc_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">disc_alts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_alts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">disc_domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">disc_domain_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">gen_domain_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Arguments:</span>
-<span class="sd">            d_opts: List of optimizers for the D phase.</span>
-<span class="sd">            g_opts: List of optimizers for the G phase.</span>
-<span class="sd">            d_weighter: A loss weighter for the D phase.</span>
-<span class="sd">                If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
-<span class="sd">            d_reducer: A loss reducer for the D phase.</span>
-<span class="sd">                If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
-<span class="sd">            g_weighter: A loss weighter for the G phase.</span>
-<span class="sd">                If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
-<span class="sd">            g_reducer: A loss reducer for the G phase.</span>
-<span class="sd">                If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
-<span class="sd">            pre_d: List of hooks that will be executed at the very</span>
-<span class="sd">                beginning of the D phase.</span>
-<span class="sd">            post_d: List of hooks that will be executed at the end</span>
-<span class="sd">                of the D phase, but before the optimizers are called.</span>
-<span class="sd">            pre_g: List of hooks that will be executed at the very</span>
-<span class="sd">                beginning of the G phase.</span>
-<span class="sd">            post_g: List of hooks that will be executed at the end</span>
-<span class="sd">                of the G phase, but before the optimizers are called.</span>
-<span class="sd">            use_logits: If ```True```, then D receives the output of C</span>
-<span class="sd">                instead of the output of G.</span>
-<span class="sd">            disc_hook: The hook used for computing the discriminator&#39;s</span>
-<span class="sd">                domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
-<span class="sd">            gen_hook: The hook used for computing the generator&#39;s</span>
-<span class="sd">                domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
-<span class="sd">            c_hook: The hook used for computing the classifiers&#39;s loss.</span>
-<span class="sd">                If ```None``` then [```CLossHook```][pytorch_adapt.hooks.CLossHook] is used.</span>
-<span class="sd">            disc_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">                for the D phase.</span>
-<span class="sd">            disc_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">                for the D phase.</span>
-<span class="sd">            gen_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">                for the G phase.</span>
-<span class="sd">            gen_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">                for the G phase.</span>
-<span class="sd">            disc_domains: The domains used to compute the discriminator&#39;s</span>
-<span class="sd">                domain loss. If ```None```, then ```[&quot;src&quot;, &quot;target&quot;]``` is used.</span>
-<span class="sd">            gen_domains: The domains used to compute the generators&#39;s</span>
-<span class="sd">                domain loss. If ```None```, then ```[&quot;src&quot;, &quot;target&quot;]``` is used.</span>
-<span class="sd">            disc_domain_loss_fn: The loss function used to compute the</span>
-<span class="sd">                discriminator&#39;s domain loss. If ```None``` then</span>
-<span class="sd">                ```torch.nn.BCEWithLogitsLoss``` is used.</span>
-<span class="sd">            gen_domain_loss_fn: The loss function used to compute the</span>
-<span class="sd">                generator&#39;s domain loss. If ```None``` then</span>
-<span class="sd">                ```torch.nn.BCEWithLogitsLoss``` is used.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="p">[</span><span class="n">pre_d</span><span class="p">,</span> <span class="n">post_d</span><span class="p">,</span> <span class="n">pre_g</span><span class="p">,</span> <span class="n">post_g</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">many_default</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">pre_d</span><span class="p">,</span> <span class="n">post_d</span><span class="p">,</span> <span class="n">pre_g</span><span class="p">,</span> <span class="n">post_g</span><span class="p">],</span> <span class="p">[[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]]</span>
-        <span class="p">)</span>
-        <span class="n">disc_f_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-            <span class="n">disc_f_hook</span><span class="p">,</span>
-            <span class="n">FeaturesForDomainLossHook</span><span class="p">,</span>
-            <span class="p">{</span><span class="s2">&quot;detach&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;use_logits&quot;</span><span class="p">:</span> <span class="n">use_logits</span><span class="p">,</span> <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">disc_domains</span><span class="p">},</span>
-        <span class="p">)</span>
-        <span class="n">gen_f_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-            <span class="n">gen_f_hook</span><span class="p">,</span>
-            <span class="n">FeaturesForDomainLossHook</span><span class="p">,</span>
-            <span class="p">{</span><span class="s2">&quot;use_logits&quot;</span><span class="p">:</span> <span class="n">use_logits</span><span class="p">,</span> <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">gen_domains</span><span class="p">},</span>
-        <span class="p">)</span>
-        <span class="n">c_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">c_hook</span><span class="p">,</span> <span class="n">CLossHook</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-            <span class="n">disc_hook</span><span class="p">,</span>
-            <span class="n">DomainLossHook</span><span class="p">,</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;d_loss_fn&quot;</span><span class="p">:</span> <span class="n">disc_domain_loss_fn</span><span class="p">,</span>
-                <span class="s2">&quot;loss_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;d_&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;detach_features&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="s2">&quot;f_hook&quot;</span><span class="p">:</span> <span class="n">disc_f_hook</span><span class="p">,</span>
-                <span class="s2">&quot;d_hook&quot;</span><span class="p">:</span> <span class="n">disc_d_hook</span><span class="p">,</span>
-                <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">disc_domains</span><span class="p">,</span>
-            <span class="p">},</span>
-        <span class="p">)</span>
-        <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-            <span class="n">gen_hook</span><span class="p">,</span>
-            <span class="n">DomainLossHook</span><span class="p">,</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;d_loss_fn&quot;</span><span class="p">:</span> <span class="n">gen_domain_loss_fn</span><span class="p">,</span>
-                <span class="s2">&quot;loss_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;g_&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reverse_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="s2">&quot;f_hook&quot;</span><span class="p">:</span> <span class="n">gen_f_hook</span><span class="p">,</span>
-                <span class="s2">&quot;d_hook&quot;</span><span class="p">:</span> <span class="n">gen_d_hook</span><span class="p">,</span>
-                <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">gen_domains</span><span class="p">,</span>
-            <span class="p">},</span>
-        <span class="p">)</span>
-        <span class="c1"># use gen_f_hook to get undetached features first</span>
-        <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span>
-            <span class="o">*</span><span class="n">pre_d</span><span class="p">,</span>
-            <span class="n">gen_f_hook</span><span class="p">,</span>
-            <span class="n">disc_hook</span><span class="p">,</span>
-            <span class="o">*</span><span class="n">post_d</span><span class="p">,</span>
-            <span class="n">conditions</span><span class="o">=</span><span class="n">disc_conditions</span><span class="p">,</span>
-            <span class="n">alts</span><span class="o">=</span><span class="n">disc_alts</span>
-        <span class="p">)</span>
-        <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span>
-            <span class="o">*</span><span class="n">pre_g</span><span class="p">,</span> <span class="n">gen_hook</span><span class="p">,</span> <span class="n">c_hook</span><span class="p">,</span> <span class="o">*</span><span class="n">post_g</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="n">gen_conditions</span><span class="p">,</span> <span class="n">alts</span><span class="o">=</span><span class="n">gen_alts</span>
-        <span class="p">)</span>
-
-        <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">disc_hook</span><span class="p">,</span> <span class="n">d_opts</span><span class="p">,</span> <span class="n">d_weighter</span><span class="p">,</span> <span class="n">d_reducer</span><span class="p">)</span>
-        <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">gen_hook</span><span class="p">,</span> <span class="n">g_opts</span><span class="p">,</span> <span class="n">g_weighter</span><span class="p">,</span> <span class="n">g_reducer</span><span class="p">)</span>
-        <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;d_loss&quot;</span><span class="p">:</span> <span class="n">disc_hook</span><span class="p">,</span> <span class="s2">&quot;g_loss&quot;</span><span class="p">:</span> <span class="n">gen_hook</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">disc_hook</span><span class="p">,</span> <span class="n">gen_hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -3020,399 +2732,30 @@ This includes the model optimization steps.</p>
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h4 id="pytorch_adapt.adapters.gan.GAN.hook_cls.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="p">,</span> <span class="n">d_weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">disc_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disc_f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disc_d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disc_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disc_alts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_alts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disc_domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disc_domain_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gen_domain_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#pytorch_adapt.adapters.gan.GAN.hook_cls.__init__" class="headerlink" title="Permanent link">&para;</a></h4>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>d_opts</code></td>
-        <td></td>
-        <td><p>List of optimizers for the D phase.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>g_opts</code></td>
-        <td></td>
-        <td><p>List of optimizers for the G phase.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>d_weighter</code></td>
-        <td></td>
-        <td><p>A loss weighter for the D phase.
-If <code>None</code> then <a class="autorefs autorefs-internal" href="../../weighters/mean_weighter/#pytorch_adapt.weighters.mean_weighter.MeanWeighter"><code>MeanWeighter</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>d_reducer</code></td>
-        <td></td>
-        <td><p>A loss reducer for the D phase.
-If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/reducers/#pytorch_adapt.hooks.reducers.MeanReducer"><code>MeanReducer</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>g_weighter</code></td>
-        <td></td>
-        <td><p>A loss weighter for the G phase.
-If <code>None</code> then <a class="autorefs autorefs-internal" href="../../weighters/mean_weighter/#pytorch_adapt.weighters.mean_weighter.MeanWeighter"><code>MeanWeighter</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>g_reducer</code></td>
-        <td></td>
-        <td><p>A loss reducer for the G phase.
-If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/reducers/#pytorch_adapt.hooks.reducers.MeanReducer"><code>MeanReducer</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>pre_d</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed at the very
-beginning of the D phase.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>post_d</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed at the end
-of the D phase, but before the optimizers are called.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>pre_g</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed at the very
-beginning of the G phase.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>post_g</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed at the end
-of the G phase, but before the optimizers are called.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>use_logits</code></td>
-        <td></td>
-        <td><p>If <code>True</code>, then D receives the output of C
-instead of the output of G.</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>disc_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing the discriminator's
-domain loss. If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/domain/#pytorch_adapt.hooks.domain.DomainLossHook"><code>DomainLossHook</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>gen_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing the generator's
-domain loss. If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/domain/#pytorch_adapt.hooks.domain.DomainLossHook"><code>DomainLossHook</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>c_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing the classifiers's loss.
-If <code>None</code> then <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.CLossHook"><code>CLossHook</code></a> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>disc_conditions</code></td>
-        <td></td>
-        <td><p>The condition hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
-for the D phase.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>disc_alts</code></td>
-        <td></td>
-        <td><p>The alt hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
-for the D phase.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>gen_conditions</code></td>
-        <td></td>
-        <td><p>The condition hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
-for the G phase.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>gen_alts</code></td>
-        <td></td>
-        <td><p>The alt hooks used in the <a class="autorefs autorefs-internal" href="../../hooks/utils/#pytorch_adapt.hooks.utils.ChainHook"><code>ChainHook</code></a>
-for the G phase.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>disc_domains</code></td>
-        <td></td>
-        <td><p>The domains used to compute the discriminator's
-domain loss. If <code>None</code>, then <code>["src", "target"]</code> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>gen_domains</code></td>
-        <td></td>
-        <td><p>The domains used to compute the generators's
-domain loss. If <code>None</code>, then <code>["src", "target"]</code> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>disc_domain_loss_fn</code></td>
-        <td></td>
-        <td><p>The loss function used to compute the
-discriminator's domain loss. If <code>None</code> then
-<code>torch.nn.BCEWithLogitsLoss</code> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>gen_domain_loss_fn</code></td>
-        <td></td>
-        <td><p>The loss function used to compute the
-generator's domain loss. If <code>None</code> then
-<code>torch.nn.BCEWithLogitsLoss</code> is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">d_opts</span><span class="p">,</span>
-    <span class="n">g_opts</span><span class="p">,</span>
-    <span class="n">d_weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">d_reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">g_weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">g_reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">disc_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">disc_f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">disc_d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">disc_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">disc_alts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_alts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">disc_domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">disc_domain_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">gen_domain_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Arguments:</span>
-<span class="sd">        d_opts: List of optimizers for the D phase.</span>
-<span class="sd">        g_opts: List of optimizers for the G phase.</span>
-<span class="sd">        d_weighter: A loss weighter for the D phase.</span>
-<span class="sd">            If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
-<span class="sd">        d_reducer: A loss reducer for the D phase.</span>
-<span class="sd">            If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
-<span class="sd">        g_weighter: A loss weighter for the G phase.</span>
-<span class="sd">            If ```None``` then [```MeanWeighter```][pytorch_adapt.weighters.MeanWeighter] is used.</span>
-<span class="sd">        g_reducer: A loss reducer for the G phase.</span>
-<span class="sd">            If ```None``` then [```MeanReducer```][pytorch_adapt.hooks.MeanReducer] is used.</span>
-<span class="sd">        pre_d: List of hooks that will be executed at the very</span>
-<span class="sd">            beginning of the D phase.</span>
-<span class="sd">        post_d: List of hooks that will be executed at the end</span>
-<span class="sd">            of the D phase, but before the optimizers are called.</span>
-<span class="sd">        pre_g: List of hooks that will be executed at the very</span>
-<span class="sd">            beginning of the G phase.</span>
-<span class="sd">        post_g: List of hooks that will be executed at the end</span>
-<span class="sd">            of the G phase, but before the optimizers are called.</span>
-<span class="sd">        use_logits: If ```True```, then D receives the output of C</span>
-<span class="sd">            instead of the output of G.</span>
-<span class="sd">        disc_hook: The hook used for computing the discriminator&#39;s</span>
-<span class="sd">            domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
-<span class="sd">        gen_hook: The hook used for computing the generator&#39;s</span>
-<span class="sd">            domain loss. If ```None``` then [```DomainLossHook```][pytorch_adapt.hooks.DomainLossHook] is used.</span>
-<span class="sd">        c_hook: The hook used for computing the classifiers&#39;s loss.</span>
-<span class="sd">            If ```None``` then [```CLossHook```][pytorch_adapt.hooks.CLossHook] is used.</span>
-<span class="sd">        disc_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">            for the D phase.</span>
-<span class="sd">        disc_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">            for the D phase.</span>
-<span class="sd">        gen_conditions: The condition hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">            for the G phase.</span>
-<span class="sd">        gen_alts: The alt hooks used in the [```ChainHook```][pytorch_adapt.hooks.ChainHook]</span>
-<span class="sd">            for the G phase.</span>
-<span class="sd">        disc_domains: The domains used to compute the discriminator&#39;s</span>
-<span class="sd">            domain loss. If ```None```, then ```[&quot;src&quot;, &quot;target&quot;]``` is used.</span>
-<span class="sd">        gen_domains: The domains used to compute the generators&#39;s</span>
-<span class="sd">            domain loss. If ```None```, then ```[&quot;src&quot;, &quot;target&quot;]``` is used.</span>
-<span class="sd">        disc_domain_loss_fn: The loss function used to compute the</span>
-<span class="sd">            discriminator&#39;s domain loss. If ```None``` then</span>
-<span class="sd">            ```torch.nn.BCEWithLogitsLoss``` is used.</span>
-<span class="sd">        gen_domain_loss_fn: The loss function used to compute the</span>
-<span class="sd">            generator&#39;s domain loss. If ```None``` then</span>
-<span class="sd">            ```torch.nn.BCEWithLogitsLoss``` is used.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="p">[</span><span class="n">pre_d</span><span class="p">,</span> <span class="n">post_d</span><span class="p">,</span> <span class="n">pre_g</span><span class="p">,</span> <span class="n">post_g</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">many_default</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">pre_d</span><span class="p">,</span> <span class="n">post_d</span><span class="p">,</span> <span class="n">pre_g</span><span class="p">,</span> <span class="n">post_g</span><span class="p">],</span> <span class="p">[[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]]</span>
-    <span class="p">)</span>
-    <span class="n">disc_f_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-        <span class="n">disc_f_hook</span><span class="p">,</span>
-        <span class="n">FeaturesForDomainLossHook</span><span class="p">,</span>
-        <span class="p">{</span><span class="s2">&quot;detach&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;use_logits&quot;</span><span class="p">:</span> <span class="n">use_logits</span><span class="p">,</span> <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">disc_domains</span><span class="p">},</span>
-    <span class="p">)</span>
-    <span class="n">gen_f_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-        <span class="n">gen_f_hook</span><span class="p">,</span>
-        <span class="n">FeaturesForDomainLossHook</span><span class="p">,</span>
-        <span class="p">{</span><span class="s2">&quot;use_logits&quot;</span><span class="p">:</span> <span class="n">use_logits</span><span class="p">,</span> <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">gen_domains</span><span class="p">},</span>
-    <span class="p">)</span>
-    <span class="n">c_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">c_hook</span><span class="p">,</span> <span class="n">CLossHook</span><span class="p">,</span> <span class="p">{})</span>
-    <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-        <span class="n">disc_hook</span><span class="p">,</span>
-        <span class="n">DomainLossHook</span><span class="p">,</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;d_loss_fn&quot;</span><span class="p">:</span> <span class="n">disc_domain_loss_fn</span><span class="p">,</span>
-            <span class="s2">&quot;loss_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;d_&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;detach_features&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;f_hook&quot;</span><span class="p">:</span> <span class="n">disc_f_hook</span><span class="p">,</span>
-            <span class="s2">&quot;d_hook&quot;</span><span class="p">:</span> <span class="n">disc_d_hook</span><span class="p">,</span>
-            <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">disc_domains</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">)</span>
-    <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
-        <span class="n">gen_hook</span><span class="p">,</span>
-        <span class="n">DomainLossHook</span><span class="p">,</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;d_loss_fn&quot;</span><span class="p">:</span> <span class="n">gen_domain_loss_fn</span><span class="p">,</span>
-            <span class="s2">&quot;loss_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;g_&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;reverse_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;f_hook&quot;</span><span class="p">:</span> <span class="n">gen_f_hook</span><span class="p">,</span>
-            <span class="s2">&quot;d_hook&quot;</span><span class="p">:</span> <span class="n">gen_d_hook</span><span class="p">,</span>
-            <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">gen_domains</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">)</span>
-    <span class="c1"># use gen_f_hook to get undetached features first</span>
-    <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span>
-        <span class="o">*</span><span class="n">pre_d</span><span class="p">,</span>
-        <span class="n">gen_f_hook</span><span class="p">,</span>
-        <span class="n">disc_hook</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">post_d</span><span class="p">,</span>
-        <span class="n">conditions</span><span class="o">=</span><span class="n">disc_conditions</span><span class="p">,</span>
-        <span class="n">alts</span><span class="o">=</span><span class="n">disc_alts</span>
-    <span class="p">)</span>
-    <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span>
-        <span class="o">*</span><span class="n">pre_g</span><span class="p">,</span> <span class="n">gen_hook</span><span class="p">,</span> <span class="n">c_hook</span><span class="p">,</span> <span class="o">*</span><span class="n">post_g</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="n">gen_conditions</span><span class="p">,</span> <span class="n">alts</span><span class="o">=</span><span class="n">gen_alts</span>
-    <span class="p">)</span>
-
-    <span class="n">disc_hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">disc_hook</span><span class="p">,</span> <span class="n">d_opts</span><span class="p">,</span> <span class="n">d_weighter</span><span class="p">,</span> <span class="n">d_reducer</span><span class="p">)</span>
-    <span class="n">gen_hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">gen_hook</span><span class="p">,</span> <span class="n">g_opts</span><span class="p">,</span> <span class="n">g_weighter</span><span class="p">,</span> <span class="n">g_reducer</span><span class="p">)</span>
-    <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;d_loss&quot;</span><span class="p">:</span> <span class="n">disc_hook</span><span class="p">,</span> <span class="s2">&quot;g_loss&quot;</span><span class="p">:</span> <span class="n">gen_hook</span><span class="p">})</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">disc_hook</span><span class="p">,</span> <span class="n">gen_hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
 
 
   </div>
 
-    </div>
-
   </div>
 
+</div>
 
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.GAN.init_hook" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.gan.GAN.init_hook" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p><code>self.hook</code> is initialized here.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
-    <span class="n">g_opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
-    <span class="n">d_opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">d_opts</span><span class="o">=</span><span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.gan.VADA" class="doc doc-heading">
-        <code>
-VADA            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.gan.GAN" href="#pytorch_adapt.adapters.gan.GAN">GAN</a>)
-        </code>
-
+        <code>VADA</code>
 
 
 <a href="#pytorch_adapt.adapters.gan.VADA" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.gan.GAN" href="#pytorch_adapt.adapters.gan.GAN">GAN</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/vada/#pytorch_adapt.hooks.vada.VADAHook">VADAHook</a>.</p>
 <table>
 <thead>
@@ -3440,9 +2783,36 @@ VADA            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adap
 It is simply <code>torch.nn.Sequential(G, C)</code>, and is set
 automatically during initialization.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VADA</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">VADA</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [VADAHook][pytorch_adapt.hooks.VADAHook].</span>
 
@@ -3469,53 +2839,10 @@ automatically during initialization.</p>
         <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
         <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;combined_model&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.VADA.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.gan.GANHook" href="../../hooks/gan/#pytorch_adapt.hooks.gan.GANHook">GANHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.gan.VADA.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Implementation of VADA from
-<a href="https://arxiv.org/abs/1802.08735">A DIRT-T Approach to Unsupervised Domain Adaptation</a>.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VADAHook</span><span class="p">(</span><span class="n">GANHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Implementation of VADA from</span>
-<span class="sd">    [A DIRT-T Approach to Unsupervised Domain Adaptation](https://arxiv.org/abs/1802.08735).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vat_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">entropy_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">post_g</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">post_g</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="n">post_g</span> <span class="o">+=</span> <span class="p">[</span><span class="n">VATPlusEntropyHook</span><span class="p">(</span><span class="n">vat_loss_fn</span><span class="p">,</span> <span class="n">entropy_loss_fn</span><span class="p">)]</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">post_g</span><span class="o">=</span><span class="n">post_g</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -3529,108 +2856,20 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
+  </div>
 
   </div>
 
-    </div>
-
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.VADA.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.gan.VADA.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;combined_model&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.gan.VADA.init_containers_and_check_keys" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.gan.VADA.init_containers_and_check_keys" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Called in <code>__init__</code> before
-<a class="autorefs autorefs-internal" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook"><code>init_hook</code></a>.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
-    <span class="n">models</span> <span class="o">=</span> <span class="n">containers</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span>
-    <span class="n">misc</span> <span class="o">=</span> <span class="n">containers</span><span class="p">[</span><span class="s2">&quot;misc&quot;</span><span class="p">]</span>
-    <span class="n">misc</span><span class="p">[</span><span class="s2">&quot;combined_model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">],</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">])</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="n">containers</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
 
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
+</div>
 
               
             </article>
@@ -3699,7 +2938,7 @@ hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

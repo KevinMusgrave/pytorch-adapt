@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2409,10 +2409,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2423,29 +2423,131 @@
 
 
 
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.dann.DANNHook" class="doc doc-heading">
-        <code>
-DANNHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
+        <code>DANNHook</code>
 
 
 <a href="#pytorch_adapt.hooks.dann.DANNHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.utils.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
+
+  
       <p>Implementation of
 <a href="https://arxiv.org/abs/1505.07818">Domain-Adversarial Training of Neural Networks</a>.</p>
 <p>This includes the model optimization step.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\dann.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DANNHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DANNHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of</span>
 <span class="sd">    [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818).</span>
@@ -2547,10 +2649,10 @@ DANNHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
         <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
         <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2562,149 +2664,285 @@ DANNHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.
 
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.hooks.dann.DANNHook.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">domain_loss_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook_allowed</span><span class="o">=</span><span class="s1">&#39;_dlogits$&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">post_g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gradient_reversal_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">domain_loss_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">d_hook_allowed</span><span class="o">=</span><span class="s1">&#39;_dlogits$&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.hooks.dann.DANNHook.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>opts</code></td>
-        <td></td>
-        <td><p>List of optimizers for updating the models.</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>weighter</code></td>
-        <td></td>
-        <td><p>Weights the losses before backpropagation.
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>opts</code></td>
+          <td>
+          </td>
+          <td><p>List of optimizers for updating the models.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>weighter</code></td>
+          <td>
+          </td>
+          <td><p>Weights the losses before backpropagation.
 If <code>None</code> then it defaults to
 <a class="autorefs autorefs-internal" href="../../weighters/mean_weighter/#pytorch_adapt.weighters.mean_weighter.MeanWeighter"><code>MeanWeighter</code></a></p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>reducer</code></td>
-        <td></td>
-        <td><p>Reduces loss tensors.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reducer</code></td>
+          <td>
+          </td>
+          <td><p>Reduces loss tensors.
 If <code>None</code> then it defaults to
 <a class="autorefs autorefs-internal" href="../reducers/#pytorch_adapt.hooks.reducers.MeanReducer"><code>MeanReducer</code></a></p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>pre</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed at the very
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pre</code></td>
+          <td>
+          </td>
+          <td><p>List of hooks that will be executed at the very
 beginning of each iteration.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>pre_d</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed after
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pre_d</code></td>
+          <td>
+          </td>
+          <td><p>List of hooks that will be executed after
 gradient reversal, but before the domain loss.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>post_d</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed after
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>post_d</code></td>
+          <td>
+          </td>
+          <td><p>List of hooks that will be executed after
 gradient reversal, and after the domain loss.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>pre_g</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed outside of
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pre_g</code></td>
+          <td>
+          </td>
+          <td><p>List of hooks that will be executed outside of
 the gradient reversal step, and before the generator
 and classifier loss.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>post_g</code></td>
-        <td></td>
-        <td><p>List of hooks that will be executed after
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>post_g</code></td>
+          <td>
+          </td>
+          <td><p>List of hooks that will be executed after
 the generator and classifier losses.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>gradient_reversal</code></td>
-        <td></td>
-        <td><p>Called before all D hooks, including
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>gradient_reversal</code></td>
+          <td>
+          </td>
+          <td><p>Called before all D hooks, including
 <code>pre_d</code>.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>use_logits</code></td>
-        <td></td>
-        <td><p>If <code>True</code>, then D receives the output of C
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>use_logits</code></td>
+          <td>
+          </td>
+          <td><p>If <code>True</code>, then D receives the output of C
 instead of the output of G.</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>f_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing features and logits.
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>f_hook</code></td>
+          <td>
+          </td>
+          <td><p>The hook used for computing features and logits.
 If <code>None</code> then it defaults to
 <a class="autorefs autorefs-internal" href="../domain/#pytorch_adapt.hooks.domain.FeaturesForDomainLossHook"><code>FeaturesForDomainLossHook</code></a></p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>d_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing discriminator logits.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>d_hook</code></td>
+          <td>
+          </td>
+          <td><p>The hook used for computing discriminator logits.
 If <code>None</code> then it defaults to
 <a class="autorefs autorefs-internal" href="../features/#pytorch_adapt.hooks.features.DLogitsHook"><code>DLogitsHook</code></a></p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>c_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing the classifiers's loss.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>c_hook</code></td>
+          <td>
+          </td>
+          <td><p>The hook used for computing the classifiers's loss.
 If <code>None</code> then it defaults to
 <a class="autorefs autorefs-internal" href="../classification/#pytorch_adapt.hooks.classification.CLossHook"><code>CLossHook</code></a></p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>domain_loss_hook</code></td>
-        <td></td>
-        <td><p>The hook used for computing the domain loss.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>domain_loss_hook</code></td>
+          <td>
+          </td>
+          <td><p>The hook used for computing the domain loss.
 If <code>None</code> then it defaults to
 <a class="autorefs autorefs-internal" href="../domain/#pytorch_adapt.hooks.domain.DomainLossHook"><code>DomainLossHook</code></a>.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>d_hook_allowed</code></td>
-        <td></td>
-        <td><p>A regex string that specifies the allowed
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>d_hook_allowed</code></td>
+          <td>
+          </td>
+          <td><p>A regex string that specifies the allowed
 output names of the discriminator block.</p></td>
-        <td><code>&#39;_dlogits$&#39;</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\hooks\dann.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+          <td>
+                <code>&#39;_dlogits$&#39;</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\hooks\dann.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">opts</span><span class="p">,</span>
     <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2798,40 +3036,28 @@ output names of the discriminator block.</p></td>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
     <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
 
   </div>
 
-
-
-
-
   </div>
 
-    </div>
-
-  </div>
-
-
-
-
-
-
-
-
-
-
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
+
+</div>
 
               
             </article>
@@ -2900,7 +3126,7 @@ output names of the discriminator block.</p></td>
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

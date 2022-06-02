@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2423,10 +2423,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2436,21 +2436,23 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.classifier.Classifier" class="doc doc-heading">
-        <code>
-Classifier            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseGCAdapter" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a>)
-        </code>
-
+        <code>Classifier</code>
 
 
 <a href="#pytorch_adapt.adapters.classifier.Classifier" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseGCAdapter" href="../base_adapter/#pytorch_adapt.adapters.base_adapter.BaseGCAdapter">BaseGCAdapter</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.ClassifierHook">ClassifierHook</a>.</p>
 <table>
 <thead>
@@ -2471,9 +2473,24 @@ Classifier            (<a class="autorefs autorefs-internal" title="pytorch_adap
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Classifier</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Classifier</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [ClassifierHook][pytorch_adapt.hooks.ClassifierHook].</span>
 
@@ -2488,68 +2505,10 @@ Classifier            (<a class="autorefs autorefs-internal" title="pytorch_adap
     <span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
         <span class="n">opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="n">opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.classifier.Classifier.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../../hooks/base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.classifier.Classifier.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>This computes the classification loss and also
-optimizes the models.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ClassifierHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This computes the classification loss and also</span>
-<span class="sd">    optimizes the models.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">opts</span><span class="p">,</span>
-        <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">reducer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">detach_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">post</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="p">[</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">many_default</span><span class="p">([</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">],</span> <span class="p">[[],</span> <span class="p">[]])</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">CLossHook</span><span class="p">(</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">detach_features</span><span class="p">,</span> <span class="n">f_hook</span><span class="p">)</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="o">*</span><span class="n">pre</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="o">*</span><span class="n">post</span><span class="p">)</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
-        <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -2563,69 +2522,28 @@ optimizes the models.</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.classifier.Classifier.init_hook" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.classifier.Classifier.init_hook" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p><code>self.hook</code> is initialized here.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
-    <span class="n">opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="n">opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.classifier.Finetuner" class="doc doc-heading">
-        <code>
-Finetuner            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.classifier.Classifier" href="#pytorch_adapt.adapters.classifier.Classifier">Classifier</a>)
-        </code>
-
+        <code>Finetuner</code>
 
 
 <a href="#pytorch_adapt.adapters.classifier.Finetuner" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.classifier.Classifier" href="#pytorch_adapt.adapters.classifier.Classifier">Classifier</a></code></p>
+
+  
       <p>Wraps <a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.FinetunerHook">FinetunerHook</a>.</p>
 <table>
 <thead>
@@ -2646,9 +2564,29 @@ Finetuner            (<a class="autorefs autorefs-internal" title="pytorch_adapt
 </tbody>
 </table>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Finetuner</span><span class="p">(</span><span class="n">Classifier</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finetuner</span><span class="p">(</span><span class="n">Classifier</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [FinetunerHook][pytorch_adapt.hooks.FinetunerHook].</span>
 
@@ -2668,55 +2606,10 @@ Finetuner            (<a class="autorefs autorefs-internal" title="pytorch_adapt
         <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
         <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h3 id="pytorch_adapt.adapters.classifier.Finetuner.hook_cls" class="doc doc-heading">
-        <code>
-hook_cls            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.classification.ClassifierHook" href="../../hooks/classification/#pytorch_adapt.hooks.classification.ClassifierHook">ClassifierHook</a>)
-        </code>
-
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner.hook_cls" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>This is the same as
-<a class="autorefs autorefs-internal" href="../../hooks/classification/#pytorch_adapt.hooks.classification.ClassifierHook"><code>ClassifierHook</code></a>,
-but it freezes the generator model ("G").</p>
-
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FinetunerHook</span><span class="p">(</span><span class="n">ClassifierHook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This is the same as</span>
-<span class="sd">    [```ClassifierHook```][pytorch_adapt.hooks.ClassifierHook],</span>
-<span class="sd">    but it freezes the generator model (&quot;G&quot;).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">f_hook</span> <span class="o">=</span> <span class="n">FrozenModelHook</span><span class="p">(</span><span class="n">FeaturesHook</span><span class="p">(</span><span class="n">detach</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]),</span> <span class="s2">&quot;G&quot;</span><span class="p">)</span>
-        <span class="n">f_hook</span> <span class="o">=</span> <span class="n">FeaturesChainHook</span><span class="p">(</span><span class="n">f_hook</span><span class="p">,</span> <span class="n">LogitsHook</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]))</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">f_hook</span><span class="o">=</span><span class="n">f_hook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
+  
 
   <div class="doc doc-children">
 
@@ -2730,122 +2623,20 @@ but it freezes the generator model ("G").</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
-
-  </div>
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.classifier.Finetuner.get_default_containers" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner.get_default_containers" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. Consists of an
-<a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
-container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a>
-of Adam with lr 0.0001.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
-    <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.classifier.Finetuner.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.classifier.Finetuner.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
-    <span class="n">ke</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;optimizers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ke</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
 
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
+</div>
 
               
             </article>
@@ -2914,7 +2705,7 @@ of Adam with lr 0.0001.</p></td>
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

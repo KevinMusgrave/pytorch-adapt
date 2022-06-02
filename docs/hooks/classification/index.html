@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2465,10 +2465,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2478,28 +2478,75 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.classification.CLossHook" class="doc doc-heading">
-        <code>
-CLossHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
+        <code>CLossHook</code>
 
 
 <a href="#pytorch_adapt.hooks.classification.CLossHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
+
+  
       <p>Computes a classification loss on the specified tensors.
 The default setting is to compute the cross entropy loss
 of the source domain logits.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CLossHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CLossHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes a classification loss on the specified tensors.</span>
 <span class="sd">    The default setting is to compute the cross entropy loss</span>
@@ -2544,10 +2591,10 @@ of the source domain logits.</p>
     <span class="k">def</span> <span class="nf">_loss_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;c_loss&quot;</span><span class="p">]</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2559,58 +2606,92 @@ of the source domain logits.</p>
 
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.hooks.classification.CLossHook.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">detach_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">detach_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">f_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.hooks.classification.CLossHook.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>loss_fn</code></td>
-        <td><code>Callable[[torch.Tensor, torch.Tensor], torch.Tensor]</code></td>
-        <td><p>The classification loss function. If <code>None</code>,
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>loss_fn</code></td>
+          <td>
+                <code><span title="typing.Callable">Callable</span>[[torch.<span title="torch.Tensor">Tensor</span>, torch.<span title="torch.Tensor">Tensor</span>], torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>The classification loss function. If <code>None</code>,
 it defaults to <code>torch.nn.CrossEntropyLoss</code>.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>detach_features</code></td>
-        <td><code>bool</code></td>
-        <td><p>Whether or not to detach the features,
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>detach_features</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>Whether or not to detach the features,
 from which logits are computed.</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>f_hook</code></td>
-        <td><code>BaseHook</code></td>
-        <td><p>The hook for computing logits.</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>f_hook</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseHook" href="../base/#pytorch_adapt.hooks.base.BaseHook">BaseHook</a></code>
+          </td>
+          <td><p>The hook for computing logits.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">loss_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">detach_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -2635,46 +2716,67 @@ from which logits are computed.</p></td>
         <span class="n">FeaturesAndLogitsHook</span><span class="p">,</span>
         <span class="p">{</span><span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">],</span> <span class="s2">&quot;detach_features&quot;</span><span class="p">:</span> <span class="n">detach_features</span><span class="p">},</span>
     <span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
-
-
+</div>
 
 
 
   </div>
 
-    </div>
-
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.classification.ClassifierHook" class="doc doc-heading">
-        <code>
-ClassifierHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
+        <code>ClassifierHook</code>
 
 
 <a href="#pytorch_adapt.hooks.classification.ClassifierHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
+
+  
       <p>This computes the classification loss and also
 optimizes the models.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ClassifierHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ClassifierHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This computes the classification loss and also</span>
 <span class="sd">    optimizes the models.</span>
@@ -2699,10 +2801,10 @@ optimizes the models.</p>
         <span class="n">hook</span> <span class="o">=</span> <span class="n">OptimizerHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">weighter</span><span class="p">,</span> <span class="n">reducer</span><span class="p">)</span>
         <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SummaryHook</span><span class="p">({</span><span class="s2">&quot;total_loss&quot;</span><span class="p">:</span> <span class="n">hook</span><span class="p">})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">s_hook</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2716,37 +2818,46 @@ optimizes the models.</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.classification.FinetunerHook" class="doc doc-heading">
-        <code>
-FinetunerHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.classification.ClassifierHook" href="#pytorch_adapt.hooks.classification.ClassifierHook">ClassifierHook</a>)
-        </code>
-
+        <code>FinetunerHook</code>
 
 
 <a href="#pytorch_adapt.hooks.classification.FinetunerHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.classification.ClassifierHook" href="#pytorch_adapt.hooks.classification.ClassifierHook">ClassifierHook</a></code></p>
+
+  
       <p>This is the same as
 <a class="autorefs autorefs-internal" href="#pytorch_adapt.hooks.classification.ClassifierHook"><code>ClassifierHook</code></a>,
 but it freezes the generator model ("G").</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FinetunerHook</span><span class="p">(</span><span class="n">ClassifierHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">FinetunerHook</span><span class="p">(</span><span class="n">ClassifierHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is the same as</span>
 <span class="sd">    [```ClassifierHook```][pytorch_adapt.hooks.ClassifierHook],</span>
@@ -2757,10 +2868,10 @@ but it freezes the generator model ("G").</p>
         <span class="n">f_hook</span> <span class="o">=</span> <span class="n">FrozenModelHook</span><span class="p">(</span><span class="n">FeaturesHook</span><span class="p">(</span><span class="n">detach</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]),</span> <span class="s2">&quot;G&quot;</span><span class="p">)</span>
         <span class="n">f_hook</span> <span class="o">=</span> <span class="n">FeaturesChainHook</span><span class="p">(</span><span class="n">f_hook</span><span class="p">,</span> <span class="n">LogitsHook</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]))</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">f_hook</span><span class="o">=</span><span class="n">f_hook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2774,36 +2885,42 @@ but it freezes the generator model ("G").</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.classification.SoftmaxHook" class="doc doc-heading">
-        <code>
-SoftmaxHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.utils.ApplyFnHook" href="../utils/#pytorch_adapt.hooks.utils.ApplyFnHook">ApplyFnHook</a>)
-        </code>
-
+        <code>SoftmaxHook</code>
 
 
 <a href="#pytorch_adapt.hooks.classification.SoftmaxHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.utils.ApplyFnHook" href="../utils/#pytorch_adapt.hooks.utils.ApplyFnHook">ApplyFnHook</a></code></p>
+
+  
       <p>Applies <code>torch.nn.Softmax(dim=1)</code> to the
 specified inputs.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SoftmaxHook</span><span class="p">(</span><span class="n">ApplyFnHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SoftmaxHook</span><span class="p">(</span><span class="n">ApplyFnHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies ```torch.nn.Softmax(dim=1)``` to the</span>
 <span class="sd">    specified inputs.</span>
@@ -2811,10 +2928,10 @@ specified inputs.</p>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2828,37 +2945,53 @@ specified inputs.</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.hooks.classification.SoftmaxLocallyHook" class="doc doc-heading">
-        <code>
-SoftmaxLocallyHook            (<a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a>)
-        </code>
-
+        <code>SoftmaxLocallyHook</code>
 
 
 <a href="#pytorch_adapt.hooks.classification.SoftmaxLocallyHook" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
+
+  
       <p>Applies <code>torch.nn.Softmax(dim=1)</code> to the
 specified inputs, which are overwritten, but
 only inside this hook.</p>
 
+
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SoftmaxLocallyHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SoftmaxLocallyHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies ```torch.nn.Softmax(dim=1)``` to the</span>
 <span class="sd">    specified inputs, which are overwritten, but</span>
@@ -2870,16 +3003,16 @@ only inside this hook.</p>
 <span class="sd">        Arguments:</span>
 <span class="sd">            apply_to: list of names of tensors that softmax</span>
 <span class="sd">                will be applied to.</span>
-<span class="sd">            hooks: the hooks that will receive the softmaxed</span>
+<span class="sd">            *hooks: the hooks that will receive the softmaxed</span>
 <span class="sd">                tensors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SoftmaxHook</span><span class="p">(</span><span class="n">apply_to</span><span class="o">=</span><span class="n">apply_to</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">OnlyNewOutputsHook</span><span class="p">(</span><span class="n">ChainHook</span><span class="p">(</span><span class="n">s_hook</span><span class="p">,</span> <span class="o">*</span><span class="n">hooks</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2891,89 +3024,100 @@ only inside this hook.</p>
 
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.hooks.classification.SoftmaxLocallyHook.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply_to</span><span class="p">,</span> <span class="o">*</span><span class="n">hooks</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">apply_to</span><span class="p">,</span> <span class="o">*</span><span class="n">hooks</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.hooks.classification.SoftmaxLocallyHook.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>apply_to</code></td>
-        <td><code>List[str]</code></td>
-        <td><p>list of names of tensors that softmax
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>apply_to</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[str]</code>
+          </td>
+          <td><p>list of names of tensors that softmax
 will be applied to.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>hooks</code></td>
-        <td><code>BaseHook</code></td>
-        <td><p>the hooks that will receive the softmaxed
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>*hooks</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseHook" href="../base/#pytorch_adapt.hooks.base.BaseHook">BaseHook</a></code>
+          </td>
+          <td><p>the hooks that will receive the softmaxed
 tensors.</p></td>
-        <td><code>()</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply_to</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="n">hooks</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <td>
+                <code>()</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\hooks\classification.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply_to</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="n">hooks</span><span class="p">:</span> <span class="n">BaseHook</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        apply_to: list of names of tensors that softmax</span>
 <span class="sd">            will be applied to.</span>
-<span class="sd">        hooks: the hooks that will receive the softmaxed</span>
+<span class="sd">        *hooks: the hooks that will receive the softmaxed</span>
 <span class="sd">            tensors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">s_hook</span> <span class="o">=</span> <span class="n">SoftmaxHook</span><span class="p">(</span><span class="n">apply_to</span><span class="o">=</span><span class="n">apply_to</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">OnlyNewOutputsHook</span><span class="p">(</span><span class="n">ChainHook</span><span class="p">(</span><span class="n">s_hook</span><span class="p">,</span> <span class="o">*</span><span class="n">hooks</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</code></pre></div>
-        </details>
-    </div>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
 
   </div>
 
-
-
-
-
   </div>
 
-    </div>
-
-  </div>
-
-
-
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
+
+</div>
 
               
             </article>
@@ -3042,7 +3186,7 @@ tensors.</p></td>
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

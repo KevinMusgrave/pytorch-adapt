@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2507,10 +2507,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2521,48 +2521,66 @@
 
 
 
-  <div class="doc doc-object doc-function">
+
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.adabn_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">adabn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.adabn_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p><a class="autorefs autorefs-internal" href="../../adapters/adabn/#pytorch_adapt.adapters.adabn.AdaBN">AdaBN</a> features and logits.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>x</code></td>
-        <td></td>
-        <td><p>The input to the model</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>domain</code></td>
-        <td></td>
-        <td><p>0 for source domain, 1 for target domain.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adabn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>x</code></td>
+          <td>
+          </td>
+          <td><p>The input to the model</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>domain</code></td>
+          <td>
+          </td>
+          <td><p>0 for source domain, 1 for target domain.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adabn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    [AdaBN][pytorch_adapt.adapters.AdaBN] features and logits.</span>
 <span class="sd">    Arguments:</span>
@@ -2573,98 +2591,170 @@
     <span class="n">features</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="n">logits</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span> <span class="s2">&quot;logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">}</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.adda_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">adda_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.adda_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p><a class="autorefs autorefs-internal" href="../../adapters/adda/#pytorch_adapt.adapters.adda.ADDA">ADDA</a> features and logits.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>x</code></td>
-        <td></td>
-        <td><p>The input to the model</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>domain</code></td>
-        <td></td>
-        <td><p>If 0, then <code>features = G(x)</code>.
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>x</code></td>
+          <td>
+          </td>
+          <td><p>The input to the model</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>domain</code></td>
+          <td>
+          </td>
+          <td><p>If 0, then <code>features = G(x)</code>.
 Otherwise <code>features = T(x)</code>.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>models</code></td>
-        <td></td>
-        <td><p>Dictionary of models with keys
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>models</code></td>
+          <td>
+          </td>
+          <td><p>Dictionary of models with keys
 <code>["G", "C", "T"]</code>.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>get_all</code></td>
-        <td><code>bool</code></td>
-        <td><p>If <code>True</code>, then return features
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>get_all</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>If <code>True</code>, then return features
 and logits using both <code>G</code> and <code>T</code>
 as the feature extractor.</p></td>
-        <td><code>False</code></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
       </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Dict[str, torch.Tensor]</code></td>
-      <td><p>A dictionary of features and logits.</p>
-<ul>
-<li>
-<p>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</p>
-</li>
-<li>
-<p>If <code>get_all</code> is <code>True</code>,
-then the keys will be <code>{"features", "logits", "other_features", "other_logits"}</code>,
-where the <code>other_</code> prefix represents the features and logits obtained
-using <code>G</code> if <code>domain == 1</code> and <code>T</code> if <code>domain == 0</code>.</p>
-</li>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>A dictionary of features and logits.</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><ul>
+<li>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</li>
 </ul></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_fn</span><span class="p">(</span>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><ul>
+<li>If <code>get_all</code> is <code>True</code>,</li>
+</ul></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>then the keys will be <code>{"features", "logits", "other_features", "other_logits"}</code>,</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>where the <code>other_</code> prefix represents the features and logits obtained</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>using <code>G</code> if <code>domain == 1</code> and <code>T</code> if <code>domain == 0</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adda_fn</span><span class="p">(</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -2699,50 +2789,75 @@ using <code>G</code> if <code>domain == 1</code> and <code>T</code> if <code>dom
         <span class="n">logits</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;other_features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span> <span class="s2">&quot;other_logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">})</span>
     <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.adda_full_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">adda_full_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.adda_full_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p><a class="autorefs autorefs-internal" href="../../adapters/adda/#pytorch_adapt.adapters.adda.ADDA">ADDA</a> features, logits, discriminator logits,
 other features, other logits, other discriminator logits.
 See <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a> for the input arguments.</p>
 
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Dict[str, torch.Tensor]</code></td>
-      <td><p>discriminator logits (<code>"d_logits"</code>), "other" discriminator logits (<code>"other_d_logits"</code>)
-in addition to everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>
-with <code>get_all = True</code>.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_full_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>discriminator logits (<code>"d_logits"</code>), "other" discriminator logits (<code>"other_d_logits"</code>)</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>in addition to everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a></p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>with <code>get_all = True</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adda_full_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    [ADDA][pytorch_adapt.adapters.ADDA] features, logits, discriminator logits,</span>
 <span class="sd">    other features, other logits, other discriminator logits.</span>
@@ -2757,48 +2872,62 @@ with <code>get_all = True</code>.</p></td>
     <span class="n">output2</span> <span class="o">=</span> <span class="n">d_fn</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">output</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;other_</span><span class="si">{</span><span class="n">layer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">output</span><span class="p">[</span><span class="s2">&quot;other_d_logits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output2</span><span class="p">[</span><span class="s2">&quot;d_logits&quot;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.adda_with_d" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">adda_with_d</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.adda_with_d" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p><a class="autorefs autorefs-internal" href="../../adapters/adda/#pytorch_adapt.adapters.adda.ADDA">ADDA</a> features, logits, and discriminator logits. See
 <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a> for the input arguments.</p>
 
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Dict[str, torch.Tensor]</code></td>
-      <td><p>discriminator logits as <code>"d_logits"</code>, in addition to
-everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">adda_with_d</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>discriminator logits as <code>"d_logits"</code>, in addition to</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adda_with_d</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    [ADDA][pytorch_adapt.adapters.ADDA] features, logits, and discriminator logits. See</span>
 <span class="sd">    [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.</span>
@@ -2807,84 +2936,92 @@ everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adap
 <span class="sd">        everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">with_d</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">adda_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-
-
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.default_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">default_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.default_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>The default inference function for <a class="autorefs autorefs-internal" href="../../adapters/base_adapter/#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a>.</p>
 
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">default_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The default inference function for [BaseAdapter][pytorch_adapt.adapters.BaseAdapter].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">features</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
     <span class="n">logits</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span> <span class="s2">&quot;logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">}</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-
-
-
-
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.mcd_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">mcd_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.mcd_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td><p>Features and logits, where <code>logits = sum(C(features))</code>.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mcd_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>Features and logits, where <code>logits = sum(C(features))</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mcd_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Features and logits, where ```logits = sum(C(features))```.</span>
@@ -2897,97 +3034,154 @@ everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adap
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">logits_list</span><span class="p">):</span>
             <span class="n">output</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;logits</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span>
     <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.rtn_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">rtn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.rtn_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p><a class="autorefs autorefs-internal" href="../../adapters/aligner/#pytorch_adapt.adapters.aligner.RTN">RTN</a> features and logits.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>x</code></td>
-        <td></td>
-        <td><p>The input to the model</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>domain</code></td>
-        <td></td>
-        <td><p>If 0, <code>logits = residual_model(C(G(x)))</code>.
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>x</code></td>
+          <td>
+          </td>
+          <td><p>The input to the model</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>domain</code></td>
+          <td>
+          </td>
+          <td><p>If 0, <code>logits = residual_model(C(G(x)))</code>.
 Otherwise, <code>logits = C(G(x))</code>.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>models</code></td>
-        <td></td>
-        <td><p>Dictionary of models with keys
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>models</code></td>
+          <td>
+          </td>
+          <td><p>Dictionary of models with keys
 <code>["G", "C", "residual_model"]</code>.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>get_all</code></td>
-        <td></td>
-        <td><p>If <code>True</code>, then in addition to the regular outputs,
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>get_all</code></td>
+          <td>
+          </td>
+          <td><p>If <code>True</code>, then in addition to the regular outputs,
 it will return the <code>residual_model</code> logits when
 <code>domain == 1</code> and the <code>C</code> logits when <code>domain == 0</code>.</p></td>
-        <td><code>False</code></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
       </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Dict[str, torch.Tensor]</code></td>
-      <td><p>A dictionary of features and logits.</p>
-<ul>
-<li>
-<p>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</p>
-</li>
-<li>
-<p>If <code>get_all</code> is <code>True</code>,
-then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p>
-</li>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>A dictionary of features and logits.</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><ul>
+<li>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</li>
 </ul></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rtn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><ul>
+<li>If <code>get_all</code> is <code>True</code>,</li>
+</ul></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">rtn_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    [RTN][pytorch_adapt.adapters.RTN] features and logits.</span>
 <span class="sd">    Arguments:</span>
@@ -3019,72 +3213,92 @@ then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p>
     <span class="k">elif</span> <span class="n">get_all</span> <span class="ow">and</span> <span class="n">domain</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">f_dict</span><span class="p">[</span><span class="s2">&quot;other_logits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_logits</span>
     <span class="k">return</span> <span class="n">f_dict</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-
-
-  <div class="doc doc-object doc-function">
+<div class="doc doc-object doc-function">
 
 
 
 <h2 id="pytorch_adapt.inference.inference.symnets_fn" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">symnets_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
-
 <a href="#pytorch_adapt.inference.inference.symnets_fn" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>x</code></td>
-        <td></td>
-        <td><p>The input to the model</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>x</code></td>
+          <td>
+          </td>
+          <td><p>The input to the model</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>domain</code></td>
+          <td>
+          </td>
+          <td><p>0 for the source domain, 1 for the target domain.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>domain</code></td>
-        <td></td>
-        <td><p>0 for the source domain, 1 for the target domain.</p></td>
-        <td><em>required</em></td>
+        <th>Type</th>
+        <th>Description</th>
       </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td><p>Features and logits, where <code>logits = C(features)[domain]</code>.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">symnets_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>Features and logits, where <code>logits = C(features)[domain]</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\inference\inference.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">symnets_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Arguments:</span>
 <span class="sd">        x: The input to the model</span>
@@ -3100,26 +3314,19 @@ then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p>
         <span class="n">logits</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">](</span><span class="n">features</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="n">domain</span><span class="p">)]</span>
         <span class="n">output</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;other_logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">})</span>
     <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
-
-
-
-
-
-
+</div>
 
 
 
   </div>
 
-    </div>
-
   </div>
+
+</div>
 
               
             </article>
@@ -3188,7 +3395,7 @@ then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>

@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../imgs/Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -17,10 +17,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -2437,10 +2437,10 @@
 <div class="doc doc-object doc-module">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2450,26 +2450,178 @@
 
 
 
-  <div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.base_adapter.BaseAdapter" class="doc doc-heading">
-        <code>
-BaseAdapter            (<span title="abc.ABC">ABC</span>)
-        </code>
-
+        <code>BaseAdapter</code>
 
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="abc.ABC">ABC</span></code></p>
+
+  
       <p>Parent class of all adapters.</p>
+
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseAdapter</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseAdapter</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parent class of all adapters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2619,10 +2771,10 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
         <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;lr_schedulers</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lr_schedulers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;misc</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">misc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">c_f</span><span class="o">.</span><span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;hook</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -2634,113 +2786,206 @@ BaseAdapter            (<span title="abc.ABC">ABC</span>)
 
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lr_schedulers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">misc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default_containers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_enforcer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">before_training_starts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lr_schedulers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">misc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default_containers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_enforcer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">before_training_starts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>models</code></td>
-        <td><code>Models</code></td>
-        <td><p>A <a class="autorefs autorefs-internal" href="../../containers/models/#pytorch_adapt.containers.models.Models"><code>Models</code></a> container.
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>models</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.Models" href="../../containers/models/#pytorch_adapt.containers.models.Models">Models</a></code>
+          </td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../../containers/models/#pytorch_adapt.containers.models.Models"><code>Models</code></a> container.
 The models will be passed to the wrapped hook at each
 training iteration.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>optimizers</code></td>
-        <td><code>Optimizers</code></td>
-        <td><p>An <a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers"><code>Optimizers</code></a> container.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>optimizers</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.Optimizers" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a></code>
+          </td>
+          <td><p>An <a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers"><code>Optimizers</code></a> container.
 The optimizers will be passed to the wrapped hook at each
 training iteration.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>lr_schedulers</code></td>
-        <td><code>LRSchedulers</code></td>
-        <td><p>An <a class="autorefs autorefs-internal" href="../../containers/lr_schedulers/#pytorch_adapt.containers.lr_schedulers.LRSchedulers"><code>LRSchedulers</code></a> container.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>lr_schedulers</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.LRSchedulers" href="../../containers/lr_schedulers/#pytorch_adapt.containers.lr_schedulers.LRSchedulers">LRSchedulers</a></code>
+          </td>
+          <td><p>An <a class="autorefs autorefs-internal" href="../../containers/lr_schedulers/#pytorch_adapt.containers.lr_schedulers.LRSchedulers"><code>LRSchedulers</code></a> container.
 The lr schedulers are called automatically by the
 <a href="../../frameworks/"><code>framework</code></a> that wrap this adapter.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>misc</code></td>
-        <td><code>Misc</code></td>
-        <td><p>A <a class="autorefs autorefs-internal" href="../../containers/misc/#pytorch_adapt.containers.misc.Misc"><code>Misc</code></a> container for models
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>misc</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.Misc" href="../../containers/misc/#pytorch_adapt.containers.misc.Misc">Misc</a></code>
+          </td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../../containers/misc/#pytorch_adapt.containers.misc.Misc"><code>Misc</code></a> container for models
 that don't require optimizers, and other miscellaneous objects.
 These are passed into the wrapped hook at each training iteration.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>default_containers</code></td>
-        <td><code>MultipleContainers</code></td>
-        <td><p>The default set of containers to use, wrapped in a
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>default_containers</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
+          </td>
+          <td><p>The default set of containers to use, wrapped in a
 <a class="autorefs autorefs-internal" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers"><code>MultipleContainers</code></a> object.
 If <code>None</code> then the default containers are defined in
 <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers"><code>self.get_default_containers</code></a></p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>key_enforcer</code></td>
-        <td><code>KeyEnforcer</code></td>
-        <td><p>A <a class="autorefs autorefs-internal" href="../../containers/key_enforcer/#pytorch_adapt.containers.key_enforcer.KeyEnforcer"><code>KeyEnforcer</code></a> object.
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>key_enforcer</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.KeyEnforcer" href="../../containers/key_enforcer/#pytorch_adapt.containers.key_enforcer.KeyEnforcer">KeyEnforcer</a></code>
+          </td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../../containers/key_enforcer/#pytorch_adapt.containers.key_enforcer.KeyEnforcer"><code>KeyEnforcer</code></a> object.
 If <code>None</code>, then <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer"><code>self.get_key_enforcer</code></a>
 is used.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>inference_fn</code></td>
-        <td></td>
-        <td><p>A function that takes in:</p>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>inference_fn</code></td>
+          <td>
+          </td>
+          <td><p>A function that takes in:</p>
 <ul>
 <li><code>x</code>: the input to the model</li>
 <li><code>domain</code>: an integer representing the domain of the data</li>
 <li><code>models</code>: a dictionary of models, i.e. <code>self.models</code></li>
 <li><code>misc</code>: a dictionary of misc objects, i.e. <code>self.misc</code></li>
 </ul></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>before_training_starts</code></td>
-        <td></td>
-        <td><p>A function that takes in this adapter and returns another
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>before_training_starts</code></td>
+          <td>
+          </td>
+          <td><p>A function that takes in this adapter and returns another
 function that is optionally called by a framework wrapper before training starts.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>hook_kwargs</code></td>
-        <td><code>Dict[str, Any]</code></td>
-        <td><p>A dictionary of keyword arguments that will be
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>hook_kwargs</code></td>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
+          </td>
+          <td><p>A dictionary of keyword arguments that will be
 passed into the wrapped hook during initialization.</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">models</span><span class="p">:</span> <span class="n">Models</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">optimizers</span><span class="p">:</span> <span class="n">Optimizers</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2802,49 +3047,73 @@ passed into the wrapped hook during initialization.</p></td>
     <span class="bp">self</span><span class="o">.</span><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="n">containers</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">init_hook</span><span class="p">(</span><span class="n">hook_kwargs</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">default_fn</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">get_default_containers</span><span class="p">()</span></code>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.get_default_containers" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>MultipleContainers</code></td>
-      <td><p>The default set of containers. Consists of an
-<a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
-container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a>
-of Adam with lr 0.0001.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
+          </td>
+          <td><p>The default set of containers. Consists of an</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
+          </td>
+          <td><p><a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a></p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
+          </td>
+          <td><p>container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a></p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
+          </td>
+          <td><p>of Adam with lr 0.0001.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The default set of containers. Consists of an</span>
@@ -2854,115 +3123,152 @@ of Adam with lr 0.0001.</p></td>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">()</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.KeyEnforcer" href="../../containers/key_enforcer/#pytorch_adapt.containers.key_enforcer.KeyEnforcer">KeyEnforcer</a></code>
+          </td>
+          <td><p>The default KeyEnforcer.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The default KeyEnforcer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.inference" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">inference</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.inference" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>x</code></td>
-        <td><code>Tensor</code></td>
-        <td><p>The input to the model</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>x</code></td>
+          <td>
+                <code>torch.<span title="torch.Tensor">Tensor</span></code>
+          </td>
+          <td><p>The input to the model</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>domain</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>An optional integer indicating the domain.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>domain</code></td>
-        <td><code>int</code></td>
-        <td><p>An optional integer indicating the domain.</p></td>
-        <td><code>None</code></td>
+        <th>Type</th>
+        <th>Description</th>
       </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Tuple[torch.Tensor, torch.Tensor]</code></td>
-      <td><p>Features and logits</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Tuple">Tuple</span>[torch.<span title="torch.Tensor">Tensor</span>, torch.<span title="torch.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>Features and logits</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -2979,32 +3285,38 @@ of Adam with lr 0.0001.</p></td>
         <span class="n">models</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span>
         <span class="n">misc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">misc</span><span class="p">,</span>
     <span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.init_containers_and_check_keys" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">init_containers_and_check_keys</span><span class="p">(</span><span class="n">containers</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_containers_and_check_keys" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>Called in <code>__init__</code> before
 <a class="autorefs autorefs-internal" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook"><code>init_hook</code></a>.</p>
 
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Called in ```__init__``` before</span>
 <span class="sd">    [```init_hook```][pytorch_adapt.adapters.BaseAdapter.init_hook].</span>
@@ -3013,110 +3325,154 @@ of Adam with lr 0.0001.</p></td>
     <span class="bp">self</span><span class="o">.</span><span class="n">key_enforcer</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">containers</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">containers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">init_hook</span><span class="p">()</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.init_hook" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p><code>self.hook</code> is initialized here.</p>
 
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ```self.hook``` is initialized here.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
-</code></pre></div>
-        </details>
-    </div>
-
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h3 id="pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">training_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseAdapter.training_step" class="headerlink" title="Permanent link">&para;</a></h3>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>Calls the wrapped hook at each iteration during training.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>batch</code></td>
-        <td><code>Dict[str, Any]</code></td>
-        <td><p>A dictionary containing training data.</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>batch</code></td>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
+          </td>
+          <td><p>A dictionary containing training data.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>**kwargs</code></td>
+          <td>
+          </td>
+          <td><p>Any other data that will be passed into the hook.</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>**kwargs</code></td>
-        <td></td>
-        <td><p>Any other data that will be passed into the hook.</p></td>
-        <td><code>{}</code></td>
+        <th>Type</th>
+        <th>Description</th>
       </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Dict[str, Dict[str, float]]</code></td>
-      <td><p>A two-level dictionary</p>
-<ul>
-<li>
-<p>the outer level is associated with a particular optimization step
-    (relevant for GAN architectures),</p>
-</li>
-<li>
-<p>the inner level contains the loss components.</p>
-</li>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Dict">Dict</span>[str, float]]</code>
+          </td>
+          <td><p>A two-level dictionary</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Dict">Dict</span>[str, float]]</code>
+          </td>
+          <td><ul>
+<li>the outer level is associated with a particular optimization step
+(relevant for GAN architectures),</li>
 </ul></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span>
+        </tr>
+        <tr>
+          <td>
+                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Dict">Dict</span>[str, float]]</code>
+          </td>
+          <td><ul>
+<li>the inner level contains the loss components.</li>
+</ul></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -3137,44 +3493,51 @@ of Adam with lr 0.0001.</p></td>
     <span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">losses</span>
-</code></pre></div>
-        </details>
-    </div>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
 
   </div>
 
-
-
-
-
   </div>
 
-    </div>
+</div>
 
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.base_adapter.BaseGCAdapter" class="doc doc-heading">
-        <code>
-BaseGCAdapter            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseAdapter" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a>)
-        </code>
-
+        <code>BaseGCAdapter</code>
 
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseGCAdapter" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseAdapter" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a></code></p>
+
+  
       <p>Base class for adapters that use a Generator and Classifier.</p>
+
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseGCAdapter</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseGCAdapter</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for adapters that use a Generator and Classifier.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3184,10 +3547,10 @@ BaseGCAdapter            (<a class="autorefs autorefs-internal" title="pytorch_a
             <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
             <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
         <span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -3199,79 +3562,45 @@ BaseGCAdapter            (<a class="autorefs autorefs-internal" title="pytorch_a
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="pytorch_adapt.adapters.base_adapter.BaseGCAdapter.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.base_adapter.BaseGCAdapter.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">KeyEnforcer</span><span class="p">(</span>
-        <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
-        <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
 
 
   </div>
 
-    </div>
-
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
 
 <h2 id="pytorch_adapt.adapters.base_adapter.BaseGCDAdapter" class="doc doc-heading">
-        <code>
-BaseGCDAdapter            (<a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseAdapter" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a>)
-        </code>
-
+        <code>BaseGCDAdapter</code>
 
 
 <a href="#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter" class="headerlink" title="Permanent link">&para;</a></h2>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.adapters.base_adapter.BaseAdapter" href="#pytorch_adapt.adapters.base_adapter.BaseAdapter">BaseAdapter</a></code></p>
+
+  
       <p>Base class for adapters that use a Generator, Classifier, and Discriminator.</p>
+
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseGCDAdapter</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseGCDAdapter</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for adapters that use a Generator, Classifier, and Discriminator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3281,10 +3610,10 @@ BaseGCDAdapter            (<a class="autorefs autorefs-internal" title="pytorch_
             <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span>
             <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span>
         <span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
 
-
+  
 
   <div class="doc doc-children">
 
@@ -3296,68 +3625,22 @@ BaseGCDAdapter            (<a class="autorefs autorefs-internal" title="pytorch_
 
 
 
-  <div class="doc doc-object doc-method">
 
-
-
-<h3 id="pytorch_adapt.adapters.base_adapter.BaseGCDAdapter.get_key_enforcer" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-<a href="#pytorch_adapt.adapters.base_adapter.BaseGCDAdapter.get_key_enforcer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>KeyEnforcer</code></td>
-      <td><p>The default KeyEnforcer.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pytorch_adapt\adapters\base_adapter.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">KeyEnforcer</span><span class="p">(</span>
-        <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span>
-        <span class="n">optimizers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
 
   </div>
 
+  </div>
+
+</div>
 
 
 
 
   </div>
 
-    </div>
-
   </div>
 
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
+</div>
 
               
             </article>
@@ -3426,7 +3709,7 @@ BaseGCDAdapter            (<a class="autorefs autorefs-internal" title="pytorch_
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>
