@@ -33,7 +33,7 @@ class RandomizedDotProduct(torch.nn.Module):
     def forward(self, *inputs: torch.Tensor) -> torch.Tensor:
         """
         Arguments:
-            inputs: The number of inputs must be equal to the length of ```self.in_dims```.
+            *inputs: The number of inputs must be equal to the length of ```self.in_dims```.
         """
 
         for i in range(self.num_mats):

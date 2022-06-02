@@ -37,7 +37,7 @@ class SoftmaxLocallyHook(BaseWrapperHook):
         Arguments:
             apply_to: list of names of tensors that softmax
                 will be applied to.
-            hooks: the hooks that will receive the softmaxed
+            *hooks: the hooks that will receive the softmaxed
                 tensors.
         """
         super().__init__(**kwargs)
