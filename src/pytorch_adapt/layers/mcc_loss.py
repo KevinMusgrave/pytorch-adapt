@@ -43,7 +43,7 @@ class MCCLoss(torch.nn.Module):
         """
         Y = torch.nn.functional.softmax(x / self.T, dim=1)
         H_weights = self.entropy_weighter(Y.detach())
-        C = torch.linalg.multi_dot([Y.t(), torch.diag(H_weights), Y])
+        C = torch.mm((Y * H_weights.view(-1, 1)).t(), Y)
         C = C / torch.sum(C, dim=1)
         return (torch.sum(C) - torch.trace(C)) / C.shape[0]
 

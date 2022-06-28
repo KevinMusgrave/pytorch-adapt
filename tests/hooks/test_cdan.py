@@ -162,22 +162,24 @@ class TestCDAN(unittest.TestCase):
                 )
 
                 self.assertTrue(
-                    torch.equal(c_logits[:100], outputs_d["src_imgs_features_logits"])
+                    torch.allclose(
+                        c_logits[:100], outputs_d["src_imgs_features_logits"]
+                    )
                 )
                 self.assertTrue(
-                    torch.equal(
+                    torch.allclose(
                         c_logits[100:], outputs_d["target_imgs_features_logits"]
                     )
                 )
                 self.assertTrue(
                     all(
-                        torch.equal(losses_d[k], d_losses[k])
+                        torch.allclose(losses_d[k], d_losses[k])
                         for k in ["d_src_domain_loss", "d_target_domain_loss"]
                     )
                 )
                 self.assertTrue(
                     all(
-                        torch.equal(losses_g[k], g_losses[k])
+                        torch.allclose(losses_g[k], g_losses[k])
                         for k in ["g_src_domain_loss", "g_target_domain_loss"]
                     )
                 )
