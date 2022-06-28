@@ -10,6 +10,7 @@ from .utils import Net
 
 class TestConditions(unittest.TestCase):
     def test_strong_d_hook(self):
+        torch.manual_seed(3420)
         for threshold in [0.1, 0.4, 0.6]:
             h = StrongDHook(threshold=threshold)
             src_domain = torch.zeros(10)

@@ -49,6 +49,7 @@ def test_equivalent_adapter(G, C, R, feature_combiner, data):
 
 class TestRTN(unittest.TestCase):
     def test_residual_hook(self):
+        torch.manual_seed(5409)
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)
@@ -87,6 +88,7 @@ class TestRTN(unittest.TestCase):
         )
 
     def test_rtn_logits_hook(self):
+        torch.manual_seed(9829)
         src_imgs = torch.randn(100, 32)
         src_labels = torch.randint(0, 10, size=(100,))
         target_imgs = torch.randn(100, 32)
@@ -125,6 +127,7 @@ class TestRTN(unittest.TestCase):
         self.assertTrue(torch.isclose(correct_c_loss, torch.mean(losses["c_loss"])))
 
     def test_rtn_aligner_hook(self):
+        torch.manual_seed(2345)
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)
         G = Net(32, 16)
@@ -163,6 +166,7 @@ class TestRTN(unittest.TestCase):
         self.assertTrue(confusion_loss == losses["features_confusion_loss"])
 
     def test_rtn_hook(self):
+        torch.manual_seed(3233)
         (
             G,
             C,

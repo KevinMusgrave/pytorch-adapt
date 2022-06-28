@@ -10,6 +10,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestBSP(unittest.TestCase):
     def test_bsp_hook(self):
+        torch.manual_seed(453094)
         h = BSPHook()
         src_imgs = torch.randn(100, 32)
         target_imgs = torch.randn(100, 32)

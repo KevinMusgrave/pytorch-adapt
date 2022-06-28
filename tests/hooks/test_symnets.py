@@ -69,6 +69,7 @@ def get_correct_domain_loss(G, C, src_imgs, target_imgs, num_classes, domain, ha
 
 class TestSymNets(unittest.TestCase):
     def test_symnets_entropy_hook(self):
+        torch.manual_seed(32454)
         G, C, src_imgs, target_imgs, batch_size, num_classes = get_model_and_data()
         h = SymNetsEntropyHook()
 
@@ -85,6 +86,7 @@ class TestSymNets(unittest.TestCase):
         self.assertTrue(torch.isclose(losses["symnets_entropy_loss"], correct_entropy))
 
     def test_symnets_domain_loss_hook(self):
+        torch.manual_seed(54498)
         G, C, src_imgs, target_imgs, batch_size, num_classes = get_model_and_data()
         TestG = copy.deepcopy(G)
         TestC = copy.deepcopy(C)
@@ -121,6 +123,7 @@ class TestSymNets(unittest.TestCase):
                 self.assertTrue(torch.isclose(losses[h.loss_keys[0]], correct_loss))
 
     def test_symnets_category_loss_hook(self):
+        torch.manual_seed(349587)
         G, C, src_imgs, target_imgs, batch_size, num_classes = get_model_and_data()
         src_labels = torch.randint(0, num_classes, size=(batch_size,))
         h = SymNetsCategoryLossHook()
@@ -139,6 +142,7 @@ class TestSymNets(unittest.TestCase):
         self.assertTrue(torch.isclose(losses["symnets_category_loss"], loss))
 
     def test_symnets(self):
+        torch.manual_seed(29345)
         G, C, src_imgs, target_imgs, batch_size, num_classes = get_model_and_data()
 
         originalG = copy.deepcopy(G)

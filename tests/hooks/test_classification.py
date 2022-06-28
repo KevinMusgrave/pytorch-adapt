@@ -9,6 +9,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestClassification(unittest.TestCase):
     def test_softmax_hook(self):
+        torch.manual_seed(8112)
         h = SoftmaxHook(apply_to=["src_imgs_features"])
         src_imgs_features = torch.randn(100, 10)
         outputs, losses = h(locals())
@@ -21,6 +22,7 @@ class TestClassification(unittest.TestCase):
         )
 
     def test_closs_hook(self):
+        torch.manual_seed(24242)
         for detach_features in [True, False]:
             h = CLossHook(detach_features=detach_features)
             src_imgs = torch.randn(100, 32)

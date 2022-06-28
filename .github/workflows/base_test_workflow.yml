@@ -1,0 +1,30 @@
+name: base_test_workflow
+
+on:
+  workflow_call:
+    inputs:
+      module-to-test:
+        required: true
+        type: string
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install .[ignite,lightning,record-keeper,timm]
+        pip install --upgrade protobuf==3.20.1
+    - name: Run unit tests
+      run: |
+        TEST_DTYPES=float32,float64 TEST_DEVICE=cpu python -m unittest discover -t . -s tests/${{ inputs.module-to-test }} 

@@ -70,7 +70,7 @@ class ChainHook(BaseHook):
     ):
         """
         Arguments:
-            hooks: a sequence of hooks that will be called sequentially.
+            *hooks: a sequence of hooks that will be called sequentially.
             conditions: an optional list of condition hooks.
                 If conditions[i] returns False, then alts[i] is called. Otherwise hooks[i] is called.
             alts: an optional list of hooks that will be executed
@@ -168,7 +168,7 @@ class ParallelHook(BaseHook):
     def __init__(self, *hooks: BaseHook, **kwargs):
         """
         Arguments:
-            hooks: a sequence of hooks that will be called sequentially,
+            *hooks: a sequence of hooks that will be called sequentially,
                 with each hook receiving the same initial context.
         """
         super().__init__(**kwargs)

@@ -11,7 +11,7 @@ class MultipleModels(torch.nn.Module):
     def __init__(self, *models: torch.nn.Module):
         """
         Arguments:
-            models: The models to be wrapped.
+            *models: The models to be wrapped.
         """
         super().__init__()
         self.models = torch.nn.ModuleList(models)

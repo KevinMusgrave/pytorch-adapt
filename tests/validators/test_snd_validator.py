@@ -75,12 +75,15 @@ class TestSNDValidator(unittest.TestCase):
             )
             target_train = TargetDataset(train_datasets[2])
 
-            C = torch.nn.Sequential(torch.nn.Linear(128, 10), torch.nn.Softmax(dim=1))
+            C = torch.nn.Sequential(
+                torch.nn.Linear(128, 10), torch.nn.Softmax(dim=1)
+            ).to(TEST_DEVICE)
             models = Models({"G": C, "C": torch.nn.Identity()})
             optimizers = Optimizers((torch.optim.Adam, {"lr": 0}))
             adapter = wrapper_type(
                 Classifier(models=models, optimizers=optimizers),
                 validator=ScoreHistory(SNDValidator()),
+                device=TEST_DEVICE,
             )
             score, _ = adapter.run(
                 {"train": train_dataset, "target_train": target_train},

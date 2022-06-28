@@ -13,6 +13,7 @@ from pytorch_adapt.validators import (
 from pytorch_adapt.validators.per_class_validator import get_common_labels
 
 from .. import TEST_DEVICE
+from .utils import get_knn_func
 
 
 def get_data(dataset_size, domain, label_range=None):
@@ -57,11 +58,13 @@ def get_correct_score(data, validator):
 class TestPerClassValidator(unittest.TestCase):
     def test_per_class_validator(self):
         torch.manual_seed(204)
+        np.random.seed(204)
         dataset_size = 256
+        knn_func = get_knn_func()
         inner_validators = [
-            KNNValidator(key_map={"src_val": "src_train"}, metric="AMI"),
             KNNValidator(
-                key_map={"src_val": "src_train", "target_val": "target_train"}
+                key_map={"src_val": "src_train", "target_val": "target_train"},
+                knn_func=knn_func,
             ),
             MMDValidator(mmd_kwargs={"mmd_type": "quadratic"}),
             SNDValidator(),
@@ -79,7 +82,7 @@ class TestPerClassValidator(unittest.TestCase):
             if isinstance(v, MMDValidator):
                 self.assertTrue(np.isclose(score, correct_score, rtol=0.05))
             else:
-                self.assertTrue(score == correct_score)
+                self.assertEqual(score, correct_score)
 
     def test_common_labels(self):
         def label_fn(x):

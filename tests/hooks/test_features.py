@@ -15,6 +15,7 @@ from .utils import Net, assertRequiresGrad
 
 class TestFeatures(unittest.TestCase):
     def test_features_hook_logits_hook(self):
+        torch.manual_seed(144)
         for hook_type in ["features", "logits"]:
             G = Net(32, 8)
             if hook_type == "features":
@@ -81,6 +82,7 @@ class TestFeatures(unittest.TestCase):
             self.assertTrue(G.count == 3)
 
     def test_features_and_logits_hook(self):
+        torch.manual_seed(145)
         G = Net(32, 8)
         C = Net(8, 2)
         src_imgs = torch.randn(100, 32)
@@ -135,6 +137,7 @@ class TestFeatures(unittest.TestCase):
         self.assertTrue(C.count == 5)
 
     def test_d_logits_hook(self):
+        torch.manual_seed(146)
         D = Net(32, 2)
         src_imgs_features = torch.randn(100, 32)
         target_imgs_features = torch.randn(100, 32)
@@ -171,6 +174,7 @@ class TestFeatures(unittest.TestCase):
                 outputs, losses = hook(locals())
 
     def test_multiple_detach_modes(self):
+        torch.manual_seed(147)
         G = Net(32, 8)
         C = Net(8, 2)
         src_imgs = torch.randn(100, 32)

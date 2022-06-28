@@ -20,21 +20,21 @@ nav:
 - Documentation: docs/
 
 
+watch:
+  - src
+
+
 plugins:
 - search
 - gen-files:
     scripts:
     - docs/gen_ref_pages.py
 - mkdocstrings:
-    watch:
-    - src/pytorch_adapt
     handlers:
       python:
-        setup_commands:
-          - import sys
-          - sys.path.insert(0, "src")
-        rendering:
-          show_root_toc_entry: false
+        paths: [src]
+        options:
+          show_root_toc_entry: no
 - section-index
 - literate-nav:
     nav_file: SUMMARY.md

@@ -77,7 +77,9 @@ class TestISTLoss(unittest.TestCase):
                             ] * torch.log(mean_preds[1])
                             correct_loss += -div
 
-                        self.assertTrue(torch.isclose(loss, correct_loss))
+                        self.assertAlmostEqual(
+                            loss.item(), correct_loss.item(), places=6
+                        )
 
                         loss.backward()
                         grad1 = x.grad.clone()

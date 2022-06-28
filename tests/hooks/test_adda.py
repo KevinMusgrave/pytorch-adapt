@@ -150,7 +150,9 @@ class TestADDA(unittest.TestCase):
                 )
 
                 total_loss = sum(total_loss) / len(total_loss)
-                self.assertTrue(total_loss == losses["g_loss"]["total"])
+                self.assertAlmostEqual(
+                    total_loss.item(), losses["g_loss"]["total"], places=6
+                )
                 g_opts.zero_grad()
                 total_loss.backward()
                 g_opts.step()

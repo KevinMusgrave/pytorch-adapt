@@ -61,6 +61,7 @@ def get_models_and_data():
 
 class TestGVB(unittest.TestCase):
     def test_gvb_hook(self):
+        torch.manual_seed(509)
         for hook_cls in [GVBHook, GVBEHook]:
             for detach_reducer in [False, True]:
                 if detach_reducer and hook_cls is not GVBEHook:

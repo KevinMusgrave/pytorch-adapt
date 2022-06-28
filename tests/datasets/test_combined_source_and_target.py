@@ -9,7 +9,7 @@ from pytorch_adapt.utils.common_functions import join_lists
 
 class TestCombinedSourceAndTarget(unittest.TestCase):
     def test_combined(self):
-
+        np.random.seed(3429)
         for target_dataset_size in [99, 199]:
             src_dataset_size = 117
 
@@ -45,5 +45,5 @@ class TestCombinedSourceAndTarget(unittest.TestCase):
             self.assertTrue(len(bincount) == src_dataset_size)
             ideal_bincount = total_len // src_dataset_size
             self.assertTrue(
-                all(np.isclose(x, ideal_bincount, rtol=5e-2) for x in bincount)
+                all(np.isclose(x, ideal_bincount, rtol=0.1) for x in bincount)
             )

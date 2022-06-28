@@ -44,6 +44,7 @@ def test_equivalent_adapter(G, D, C, data, post_g):
 
 class TestDANN(unittest.TestCase):
     def test_dann(self):
+        torch.manual_seed(65498)
         for post_g in [None, [BSPHook()], [BNMHook()], [MCCHook()], [AFNHook()]]:
             for hook_cls in [DANNHook, DANNEHook, CDANNEHook, DANNSoftmaxLogitsHook]:
                 for detach_reducer in [False, True]:

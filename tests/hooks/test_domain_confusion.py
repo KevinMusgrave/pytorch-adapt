@@ -9,6 +9,7 @@ from .utils import assertRequiresGrad, get_models_and_data
 
 class TestDomainConfusion(unittest.TestCase):
     def test_domain_confusion_hook(self):
+        torch.manual_seed(9999)
         (
             G,
             C,
