@@ -137,34 +137,36 @@ class TestGVB(unittest.TestCase):
                     grl(torch.nn.functional.softmax(logits, dim=1)), return_bridge=True
                 )
                 self.assertTrue(
-                    torch.equal(logits[:bs], outputs["src_imgs_features_logits"])
+                    torch.allclose(logits[:bs], outputs["src_imgs_features_logits"])
                 )
                 self.assertTrue(
-                    torch.equal(logits[bs:], outputs["target_imgs_features_logits"])
+                    torch.allclose(logits[bs:], outputs["target_imgs_features_logits"])
                 )
                 self.assertTrue(
-                    torch.equal(gbridge[:bs], outputs["src_imgs_features_gbridge"])
+                    torch.allclose(gbridge[:bs], outputs["src_imgs_features_gbridge"])
                 )
                 self.assertTrue(
-                    torch.equal(gbridge[bs:], outputs["target_imgs_features_gbridge"])
+                    torch.allclose(
+                        gbridge[bs:], outputs["target_imgs_features_gbridge"]
+                    )
                 )
                 self.assertTrue(
-                    torch.equal(
+                    torch.allclose(
                         dlogits[:bs], outputs["src_imgs_features_logits_dlogits"]
                     )
                 )
                 self.assertTrue(
-                    torch.equal(
+                    torch.allclose(
                         dlogits[bs:], outputs["target_imgs_features_logits_dlogits"]
                     )
                 )
                 self.assertTrue(
-                    torch.equal(
+                    torch.allclose(
                         dbridge[:bs], outputs["src_imgs_features_logits_dbridge"]
                     )
                 )
                 self.assertTrue(
-                    torch.equal(
+                    torch.allclose(
                         dbridge[bs:], outputs["target_imgs_features_logits_dbridge"]
                     )
                 )
@@ -296,31 +298,35 @@ class TestGVB(unittest.TestCase):
         dlogits, dbridge = originalD(
             torch.nn.functional.softmax(logits.detach(), dim=1), return_bridge=True
         )
-        self.assertTrue(torch.equal(logits[:bs], outputs["src_imgs_features_logits"]))
         self.assertTrue(
-            torch.equal(logits[bs:], outputs["target_imgs_features_logits"])
-        )
-        self.assertTrue(torch.equal(gbridge[:bs], outputs["src_imgs_features_gbridge"]))
-        self.assertTrue(
-            torch.equal(gbridge[bs:], outputs["target_imgs_features_gbridge"])
+            torch.allclose(logits[:bs], outputs["src_imgs_features_logits"])
         )
         self.assertTrue(
-            torch.equal(
+            torch.allclose(logits[bs:], outputs["target_imgs_features_logits"])
+        )
+        self.assertTrue(
+            torch.allclose(gbridge[:bs], outputs["src_imgs_features_gbridge"])
+        )
+        self.assertTrue(
+            torch.allclose(gbridge[bs:], outputs["target_imgs_features_gbridge"])
+        )
+        self.assertTrue(
+            torch.allclose(
                 dlogits[:bs], outputs["src_imgs_features_logits_detached_dlogits"]
             )
         )
         self.assertTrue(
-            torch.equal(
+            torch.allclose(
                 dlogits[bs:], outputs["target_imgs_features_logits_detached_dlogits"]
             )
         )
         self.assertTrue(
-            torch.equal(
+            torch.allclose(
                 dbridge[:bs], outputs["src_imgs_features_logits_detached_dbridge"]
             )
         )
         self.assertTrue(
-            torch.equal(
+            torch.allclose(
                 dbridge[bs:], outputs["target_imgs_features_logits_detached_dbridge"]
             )
         )
@@ -370,7 +376,7 @@ class TestGVB(unittest.TestCase):
 
         total_loss = 0
         correct_loss = torch.nn.functional.cross_entropy(logits[:bs], src_labels)
-        self.assertTrue(losses["g_loss"]["c_loss"] == correct_loss)
+        self.assertTrue(np.isclose(losses["g_loss"]["c_loss"], correct_loss.item()))
         total_loss += correct_loss
 
         correct_loss = torch.mean(torch.abs(gbridge[:bs]))

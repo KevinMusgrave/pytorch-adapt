@@ -33,3 +33,5 @@ RUN_DOMAINNET_DATASET_TESTS = os.environ.get("RUN_DOMAINNET_DATASET_TESTS", Fals
 
 TEST_DTYPES = [getattr(torch, x) for x in dtypes_from_environ]
 TEST_DEVICE = torch.device(device_from_environ)
+
+c_f.LOGGER.info(f"Testing {TEST_DTYPES} on {TEST_DEVICE}")
