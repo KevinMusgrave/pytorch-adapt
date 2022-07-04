@@ -83,22 +83,14 @@ class CheckpointFnCreator:
 
         return fn
 
-    def load_objects(self, to_load, checkpoint=None, global_step=None, **kwargs):
-        # This can be simplified once this issue is resolved https://github.com/pytorch/ignite/issues/2480
-        if global_step is not None:
-            dirname = self.objs.save_handler.dirname
-            filename_dict = {
-                "filename_prefix": self.objs.filename_prefix,
-                "name": "checkpoint",
-                "ext": self.objs.ext,
-                "score_name": self.objs.score_name,
-                "global_step": global_step,
-            }
-            filename = self.objs.filename_pattern.format(**filename_dict)
-            checkpoint = os.path.join(dirname, filename)
-
+    def load_objects(self, to_load, checkpoint=None, global_step=None):
         to_load = {k: v for k, v in to_load.items() if v}
-        self.objs.load_objects(to_load, str(checkpoint), **kwargs)
+        if global_step is not None:
+            self.objs.reload_objects(
+                to_load, name="checkpoint", global_step=global_step
+            )
+        else:
+            self.objs.load_objects(to_load, str(checkpoint))
 
     def load_best_checkpoint(self, to_load):
         last_checkpoint = self.get_best_checkpoint()
