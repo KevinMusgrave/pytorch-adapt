@@ -6,6 +6,7 @@ from ..utils.constants import IMAGENET_MEAN, IMAGENET_STD
 from ..utils.transforms import GrayscaleToRGB
 from .combined_source_and_target import CombinedSourceAndTargetDataset
 from .concat_dataset import ConcatDataset
+from .domainnet import DomainNet126
 from .mnistm import MNISTM
 from .office31 import Office31
 from .officehome import OfficeHome
@@ -146,3 +147,7 @@ def get_office31(*args, **kwargs):
 
 def get_officehome(*args, **kwargs):
     return get_datasets(standard_dataset(OfficeHome), *args, **kwargs)
+
+
+def get_domainnet126(*args, **kwargs):
+    return get_datasets(standard_dataset(DomainNet126), *args, **kwargs)
