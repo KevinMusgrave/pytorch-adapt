@@ -10,6 +10,7 @@ from .ist_validator import ISTValidator
 from .knn_validator import KNNValidator
 from .mmd_validator import MMDValidator
 from .multiple_validators import MultipleValidators
+from .nearest_source_validator import NearestSourceValidator
 from .per_class_validator import PerClassValidator
 from .score_history import ScoreHistories, ScoreHistory
 from .snd_validator import SNDValidator
