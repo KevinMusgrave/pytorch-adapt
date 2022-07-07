@@ -3,8 +3,8 @@ import unittest
 from torchvision.datasets import MNIST
 
 from pytorch_adapt.datasets import (
-    DomainNet126,
     MNISTM,
+    DomainNet126,
     Office31,
     OfficeHome,
     SourceDataset,

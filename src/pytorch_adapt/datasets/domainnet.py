@@ -89,9 +89,9 @@ class DomainNet126(BaseDownloadableDataset):
     A custom train/test split of DomainNet126Full.
     """
 
-    url = "https://cornell.box.com/shared/static/0nhnxntduu9sjs5pbrx6tufpymxfuf7c"
+    url = "https://cornell.box.com/shared/static/5uu0v3rs9heusbiht2nn1gbn4yfspas6"
     filename = "domainnet126.tar.gz"
-    md5 = "dad9d3e1a3d795769c15b44052ff85d6"
+    md5 = "50f29fa0152d715c036c813ad67502d6"
 
     def __init__(self, root: str, domain: str, train: bool, transform=None, **kwargs):
         """
