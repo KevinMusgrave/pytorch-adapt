@@ -30,6 +30,7 @@ TEST_FOLDER = "zzz_pytorch_adapt_test_folder"
 DATASET_FOLDER = "zzz_pytorch_adapt_dataset_test_folder"
 RUN_DATASET_TESTS = os.environ.get("RUN_DATASET_TESTS", False)
 RUN_DOMAINNET_DATASET_TESTS = os.environ.get("RUN_DOMAINNET_DATASET_TESTS", False)
+RUN_DOMAINNET126_DATASET_TESTS = os.environ.get("RUN_DOMAINNET126_DATASET_TESTS", False)
 
 TEST_DTYPES = [getattr(torch, x) for x in dtypes_from_environ]
 TEST_DEVICE = torch.device(device_from_environ)
