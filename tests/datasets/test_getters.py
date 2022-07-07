@@ -157,3 +157,8 @@ class TestGetters(unittest.TestCase):
                 "target_val": 4917,
             },
         )
+
+    def test_incorrect_train_arg(self):
+        for dataset in [MNISTM, Office31, OfficeHome, DomainNet126]:
+            with self.assertRaises(TypeError):
+                dataset(root=DATASET_FOLDER, domain=None, train="something")
