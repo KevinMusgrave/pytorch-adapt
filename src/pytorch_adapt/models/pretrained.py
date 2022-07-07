@@ -148,3 +148,26 @@ def officehomeC(
     return download_weights(
         model, url, pretrained, progress=progress, file_name=file_name, **kwargs
     )
+
+
+def domainnet126G(*args, **kwargs):
+    """
+    Returns:
+        A ResNet50 model trained on ImageNet, if ```pretrained == True```.
+    """
+    return resnet50(*args, **kwargs)
+
+
+def domainnet126C(
+    domain=None,
+    num_classes=126,
+    in_size=2048,
+    h=256,
+    pretrained=False,
+    progress=True,
+    **kwargs,
+):
+    if pretrained:
+        raise ValueError("pretrained=True not yet supported")
+
+    return Classifier(num_classes=num_classes, in_size=in_size, h=h)
