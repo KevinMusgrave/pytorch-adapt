@@ -1,5 +1,9 @@
 import torch
-from pytorch_metric_learning.distances import CosineSimilarity, LpDistance
+from pytorch_metric_learning.distances import (
+    BatchedDistance,
+    CosineSimilarity,
+    LpDistance,
+)
 from pytorch_metric_learning.utils.inference import CustomKNN
 
 from .base_validator import BaseValidator
@@ -51,10 +55,24 @@ class NearestSourceValidator(BaseValidator):
 class NearestSourceL2Validator(NearestSourceValidator):
     def __init__(self, layer="preds", **kwargs):
         super().__init__(layer=layer, threshold=float("inf"), weighted=True, **kwargs)
-        self.knn_fn = CustomKNN(LpDistance(normalize_embeddings=False))
+        dist_fn = LpDistance(normalize_embeddings=False)
+        self.knn_fn = CustomKNN(dist_fn)
+        self.all_dist_fn = BatchedDistance(dist_fn, batch_size=1024)
 
     def compute_score(self, src_val, target_train):
+        max_dist = [0]
+
+        def iter_fn(mat, *_):
+            max_dist[0] = max(max_dist[0], torch.max(mat))
+
+        all_feats = torch.cat([src_val[self.layer], target_train[self.layer]], dim=0)
+        self.all_dist_fn.iter_fn = iter_fn
+        self.all_dist_fn(all_feats)
+
         nearest_src_acc, dists = self.get_nearest_src_acc(src_val, target_train)
-        dists = (dists - min(dists)) / (max(dists) - min(dists))
+        dists /= max_dist[0]
         nearest_src_acc *= 1 - dists
         return torch.mean(nearest_src_acc).item()
+
+
+#
