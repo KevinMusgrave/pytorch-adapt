@@ -12,7 +12,7 @@ class TestNearestSourceValidator(unittest.TestCase):
         src_size, target_size = 1000, 2000
         emb_size, num_classes = 128, 5
         for layer in ["features", "preds"]:
-            for threshold in [-2, -0.5, 0, 0.5, 1]:
+            for threshold in [-2, -0.5, 0, 0.5]:
                 for weighted in [False, True]:
                     validator = NearestSourceValidator(
                         layer=layer, threshold=threshold, weighted=weighted
@@ -34,6 +34,7 @@ class TestNearestSourceValidator(unittest.TestCase):
                     src_val = {layer: src_emb, "preds": src_preds, "labels": src_labels}
                     target_train = {layer: target_emb}
                     score = validator(src_val=src_val, target_train=target_train)
+                    self.assertTrue(0 <= score <= 1)
                     # TODO: actually test that the score is correct
 
     def test_nearest_source_l2_validator(self):
@@ -54,4 +55,5 @@ class TestNearestSourceValidator(unittest.TestCase):
             src_val = {layer: src_emb, "preds": src_preds, "labels": src_labels}
             target_train = {layer: target_emb}
             score = validator(src_val=src_val, target_train=target_train)
+            self.assertTrue(0 <= score <= 1)
             # TODO: actually test that the score is correct
