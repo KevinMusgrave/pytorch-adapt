@@ -6,6 +6,7 @@ from ..utils.constants import IMAGENET_MEAN, IMAGENET_STD
 from ..utils.transforms import GrayscaleToRGB
 from .combined_source_and_target import CombinedSourceAndTargetDataset
 from .concat_dataset import ConcatDataset
+from .domainnet import DomainNet126
 from .mnistm import MNISTM
 from .office31 import Office31
 from .officehome import OfficeHome
@@ -13,8 +14,8 @@ from .source_dataset import SourceDataset
 from .target_dataset import TargetDataset
 
 
-def get_multiple(dataset_getter, domains, *args):
-    return ConcatDataset([dataset_getter(d, *args) for d in domains])
+def get_multiple(dataset_getter, domains, **kwargs):
+    return ConcatDataset([dataset_getter(domain=d, **kwargs) for d in domains])
 
 
 def get_datasets(
@@ -31,11 +32,11 @@ def get_datasets(
         return get_multiple(
             dataset_getter,
             domains,
-            train,
-            is_training,
-            folder,
-            download,
-            transform_getter,
+            train=train,
+            is_training=is_training,
+            root=folder,
+            download=download,
+            transform_getter=transform_getter,
         )
 
     if not src_domains and not target_domains:
@@ -93,15 +94,15 @@ def get_mnist_transform(domain, *_):
         )
 
 
-def _get_mnist_mnistm(domain, train, is_training, folder, download, transform_getter):
+def _get_mnist_mnistm(is_training, transform_getter, **kwargs):
     transform_getter = c_f.default(transform_getter, get_mnist_transform)
-    transform = transform_getter(domain, train, is_training)
+    domain = kwargs["domain"]
+    kwargs["transform"] = transform_getter(domain, kwargs["train"], is_training)
+    kwargs.pop("domain")
     if domain == "mnist":
-        return datasets.MNIST(
-            folder, train=train, transform=transform, download=download
-        )
+        return datasets.MNIST(**kwargs)
     elif domain == "mnistm":
-        return MNISTM(folder, train, transform, download=download)
+        return MNISTM(**kwargs)
 
 
 def get_mnist_mnistm(*args, **kwargs):
@@ -126,16 +127,12 @@ def get_resnet_transform(domain, train, is_training):
 
 
 def standard_dataset(cls):
-    def fn(domain, train, is_training, folder, download, transform_getter):
+    def fn(is_training, transform_getter, **kwargs):
         transform_getter = c_f.default(transform_getter, get_resnet_transform)
-        transform = transform_getter(domain, train, is_training)
-        return cls(
-            root=folder,
-            domain=domain,
-            train=train,
-            transform=transform,
-            download=download,
+        kwargs["transform"] = transform_getter(
+            kwargs["domain"], kwargs["train"], is_training
         )
+        return cls(**kwargs)
 
     return fn
 
@@ -146,3 +143,7 @@ def get_office31(*args, **kwargs):
 
 def get_officehome(*args, **kwargs):
     return get_datasets(standard_dataset(OfficeHome), *args, **kwargs)
+
+
+def get_domainnet126(*args, **kwargs):
+    return get_datasets(standard_dataset(DomainNet126), *args, **kwargs)

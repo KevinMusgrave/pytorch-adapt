@@ -4,6 +4,7 @@ from torchvision.datasets import MNIST
 
 from pytorch_adapt.datasets import (
     MNISTM,
+    DomainNet126,
     Office31,
     OfficeHome,
     SourceDataset,
@@ -12,9 +13,10 @@ from pytorch_adapt.datasets import (
     get_office31,
     get_officehome,
 )
+from pytorch_adapt.datasets.getters import get_domainnet126
 
-from .. import DATASET_FOLDER, RUN_DATASET_TESTS
-from .utils import skip_reason
+from .. import DATASET_FOLDER, RUN_DATASET_TESTS, RUN_DOMAINNET126_DATASET_TESTS
+from .utils import skip_reason, skip_reason_domainnet126
 
 
 class TestGetters(unittest.TestCase):
@@ -138,3 +140,25 @@ class TestGetters(unittest.TestCase):
                 "target_val": 159,
             },
         )
+
+    @unittest.skipIf(not RUN_DOMAINNET126_DATASET_TESTS, skip_reason_domainnet126)
+    def test_domainnet126(self):
+        datasets = get_domainnet126(
+            ["real"], ["sketch"], folder=DATASET_FOLDER, download=True
+        )
+        self.helper(
+            datasets,
+            DomainNet126,
+            DomainNet126,
+            {
+                "src_train": 56286,
+                "src_val": 14072,
+                "target_train": 19665,
+                "target_val": 4917,
+            },
+        )
+
+    def test_incorrect_train_arg(self):
+        for dataset in [MNISTM, Office31, OfficeHome, DomainNet126]:
+            with self.assertRaises(TypeError):
+                dataset(root=DATASET_FOLDER, domain=None, train="something")
