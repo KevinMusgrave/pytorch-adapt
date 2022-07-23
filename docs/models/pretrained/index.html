@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.models.pretrained.mnistC" class="md-skip">
+        <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="md-skip">
           Skip to content
         </a>
       
@@ -2053,6 +2053,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="md-nav__link">
+    domainnet126G()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.models.pretrained.mnistC" class="md-nav__link">
     mnistC()
   </a>
@@ -2415,6 +2422,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="md-nav__link">
+    domainnet126G()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.models.pretrained.mnistC" class="md-nav__link">
     mnistC()
   </a>
@@ -2493,6 +2507,55 @@
 
 
 
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="pytorch_adapt.models.pretrained.domainnet126G" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">domainnet126G</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+<a href="#pytorch_adapt.models.pretrained.domainnet126G" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>A ResNet50 model trained on ImageNet, if <code>pretrained == True</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">domainnet126G</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A ResNet50 model trained on ImageNet, if ```pretrained == True```.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">resnet50</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
 
 <div class="doc doc-object doc-function">
 

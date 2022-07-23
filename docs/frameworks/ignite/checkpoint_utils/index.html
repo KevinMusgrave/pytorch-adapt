@@ -2530,15 +2530,7 @@ for use with the <a class="autorefs autorefs-internal" href="../ignite/#pytorch_
 <span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CheckpointFnCreator</span><span class="p">:</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CheckpointFnCreator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class creates a checkpointing function</span>
 <span class="sd">    for use with the [```Ignite```][pytorch_adapt.frameworks.ignite.Ignite] wrapper.</span>
@@ -2594,22 +2586,14 @@ for use with the <a class="autorefs autorefs-internal" href="../ignite/#pytorch_
 
         <span class="k">return</span> <span class="n">fn</span>
 
-    <span class="k">def</span> <span class="nf">load_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_load</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># This can be simplified once this issue is resolved https://github.com/pytorch/ignite/issues/2480</span>
-        <span class="k">if</span> <span class="n">global_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">dirname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">save_handler</span><span class="o">.</span><span class="n">dirname</span>
-            <span class="n">filename_dict</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;filename_prefix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">filename_prefix</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;checkpoint&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">ext</span><span class="p">,</span>
-                <span class="s2">&quot;score_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">score_name</span><span class="p">,</span>
-                <span class="s2">&quot;global_step&quot;</span><span class="p">:</span> <span class="n">global_step</span><span class="p">,</span>
-            <span class="p">}</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">filename_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">filename_dict</span><span class="p">)</span>
-            <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-
+    <span class="k">def</span> <span class="nf">load_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_load</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">to_load</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">to_load</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">load_objects</span><span class="p">(</span><span class="n">to_load</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">global_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">reload_objects</span><span class="p">(</span>
+                <span class="n">to_load</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;checkpoint&quot;</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">load_objects</span><span class="p">(</span><span class="n">to_load</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">load_best_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_load</span><span class="p">):</span>
         <span class="n">last_checkpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_best_checkpoint</span><span class="p">()</span>
