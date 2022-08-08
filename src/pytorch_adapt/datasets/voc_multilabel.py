@@ -1,6 +1,8 @@
 import torch
 from torchvision.datasets import VOCDetection
 
+from .utils import maybe_download
+
 
 class VOCMultiLabel(VOCDetection):
     NUM_CLASSES = 20
@@ -27,6 +29,9 @@ class VOCMultiLabel(VOCDetection):
         "tvmonitor",
     ]
     CLASSNAME_TO_IDX = {x: i for i, x in enumerate(CLASSNAMES)}
+
+    def __init__(self, **kwargs):
+        maybe_download(super(), kwargs)
 
     def __getitem__(self, idx):
         img, info = super().__getitem__(idx)

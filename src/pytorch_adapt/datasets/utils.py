@@ -20,3 +20,16 @@ def check_train(train):
     if not isinstance(train, bool):
         raise TypeError("train should be True or False")
     return train
+
+
+def maybe_download(cls, kwargs):
+    original_download = kwargs["download"]
+    try:
+        kwargs["download"] = False
+        cls.__init__(**kwargs)
+    except (RuntimeError, FileNotFoundError):
+        if original_download:
+            kwargs["download"] = True
+            cls.__init__(**kwargs)
+        else:
+            raise
