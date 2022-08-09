@@ -1,4 +1,5 @@
 from .base_dataset import BaseDataset, BaseDownloadableDataset
+from .clipart1k import Clipart1kMultiLabel
 from .combined_source_and_target import CombinedSourceAndTargetDataset
 from .concat_dataset import ConcatDataset
 from .dataloader_creator import DataloaderCreator
