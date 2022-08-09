@@ -34,6 +34,9 @@ class Clipart1kMultiLabel(VOCDetection):
                 "image_set": image_set,
                 "download": download,
                 "rename_fn": rename_fn,
+                "exclude_list": ["681633840"], # https://github.com/naoto0804/cross-domain-detection/issues/39
             },
         )
-        assert len(self.images) == 500
+
+        true_len = {"train": 499, "test": 500}[image_set]
+        assert len(self.images) == true_len

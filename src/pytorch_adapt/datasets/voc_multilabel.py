@@ -4,6 +4,7 @@ import torch
 from torchvision.datasets import VOCDetection
 from torchvision.datasets.utils import download_and_extract_archive
 
+from ..utils import common_functions as c_f
 from .utils import maybe_download
 
 NUM_CLASSES = 20
@@ -33,7 +34,9 @@ CLASSNAME_TO_IDX = {x: i for i, x in enumerate(CLASSNAMES)}
 
 
 # modified from https://github.com/pytorch/vision/blob/main/torchvision/datasets/voc.py
-def process_voc_style_dataset(cls, dataset_root, image_set, download, rename_fn=None):
+def process_voc_style_dataset(
+    cls, dataset_root, image_set, download, rename_fn=None, exclude_list=None
+):
     if download:
         download_and_extract_archive(
             cls.url, cls.root, filename=cls.filename, md5=cls.md5
@@ -46,6 +49,8 @@ def process_voc_style_dataset(cls, dataset_root, image_set, download, rename_fn=
     with open(os.path.join(split_f)) as f:
         file_names = [x.strip() for x in f.readlines()]
 
+    exclude_list = c_f.default(exclude_list, [])
+    file_names = [x for x in file_names if x not in exclude_list]
     image_dir = os.path.join(dataset_root, "JPEGImages")
     cls.images = [os.path.join(image_dir, x + ".jpg") for x in file_names]
 
