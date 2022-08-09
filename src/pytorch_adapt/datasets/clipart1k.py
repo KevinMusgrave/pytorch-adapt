@@ -3,7 +3,7 @@ import os
 from torchvision.datasets import VisionDataset, VOCDetection
 
 from .utils import maybe_download
-from .voc_multilabel import VOCMultiLabel, get_multilabel, process_voc_style_dataset
+from .voc_multilabel import process_voc_style_dataset
 
 
 class Clipart1kMultiLabel(VOCDetection):
@@ -37,9 +37,3 @@ class Clipart1kMultiLabel(VOCDetection):
             },
         )
         assert len(self.images) == 500
-
-    def __getitem__(self, idx):
-        img, info = super().__getitem__(idx)
-        return get_multilabel(
-            img, info, VOCMultiLabel.CLASSNAME_TO_IDX, VOCMultiLabel.NUM_CLASSES
-        )

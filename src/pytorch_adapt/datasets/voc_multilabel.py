@@ -6,6 +6,31 @@ from torchvision.datasets.utils import download_and_extract_archive
 
 from .utils import maybe_download
 
+NUM_CLASSES = 20
+CLASSNAMES = [
+    "aeroplane",
+    "bicycle",
+    "bird",
+    "boat",
+    "bottle",
+    "bus",
+    "car",
+    "cat",
+    "chair",
+    "cow",
+    "diningtable",
+    "dog",
+    "horse",
+    "motorbike",
+    "person",
+    "pottedplant",
+    "sheep",
+    "sofa",
+    "train",
+    "tvmonitor",
+]
+CLASSNAME_TO_IDX = {x: i for i, x in enumerate(CLASSNAMES)}
+
 
 # modified from https://github.com/pytorch/vision/blob/main/torchvision/datasets/voc.py
 def process_voc_style_dataset(cls, dataset_root, image_set, download, rename_fn=None):
@@ -32,42 +57,13 @@ def process_voc_style_dataset(cls, dataset_root, image_set, download, rename_fn=
     assert len(cls.images) == len(cls.targets)
 
 
-def get_multilabel(img, info, CLASSNAME_TO_IDX, NUM_CLASSES):
-    classes = [CLASSNAME_TO_IDX[x["name"]] for x in info["annotation"]["object"]]
+def get_labels_as_vector(class_names):
+    classes = [CLASSNAME_TO_IDX[x] for x in class_names]
     label = torch.zeros(NUM_CLASSES, dtype=int)
     label[classes] = 1
-    return img, label
+    return label
 
 
 class VOCMultiLabel(VOCDetection):
-    NUM_CLASSES = 20
-    CLASSNAMES = [
-        "aeroplane",
-        "bicycle",
-        "bird",
-        "boat",
-        "bottle",
-        "bus",
-        "car",
-        "cat",
-        "chair",
-        "cow",
-        "diningtable",
-        "dog",
-        "horse",
-        "motorbike",
-        "person",
-        "pottedplant",
-        "sheep",
-        "sofa",
-        "train",
-        "tvmonitor",
-    ]
-    CLASSNAME_TO_IDX = {x: i for i, x in enumerate(CLASSNAMES)}
-
     def __init__(self, **kwargs):
         maybe_download(super().__init__, kwargs)
-
-    def __getitem__(self, idx):
-        img, info = super().__getitem__(idx)
-        return get_multilabel(img, info, self.CLASSNAME_TO_IDX, self.NUM_CLASSES)

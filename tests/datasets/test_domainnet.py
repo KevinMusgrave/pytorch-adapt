@@ -1,7 +1,5 @@
 import unittest
 
-from torchvision import transforms as torch_transforms
-
 from pytorch_adapt.datasets import DomainNet, DomainNet126, DomainNet126Full
 
 from .. import (
