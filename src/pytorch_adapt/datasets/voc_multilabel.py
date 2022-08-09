@@ -7,7 +7,7 @@ from torchvision.datasets.utils import download_and_extract_archive
 from .utils import maybe_download
 
 
-# from torchvision repo
+# modified from https://github.com/pytorch/vision/blob/main/torchvision/datasets/voc.py
 def process_voc_style_dataset(cls, dataset_root, image_set, download, rename_fn=None):
     if download:
         download_and_extract_archive(

@@ -14,6 +14,7 @@ from .utils import (
     check_train_test_disjoint,
     check_train_test_matches_full,
     loop_through_dataset,
+    simple_transform,
     skip_reason_domainnet,
     skip_reason_domainnet126,
 )
@@ -22,12 +23,7 @@ from .utils import (
 class TestDomainNet(unittest.TestCase):
     @unittest.skipIf(not RUN_DOMAINNET_DATASET_TESTS, skip_reason_domainnet)
     def test_domainnet(self):
-        transform = torch_transforms.Compose(
-            [
-                torch_transforms.Resize((2, 2)),
-                torch_transforms.ToTensor(),
-            ]
-        )
+        transform = simple_transform()
         for domain, length, num_classes in [
             ("clipart", 48129, 345),
             ("infograph", 51605, 345),
