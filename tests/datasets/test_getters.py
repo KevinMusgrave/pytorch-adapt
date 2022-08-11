@@ -162,20 +162,25 @@ class TestGetters(unittest.TestCase):
         )
 
     def test_voc_multilabel(self):
-        datasets = get_voc_multilabel(
-            ["voc"], ["clipart"], folder=DATASET_FOLDER, download=True
-        )
-        self.helper(
-            datasets,
-            VOCMultiLabel,
-            Clipart1kMultiLabel,
-            {
-                "src_train": 5717,
-                "src_val": 5823,
-                "target_train": 499,
-                "target_val": 500,
-            },
-        )
+        for year in [None, "2011", "2012"]:
+            year_kwarg = {} if year is None else {"year": year}
+            datasets = get_voc_multilabel(
+                ["voc"], ["clipart"], folder=DATASET_FOLDER, download=True, **year_kwarg
+            )
+            self.helper(
+                datasets,
+                VOCMultiLabel,
+                Clipart1kMultiLabel,
+                {
+                    "src_train": 5717,
+                    "src_val": 5823,
+                    "target_train": 499,
+                    "target_val": 500,
+                },
+            )
+            correct_year = "2012" if year is None else year
+            self.assertTrue(datasets["src_train"].dataset.datasets[0].year == correct_year)
+
 
     def test_incorrect_train_arg(self):
         for dataset in [MNISTM, Office31, OfficeHome, DomainNet126]:
