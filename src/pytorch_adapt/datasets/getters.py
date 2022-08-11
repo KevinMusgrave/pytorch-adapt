@@ -120,14 +120,14 @@ def get_domainnet126(*args, **kwargs):
 
 def _get_voc_multilabel(is_training, transform_getter, **kwargs):
     # import here, because albumentations is an optional dependency
-    from ..transforms.detection import get_voc_transform, voc_transform_wrapper
+    from ..transforms.detection import VOCTransformWrapper, get_voc_transform
 
     transform_getter = c_f.default(transform_getter, get_voc_transform)
     domain = kwargs["domain"]
     transform = transform_getter(
         domain=domain, train=kwargs["train"], is_training=is_training
     )
-    kwargs["transform"] = voc_transform_wrapper(transform, voc_labels_as_vector)
+    kwargs["transform"] = VOCTransformWrapper(transform, voc_labels_as_vector)
     kwargs.pop("domain")
     train = kwargs.pop("train")
     if domain == "voc":

@@ -26,17 +26,28 @@ def get_voc_transform(is_training, **kwargs):
     return A.Compose(transform, bbox_params=bbox_params)
 
 
-def voc_transform_wrapper(transform, labels_to_vec):
-    def fn(image, target):
+class VOCTransformWrapper:
+    def __init__(self, transform, labels_to_vec):
+        self.transform = transform
+        self.labels_to_vec = labels_to_vec
+
+    def __call__(self, image, target):
         objects = target["annotation"]["object"]
         bboxes = [
             [int(y) for y in c_f.extract(x["bndbox"], ["xmin", "ymin", "xmax", "ymax"])]
             for x in objects
         ]
         class_labels = [x["name"] for x in objects]
-        x = transform(image=np.array(image), bboxes=bboxes, class_labels=class_labels)
+        x = self.transform(
+            image=np.array(image), bboxes=bboxes, class_labels=class_labels
+        )
         image = x["image"]
-        labels = labels_to_vec(x["class_labels"])
+        labels = self.labels_to_vec(x["class_labels"])
         return image, labels
 
-    return fn
+    def __repr__(self):
+        return c_f.nice_repr(
+            self,
+            None,
+            {"transform": self.transform, "labels_to_vec": self.labels_to_vec},
+        )

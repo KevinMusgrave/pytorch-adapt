@@ -6,7 +6,7 @@ import tqdm
 from torchvision import transforms as torch_transforms
 
 from pytorch_adapt.datasets.voc_multilabel import get_labels_as_vector
-from pytorch_adapt.transforms.detection import get_voc_transform, voc_transform_wrapper
+from pytorch_adapt.transforms.detection import VOCTransformWrapper, get_voc_transform
 
 skip_reason = "RUN_DATASET_TESTS is False"
 skip_reason_domainnet = "RUN_DOMAINNET_DATASET_TESTS is False"
@@ -23,7 +23,7 @@ def simple_transform():
 
 
 def simple_detection_transform():
-    return voc_transform_wrapper(
+    return VOCTransformWrapper(
         get_voc_transform(is_training=True), get_labels_as_vector
     )
 
@@ -77,3 +77,7 @@ def assert_classnames_match_labels(cls, d, dataset_folder):
     for i, classname in enumerate(classes):
         classes_to_labels[classname].append(d.labels[i])
     cls.assertTrue(all(len(set(x)) == 1 for x in classes_to_labels.values()))
+
+
+def has_random_transform(x):
+    return any(y in x.__class__.__name__ for y in ["Random", "Flip"])
