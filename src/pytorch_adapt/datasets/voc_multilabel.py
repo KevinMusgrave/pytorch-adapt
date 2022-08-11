@@ -5,7 +5,7 @@ from torchvision.datasets import VOCDetection
 from torchvision.datasets.utils import download_and_extract_archive
 
 from ..utils import common_functions as c_f
-from .utils import maybe_download
+from .utils import check_length, maybe_download
 
 NUM_CLASSES = 20
 CLASSNAMES = [
@@ -72,3 +72,15 @@ def get_labels_as_vector(class_names):
 class VOCMultiLabel(VOCDetection):
     def __init__(self, **kwargs):
         maybe_download(super().__init__, kwargs)
+
+        check_length(
+            self,
+            {
+                "2007": {"train": 2501, "trainval": 5011, "val": 2510, "test": 4952},
+                "2008": {"train": 2111, "trainval": 4332, "val": 2221},
+                "2009": {"train": 3473, "trainval": 7054, "val": 3581},
+                "2010": {"train": 4998, "trainval": 10103, "val": 5105},
+                "2011": {"train": 5717, "trainval": 11540, "val": 5823},
+                "2012": {"train": 5717, "trainval": 11540, "val": 5823},
+            }[self.year][self.image_set],
+        )

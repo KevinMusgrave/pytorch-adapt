@@ -2,7 +2,7 @@ import os
 
 from torchvision.datasets import VisionDataset, VOCDetection
 
-from .utils import maybe_download
+from .utils import check_length, maybe_download
 from .voc_multilabel import process_voc_style_dataset
 
 
@@ -34,9 +34,10 @@ class Clipart1kMultiLabel(VOCDetection):
                 "image_set": image_set,
                 "download": download,
                 "rename_fn": rename_fn,
-                "exclude_list": ["681633840"], # https://github.com/naoto0804/cross-domain-detection/issues/39
+                "exclude_list": [
+                    "681633840"
+                ],  # https://github.com/naoto0804/cross-domain-detection/issues/39
             },
         )
 
-        true_len = {"train": 499, "test": 500}[image_set]
-        assert len(self.images) == true_len
+        check_length(self, {"train": 499, "test": 500}[image_set])
