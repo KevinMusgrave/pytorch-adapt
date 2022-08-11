@@ -3,21 +3,27 @@ import numpy as np
 from albumentations.pytorch.transforms import ToTensorV2
 
 from ..utils import common_functions as c_f
+from .constants import IMAGENET_MEAN, IMAGENET_STD
 
 
-def get_voc_transform():
-    return A.Compose(
-        [
-            A.SmallestMaxSize(224),
-            A.RandomCrop(width=224, height=224),
-            A.HorizontalFlip(p=0.5),
-            A.RandomBrightnessContrast(p=0.2),
-            ToTensorV2(),
-        ],
-        bbox_params=A.BboxParams(
-            format="pascal_voc", min_visibility=0.5, label_fields=["class_labels"]
-        ),
+def get_voc_transform(domain, train, is_training):
+    bbox_params = A.BboxParams(
+        format="pascal_voc", min_visibility=0.5, label_fields=["class_labels"]
     )
+    transform = [A.SmallestMaxSize(224)]
+    if is_training:
+        transform += [
+            A.RandomCrop(height=224, width=224),
+            A.HorizontalFlip(p=0.5),
+        ]
+    else:
+        transform += [A.CenterCrop(height=224, width=224)]
+
+    transform += [
+        ToTensorV2(),
+        A.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+    ]
+    return A.Compose(transform, bbox_params=bbox_params)
 
 
 def voc_transform_wrapper(transform, labels_to_vec):

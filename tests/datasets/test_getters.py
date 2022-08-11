@@ -12,8 +12,11 @@ from pytorch_adapt.datasets import (
     get_mnist_mnistm,
     get_office31,
     get_officehome,
+    get_voc_multilabel,
 )
+from pytorch_adapt.datasets.clipart1k import Clipart1kMultiLabel
 from pytorch_adapt.datasets.getters import get_domainnet126
+from pytorch_adapt.datasets.voc_multilabel import VOCMultiLabel
 
 from .. import DATASET_FOLDER, RUN_DATASET_TESTS, RUN_DOMAINNET126_DATASET_TESTS
 from .utils import skip_reason, skip_reason_domainnet126
@@ -155,6 +158,22 @@ class TestGetters(unittest.TestCase):
                 "src_val": 14072,
                 "target_train": 19665,
                 "target_val": 4917,
+            },
+        )
+
+    def test_voc_multilabel(self):
+        datasets = get_voc_multilabel(
+            ["voc"], ["clipart"], folder=DATASET_FOLDER, download=True
+        )
+        self.helper(
+            datasets,
+            VOCMultiLabel,
+            Clipart1kMultiLabel,
+            {
+                "src_train": 5717,
+                "src_val": 5823,
+                "target_train": 499,
+                "target_val": 500,
             },
         )
 
