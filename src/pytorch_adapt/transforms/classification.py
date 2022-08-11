@@ -9,7 +9,7 @@ class GrayscaleToRGB:
         return torch.cat([x, x, x], dim=0)
 
 
-def get_mnist_transform(domain, *_):
+def get_mnist_transform(domain, **kwargs):
     if domain == "mnist":
         return T.Compose(
             [
@@ -28,7 +28,7 @@ def get_mnist_transform(domain, *_):
         )
 
 
-def get_resnet_transform(domain, train, is_training):
+def get_resnet_transform(is_training, **kwargs):
     transform = [T.Resize(256)]
     if is_training:
         transform += [

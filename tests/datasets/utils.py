@@ -23,7 +23,9 @@ def simple_transform():
 
 
 def simple_detection_transform():
-    return voc_transform_wrapper(get_voc_transform(), get_labels_as_vector)
+    return voc_transform_wrapper(
+        get_voc_transform(is_training=True), get_labels_as_vector
+    )
 
 
 def loop_through_dataset(dataset):

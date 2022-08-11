@@ -81,7 +81,9 @@ def get_datasets(
 def _get_mnist_mnistm(is_training, transform_getter, **kwargs):
     transform_getter = c_f.default(transform_getter, get_mnist_transform)
     domain = kwargs["domain"]
-    kwargs["transform"] = transform_getter(domain, kwargs["train"], is_training)
+    kwargs["transform"] = transform_getter(
+        domain=domain, train=kwargs["train"], is_training=is_training
+    )
     kwargs.pop("domain")
     if domain == "mnist":
         return MNIST(**kwargs)
@@ -97,7 +99,7 @@ def standard_dataset(cls):
     def fn(is_training, transform_getter, **kwargs):
         transform_getter = c_f.default(transform_getter, get_resnet_transform)
         kwargs["transform"] = transform_getter(
-            kwargs["domain"], kwargs["train"], is_training
+            domain=kwargs["domain"], train=kwargs["train"], is_training=is_training
         )
         return cls(**kwargs)
 
@@ -122,7 +124,9 @@ def _get_voc_multilabel(is_training, transform_getter, **kwargs):
 
     transform_getter = c_f.default(transform_getter, get_voc_transform)
     domain = kwargs["domain"]
-    transform = transform_getter(domain, kwargs["train"], is_training)
+    transform = transform_getter(
+        domain=domain, train=kwargs["train"], is_training=is_training
+    )
     kwargs["transform"] = voc_transform_wrapper(transform, voc_labels_as_vector)
     kwargs.pop("domain")
     train = kwargs.pop("train")

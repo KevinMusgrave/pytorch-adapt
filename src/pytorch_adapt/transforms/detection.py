@@ -6,7 +6,7 @@ from ..utils import common_functions as c_f
 from .constants import IMAGENET_MEAN, IMAGENET_STD
 
 
-def get_voc_transform(domain, train, is_training):
+def get_voc_transform(is_training, **kwargs):
     bbox_params = A.BboxParams(
         format="pascal_voc", min_visibility=0.5, label_fields=["class_labels"]
     )
@@ -20,8 +20,8 @@ def get_voc_transform(domain, train, is_training):
         transform += [A.CenterCrop(height=224, width=224)]
 
     transform += [
-        ToTensorV2(),
         A.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+        ToTensorV2(),
     ]
     return A.Compose(transform, bbox_params=bbox_params)
 
