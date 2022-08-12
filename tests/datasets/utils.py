@@ -6,7 +6,6 @@ import tqdm
 from torchvision import transforms as torch_transforms
 
 from pytorch_adapt.datasets.voc_multilabel import get_labels_as_vector
-from pytorch_adapt.transforms.detection import VOCTransformWrapper, get_voc_transform
 
 skip_reason = "RUN_DATASET_TESTS is False"
 skip_reason_domainnet = "RUN_DOMAINNET_DATASET_TESTS is False"
@@ -23,6 +22,11 @@ def simple_transform():
 
 
 def simple_detection_transform():
+    from pytorch_adapt.transforms.detection import (
+        VOCTransformWrapper,
+        get_voc_transform,
+    )
+
     return VOCTransformWrapper(
         get_voc_transform(is_training=True), get_labels_as_vector
     )
