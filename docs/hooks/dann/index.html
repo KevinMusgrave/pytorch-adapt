@@ -2081,6 +2081,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../transforms/" class="md-nav__link">
+        transforms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../utils/" class="md-nav__link">
         utils
       </a>
@@ -2098,7 +2112,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
       
       
       
@@ -2108,14 +2122,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../validators/">validators</a>
           
-            <label for="__nav_4_11">
+            <label for="__nav_4_12">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="validators" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_11">
+        <label class="md-nav__title" for="__nav_4_12">
           <span class="md-nav__icon md-icon"></span>
           validators
         </label>
@@ -2277,7 +2291,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
       
       
       
@@ -2287,14 +2301,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../weighters/">weighters</a>
           
-            <label for="__nav_4_12">
+            <label for="__nav_4_13">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="weighters" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_12">
+        <label class="md-nav__title" for="__nav_4_13">
           <span class="md-nav__icon md-icon"></span>
           weighters
         </label>
@@ -2436,7 +2450,7 @@
 
   <div class="doc doc-contents ">
       <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.utils.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
+        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.hooks.base.BaseWrapperHook" href="../base/#pytorch_adapt.hooks.base.BaseWrapperHook">BaseWrapperHook</a></code></p>
 
   
       <p>Implementation of
@@ -2446,7 +2460,13 @@
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\hooks\dann.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 49</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
 <span class="normal"> 50</span>
 <span class="normal"> 51</span>
 <span class="normal"> 52</span>
@@ -2541,13 +2561,7 @@
 <span class="normal">141</span>
 <span class="normal">142</span>
 <span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DANNHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DANNHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of</span>
 <span class="sd">    [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818).</span>
@@ -2849,7 +2863,13 @@ output names of the discriminator block.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>pytorch_adapt\hooks\dann.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 57</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
 <span class="normal"> 58</span>
 <span class="normal"> 59</span>
 <span class="normal"> 60</span>
@@ -2936,13 +2956,7 @@ output names of the discriminator block.</p></td>
 <span class="normal">141</span>
 <span class="normal">142</span>
 <span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">opts</span><span class="p">,</span>
     <span class="n">weighter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>

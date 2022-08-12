@@ -2088,6 +2088,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../transforms/" class="md-nav__link">
+        transforms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../utils/" class="md-nav__link">
         utils
       </a>
@@ -2105,7 +2119,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
       
       
       
@@ -2115,14 +2129,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../validators/">validators</a>
           
-            <label for="__nav_4_11">
+            <label for="__nav_4_12">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="validators" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_11">
+        <label class="md-nav__title" for="__nav_4_12">
           <span class="md-nav__icon md-icon"></span>
           validators
         </label>
@@ -2284,7 +2298,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
       
       
       
@@ -2294,14 +2308,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../weighters/">weighters</a>
           
-            <label for="__nav_4_12">
+            <label for="__nav_4_13">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="weighters" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_12">
+        <label class="md-nav__title" for="__nav_4_13">
           <span class="md-nav__icon md-icon"></span>
           weighters
         </label>
@@ -2560,8 +2574,7 @@ respect to domain labels.</p>
 <span class="normal">147</span>
 <span class="normal">148</span>
 <span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DomainLossHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
+<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DomainLossHook</span><span class="p">(</span><span class="n">BaseWrapperHook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the loss of a discriminator&#39;s output with</span>
 <span class="sd">    respect to domain labels.</span>
@@ -2604,7 +2617,6 @@ respect to domain labels.</p>
         <span class="p">)</span>
         <span class="n">d_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">d_hook</span><span class="p">,</span> <span class="n">DLogitsHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">domains</span><span class="p">})</span>
         <span class="n">f_out</span> <span class="o">=</span> <span class="n">f_hook</span><span class="o">.</span><span class="n">last_hook_out_keys</span>
-        <span class="n">d_in</span> <span class="o">=</span> <span class="n">d_hook</span><span class="o">.</span><span class="n">in_keys</span>
         <span class="n">d_hook</span><span class="o">.</span><span class="n">set_in_keys</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_fhook_dhook_keys</span><span class="p">(</span><span class="n">f_hook</span><span class="p">,</span> <span class="n">d_hook</span><span class="p">,</span> <span class="n">detach_features</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">f_hook</span><span class="p">,</span> <span class="n">d_hook</span><span class="p">)</span>
@@ -2618,7 +2630,7 @@ respect to domain labels.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing loss for </span><span class="si">{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> domain&quot;</span><span class="p">)</span>
             <span class="p">[</span><span class="n">dlogits</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">outputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">],</span>
-                <span class="n">c_f</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="o">.</span><span class="n">out_keys</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_dlogits$&quot;</span><span class="p">,</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;^</span><span class="si">{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]),</span>
+                <span class="n">c_f</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="o">.</span><span class="n">out_keys</span><span class="p">,</span> <span class="s2">&quot;_dlogits$&quot;</span><span class="p">,</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;^</span><span class="si">{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]),</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">dlogits</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
@@ -2807,8 +2819,7 @@ If <code>None</code> it defaults to <code>["src", "target"]</code>.</p></td>
 <span class="normal">92</span>
 <span class="normal">93</span>
 <span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">d_loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">detach_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -2845,7 +2856,6 @@ If <code>None</code> it defaults to <code>["src", "target"]</code>.</p></td>
     <span class="p">)</span>
     <span class="n">d_hook</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">d_hook</span><span class="p">,</span> <span class="n">DLogitsHook</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">domains</span><span class="p">})</span>
     <span class="n">f_out</span> <span class="o">=</span> <span class="n">f_hook</span><span class="o">.</span><span class="n">last_hook_out_keys</span>
-    <span class="n">d_in</span> <span class="o">=</span> <span class="n">d_hook</span><span class="o">.</span><span class="n">in_keys</span>
     <span class="n">d_hook</span><span class="o">.</span><span class="n">set_in_keys</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">check_fhook_dhook_keys</span><span class="p">(</span><span class="n">f_hook</span><span class="p">,</span> <span class="n">d_hook</span><span class="p">,</span> <span class="n">detach_features</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="n">ChainHook</span><span class="p">(</span><span class="n">f_hook</span><span class="p">,</span> <span class="n">d_hook</span><span class="p">)</span>
