@@ -127,7 +127,7 @@ def _get_voc_multilabel(is_training, transform_getter, **kwargs):
     transform = transform_getter(
         domain=domain, train=kwargs["train"], is_training=is_training
     )
-    kwargs["transform"] = VOCTransformWrapper(transform, voc_labels_as_vector)
+    kwargs["transforms"] = VOCTransformWrapper(transform, voc_labels_as_vector)
     kwargs.pop("domain")
     train = kwargs.pop("train")
     if domain == "voc":

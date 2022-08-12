@@ -34,6 +34,10 @@ class TestGetters(unittest.TestCase):
         supervised=False,
         check_transforms=True,
     ):
+        # make sure __getitem__ doesn't raise an error
+        for v in datasets.values():
+            v[0]
+
         for k in ["src_train", "src_val"]:
             self.assertTrue(isinstance(datasets[k].dataset.datasets[0], src_class))
             self.assertTrue(isinstance(datasets[k], SourceDataset))
@@ -73,7 +77,7 @@ class TestGetters(unittest.TestCase):
                 else:
                     curr_datasets = v.dataset.datasets
                 for d in curr_datasets:
-                    transform = d.transform
+                    transform = d.transform if d.transform else d.transforms
                     if isinstance(transform, VOCTransformWrapper):
                         transform = transform.transform
                     # go through each transform in Compose
