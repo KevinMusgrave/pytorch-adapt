@@ -125,7 +125,6 @@ class TestADDA(unittest.TestCase):
                 d_opts.step()
 
                 with torch.no_grad():
-                    features = torch.cat([src_features, target_features], dim=0)
                     logits = torch.cat(
                         [src_features_dlogits, target_features_dlogits], dim=0
                     )

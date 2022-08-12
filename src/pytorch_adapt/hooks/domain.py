@@ -89,7 +89,6 @@ class DomainLossHook(BaseWrapperHook):
         )
         d_hook = c_f.default(d_hook, DLogitsHook, {"domains": domains})
         f_out = f_hook.last_hook_out_keys
-        d_in = d_hook.in_keys
         d_hook.set_in_keys(f_out)
         self.check_fhook_dhook_keys(f_hook, d_hook, detach_features)
         self.hook = ChainHook(f_hook, d_hook)
@@ -103,7 +102,7 @@ class DomainLossHook(BaseWrapperHook):
             self.logger(f"Computing loss for {domain_name} domain")
             [dlogits] = c_f.extract(
                 [outputs, inputs],
-                c_f.filter(self.hook.out_keys, f"_dlogits$", [f"^{domain_name}"]),
+                c_f.filter(self.hook.out_keys, "_dlogits$", [f"^{domain_name}"]),
             )
             if dlogits.dim() > 1:
                 labels = labels.type(torch.long)

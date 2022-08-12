@@ -75,9 +75,7 @@ class TestMCD(unittest.TestCase):
             outputs, loss = h(locals())
             assertRequiresGrad(self, outputs)
 
-            self.assertTrue(
-                outputs[logits_key][i].requires_grad == True for i in range(3)
-            )
+            self.assertTrue(outputs[logits_key][i].requires_grad for i in range(3))
             self.assertTrue(all(x.count == 1 for x in [C0, C1, C2]))
             self.assertTrue(outputs.keys() == {*out_keys})
             self.assertTrue(loss.keys() == {"c_loss0", "c_loss1", "c_loss2"})
@@ -115,9 +113,7 @@ class TestMCD(unittest.TestCase):
             target_imgs_features = torch.randn(batch_size, emb_size)
             outputs, loss = h(locals())
             assertRequiresGrad(self, outputs)
-            self.assertTrue(
-                outputs[logits_key][i].requires_grad == True for i in range(3)
-            )
+            self.assertTrue(outputs[logits_key][i].requires_grad for i in range(3))
             self.assertTrue(all(x.count == 1 for x in [C0, C1]))
             self.assertTrue(outputs.keys() == {*out_keys})
             self.assertTrue(loss.keys() == {"discrepancy_loss"})

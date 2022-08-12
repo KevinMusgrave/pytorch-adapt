@@ -163,7 +163,7 @@ class TestDeepEmbeddedValidator(unittest.TestCase):
         self.assertTrue(not np.isclose(np.mean(weights), 1))
         self.assertTrue(not np.isclose(np.std(weights), 1))
 
-        with self.assertRaises(ValueError) as c:
+        with self.assertRaises(ValueError):
             normalize_weights(new_weights(), "")
 
     def test_dev_binary_fn(self):

@@ -34,7 +34,7 @@ class TestDomainConfusion(unittest.TestCase):
             "src_domain": src_domain,
             "target_domain": target_domain,
         }
-        model_counts = validate_hook(h, list(data.keys()))
+        validate_hook(h, list(data.keys()))
 
         for _ in range(10):
             outputs, losses = h({**models, **data})

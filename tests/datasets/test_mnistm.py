@@ -5,7 +5,7 @@ import tqdm
 from torchvision import transforms as torch_transforms
 
 from pytorch_adapt.datasets import MNISTM
-from pytorch_adapt.utils.constants import IMAGENET_MEAN, IMAGENET_STD
+from pytorch_adapt.transforms.constants import IMAGENET_MEAN, IMAGENET_STD
 
 from .. import DATASET_FOLDER, RUN_DATASET_TESTS
 from .utils import skip_reason

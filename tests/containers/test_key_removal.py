@@ -10,7 +10,6 @@ from ..adapters.utils import Discriminator, get_source_model
 class TestKeyRemoval(unittest.TestCase):
     def test_key_removal(self):
 
-        num_classes = 10
         source_model, source_classifier = get_source_model()
         discriminator = Discriminator(source_classifier.net[0].in_features, 1)
         models = Models(

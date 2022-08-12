@@ -9,6 +9,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
+extras_require_detection = ["albumentations"]
 extras_require_ignite = ["pytorch-ignite == 0.4.9"]
 extras_require_lightning = ["pytorch-lightning"]
 extras_require_record_keeper = ["record-keeper >= 0.9.31"]
@@ -47,6 +48,7 @@ setuptools.setup(
         "pytorch-metric-learning >= 1.3.1.dev0",
     ],
     extras_require={
+        "detection": extras_require_detection,
         "ignite": extras_require_ignite,
         "lightning": extras_require_lightning,
         "record-keeper": extras_require_record_keeper,

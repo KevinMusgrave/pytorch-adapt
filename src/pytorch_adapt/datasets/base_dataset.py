@@ -1,5 +1,6 @@
 import os
 import tarfile
+import zipfile
 
 import torch
 from PIL import Image
@@ -58,5 +59,7 @@ class BaseDownloadableDataset(BaseDataset):
 
     def download_dataset(self, root):
         download_url(self.url, root, filename=self.filename, md5=self.md5)
-        with tarfile.open(os.path.join(root, self.filename), "r:gz") as tar:
-            tar.extractall(path=root, members=c_f.extract_progress(tar))
+        filepath = os.path.join(root, self.filename)
+        decompressor = tarfile.open if tarfile.is_tarfile(filepath) else zipfile.ZipFile
+        with decompressor(filepath, "r") as f:
+            f.extractall(path=root, members=c_f.extract_progress(f))

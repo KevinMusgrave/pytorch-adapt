@@ -453,7 +453,7 @@ def to_set(x):
 def check_domain(domain, keep_len=False):
     if domain is not None:
         if len(torch.unique(domain)) > 1:
-            raise ValueError(f"inference only supports one domain per batch")
+            raise ValueError("inference only supports one domain per batch")
         if not keep_len and not len_one_tensor(domain):
             domain = domain[0]
     return domain
@@ -518,7 +518,7 @@ def assert_dicts_are_disjoint(*x):
         output.update(y)
         total_len += len(y)
     if len(output) != total_len:
-        raise KeyError(f"dicts have overlapping keys")
+        raise KeyError("dicts have overlapping keys")
     return output
 
 
