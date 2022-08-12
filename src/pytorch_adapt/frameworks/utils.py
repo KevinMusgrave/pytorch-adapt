@@ -10,7 +10,7 @@ def create_output_dict(f_dict):
 def create_output_dict_preds_as_features(f_dict):
     [features, logits] = c_f.extract(f_dict, ["features", "logits"])
     if not torch.allclose(features, logits):
-        raise ValueError(f"features and logits should be equal")
+        raise ValueError("features and logits should be equal")
     return {"features": features, "preds": features}
 
 

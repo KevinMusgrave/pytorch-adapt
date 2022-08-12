@@ -27,7 +27,7 @@ class SymNetsDomainLossHook(BaseWrapperHook):
     def call(self, inputs, losses):
         outputs = self.hook(inputs, losses)[0]
         [logits] = c_f.extract(
-            [outputs, inputs], c_f.filter(self.hook.out_keys, f"_logits$")
+            [outputs, inputs], c_f.filter(self.hook.out_keys, "_logits$")
         )
         loss = self.loss_fn(*logits)
         return outputs, {self._loss_keys()[0]: loss}

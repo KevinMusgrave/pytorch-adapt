@@ -17,7 +17,6 @@ def correct_fn(x, labels, threshold):
 class TestSufficientAccuracy(unittest.TestCase):
     def test_sufficient_accuracy(self):
         batch_size = 256
-        embedding_size = 1
         for threshold in np.linspace(0, 1, 100):
             loss_fn = SufficientAccuracy(
                 threshold, to_probs_func=torch.nn.Sigmoid()

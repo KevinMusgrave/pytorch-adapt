@@ -309,7 +309,6 @@ class TestIgnite(unittest.TestCase):
         ]
         adapter, datasets = helper(val_hooks=val_hooks)
         dc = DataloaderCreator(num_workers=0)
-        max_epochs = 1
 
         # Test that collected data gets filtered correctly
         # otherwise an exception will be raised

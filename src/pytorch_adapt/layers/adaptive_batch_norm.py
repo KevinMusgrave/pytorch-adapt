@@ -150,7 +150,6 @@ class PopulationBatchNorm2d(torch.nn.BatchNorm2d):
 
 
 def convert_bn_to_adabn(model, affine_domain, bn_type):
-    changes = []
     for child_name, child in model.named_children():
         if isinstance(child, (torch.nn.BatchNorm1d, torch.nn.BatchNorm3d)):
             raise TypeError(
@@ -216,4 +215,4 @@ def set_bn_layer_to_train(model, layer_num, bn_type):
     if set_layer is not None:
         c_f.LOGGER.info(f"Set bn layer {set_layer} to train mode")
     else:
-        c_f.LOGGER.info(f"Did not set any bn layers to train mode.")
+        c_f.LOGGER.info("Did not set any bn layers to train mode.")

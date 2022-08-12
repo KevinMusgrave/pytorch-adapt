@@ -8,13 +8,7 @@ from .classification import CLossHook, SoftmaxHook
 from .domain import DomainLossHook, FeaturesForDomainLossHook
 from .features import LogitsHook
 from .optimizer import OptimizerHook, SummaryHook
-from .utils import (
-    ApplyFnHook,
-    AssertHook,
-    BaseWrapperHook,
-    ChainHook,
-    OnlyNewOutputsHook,
-)
+from .utils import ApplyFnHook, AssertHook, ChainHook, OnlyNewOutputsHook
 
 
 class GradientReversalHook(ApplyFnHook):

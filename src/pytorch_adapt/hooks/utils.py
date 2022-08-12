@@ -418,7 +418,7 @@ class ApplyToListHook(BaseWrapperHook):
         search_strs = c_f.filter(inputs, self.regex)
         extracted = c_f.extract(inputs, search_strs)
         if len(set(len(x) for x in extracted)) != 1:
-            raise TypeError(f"All extracted input lists must be equal in length")
+            raise TypeError("All extracted input lists must be equal in length")
         losses = {}
         for i in range(len(extracted[0])):
             curr_extracted = [x[i] for x in extracted]

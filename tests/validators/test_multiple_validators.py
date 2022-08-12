@@ -50,8 +50,8 @@ class TestMultipleValidators(unittest.TestCase):
 
     def test_incorrect_keys(self):
         # good version
-        v = IMValidator(weights={"entropy": 1, "diversity": 2})
+        IMValidator(weights={"entropy": 1, "diversity": 2})
 
         # bad version
         with self.assertRaises(KeyError):
-            v = IMValidator(weights={"entropy": 1, "y": 2})
+            IMValidator(weights={"entropy": 1, "y": 2})
