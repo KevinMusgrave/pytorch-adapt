@@ -70,8 +70,7 @@ def test_with_ignite_framework(
         C = torch.nn.Linear(128, num_classes).to(TEST_DEVICE)
 
         if wrapper_type is IgnitePredsAsFeatures:
-            preds_fn = torch.nn.Sigmoid() if multilabel else torch.nn.Softmax(dim=1)
-            G = torch.nn.Sequential(G, C, preds_fn)
+            G = torch.nn.Sequential(G, C, torch.nn.Softmax(dim=1))
             C = torch.nn.Identity()
 
         models = Models({"G": G, "C": C})

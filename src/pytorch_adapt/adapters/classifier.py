@@ -1,6 +1,5 @@
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
 from ..hooks import ClassifierHook, FinetunerHook, MultiLabelClassifierHook
-from ..hooks.classification import MultiLabelClassifierHook
 from .base_adapter import BaseGCAdapter
 from .utils import default_optimizer_tuple, with_opt
 

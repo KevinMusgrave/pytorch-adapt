@@ -156,7 +156,8 @@ class TestAPValidatorWithIgnite(unittest.TestCase):
             for average in ["micro", "macro"]:
                 for ignite_cls_list in [
                     [Ignite],
-                    [IgnitePredsAsFeatures, IgniteMultiLabelClassification],
+                    [IgnitePredsAsFeatures],
+                    [IgniteMultiLabelClassification],
                 ]:
 
                     def assertion_fn(logits, labels, score):
@@ -166,7 +167,12 @@ class TestAPValidatorWithIgnite(unittest.TestCase):
                             average=average,
                         )
                         scores_close = np.isclose(score, correct_score)
-                        self.assertEqual(ignite_cls_list != [Ignite], scores_close)
+                        to_assert = (
+                            not scores_close
+                            if ignite_cls_list in [[Ignite], [IgnitePredsAsFeatures]]
+                            else scores_close
+                        )
+                        self.assertTrue(to_assert)
 
                     test_with_ignite_framework(
                         APValidator(
