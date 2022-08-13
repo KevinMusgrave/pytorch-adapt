@@ -17,8 +17,6 @@ class SymNets(BaseGCAdapter):
     The C model must output a list of logits: ```[logits1, logits2]```.
     """
 
-    hook_cls = SymNetsHook
-
     def __init__(self, *args, inference_fn=None, **kwargs):
         inference_fn = c_f.default(inference_fn, symnets_fn)
         super().__init__(*args, inference_fn=inference_fn, **kwargs)
@@ -27,3 +25,7 @@ class SymNets(BaseGCAdapter):
         self.hook = self.hook_cls(
             g_opts=with_opt(["G"]), c_opts=with_opt(["C"]), **hook_kwargs
         )
+
+    @property
+    def hook_cls(self):
+        return SymNetsHook

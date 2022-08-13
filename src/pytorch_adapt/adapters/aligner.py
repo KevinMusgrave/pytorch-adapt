@@ -16,11 +16,13 @@ class Aligner(BaseGCAdapter):
     |optimizers|```["G", "C"]```|
     """
 
-    hook_cls = AlignerPlusCHook
-
     def init_hook(self, hook_kwargs):
         opts = with_opt(list(self.optimizers.keys()))
         self.hook = self.hook_cls(opts, **hook_kwargs)
+
+    @property
+    def hook_cls(self):
+        return AlignerPlusCHook
 
 
 class RTN(Aligner):
@@ -34,8 +36,6 @@ class RTN(Aligner):
     |misc|```["feature_combiner"]```|
     """
 
-    hook_cls = RTNHook
-
     def __init__(self, *args, inference_fn=None, **kwargs):
         """
         Arguments:
@@ -43,6 +43,10 @@ class RTN(Aligner):
         """
         inference_fn = c_f.default(inference_fn, rtn_fn)
         super().__init__(*args, inference_fn=inference_fn, **kwargs)
+
+    @property
+    def hook_cls(self):
+        return RTNHook
 
     def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()

@@ -14,11 +14,13 @@ class Classifier(BaseGCAdapter):
     |optimizers|```["G", "C"]```|
     """
 
-    hook_cls = ClassifierHook
-
     def init_hook(self, hook_kwargs):
         opts = with_opt(list(self.optimizers.keys()))
         self.hook = self.hook_cls(opts=opts, **hook_kwargs)
+
+    @property
+    def hook_cls(self):
+        return ClassifierHook
 
 
 class Finetuner(Classifier):
@@ -31,7 +33,9 @@ class Finetuner(Classifier):
     |optimizers|```["C"]```|
     """
 
-    hook_cls = FinetunerHook
+    @property
+    def hook_cls(self):
+        return FinetunerHook
 
     def get_default_containers(self) -> MultipleContainers:
         optimizers = Optimizers(default_optimizer_tuple(), keys=["C"])

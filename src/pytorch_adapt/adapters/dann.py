@@ -15,19 +15,25 @@ class DANN(BaseGCDAdapter):
     |optimizers|```["G", "C", "D"]```|
     """
 
-    hook_cls = DANNHook
-
     def init_hook(self, hook_kwargs):
         opts = with_opt(list(self.optimizers.keys()))
         self.hook = self.hook_cls(opts=opts, **hook_kwargs)
 
+    @property
+    def hook_cls(self):
+        return DANNHook
+
 
 class DANNE(DANN):
-    hook_cls = DANNEHook
+    @property
+    def hook_cls(self):
+        return DANNEHook
 
 
 class CDANNE(DANN, CDAN):
-    hook_cls = CDANNEHook
+    @property
+    def hook_cls(self):
+        return CDANNEHook
 
 
 class GVB(DANN):
@@ -44,7 +50,9 @@ class GVB(DANN):
     with each bridge being a re-initialized copy of each model.
     """
 
-    hook_cls = GVBHook
+    @property
+    def hook_cls(self):
+        return GVBHook
 
     def init_containers_and_check_keys(self, containers):
         models = containers["models"]
@@ -55,4 +63,6 @@ class GVB(DANN):
 
 
 class GVBE(GVB):
-    hook_cls = GVBEHook
+    @property
+    def hook_cls(self):
+        return GVBEHook

@@ -19,8 +19,6 @@ class MCD(BaseGCAdapter):
     classifiers is 2, so C should output ```[logits1, logits2]```.
     """
 
-    hook_cls = MCDHook
-
     def __init__(self, *args, inference_fn=None, **kwargs):
         inference_fn = c_f.default(inference_fn, mcd_fn)
         super().__init__(*args, inference_fn=inference_fn, **kwargs)
@@ -29,3 +27,7 @@ class MCD(BaseGCAdapter):
         self.hook = self.hook_cls(
             g_opts=with_opt(["G"]), c_opts=with_opt(["C"]), **hook_kwargs
         )
+
+    @property
+    def hook_cls(self):
+        return MCDHook

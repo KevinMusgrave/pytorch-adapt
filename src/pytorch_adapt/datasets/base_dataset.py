@@ -61,5 +61,6 @@ class BaseDownloadableDataset(BaseDataset):
         download_url(self.url, root, filename=self.filename, md5=self.md5)
         filepath = os.path.join(root, self.filename)
         decompressor = tarfile.open if tarfile.is_tarfile(filepath) else zipfile.ZipFile
+        c_f.LOGGER.info("Extracting")
         with decompressor(filepath, "r") as f:
             f.extractall(path=root, members=c_f.extract_progress(f))
