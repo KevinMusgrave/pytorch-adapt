@@ -9,7 +9,13 @@ from .aligners import (
 )
 from .atdoc import ATDOCHook
 from .cdan import CDANDomainHookD, CDANDomainHookG, CDANEHook, CDANHook, GANEHook
-from .classification import ClassifierHook, CLossHook, FinetunerHook, SoftmaxHook
+from .classification import (
+    ClassifierHook,
+    CLossHook,
+    FinetunerHook,
+    MultiLabelClassifierHook,
+    SoftmaxHook,
+)
 from .conditions import StrongDHook
 from .dann import (
     CDANNEHook,

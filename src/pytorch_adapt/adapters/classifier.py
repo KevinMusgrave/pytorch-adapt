@@ -1,5 +1,6 @@
 from ..containers import KeyEnforcer, MultipleContainers, Optimizers
-from ..hooks import ClassifierHook, FinetunerHook
+from ..hooks import ClassifierHook, FinetunerHook, MultiLabelClassifierHook
+from ..hooks.classification import MultiLabelClassifierHook
 from .base_adapter import BaseGCAdapter
 from .utils import default_optimizer_tuple, with_opt
 
@@ -45,3 +46,9 @@ class Finetuner(Classifier):
         ke = super().get_key_enforcer()
         ke.requirements["optimizers"].remove("G")
         return ke
+
+
+class MultiLabelClassifier(Classifier):
+    @property
+    def hook_cls(self):
+        return MultiLabelClassifierHook

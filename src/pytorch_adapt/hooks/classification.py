@@ -130,3 +130,14 @@ class FinetunerHook(ClassifierHook):
         f_hook = FrozenModelHook(FeaturesHook(detach=True, domains=["src"]), "G")
         f_hook = FeaturesChainHook(f_hook, LogitsHook(domains=["src"]))
         super().__init__(f_hook=f_hook, **kwargs)
+
+
+# labels are usually int
+class BCEWithLogitsConvertLabels(torch.nn.BCEWithLogitsLoss):
+    def forward(self, input, target, *args, **kwargs):
+        return super().forward(input, target.float(), *args, **kwargs)
+
+
+class MultiLabelClassifierHook(ClassifierHook):
+    def __init__(self, **kwargs):
+        super().__init__(loss_fn=BCEWithLogitsConvertLabels(), **kwargs)

@@ -7,6 +7,10 @@ def create_output_dict(f_dict):
     return {**f_dict, "preds": torch.softmax(f_dict["logits"], dim=1)}
 
 
+def create_output_dict_multilabel_classification(f_dict):
+    return {**f_dict, "preds": torch.sigmoid(f_dict["logits"])}
+
+
 def create_output_dict_preds_as_features(f_dict):
     [features, logits] = c_f.extract(f_dict, ["features", "logits"])
     if not torch.allclose(features, logits):

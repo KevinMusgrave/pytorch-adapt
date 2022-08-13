@@ -11,7 +11,12 @@ from pytorch_adapt.datasets import (
     SourceDataset,
     TargetDataset,
 )
-from pytorch_adapt.frameworks.ignite import Ignite, IgnitePredsAsFeatures
+from pytorch_adapt.frameworks.ignite import (
+    Ignite,
+    IgniteMultiLabelClassification,
+    IgnitePredsAsFeatures,
+)
+from pytorch_adapt.utils import common_functions as c_f
 from pytorch_adapt.validators import ScoreHistory
 
 from .. import TEST_DEVICE
@@ -26,9 +31,20 @@ def kmeans_func(query, num_clusters):
 
 
 def test_with_ignite_framework(
-    validator, assertion_fn, num_classes=10, multilabel=False
+    validator,
+    assertion_fn,
+    num_classes=10,
+    multilabel=False,
+    adapter_cls=None,
+    ignite_cls_list=None,
 ):
-    for wrapper_type in [Ignite, IgnitePredsAsFeatures]:
+    ignite_cls_list = c_f.default(
+        ignite_cls_list, [Ignite, IgnitePredsAsFeatures, IgniteMultiLabelClassification]
+    )
+    adapter_cls = c_f.default(adapter_cls, Classifier)
+
+    for wrapper_type in ignite_cls_list:
+        c_f.LOGGER.info(f"Testing with wrapper class {wrapper_type}")
         dataset_size = 9999
 
         datasets = {}
@@ -54,13 +70,14 @@ def test_with_ignite_framework(
         C = torch.nn.Linear(128, num_classes).to(TEST_DEVICE)
 
         if wrapper_type is IgnitePredsAsFeatures:
-            G = torch.nn.Sequential(G, C, torch.nn.Softmax(dim=1))
+            preds_fn = torch.nn.Sigmoid() if multilabel else torch.nn.Softmax(dim=1)
+            G = torch.nn.Sequential(G, C, preds_fn)
             C = torch.nn.Identity()
 
         models = Models({"G": G, "C": C})
         optimizers = Optimizers((torch.optim.Adam, {"lr": 0}))
         adapter = wrapper_type(
-            Classifier(models=models, optimizers=optimizers),
+            adapter_cls(models=models, optimizers=optimizers),
             validator=ScoreHistory(validator),
             device=TEST_DEVICE,
         )

@@ -8,6 +8,12 @@ from sklearn.metrics import (
     balanced_accuracy_score,
 )
 
+from pytorch_adapt.adapters import MultiLabelClassifier
+from pytorch_adapt.frameworks.ignite import (
+    Ignite,
+    IgniteMultiLabelClassification,
+    IgnitePredsAsFeatures,
+)
 from pytorch_adapt.validators import AccuracyValidator, APValidator, ScoreHistory
 
 from .utils import test_with_ignite_framework
@@ -148,23 +154,30 @@ class TestAPValidatorWithIgnite(unittest.TestCase):
 
         for num_classes in [5, 13, 19]:
             for average in ["micro", "macro"]:
+                for ignite_cls_list in [
+                    [Ignite],
+                    [IgnitePredsAsFeatures, IgniteMultiLabelClassification],
+                ]:
 
-                def assertion_fn(logits, labels, score):
-                    correct_score = average_precision_score(
-                        labels["src_val"].cpu().numpy(),
-                        logits["src_val"].cpu().numpy(),
-                        average=average,
+                    def assertion_fn(logits, labels, score):
+                        correct_score = average_precision_score(
+                            labels["src_val"].cpu().numpy(),
+                            torch.sigmoid(logits["src_val"]).cpu().numpy(),
+                            average=average,
+                        )
+                        scores_close = np.isclose(score, correct_score)
+                        self.assertEqual(ignite_cls_list != [Ignite], scores_close)
+
+                    test_with_ignite_framework(
+                        APValidator(
+                            torchmetric_kwargs={
+                                "num_classes": num_classes,
+                                "average": average,
+                            }
+                        ),
+                        assertion_fn,
+                        num_classes,
+                        multilabel=True,
+                        adapter_cls=MultiLabelClassifier,
+                        ignite_cls_list=ignite_cls_list,
                     )
-                    self.assertTrue(np.isclose(score, correct_score))
-
-                test_with_ignite_framework(
-                    APValidator(
-                        torchmetric_kwargs={
-                            "num_classes": num_classes,
-                            "average": average,
-                        }
-                    ),
-                    assertion_fn,
-                    num_classes,
-                    multilabel=True,
-                )

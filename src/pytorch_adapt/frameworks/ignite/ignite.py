@@ -30,6 +30,7 @@ class Ignite:
         with_pbars=True,
         device=None,
         auto_dist=True,
+        val_output_dict_fn=None,
     ):
         """
         Arguments:
@@ -77,6 +78,9 @@ class Ignite:
         self.log_freq = log_freq
         self.with_pbars = with_pbars
         self.device = c_f.default(device, idist.device, {})
+        self.val_output_dict_fn = c_f.default(
+            val_output_dict_fn, f_utils.create_output_dict
+        )
         self.trainer_init()
         self.collector_init()
         self.dist_init_done = False
@@ -325,7 +329,7 @@ class Ignite:
     def get_collector_step(self, inference):
         def collector_step(engine, batch):
             batch = c_f.batch_to_device(batch, self.device)
-            return f_utils.collector_step(inference, batch, f_utils.create_output_dict)
+            return f_utils.collector_step(inference, batch, self.val_output_dict_fn)
 
         return collector_step
 

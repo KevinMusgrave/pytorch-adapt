@@ -5,6 +5,7 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 
+from pytorch_adapt.frameworks.ignite import Ignite, IgnitePredsAsFeatures
 from pytorch_adapt.validators import ScoreHistory, SNDValidator
 
 from .. import TEST_DEVICE
@@ -55,4 +56,8 @@ class TestSNDValidator(unittest.TestCase):
             correct_score = simple_compute_snd(logits["target_train"], T=0.05)
             self.assertTrue(np.isclose(score, correct_score))
 
-        test_with_ignite_framework(SNDValidator(), assertion_fn)
+        test_with_ignite_framework(
+            SNDValidator(),
+            assertion_fn,
+            ignite_cls_list=[Ignite, IgnitePredsAsFeatures],
+        )
