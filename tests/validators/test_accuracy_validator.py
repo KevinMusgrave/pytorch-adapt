@@ -10,6 +10,8 @@ from sklearn.metrics import (
 
 from pytorch_adapt.validators import AccuracyValidator, APValidator, ScoreHistory
 
+from .utils import test_with_ignite_framework
+
 
 class TestAccuracyValidator(unittest.TestCase):
     def test_accuracy_validator(self):
@@ -139,3 +141,30 @@ class TestAccuracyValidator(unittest.TestCase):
 
                         self.assertTrue(np.isclose(score, correct_score))
                         self.assertTrue(validator.latest_score == score)
+
+
+class TestAPValidatorWithIgnite(unittest.TestCase):
+    def test_ap_validator(self):
+
+        for num_classes in [5, 13, 19]:
+            for average in ["micro", "macro"]:
+
+                def assertion_fn(logits, labels, score):
+                    correct_score = average_precision_score(
+                        labels["src_val"].cpu().numpy(),
+                        logits["src_val"].cpu().numpy(),
+                        average=average,
+                    )
+                    self.assertTrue(np.isclose(score, correct_score))
+
+                test_with_ignite_framework(
+                    APValidator(
+                        torchmetric_kwargs={
+                            "num_classes": num_classes,
+                            "average": average,
+                        }
+                    ),
+                    assertion_fn,
+                    num_classes,
+                    multilabel=True,
+                )
