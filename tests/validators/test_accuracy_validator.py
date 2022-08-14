@@ -166,13 +166,11 @@ class TestAPValidatorWithIgnite(unittest.TestCase):
                             torch.sigmoid(logits["src_val"]).cpu().numpy(),
                             average=average,
                         )
-                        scores_close = np.isclose(score, correct_score)
-                        to_assert = (
-                            not scores_close
-                            if ignite_cls_list in [[Ignite], [IgnitePredsAsFeatures]]
-                            else scores_close
-                        )
-                        self.assertTrue(to_assert)
+
+                        if ignite_cls_list in [[Ignite], [IgnitePredsAsFeatures]]:
+                            self.assertNotAlmostEqual(score, correct_score, places=6)
+                        else:
+                            self.assertAlmostEqual(score, correct_score, places=6)
 
                     test_with_ignite_framework(
                         APValidator(

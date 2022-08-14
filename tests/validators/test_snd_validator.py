@@ -54,7 +54,7 @@ class TestSNDValidator(unittest.TestCase):
     def test_snd_validator_with_framework(self):
         def assertion_fn(logits, labels, score):
             correct_score = simple_compute_snd(logits["target_train"], T=0.05)
-            self.assertTrue(np.isclose(score, correct_score))
+            self.assertAlmostEqual(score, correct_score)
 
         test_with_ignite_framework(
             SNDValidator(),
