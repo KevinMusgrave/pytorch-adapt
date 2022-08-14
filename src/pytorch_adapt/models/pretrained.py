@@ -171,3 +171,26 @@ def domainnet126C(
         raise ValueError("pretrained=True not yet supported")
 
     return Classifier(num_classes=num_classes, in_size=in_size, h=h)
+
+
+def voc_multilabelG(*args, **kwargs):
+    """
+    Returns:
+        A ResNet50 model trained on ImageNet, if ```pretrained == True```.
+    """
+    return resnet50(*args, **kwargs)
+
+
+def voc_multilabelC(
+    domain=None,
+    num_classes=20,
+    in_size=2048,
+    h=256,
+    pretrained=False,
+    progress=True,
+    **kwargs,
+):
+    if pretrained:
+        raise ValueError("pretrained=True not yet supported")
+
+    return Classifier(num_classes=num_classes, in_size=in_size, h=h)
