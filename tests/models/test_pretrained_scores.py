@@ -1,3 +1,4 @@
+import pprint
 import unittest
 from collections import defaultdict
 
@@ -5,7 +6,12 @@ import numpy as np
 import torch
 import tqdm
 
-from pytorch_adapt.datasets import DataloaderCreator, get_mnist_mnistm
+from pytorch_adapt.datasets import (
+    DataloaderCreator,
+    get_mnist_mnistm,
+    get_office31,
+    get_officehome,
+)
 from pytorch_adapt.models import (
     mnistC,
     mnistG,
@@ -18,7 +24,9 @@ from pytorch_adapt.models import (
 )
 from pytorch_adapt.validators import AccuracyValidator
 
-from .. import DATASET_FOLDER, TEST_DEVICE
+from .. import DATASET_FOLDER, RUN_PRETRAINED_SCORES_TESTS, TEST_DEVICE
+
+skip_reason = "RUN_PRETRAINED_SCORES_TESTS is False"
 
 
 def get_acc_fn(num_classes):
@@ -46,7 +54,7 @@ class TestPretrainedScores(unittest.TestCase):
             )
             datasets.pop("train")
             self.assertTrue(len(datasets) == 2)  # should have src_train and src_val
-            dataloaders = DataloaderCreator(num_workers=0, batch_size=64, all_val=True)(
+            dataloaders = DataloaderCreator(num_workers=0, batch_size=32, all_val=True)(
                 **datasets
             )
             for k, v in dataloaders.items():
@@ -60,6 +68,8 @@ class TestPretrainedScores(unittest.TestCase):
                 preds = torch.cat(preds, dim=0)
                 all_labels = torch.cat(all_labels, dim=0)
                 accuracies[domain][k] = acc_getter(preds, all_labels)
+
+        pprint.pprint(accuracies)
 
         for domain, x in accuracies.items():
             for split, y in x.items():
@@ -77,6 +87,7 @@ class TestPretrainedScores(unittest.TestCase):
                     self.assertEqual(acc, true_acc)
 
     @torch.no_grad()
+    @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
     def test_mnist(self):
         G = mnistG(pretrained=True, map_location=TEST_DEVICE)
         C = mnistC(pretrained=True, map_location=TEST_DEVICE)
@@ -89,3 +100,39 @@ class TestPretrainedScores(unittest.TestCase):
             ["mnist", "mnistm"],
             get_acc_fn(num_classes=10),
         )
+
+    @torch.no_grad()
+    @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
+    def test_office31(self):
+        G = office31G(pretrained=True, map_location=TEST_DEVICE)
+        domains = ["amazon", "dslr", "webcam"]
+        for src_domain in domains:
+            C = office31C(domain=src_domain, pretrained=True, map_location=TEST_DEVICE)
+            self.helper(
+                "office31",
+                src_domain,
+                G,
+                C,
+                get_office31,
+                domains,
+                get_acc_fn(num_classes=31),
+            )
+
+    @torch.no_grad()
+    @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
+    def test_officehome(self):
+        G = officehomeG(pretrained=True, map_location=TEST_DEVICE)
+        domains = ["art", "clipart", "product", "real"]
+        for src_domain in domains:
+            C = officehomeC(
+                domain=src_domain, pretrained=True, map_location=TEST_DEVICE
+            )
+            self.helper(
+                "officehome",
+                src_domain,
+                G,
+                C,
+                get_officehome,
+                domains,
+                get_acc_fn(num_classes=65),
+            )
