@@ -12,6 +12,7 @@ from pytorch_adapt.datasets import (
     get_office31,
     get_officehome,
 )
+from pytorch_adapt.datasets.utils import num_classes
 from pytorch_adapt.models import (
     mnistC,
     mnistG,
@@ -29,16 +30,16 @@ from .. import DATASET_FOLDER, RUN_PRETRAINED_SCORES_TESTS, TEST_DEVICE
 skip_reason = "RUN_PRETRAINED_SCORES_TESTS is False"
 
 
-def get_acc_fn(num_classes):
-    def get_acc_dict(preds, labels):
-        output = {}
-        for average in ["macro", "micro"]:
-            output[average] = AccuracyValidator(
-                torchmetric_kwargs={"average": average, "num_classes": num_classes}
-            )(src_val={"preds": preds, "labels": labels})
-        return output
-
-    return get_acc_dict
+def get_acc_dict(dataset_name, preds, labels):
+    output = {}
+    for average in ["macro", "micro"]:
+        output[average] = AccuracyValidator(
+            torchmetric_kwargs={
+                "average": average,
+                "num_classes": num_classes(dataset_name),
+            }
+        )(src_val={"preds": preds, "labels": labels})
+    return output
 
 
 class TestPretrainedScores(unittest.TestCase):
@@ -67,7 +68,7 @@ class TestPretrainedScores(unittest.TestCase):
                     all_labels.append(labels)
                 preds = torch.cat(preds, dim=0)
                 all_labels = torch.cat(all_labels, dim=0)
-                accuracies[domain][k] = acc_getter(preds, all_labels)
+                accuracies[domain][k] = acc_getter(dataset_name, preds, all_labels)
 
         pprint.pprint(accuracies)
 
@@ -92,13 +93,7 @@ class TestPretrainedScores(unittest.TestCase):
         G = mnistG(pretrained=True, map_location=TEST_DEVICE)
         C = mnistC(pretrained=True, map_location=TEST_DEVICE)
         self.helper(
-            "mnist",
-            "mnist",
-            G,
-            C,
-            get_mnist_mnistm,
-            ["mnist", "mnistm"],
-            get_acc_fn(num_classes=10),
+            "mnist", "mnist", G, C, get_mnist_mnistm, ["mnist", "mnistm"], get_acc_dict
         )
 
     @torch.no_grad()
@@ -109,13 +104,7 @@ class TestPretrainedScores(unittest.TestCase):
         for src_domain in domains:
             C = office31C(domain=src_domain, pretrained=True, map_location=TEST_DEVICE)
             self.helper(
-                "office31",
-                src_domain,
-                G,
-                C,
-                get_office31,
-                domains,
-                get_acc_fn(num_classes=31),
+                "office31", src_domain, G, C, get_office31, domains, get_acc_dict
             )
 
     @torch.no_grad()
@@ -128,11 +117,5 @@ class TestPretrainedScores(unittest.TestCase):
                 domain=src_domain, pretrained=True, map_location=TEST_DEVICE
             )
             self.helper(
-                "officehome",
-                src_domain,
-                G,
-                C,
-                get_officehome,
-                domains,
-                get_acc_fn(num_classes=65),
+                "officehome", src_domain, G, C, get_officehome, domains, get_acc_dict
             )
