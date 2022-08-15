@@ -13,3 +13,4 @@ from .pretrained import (
     voc_multilabelC,
     voc_multilabelG,
 )
+from .pretrained_scores import pretrained_src_accuracy, pretrained_target_accuracy
