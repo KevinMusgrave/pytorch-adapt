@@ -1,4 +1,5 @@
 from .accuracy_validator import AccuracyValidator
+from .ap_validator import APValidator
 from .base_validator import BaseValidator
 from .class_cluster_validator import ClassClusterValidator
 from .deep_embedded_validator import DeepEmbeddedValidator

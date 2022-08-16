@@ -150,6 +150,11 @@ class BaseAdapter(ABC):
         """
         pass
 
+    @property
+    @abstractmethod
+    def hook_cls(self):
+        pass
+
     def init_containers_and_check_keys(self, containers):
         """
         Called in ```__init__``` before

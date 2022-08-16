@@ -20,8 +20,6 @@ class ADDA(BaseAdapter):
     The target model ("T") is created during initialization by deep-copying the G model.
     """
 
-    hook_cls = ADDAHook
-
     def __init__(self, *args, inference_fn=None, **kwargs):
         """
         Arguments:
@@ -55,3 +53,7 @@ class ADDA(BaseAdapter):
     def init_containers_and_check_keys(self, containers):
         containers["models"]["T"] = copy.deepcopy(containers["models"]["G"])
         super().init_containers_and_check_keys(containers)
+
+    @property
+    def hook_cls(self):
+        return ADDAHook

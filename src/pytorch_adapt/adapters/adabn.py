@@ -14,8 +14,6 @@ class AdaBN(BaseAdapter):
     |models|```["G", "C"]```|
     """
 
-    hook_cls = AdaBNHook
-
     def __init__(self, *args, inference_fn=None, **kwargs):
         """
         Arguments:
@@ -26,6 +24,10 @@ class AdaBN(BaseAdapter):
 
     def init_hook(self, hook_kwargs):
         self.hook = self.hook_cls(**hook_kwargs)
+
+    @property
+    def hook_cls(self):
+        return AdaBNHook
 
     def get_key_enforcer(self) -> KeyEnforcer:
         return KeyEnforcer(models=["G", "C"], optimizers=[])

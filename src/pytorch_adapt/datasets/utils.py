@@ -33,3 +33,14 @@ def maybe_download(fn, kwargs):
             fn(**kwargs)
         else:
             raise
+
+
+def num_classes(dataset_name):
+    return {
+        "mnist": 10,
+        "domainnet": 345,
+        "domainnet126": 126,
+        "office31": 31,
+        "officehome": 65,
+        "voc_multilabel": 20,
+    }[dataset_name]

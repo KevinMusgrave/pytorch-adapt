@@ -1,4 +1,3 @@
-from ...utils import common_functions as c_f
 from .. import utils as f_utils
 from .ignite import Ignite
 
@@ -8,11 +7,9 @@ from .ignite import Ignite
 # C is Identity()
 # In other words, the "features" are softmaxed logits
 class IgnitePredsAsFeatures(Ignite):
-    def get_collector_step(self, inference):
-        def collector_step(engine, batch):
-            batch = c_f.batch_to_device(batch, self.device)
-            return f_utils.collector_step(
-                inference, batch, f_utils.create_output_dict_preds_as_features
-            )
-
-        return collector_step
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            *args,
+            val_output_dict_fn=f_utils.create_output_dict_preds_as_features,
+            **kwargs
+        )

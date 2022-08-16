@@ -198,6 +198,7 @@ class TestGetters(unittest.TestCase):
             },
         )
 
+    @unittest.skipIf(not RUN_DATASET_TESTS, skip_reason)
     def test_voc_multilabel(self):
         for year in [None, "2011", "2012"]:
             year_kwarg = {} if year is None else {"year": year}

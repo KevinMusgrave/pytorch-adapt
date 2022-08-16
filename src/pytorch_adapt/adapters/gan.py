@@ -23,16 +23,20 @@ class GAN(BaseGCDAdapter):
     |optimizers|```["G", "C", "D"]```|
     """
 
-    hook_cls = GANHook
-
     def init_hook(self, hook_kwargs):
         g_opts = with_opt(["G", "C"])
         d_opts = with_opt(["D"])
         self.hook = self.hook_cls(d_opts=d_opts, g_opts=g_opts, **hook_kwargs)
 
+    @property
+    def hook_cls(self):
+        return GANHook
+
 
 class GANE(GAN):
-    hook_cls = GANEHook
+    @property
+    def hook_cls(self):
+        return GANEHook
 
 
 class CDAN(GAN):
@@ -46,7 +50,9 @@ class CDAN(GAN):
     |misc|```["feature_combiner"]```|
     """
 
-    hook_cls = CDANHook
+    @property
+    def hook_cls(self):
+        return CDANHook
 
     def get_key_enforcer(self) -> KeyEnforcer:
         ke = super().get_key_enforcer()
@@ -55,7 +61,9 @@ class CDAN(GAN):
 
 
 class CDANE(CDAN):
-    hook_cls = CDANEHook
+    @property
+    def hook_cls(self):
+        return CDANEHook
 
 
 class DomainConfusion(GAN):
@@ -68,7 +76,9 @@ class DomainConfusion(GAN):
     |optimizers|```["G", "C", "D"]```|
     """
 
-    hook_cls = DomainConfusionHook
+    @property
+    def hook_cls(self):
+        return DomainConfusionHook
 
 
 class VADA(GAN):
@@ -86,7 +96,9 @@ class VADA(GAN):
     automatically during initialization.
     """
 
-    hook_cls = VADAHook
+    @property
+    def hook_cls(self):
+        return VADAHook
 
     def init_containers_and_check_keys(self, containers):
         models = containers["models"]

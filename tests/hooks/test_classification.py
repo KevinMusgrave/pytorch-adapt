@@ -1,10 +1,17 @@
 import unittest
 
+import numpy as np
 import torch
+import torch.nn.functional as F
 
-from pytorch_adapt.hooks import CLossHook, SoftmaxHook
+from pytorch_adapt.hooks import (
+    ClassifierHook,
+    CLossHook,
+    MultiLabelClassifierHook,
+    SoftmaxHook,
+)
 
-from .utils import Net, assertRequiresGrad
+from .utils import Net, assertRequiresGrad, get_models_and_data, get_opts
 
 
 class TestClassification(unittest.TestCase):
@@ -36,3 +43,38 @@ class TestClassification(unittest.TestCase):
             if detach_features:
                 base_key += "_detached"
             self.assertTrue(outputs.keys() == {base_key, f"{base_key}_logits"})
+
+    def test_classifier_hook(self):
+        torch.manual_seed(53430)
+
+        num_classes = 12
+
+        for loss_fn, hook_cls in [
+            (F.cross_entropy, ClassifierHook),
+            (F.binary_cross_entropy_with_logits, MultiLabelClassifierHook),
+        ]:
+            (
+                G,
+                C,
+                _,
+                src_imgs,
+                src_labels,
+                _,
+                _,
+                _,
+            ) = get_models_and_data(num_classes=num_classes)
+
+            src_labels_for_loss_fn = src_labels
+            if hook_cls is MultiLabelClassifierHook:
+                src_labels = torch.randint(
+                    0, 2, size=(src_labels.shape[0], num_classes)
+                )
+                src_labels_for_loss_fn = src_labels.float()
+
+            correct = loss_fn(C(G(src_imgs)), src_labels_for_loss_fn).item()
+            opts = get_opts(G, C)
+            h = hook_cls(opts)
+            _, losses = h(
+                {"G": G, "C": C, "src_imgs": src_imgs, "src_labels": src_labels}
+            )
+            self.assertTrue(np.isclose(losses["total_loss"]["c_loss"], correct))
