@@ -2282,6 +2282,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/torchmetrics_validator/" class="md-nav__link">
+        torchmetrics_validator
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2504,7 +2518,9 @@
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Classifier</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Classifier</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [ClassifierHook][pytorch_adapt.hooks.ClassifierHook].</span>
 
@@ -2514,11 +2530,13 @@
 <span class="sd">    |optimizers|```[&quot;G&quot;, &quot;C&quot;]```|</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">ClassifierHook</span>
-
     <span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
         <span class="n">opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="n">opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ClassifierHook</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -2581,9 +2599,7 @@
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\classifier.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
@@ -2600,7 +2616,11 @@
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finetuner</span><span class="p">(</span><span class="n">Classifier</span><span class="p">):</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finetuner</span><span class="p">(</span><span class="n">Classifier</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [FinetunerHook][pytorch_adapt.hooks.FinetunerHook].</span>
 
@@ -2610,7 +2630,9 @@
 <span class="sd">    |optimizers|```[&quot;C&quot;]```|</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">FinetunerHook</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">FinetunerHook</span>
 
     <span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
         <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">])</span>

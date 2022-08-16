@@ -2296,6 +2296,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/torchmetrics_validator/" class="md-nav__link">
+        torchmetrics_validator
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2522,11 +2536,7 @@
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
 <span class="normal">45</span>
@@ -2538,7 +2548,13 @@
 <span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CDAN</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CDAN</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [CDANHook][pytorch_adapt.hooks.CDANHook].</span>
 
@@ -2549,7 +2565,9 @@
 <span class="sd">    |misc|```[&quot;feature_combiner&quot;]```|</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">CDANHook</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">CDANHook</span>
 
     <span class="k">def</span> <span class="nf">get_key_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEnforcer</span><span class="p">:</span>
         <span class="n">ke</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_key_enforcer</span><span class="p">()</span>
@@ -2617,17 +2635,19 @@
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">69</span>
 <span class="normal">70</span>
-<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DomainConfusion</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DomainConfusion</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [DomainConfusionHook][pytorch_adapt.hooks.DomainConfusionHook].</span>
 
@@ -2637,7 +2657,9 @@
 <span class="sd">    |optimizers|```[&quot;G&quot;, &quot;C&quot;, &quot;D&quot;]```|</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">DomainConfusionHook</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DomainConfusionHook</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -2715,7 +2737,9 @@
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
-<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">BaseGCDAdapter</span><span class="p">):</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">BaseGCDAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [GANHook][pytorch_adapt.hooks.GANHook].</span>
 
@@ -2725,12 +2749,14 @@
 <span class="sd">    |optimizers|```[&quot;G&quot;, &quot;C&quot;, &quot;D&quot;]```|</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">GANHook</span>
-
     <span class="k">def</span> <span class="nf">init_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_kwargs</span><span class="p">):</span>
         <span class="n">g_opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
         <span class="n">d_opts</span> <span class="o">=</span> <span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span><span class="n">d_opts</span><span class="o">=</span><span class="n">d_opts</span><span class="p">,</span> <span class="n">g_opts</span><span class="o">=</span><span class="n">g_opts</span><span class="p">,</span> <span class="o">**</span><span class="n">hook_kwargs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">GANHook</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -2800,17 +2826,7 @@ automatically during initialization.</p>
 
         <details class="quote">
           <summary>Source code in <code>pytorch_adapt\adapters\gan.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 84</span>
 <span class="normal"> 85</span>
 <span class="normal"> 86</span>
 <span class="normal"> 87</span>
@@ -2826,7 +2842,19 @@ automatically during initialization.</p>
 <span class="normal"> 97</span>
 <span class="normal"> 98</span>
 <span class="normal"> 99</span>
-<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">VADA</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">VADA</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [VADAHook][pytorch_adapt.hooks.VADAHook].</span>
 
@@ -2841,7 +2869,9 @@ automatically during initialization.</p>
 <span class="sd">    automatically during initialization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">VADAHook</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">VADAHook</span>
 
     <span class="k">def</span> <span class="nf">init_containers_and_check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
         <span class="n">models</span> <span class="o">=</span> <span class="n">containers</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span>

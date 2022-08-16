@@ -2275,6 +2275,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validators/torchmetrics_validator/" class="md-nav__link">
+        torchmetrics_validator
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2502,7 +2516,9 @@ classifiers is 2, so C should output <code>[logits1, logits2]</code>.</p>
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
-<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MCD</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MCD</span><span class="p">(</span><span class="n">BaseGCAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [MCDHook][pytorch_adapt.hooks.MCDHook].</span>
 
@@ -2516,8 +2532,6 @@ classifiers is 2, so C should output <code>[logits1, logits2]</code>.</p>
 <span class="sd">    classifiers is 2, so C should output ```[logits1, logits2]```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hook_cls</span> <span class="o">=</span> <span class="n">MCDHook</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">inference_fn</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">inference_fn</span><span class="p">,</span> <span class="n">mcd_fn</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">inference_fn</span><span class="o">=</span><span class="n">inference_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2526,6 +2540,10 @@ classifiers is 2, so C should output <code>[logits1, logits2]</code>.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_cls</span><span class="p">(</span>
             <span class="n">g_opts</span><span class="o">=</span><span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;G&quot;</span><span class="p">]),</span> <span class="n">c_opts</span><span class="o">=</span><span class="n">with_opt</span><span class="p">([</span><span class="s2">&quot;C&quot;</span><span class="p">]),</span> <span class="o">**</span><span class="n">hook_kwargs</span>
         <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hook_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MCDHook</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
