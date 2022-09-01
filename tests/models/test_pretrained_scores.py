@@ -12,8 +12,11 @@ from pytorch_adapt.datasets import (
     get_office31,
     get_officehome,
 )
+from pytorch_adapt.datasets.getters import get_domainnet126
 from pytorch_adapt.datasets.utils import num_classes
 from pytorch_adapt.models import (
+    domainnet126C,
+    domainnet126G,
     mnistC,
     mnistG,
     office31C,
@@ -40,6 +43,19 @@ def get_acc_dict(dataset_name, preds, labels):
             }
         )(src_val={"preds": preds, "labels": labels})
     return output
+
+
+# just make sure no exceptions are raised
+def check_if_keys_exist(dataset_name, src_domain, domains):
+    for domain in domains:
+        for split in ["train", "val"]:
+            for average in ["micro", "macro"]:
+                if domain == src_domain:
+                    pretrained_src_accuracy(dataset_name, [src_domain], split, average)
+                else:
+                    pretrained_target_accuracy(
+                        dataset_name, [src_domain], [domain], split, average
+                    )
 
 
 class TestPretrainedScores(unittest.TestCase):
@@ -92,30 +108,61 @@ class TestPretrainedScores(unittest.TestCase):
     def test_mnist(self):
         G = mnistG(pretrained=True, map_location=TEST_DEVICE)
         C = mnistC(pretrained=True, map_location=TEST_DEVICE)
+        dataset_name = "mnist"
+        src_domain = "mnist"
+        domains = ["mnist", "mnistm"]
+        check_if_keys_exist(dataset_name, src_domain, domains)
         self.helper(
-            "mnist", "mnist", G, C, get_mnist_mnistm, ["mnist", "mnistm"], get_acc_dict
+            dataset_name, src_domain, G, C, get_mnist_mnistm, domains, get_acc_dict
         )
 
     @torch.no_grad()
     @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
     def test_office31(self):
-        G = office31G(pretrained=True, map_location=TEST_DEVICE)
+        dataset_name = "office31"
         domains = ["amazon", "dslr", "webcam"]
+        for src_domain in domains:
+            check_if_keys_exist(dataset_name, src_domain, domains)
+
+        G = office31G(pretrained=True, map_location=TEST_DEVICE)
         for src_domain in domains:
             C = office31C(domain=src_domain, pretrained=True, map_location=TEST_DEVICE)
             self.helper(
-                "office31", src_domain, G, C, get_office31, domains, get_acc_dict
+                dataset_name, src_domain, G, C, get_office31, domains, get_acc_dict
             )
 
     @torch.no_grad()
     @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
     def test_officehome(self):
-        G = officehomeG(pretrained=True, map_location=TEST_DEVICE)
+        dataset_name = "officehome"
         domains = ["art", "clipart", "product", "real"]
+        for src_domain in domains:
+            check_if_keys_exist(dataset_name, src_domain, domains)
+
+        G = officehomeG(pretrained=True, map_location=TEST_DEVICE)
         for src_domain in domains:
             C = officehomeC(
                 domain=src_domain, pretrained=True, map_location=TEST_DEVICE
             )
             self.helper(
-                "officehome", src_domain, G, C, get_officehome, domains, get_acc_dict
+                dataset_name, src_domain, G, C, get_officehome, domains, get_acc_dict
+            )
+
+    @torch.no_grad()
+    @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
+    def test_domainnet126(self):
+        dataset_name = "domainnet126"
+        domains = ["clipart", "painting", "real", "sketch"]
+        for src_domain in domains:
+            check_if_keys_exist(dataset_name, src_domain, domains)
+
+        for src_domain in domains:
+            G = domainnet126G(
+                domain=src_domain, pretrained=True, map_location=TEST_DEVICE
+            )
+            C = domainnet126C(
+                domain=src_domain, pretrained=True, map_location=TEST_DEVICE
+            )
+            self.helper(
+                dataset_name, src_domain, G, C, get_domainnet126, domains, get_acc_dict
             )

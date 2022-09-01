@@ -43,3 +43,11 @@ def get_resnet_transform(is_training, **kwargs):
         T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
     ]
     return T.Compose(transform)
+
+
+def get_timm_transform(is_training, **kwargs):
+    from timm.data.transforms_factory import create_transform
+
+    return create_transform(
+        input_size=224, is_training=is_training, auto_augment="original"
+    )
