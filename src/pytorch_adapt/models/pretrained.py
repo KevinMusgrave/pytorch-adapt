@@ -75,8 +75,8 @@ def office31C(
         model = office31(domain="amazon", pretrained=True)
         ```
     """
-    if pretrained and not domain:
-        raise ValueError("if pretrained, domain must be specified")
+    if (pretrained and not domain) or (not pretrained and domain):
+        raise ValueError("if pretrained, domain must be specified, and vice versa")
 
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
     if not pretrained:
@@ -125,8 +125,8 @@ def officehomeC(
         model = officehomeC(domain="art", pretrained=True)
         ```
     """
-    if pretrained and not domain:
-        raise ValueError("if pretrained, domain must be specified")
+    if (pretrained and not domain) or (not pretrained and domain):
+        raise ValueError("if pretrained, domain must be specified, and vice versa")
 
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
     if not pretrained:
@@ -163,8 +163,10 @@ def domainnet126G(domain=None, pretrained=False, progress=True, **kwargs):
 
     if not domain:
         return timm.create_model("resnet50", pretrained=pretrained, num_classes=0)
-    if domain and pretrained:
+    elif domain and pretrained:
         model = timm.create_model("resnet50", pretrained=False, num_classes=0)
+    else:
+        raise ValueError("if domain is specified, then pretrained must be True")
     url = {
         "clipart": "https://cornell.box.com/shared/static/p89emqp3sggj8t1ir8ojjgnmgu3i1h6e",
         "painting": "https://cornell.box.com/shared/static/dytk5919v2rwmzgbz8y34hwrtwdh7zbw",
@@ -202,8 +204,8 @@ def domainnet126C(
         model = domainnet126C(domain="sketch", pretrained=True)
         ```
     """
-    if pretrained and not domain:
-        raise ValueError("if pretrained, domain must be specified")
+    if (pretrained and not domain) or (not pretrained and domain):
+        raise ValueError("if pretrained, domain must be specified, and vice versa")
 
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
     if not pretrained:
