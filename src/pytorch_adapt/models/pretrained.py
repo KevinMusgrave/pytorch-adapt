@@ -7,7 +7,7 @@ def mnistG(pretrained=False, progress=True, **kwargs):
     """
     Returns:
         An [```MNISTFeatures```][pytorch_adapt.models.MNISTFeatures] model
-        trained on the MNIST dataset, if ```pretrained == True```.
+            trained on the MNIST dataset, if ```pretrained == True```.
     """
     model = MNISTFeatures()
     url = "https://cornell.box.com/shared/static/tdx0ts24e273j7mf3r2ox7a12xh4fdfy"
@@ -24,7 +24,7 @@ def mnistC(
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
-        trained on the MNIST dataset, if ```pretrained == True```.
+            trained on the MNIST dataset, if ```pretrained == True```.
     """
     model = Classifier(num_classes=num_classes, in_size=in_size, h=h)
     url = "https://cornell.box.com/shared/static/j4zrogronmievq1csulrkai7zjm27gcq"
@@ -68,12 +68,12 @@ def office31C(
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
-        trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31]
-        dataset, if ```pretrained == True```. For example
+            trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31]
+            dataset, if ```pretrained == True```. For example
 
-        ```python
-        model = office31(domain="amazon", pretrained=True)
-        ```
+            ```python
+            model = office31(domain="amazon", pretrained=True)
+            ```
     """
     if (pretrained and not domain) or (not pretrained and domain):
         raise ValueError("if pretrained, domain must be specified, and vice versa")
@@ -118,12 +118,12 @@ def officehomeC(
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
-        trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome]
-        dataset, if ```pretrained == True```. For example
+            trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome]
+            dataset, if ```pretrained == True```. For example
 
-        ```python
-        model = officehomeC(domain="art", pretrained=True)
-        ```
+            ```python
+            model = officehomeC(domain="art", pretrained=True)
+            ```
     """
     if (pretrained and not domain) or (not pretrained and domain):
         raise ValueError("if pretrained, domain must be specified, and vice versa")
@@ -153,11 +153,11 @@ def domainnet126G(domain=None, pretrained=False, progress=True, **kwargs):
     """
     Returns:
         A ResNet50 model trained on ImageNet, if `pretrained == True`.
-        If `pretrained == True` and `domain` is specified, then it returns a ResNet50 model trained on that domain.
-        For example:
-        ```python
-        model = domainnet126G(domain="sketch", pretrained=True)
-        ```
+            If `pretrained == True` and `domain` is specified, then it returns a ResNet50 model trained on that domain.
+            For example:
+            ```python
+            model = domainnet126G(domain="sketch", pretrained=True)
+            ```
     """
     import timm
 
@@ -197,12 +197,12 @@ def domainnet126C(
     """
     Returns:
         A [```Classifier```][pytorch_adapt.models.Classifier] model
-        trained on the specified ```domain``` of the [DomainNet126][pytorch_adapt.datasets.DomainNet126]
-        dataset, if ```pretrained == True```. For example
+            trained on the specified ```domain``` of the [DomainNet126][pytorch_adapt.datasets.DomainNet126]
+            dataset, if ```pretrained == True```. For example
 
-        ```python
-        model = domainnet126C(domain="sketch", pretrained=True)
-        ```
+            ```python
+            model = domainnet126C(domain="sketch", pretrained=True)
+            ```
     """
     if (pretrained and not domain) or (not pretrained and domain):
         raise ValueError("if pretrained, domain must be specified, and vice versa")
@@ -229,10 +229,6 @@ def domainnet126C(
 
 
 def voc_multilabelG(*args, **kwargs):
-    """
-    Returns:
-        A ResNet50 model trained on ImageNet, if ```pretrained == True```.
-    """
     return resnet50(*args, **kwargs)
 
 

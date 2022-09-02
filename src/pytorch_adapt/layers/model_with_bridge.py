@@ -36,7 +36,7 @@ class ModelWithBridge(torch.nn.Module):
                 in addition to the ```model - bridge``` output
         Returns:
             If ```return_bridge = False```, then return just ```model - bridge```.
-            If ```return_bridge = True```, then return a tuple of ```(model - bridge), bridge```
+                If ```return_bridge = True```, then return a tuple of ```(model - bridge), bridge```
         """
         y = self.model(x)
         z = self.bridge(x)

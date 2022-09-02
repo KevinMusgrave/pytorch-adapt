@@ -82,7 +82,7 @@ class BaseHook(ABC):
             losses: previously computed losses
         Returns:
             Either a tuple of ```(outputs, losses)``` that will be merged with the input context,
-            or a boolean
+                or a boolean
         """
         pass
 

@@ -29,15 +29,15 @@ class TargetDataset(DomainDataset):
         Returns:
             A dictionary with keys
 
-            - "target_imgs" (the data)
+                - "target_imgs" (the data)
 
-            - "target_domain" (the integer representing the domain)
+                - "target_domain" (the integer representing the domain)
 
-            - "target_sample_idx" (idx)
+                - "target_sample_idx" (idx)
 
-            If ```supervised = True``` it returns an extra key
+                If ```supervised = True``` it returns an extra key
 
-            - "target_labels" (the class label)
+                - "target_labels" (the class label)
         """
 
         has_labels = False

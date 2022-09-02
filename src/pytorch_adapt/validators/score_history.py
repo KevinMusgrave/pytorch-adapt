@@ -85,7 +85,7 @@ class ScoreHistory(ABC):
         """
         Returns:
             The best score, ignoring ```self.ignore_epoch```.
-            Returns ```None``` if no valid scores are available.
+                Returns ```None``` if no valid scores are available.
         """
         if self.has_valid_history():
             return self.score_history_ignore_epoch[self.best_idx]
@@ -95,7 +95,7 @@ class ScoreHistory(ABC):
         """
         Returns:
             The best epoch, ignoring ```self.ignore_epoch```.
-            Returns ```None``` if no valid epochs are available.
+                Returns ```None``` if no valid epochs are available.
         """
         if self.has_valid_history():
             return self.epochs_ignore_epoch[self.best_idx]
@@ -105,7 +105,7 @@ class ScoreHistory(ABC):
         """
         Returns:
             The index of the best score in ```self.score_history_ignore_epoch```.
-            Returns ```None``` if no valid epochs are available.
+                Returns ```None``` if no valid epochs are available.
         """
         if self.has_valid_history():
             return np.nanargmax(self.score_history_ignore_epoch)
@@ -115,7 +115,7 @@ class ScoreHistory(ABC):
         """
         Returns:
             The latest epoch, including ```self.ignore_epoch```.
-            Returns ```None``` if no epochs have been scored.
+                Returns ```None``` if no epochs have been scored.
         """
         if self.has_valid_history(False):
             return self.epochs[-1]
@@ -125,7 +125,7 @@ class ScoreHistory(ABC):
         """
         Returns:
             The latest score, including ```self.ignore_epoch```.
-            Returns ```None``` if no epochs have been scored.
+                Returns ```None``` if no epochs have been scored.
         """
         if self.has_valid_history(False):
             return self.score_history[-1]
@@ -135,8 +135,8 @@ class ScoreHistory(ABC):
         """
         Returns:
             ```False``` if the latest epoch was not the best
-            scoring epoch, or if the latest epoch is ```ignore_epoch```.
-            ```True``` otherwise.
+                scoring epoch, or if the latest epoch is ```ignore_epoch```.
+                ```True``` otherwise.
         """
         if self.has_valid_history(False):
             return self.best_epoch == self.latest_epoch
