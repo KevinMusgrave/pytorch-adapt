@@ -2548,10 +2548,10 @@
 <span class="sd">            idx: The index of the target dataset. The source index is picked randomly.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A dictionary containing both source and target data.</span>
-<span class="sd">            The source keys start with ```&quot;src_&quot;```, and the target keys start with ```&quot;target_&quot;```.</span>
-<span class="sd">            See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and</span>
-<span class="sd">            [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]</span>
-<span class="sd">            for details.</span>
+<span class="sd">                The source keys start with ```&quot;src_&quot;```, and the target keys start with ```&quot;target_&quot;```.</span>
+<span class="sd">                See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and</span>
+<span class="sd">                [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]</span>
+<span class="sd">                for details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_src_idx</span><span class="p">()]</span>
@@ -2633,31 +2633,11 @@
           <td>
                 <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
           </td>
-          <td><p>A dictionary containing both source and target data.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p>The source keys start with <code>"src_"</code>, and the target keys start with <code>"target_"</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p>See <a class="autorefs autorefs-internal" href="../source_dataset/#pytorch_adapt.datasets.source_dataset.SourceDataset.__getitem__"><code>SourceDataset.__getitem__</code></a> and</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p><a class="autorefs autorefs-internal" href="../target_dataset/#pytorch_adapt.datasets.target_dataset.TargetDataset.__getitem__"><code>TargetDataset.__getitem__</code></a></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p>for details.</p></td>
+          <td><p>A dictionary containing both source and target data.
+The source keys start with <code>"src_"</code>, and the target keys start with <code>"target_"</code>.
+See <a class="autorefs autorefs-internal" href="../source_dataset/#pytorch_adapt.datasets.source_dataset.SourceDataset.__getitem__"><code>SourceDataset.__getitem__</code></a> and
+<a class="autorefs autorefs-internal" href="../target_dataset/#pytorch_adapt.datasets.target_dataset.TargetDataset.__getitem__"><code>TargetDataset.__getitem__</code></a>
+for details.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2683,10 +2663,10 @@
 <span class="sd">        idx: The index of the target dataset. The source index is picked randomly.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A dictionary containing both source and target data.</span>
-<span class="sd">        The source keys start with ```&quot;src_&quot;```, and the target keys start with ```&quot;target_&quot;```.</span>
-<span class="sd">        See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and</span>
-<span class="sd">        [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]</span>
-<span class="sd">        for details.</span>
+<span class="sd">            The source keys start with ```&quot;src_&quot;```, and the target keys start with ```&quot;target_&quot;```.</span>
+<span class="sd">            See [```SourceDataset.__getitem__```][pytorch_adapt.datasets.SourceDataset.__getitem__] and</span>
+<span class="sd">            [```TargetDataset.__getitem__```][pytorch_adapt.datasets.TargetDataset.__getitem__]</span>
+<span class="sd">            for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">target_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_src_idx</span><span class="p">()]</span>

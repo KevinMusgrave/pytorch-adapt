@@ -2733,10 +2733,10 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A two-level dictionary</span>
 
-<span class="sd">            - the outer level is associated with a particular optimization step</span>
-<span class="sd">                (relevant for GAN architectures),</span>
+<span class="sd">                - the outer level is associated with a particular optimization step</span>
+<span class="sd">                    (relevant for GAN architectures)</span>
 
-<span class="sd">            - the inner level contains the loss components.</span>
+<span class="sd">                - the inner level contains the loss components.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">combined</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">assert_dicts_are_disjoint</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">misc</span><span class="p">,</span> <span class="n">with_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">),</span> <span class="n">batch</span><span class="p">,</span> <span class="n">kwargs</span>
@@ -2766,9 +2766,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The default set of containers. Consists of an</span>
-<span class="sd">            [Optimizers][pytorch_adapt.containers.Optimizers]</span>
-<span class="sd">            container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
-<span class="sd">            of Adam with lr 0.0001.</span>
+<span class="sd">                [Optimizers][pytorch_adapt.containers.Optimizers]</span>
+<span class="sd">                container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">                of Adam with lr 0.0001.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -3117,25 +3117,10 @@ passed into the wrapped hook during initialization.</p></td>
           <td>
                 <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
           </td>
-          <td><p>The default set of containers. Consists of an</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
-          </td>
-          <td><p><a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
-          </td>
-          <td><p>container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
-          </td>
-          <td><p>of Adam with lr 0.0001.</p></td>
+          <td><p>The default set of containers. Consists of an
+<a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
+container using the <a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default</a>
+of Adam with lr 0.0001.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3155,9 +3140,9 @@ passed into the wrapped hook during initialization.</p></td>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The default set of containers. Consists of an</span>
-<span class="sd">        [Optimizers][pytorch_adapt.containers.Optimizers]</span>
-<span class="sd">        container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
-<span class="sd">        of Adam with lr 0.0001.</span>
+<span class="sd">            [Optimizers][pytorch_adapt.containers.Optimizers]</span>
+<span class="sd">            container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">            of Adam with lr 0.0001.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -3466,23 +3451,15 @@ passed into the wrapped hook during initialization.</p></td>
           <td>
                 <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Dict">Dict</span>[str, float]]</code>
           </td>
-          <td><p>A two-level dictionary</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Dict">Dict</span>[str, float]]</code>
-          </td>
-          <td><ul>
-<li>the outer level is associated with a particular optimization step
-(relevant for GAN architectures),</li>
-</ul></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Dict">Dict</span>[str, float]]</code>
-          </td>
-          <td><ul>
-<li>the inner level contains the loss components.</li>
+          <td><p>A two-level dictionary</p>
+<ul>
+<li>
+<p>the outer level is associated with a particular optimization step
+    (relevant for GAN architectures)</p>
+</li>
+<li>
+<p>the inner level contains the loss components.</p>
+</li>
 </ul></td>
         </tr>
     </tbody>
@@ -3521,10 +3498,10 @@ passed into the wrapped hook during initialization.</p></td>
 <span class="sd">    Returns:</span>
 <span class="sd">        A two-level dictionary</span>
 
-<span class="sd">        - the outer level is associated with a particular optimization step</span>
-<span class="sd">            (relevant for GAN architectures),</span>
+<span class="sd">            - the outer level is associated with a particular optimization step</span>
+<span class="sd">                (relevant for GAN architectures)</span>
 
-<span class="sd">        - the inner level contains the loss components.</span>
+<span class="sd">            - the inner level contains the loss components.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">combined</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">assert_dicts_are_disjoint</span><span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">misc</span><span class="p">,</span> <span class="n">with_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">),</span> <span class="n">batch</span><span class="p">,</span> <span class="n">kwargs</span>

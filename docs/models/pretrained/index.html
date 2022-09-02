@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="md-skip">
+        <a href="#pytorch_adapt.models.pretrained.domainnet126C" class="md-skip">
           Skip to content
         </a>
       
@@ -2053,6 +2053,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.models.pretrained.domainnet126C" class="md-nav__link">
+    domainnet126C()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="md-nav__link">
     domainnet126G()
   </a>
@@ -2097,13 +2104,6 @@
         <li class="md-nav__item">
   <a href="#pytorch_adapt.models.pretrained.officehomeG" class="md-nav__link">
     officehomeG()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.models.pretrained.voc_multilabelG" class="md-nav__link">
-    voc_multilabelG()
   </a>
   
 </li>
@@ -2457,6 +2457,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pytorch_adapt.models.pretrained.domainnet126C" class="md-nav__link">
+    domainnet126C()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="md-nav__link">
     domainnet126G()
   </a>
@@ -2505,13 +2512,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#pytorch_adapt.models.pretrained.voc_multilabelG" class="md-nav__link">
-    voc_multilabelG()
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2554,8 +2554,131 @@
 
 
 
+<h2 id="pytorch_adapt.models.pretrained.domainnet126C" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">domainnet126C</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">126</span><span class="p">,</span> <span class="n">in_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+<a href="#pytorch_adapt.models.pretrained.domainnet126C" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model
+trained on the specified <code>domain</code> of the <a class="autorefs autorefs-internal" href="../../datasets/domainnet/#pytorch_adapt.datasets.domainnet.DomainNet126">DomainNet126</a>
+dataset, if <code>pretrained == True</code>. For example</p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">domainnet126C</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">domainnet126C</span><span class="p">(</span>
+    <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_classes</span><span class="o">=</span><span class="mi">126</span><span class="p">,</span>
+    <span class="n">in_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+    <span class="n">h</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A [```Classifier```][pytorch_adapt.models.Classifier] model</span>
+<span class="sd">            trained on the specified ```domain``` of the [DomainNet126][pytorch_adapt.datasets.DomainNet126]</span>
+<span class="sd">            dataset, if ```pretrained == True```. For example</span>
+
+<span class="sd">            ```python</span>
+<span class="sd">            model = domainnet126C(domain=&quot;sketch&quot;, pretrained=True)</span>
+<span class="sd">            ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pretrained</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">domain</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pretrained</span> <span class="ow">and</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if pretrained, domain must be specified, and vice versa&quot;</span><span class="p">)</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">in_size</span><span class="o">=</span><span class="n">in_size</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pretrained</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">model</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;clipart&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/w2bkoubtzusbpy5xrjgtm1g2fky5yrvk&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;painting&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/2hsaja8l7tilnmvil019zz1cfjuqzj99&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;real&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/xjftd2p0tn6m73d5ddgzbpfp5k13psu5&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sketch&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/sjrqw3c8h4eop7od2998vvn9bor66w12&quot;</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">domain</span><span class="p">]</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;clipart&quot;</span><span class="p">:</span> <span class="s2">&quot;3728c17634360447ede69520df0c02d9037c2d70f4e9eedeb8aba8242f3fb15b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;painting&quot;</span><span class="p">:</span> <span class="s2">&quot;11af52a20808ae106168493f61c84f2a695895162d45eb0718333eb1c2ac737c&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;real&quot;</span><span class="p">:</span> <span class="s2">&quot;fc9ea8491b486f5c7302baa5db594f372cdb488f279c9f82a42c752c153b55e8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sketch&quot;</span><span class="p">:</span> <span class="s2">&quot;313876e52463eca7d3c7c8be125e86374f976f2afca6bd3aaaa75b1547f84bcf&quot;</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">domain</span><span class="p">]</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;domainnet126C</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">h</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span><span class="si">}</span><span class="s2">.pth&quot;</span>
+    <span class="k">return</span> <span class="n">download_weights</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">pretrained</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h2 id="pytorch_adapt.models.pretrained.domainnet126G" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">domainnet126G</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">domainnet126G</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 <a href="#pytorch_adapt.models.pretrained.domainnet126G" class="headerlink" title="Permanent link">&para;</a></h2>
 
@@ -2575,24 +2698,84 @@
         <tr>
           <td>
           </td>
-          <td><p>A ResNet50 model trained on ImageNet, if <code>pretrained == True</code>.</p></td>
+          <td><p>A ResNet50 model trained on ImageNet, if <code>pretrained == True</code>.
+If <code>pretrained == True</code> and <code>domain</code> is specified, then it returns a ResNet50 model trained on that domain.
+For example:
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">domainnet126G</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">153</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">152</span>
+<span class="normal">153</span>
 <span class="normal">154</span>
 <span class="normal">155</span>
 <span class="normal">156</span>
 <span class="normal">157</span>
-<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">domainnet126G</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">domainnet126G</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        A ResNet50 model trained on ImageNet, if ```pretrained == True```.</span>
+<span class="sd">        A ResNet50 model trained on ImageNet, if `pretrained == True`.</span>
+<span class="sd">            If `pretrained == True` and `domain` is specified, then it returns a ResNet50 model trained on that domain.</span>
+<span class="sd">            For example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            model = domainnet126G(domain=&quot;sketch&quot;, pretrained=True)</span>
+<span class="sd">            ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">resnet50</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">timm</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">domain</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;resnet50&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="n">pretrained</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">domain</span> <span class="ow">and</span> <span class="n">pretrained</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;resnet50&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if domain is specified, then pretrained must be True&quot;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;clipart&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/p89emqp3sggj8t1ir8ojjgnmgu3i1h6e&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;painting&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/dytk5919v2rwmzgbz8y34hwrtwdh7zbw&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;real&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/cnwd1l38zamp2rwfykrvbw05ds9bq5vp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sketch&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cornell.box.com/shared/static/2ifhf99o9oi45c7f2xfspvze9fnbxiwr&quot;</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">domain</span><span class="p">]</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;clipart&quot;</span><span class="p">:</span> <span class="s2">&quot;1cc22355555ae8cafc812584fed828030809ac7eab105c63d220503e4b28e208&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;painting&quot;</span><span class="p">:</span> <span class="s2">&quot;cd4c23e3e8c66900b7cb45d22507f31d43e5da96e9a3e491463f2da72ee15aec&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;real&quot;</span><span class="p">:</span> <span class="s2">&quot;683ac0757a222edab6bad922c7658bc0b1be983699ab38a181f78b150c778315&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sketch&quot;</span><span class="p">:</span> <span class="s2">&quot;b8c871dc736440aa2e143b75bc540d35056e13012b0de0afb785cba95ed797f7&quot;</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">domain</span><span class="p">]</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;domainnet126G</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">h</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span><span class="si">}</span><span class="s2">.pth&quot;</span>
+    <span class="k">return</span> <span class="n">download_weights</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">pretrained</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -2624,12 +2807,8 @@
         <tr>
           <td>
           </td>
-          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>trained on the MNIST dataset, if <code>pretrained == True</code>.</p></td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model
+trained on the MNIST dataset, if <code>pretrained == True</code>.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2656,7 +2835,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A [```Classifier```][pytorch_adapt.models.Classifier] model</span>
-<span class="sd">        trained on the MNIST dataset, if ```pretrained == True```.</span>
+<span class="sd">            trained on the MNIST dataset, if ```pretrained == True```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">in_size</span><span class="o">=</span><span class="n">in_size</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://cornell.box.com/shared/static/j4zrogronmievq1csulrkai7zjm27gcq&quot;</span>
@@ -2696,12 +2875,8 @@
         <tr>
           <td>
           </td>
-          <td><p>An <a class="autorefs autorefs-internal" href="../mnist/#pytorch_adapt.models.mnist.MNISTFeatures"><code>MNISTFeatures</code></a> model</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>trained on the MNIST dataset, if <code>pretrained == True</code>.</p></td>
+          <td><p>An <a class="autorefs autorefs-internal" href="../mnist/#pytorch_adapt.models.mnist.MNISTFeatures"><code>MNISTFeatures</code></a> model
+trained on the MNIST dataset, if <code>pretrained == True</code>.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2724,7 +2899,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        An [```MNISTFeatures```][pytorch_adapt.models.MNISTFeatures] model</span>
-<span class="sd">        trained on the MNIST dataset, if ```pretrained == True```.</span>
+<span class="sd">            trained on the MNIST dataset, if ```pretrained == True```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">MNISTFeatures</span><span class="p">()</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://cornell.box.com/shared/static/tdx0ts24e273j7mf3r2ox7a12xh4fdfy&quot;</span>
@@ -2764,39 +2939,20 @@
         <tr>
           <td>
           </td>
-          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>trained on the specified <code>domain</code> of the <a class="autorefs autorefs-internal" href="../../datasets/office31/#pytorch_adapt.datasets.office31.Office31">Office31</a></p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>dataset, if <code>pretrained == True</code>. For example</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>```python</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>model = office31(domain="amazon", pretrained=True)</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>```</p></td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model
+trained on the specified <code>domain</code> of the <a class="autorefs autorefs-internal" href="../../datasets/office31/#pytorch_adapt.datasets.office31.Office31">Office31</a>
+dataset, if <code>pretrained == True</code>. For example</p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">office31</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;amazon&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
 <span class="normal">62</span>
 <span class="normal">63</span>
 <span class="normal">64</span>
@@ -2832,9 +2988,7 @@
 <span class="normal">94</span>
 <span class="normal">95</span>
 <span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span>
-<span class="normal">99</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">office31C</span><span class="p">(</span>
+<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">office31C</span><span class="p">(</span>
     <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">num_classes</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span>
     <span class="n">in_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
@@ -2846,15 +3000,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A [```Classifier```][pytorch_adapt.models.Classifier] model</span>
-<span class="sd">        trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31]</span>
-<span class="sd">        dataset, if ```pretrained == True```. For example</span>
+<span class="sd">            trained on the specified ```domain``` of the [Office31][pytorch_adapt.datasets.Office31]</span>
+<span class="sd">            dataset, if ```pretrained == True```. For example</span>
 
-<span class="sd">        ```python</span>
-<span class="sd">        model = office31(domain=&quot;amazon&quot;, pretrained=True)</span>
-<span class="sd">        ```</span>
+<span class="sd">            ```python</span>
+<span class="sd">            model = office31(domain=&quot;amazon&quot;, pretrained=True)</span>
+<span class="sd">            ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">pretrained</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">domain</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if pretrained, domain must be specified&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pretrained</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">domain</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pretrained</span> <span class="ow">and</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if pretrained, domain must be specified, and vice versa&quot;</span><span class="p">)</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">in_size</span><span class="o">=</span><span class="n">in_size</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">pretrained</span><span class="p">:</span>
@@ -2911,16 +3065,18 @@
 
       <details class="quote">
         <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">office31G</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">office31G</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A ResNet50 model trained on ImageNet, if ```pretrained == True```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># G was frozen during finetuning</span>
     <span class="k">return</span> <span class="n">resnet50</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -2953,39 +3109,19 @@
         <tr>
           <td>
           </td>
-          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>trained on the specified <code>domain</code> of the <a class="autorefs autorefs-internal" href="../../datasets/officehome/#pytorch_adapt.datasets.officehome.OfficeHome">OfficeHome</a></p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>dataset, if <code>pretrained == True</code>. For example</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>```python</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>model = officehomeC(domain="art", pretrained=True)</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>```</p></td>
+          <td><p>A <a class="autorefs autorefs-internal" href="../classifier/#pytorch_adapt.models.classifier.Classifier"><code>Classifier</code></a> model
+trained on the specified <code>domain</code> of the <a class="autorefs autorefs-internal" href="../../datasets/officehome/#pytorch_adapt.datasets.officehome.OfficeHome">OfficeHome</a>
+dataset, if <code>pretrained == True</code>. For example</p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">officehomeC</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;art&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+<span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
 <span class="normal">113</span>
@@ -3024,8 +3160,7 @@
 <span class="normal">146</span>
 <span class="normal">147</span>
 <span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">officehomeC</span><span class="p">(</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">officehomeC</span><span class="p">(</span>
     <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">num_classes</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span>
     <span class="n">in_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
@@ -3037,15 +3172,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A [```Classifier```][pytorch_adapt.models.Classifier] model</span>
-<span class="sd">        trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome]</span>
-<span class="sd">        dataset, if ```pretrained == True```. For example</span>
+<span class="sd">            trained on the specified ```domain``` of the [OfficeHome][pytorch_adapt.datasets.OfficeHome]</span>
+<span class="sd">            dataset, if ```pretrained == True```. For example</span>
 
-<span class="sd">        ```python</span>
-<span class="sd">        model = officehomeC(domain=&quot;art&quot;, pretrained=True)</span>
-<span class="sd">        ```</span>
+<span class="sd">            ```python</span>
+<span class="sd">            model = officehomeC(domain=&quot;art&quot;, pretrained=True)</span>
+<span class="sd">            ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">pretrained</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">domain</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if pretrained, domain must be specified&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pretrained</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">domain</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pretrained</span> <span class="ow">and</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if pretrained, domain must be specified, and vice versa&quot;</span><span class="p">)</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">in_size</span><span class="o">=</span><span class="n">in_size</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">pretrained</span><span class="p">:</span>
@@ -3104,65 +3239,18 @@
 
       <details class="quote">
         <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
 <span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">officehomeG</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">106</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">officehomeG</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A ResNet50 model trained on ImageNet, if ```pretrained == True```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">resnet50</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="pytorch_adapt.models.pretrained.voc_multilabelG" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">voc_multilabelG</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-<a href="#pytorch_adapt.models.pretrained.voc_multilabelG" class="headerlink" title="Permanent link">&para;</a></h2>
-
-
-  <div class="doc doc-contents ">
-  
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-          </td>
-          <td><p>A ResNet50 model trained on ImageNet, if <code>pretrained == True</code>.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>pytorch_adapt\models\pretrained.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">voc_multilabelG</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        A ResNet50 model trained on ImageNet, if ```pretrained == True```.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># G was frozen during finetuning</span>
     <span class="k">return</span> <span class="n">resnet50</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>

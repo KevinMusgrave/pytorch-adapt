@@ -2476,15 +2476,10 @@
     <tbody>
         <tr>
           <td>
-                <code>torch.<span title="torch.optim">optim</span>.<span title="torch.optim.Optimizer">Optimizer</span></code>
+                <code><span title="typing.Tuple">Tuple</span>[torch.<span title="torch.optim">optim</span>.<span title="torch.optim.Optimizer">Optimizer</span>, <span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]]</code>
           </td>
-          <td><p>A tuple to be passed into an <a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p>container. The tuple specifies an Adam optimizer with lr 0.0001.</p></td>
+          <td><p>A tuple to be passed into an <a class="autorefs autorefs-internal" href="../../containers/optimizers/#pytorch_adapt.containers.optimizers.Optimizers">Optimizers</a>
+container. The tuple specifies an Adam optimizer with lr 0.0001.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2501,7 +2496,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A tuple to be passed into an [Optimizers][pytorch_adapt.containers.Optimizers]</span>
-<span class="sd">        container. The tuple specifies an Adam optimizer with lr 0.0001.</span>
+<span class="sd">            container. The tuple specifies an Adam optimizer with lr 0.0001.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>

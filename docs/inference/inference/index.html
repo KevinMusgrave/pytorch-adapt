@@ -2707,41 +2707,18 @@ as the feature extractor.</p></td>
           <td>
                 <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
           </td>
-          <td><p>A dictionary of features and logits.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><ul>
-<li>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</li>
+          <td><p>A dictionary of features and logits.</p>
+<ul>
+<li>
+<p>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</p>
+</li>
+<li>
+<p>If <code>get_all</code> is <code>True</code>,
+then the keys will be <code>{"features", "logits", "other_features", "other_logits"}</code>,
+where the <code>other_</code> prefix represents the features and logits obtained
+using <code>G</code> if <code>domain == 1</code> and <code>T</code> if <code>domain == 0</code>.</p>
+</li>
 </ul></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><ul>
-<li>If <code>get_all</code> is <code>True</code>,</li>
-</ul></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>then the keys will be <code>{"features", "logits", "other_features", "other_logits"}</code>,</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>where the <code>other_</code> prefix represents the features and logits obtained</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>using <code>G</code> if <code>domain == 1</code> and <code>T</code> if <code>domain == 0</code>.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2799,12 +2776,12 @@ as the feature extractor.</p></td>
 <span class="sd">    Returns:</span>
 <span class="sd">        A dictionary of features and logits.</span>
 
-<span class="sd">        - If ```get_all``` is ```False```, then the keys are ```{&quot;features&quot;, &quot;logits&quot;}```.</span>
+<span class="sd">            - If ```get_all``` is ```False```, then the keys are ```{&quot;features&quot;, &quot;logits&quot;}```.</span>
 
-<span class="sd">        - If ```get_all``` is ```True```,</span>
-<span class="sd">        then the keys will be ```{&quot;features&quot;, &quot;logits&quot;, &quot;other_features&quot;, &quot;other_logits&quot;}```,</span>
-<span class="sd">        where the ```other_``` prefix represents the features and logits obtained</span>
-<span class="sd">        using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.</span>
+<span class="sd">            - If ```get_all``` is ```True```,</span>
+<span class="sd">            then the keys will be ```{&quot;features&quot;, &quot;logits&quot;, &quot;other_features&quot;, &quot;other_logits&quot;}```,</span>
+<span class="sd">            where the ```other_``` prefix represents the features and logits obtained</span>
+<span class="sd">            using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
     <span class="n">fe</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span> <span class="k">if</span> <span class="n">domain</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;T&quot;</span>
@@ -2852,19 +2829,9 @@ See <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inferen
           <td>
                 <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
           </td>
-          <td><p>discriminator logits (<code>"d_logits"</code>), "other" discriminator logits (<code>"other_d_logits"</code>)</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>in addition to everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>with <code>get_all = True</code>.</p></td>
+          <td><p>discriminator logits (<code>"d_logits"</code>), "other" discriminator logits (<code>"other_d_logits"</code>)
+in addition to everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>
+with <code>get_all = True</code>.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2892,8 +2859,8 @@ See <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inferen
 <span class="sd">    See [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        discriminator logits (```&quot;d_logits&quot;```), &quot;other&quot; discriminator logits (```&quot;other_d_logits&quot;```)</span>
-<span class="sd">        in addition to everything returned by [adda_fn][pytorch_adapt.inference.adda_fn]</span>
-<span class="sd">        with ```get_all = True```.</span>
+<span class="sd">            in addition to everything returned by [adda_fn][pytorch_adapt.inference.adda_fn]</span>
+<span class="sd">            with ```get_all = True```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">layer</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;layer&quot;</span><span class="p">,</span> <span class="s2">&quot;features&quot;</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">with_d</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">adda_fn</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2934,13 +2901,8 @@ See <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inferen
           <td>
                 <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
           </td>
-          <td><p>discriminator logits as <code>"d_logits"</code>, in addition to</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>.</p></td>
+          <td><p>discriminator logits as <code>"d_logits"</code>, in addition to
+everything returned by <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inference.adda_fn">adda_fn</a>.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2961,7 +2923,7 @@ See <a class="autorefs autorefs-internal" href="#pytorch_adapt.inference.inferen
 <span class="sd">    [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        discriminator logits as ```&quot;d_logits&quot;```, in addition to</span>
-<span class="sd">        everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].</span>
+<span class="sd">            everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">with_d</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">adda_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -3149,29 +3111,16 @@ it will return the <code>residual_model</code> logits when
           <td>
                 <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
           </td>
-          <td><p>A dictionary of features and logits.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><ul>
-<li>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</li>
+          <td><p>A dictionary of features and logits.</p>
+<ul>
+<li>
+<p>If <code>get_all</code> is <code>False</code>, then the keys are <code>{"features", "logits"}</code>.</p>
+</li>
+<li>
+<p>If <code>get_all</code> is <code>True</code>,
+then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p>
+</li>
 </ul></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><ul>
-<li>If <code>get_all</code> is <code>True</code>,</li>
-</ul></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Dict">Dict</span>[str, torch.<span title="torch.Tensor">Tensor</span>]</code>
-          </td>
-          <td><p>then the keys will be <code>{"features", "logits", "other_logits"}</code>.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3224,10 +3173,10 @@ it will return the <code>residual_model</code> logits when
 <span class="sd">    Returns:</span>
 <span class="sd">        A dictionary of features and logits.</span>
 
-<span class="sd">        - If ```get_all``` is ```False```, then the keys are ```{&quot;features&quot;, &quot;logits&quot;}```.</span>
+<span class="sd">            - If ```get_all``` is ```False```, then the keys are ```{&quot;features&quot;, &quot;logits&quot;}```.</span>
 
-<span class="sd">        - If ```get_all``` is ```True```,</span>
-<span class="sd">        then the keys will be ```{&quot;features&quot;, &quot;logits&quot;, &quot;other_logits&quot;}```.</span>
+<span class="sd">            - If ```get_all``` is ```True```,</span>
+<span class="sd">            then the keys will be ```{&quot;features&quot;, &quot;logits&quot;, &quot;other_logits&quot;}```.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">check_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
     <span class="n">f_dict</span> <span class="o">=</span> <span class="n">default_fn</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>

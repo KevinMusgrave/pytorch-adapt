@@ -2838,7 +2838,7 @@ and keeps track of the validator's score history as the epochs progress.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The best score, ignoring ```self.ignore_epoch```.</span>
-<span class="sd">            Returns ```None``` if no valid scores are available.</span>
+<span class="sd">                Returns ```None``` if no valid scores are available.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">():</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_history_ignore_epoch</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_idx</span><span class="p">]</span>
@@ -2848,7 +2848,7 @@ and keeps track of the validator's score history as the epochs progress.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The best epoch, ignoring ```self.ignore_epoch```.</span>
-<span class="sd">            Returns ```None``` if no valid epochs are available.</span>
+<span class="sd">                Returns ```None``` if no valid epochs are available.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">():</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs_ignore_epoch</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_idx</span><span class="p">]</span>
@@ -2858,7 +2858,7 @@ and keeps track of the validator's score history as the epochs progress.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The index of the best score in ```self.score_history_ignore_epoch```.</span>
-<span class="sd">            Returns ```None``` if no valid epochs are available.</span>
+<span class="sd">                Returns ```None``` if no valid epochs are available.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score_history_ignore_epoch</span><span class="p">)</span>
@@ -2868,7 +2868,7 @@ and keeps track of the validator's score history as the epochs progress.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The latest epoch, including ```self.ignore_epoch```.</span>
-<span class="sd">            Returns ```None``` if no epochs have been scored.</span>
+<span class="sd">                Returns ```None``` if no epochs have been scored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -2878,7 +2878,7 @@ and keeps track of the validator's score history as the epochs progress.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The latest score, including ```self.ignore_epoch```.</span>
-<span class="sd">            Returns ```None``` if no epochs have been scored.</span>
+<span class="sd">                Returns ```None``` if no epochs have been scored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -2888,8 +2888,8 @@ and keeps track of the validator's score history as the epochs progress.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            ```False``` if the latest epoch was not the best</span>
-<span class="sd">            scoring epoch, or if the latest epoch is ```ignore_epoch```.</span>
-<span class="sd">            ```True``` otherwise.</span>
+<span class="sd">                scoring epoch, or if the latest epoch is ```ignore_epoch```.</span>
+<span class="sd">                ```True``` otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_epoch</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_epoch</span>
@@ -3157,13 +3157,8 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The best epoch, ignoring <code>self.ignore_epoch</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Returns <code>None</code> if no valid epochs are available.</p></td>
+          <td><p>The best epoch, ignoring <code>self.ignore_epoch</code>.
+Returns <code>None</code> if no valid epochs are available.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3183,7 +3178,7 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The best epoch, ignoring ```self.ignore_epoch```.</span>
-<span class="sd">        Returns ```None``` if no valid epochs are available.</span>
+<span class="sd">            Returns ```None``` if no valid epochs are available.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">():</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs_ignore_epoch</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_idx</span><span class="p">]</span>
@@ -3223,13 +3218,8 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The index of the best score in <code>self.score_history_ignore_epoch</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Returns <code>None</code> if no valid epochs are available.</p></td>
+          <td><p>The index of the best score in <code>self.score_history_ignore_epoch</code>.
+Returns <code>None</code> if no valid epochs are available.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3249,7 +3239,7 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The index of the best score in ```self.score_history_ignore_epoch```.</span>
-<span class="sd">        Returns ```None``` if no valid epochs are available.</span>
+<span class="sd">            Returns ```None``` if no valid epochs are available.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score_history_ignore_epoch</span><span class="p">)</span>
@@ -3289,13 +3279,8 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
           <td>
                 <code>float</code>
           </td>
-          <td><p>The best score, ignoring <code>self.ignore_epoch</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>float</code>
-          </td>
-          <td><p>Returns <code>None</code> if no valid scores are available.</p></td>
+          <td><p>The best score, ignoring <code>self.ignore_epoch</code>.
+Returns <code>None</code> if no valid scores are available.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3315,7 +3300,7 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The best score, ignoring ```self.ignore_epoch```.</span>
-<span class="sd">        Returns ```None``` if no valid scores are available.</span>
+<span class="sd">            Returns ```None``` if no valid scores are available.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">():</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_history_ignore_epoch</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_idx</span><span class="p">]</span>
@@ -3355,13 +3340,8 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The latest epoch, including <code>self.ignore_epoch</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Returns <code>None</code> if no epochs have been scored.</p></td>
+          <td><p>The latest epoch, including <code>self.ignore_epoch</code>.
+Returns <code>None</code> if no epochs have been scored.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3381,7 +3361,7 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The latest epoch, including ```self.ignore_epoch```.</span>
-<span class="sd">        Returns ```None``` if no epochs have been scored.</span>
+<span class="sd">            Returns ```None``` if no epochs have been scored.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -3421,19 +3401,9 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p><code>False</code> if the latest epoch was not the best</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>scoring epoch, or if the latest epoch is <code>ignore_epoch</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p><code>True</code> otherwise.</p></td>
+          <td><p><code>False</code> if the latest epoch was not the best
+scoring epoch, or if the latest epoch is <code>ignore_epoch</code>.
+<code>True</code> otherwise.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3455,8 +3425,8 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        ```False``` if the latest epoch was not the best</span>
-<span class="sd">        scoring epoch, or if the latest epoch is ```ignore_epoch```.</span>
-<span class="sd">        ```True``` otherwise.</span>
+<span class="sd">            scoring epoch, or if the latest epoch is ```ignore_epoch```.</span>
+<span class="sd">            ```True``` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_epoch</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_epoch</span>
@@ -3497,13 +3467,8 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
           <td>
                 <code>float</code>
           </td>
-          <td><p>The latest score, including <code>self.ignore_epoch</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code>float</code>
-          </td>
-          <td><p>Returns <code>None</code> if no epochs have been scored.</p></td>
+          <td><p>The latest score, including <code>self.ignore_epoch</code>.
+Returns <code>None</code> if no epochs have been scored.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3523,7 +3488,7 @@ the best scoring epoch. If <code>None</code>, then no epoch will be ignored.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The latest score, including ```self.ignore_epoch```.</span>
-<span class="sd">        Returns ```None``` if no epochs have been scored.</span>
+<span class="sd">            Returns ```None``` if no epochs have been scored.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_valid_history</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>

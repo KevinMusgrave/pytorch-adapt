@@ -2540,7 +2540,7 @@
 <span class="sd">                in addition to the ```model - bridge``` output</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            If ```return_bridge = False```, then return just ```model - bridge```.</span>
-<span class="sd">            If ```return_bridge = True```, then return a tuple of ```(model - bridge), bridge```</span>
+<span class="sd">                If ```return_bridge = True```, then return a tuple of ```(model - bridge), bridge```</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -2706,13 +2706,8 @@ in addition to the <code>model - bridge</code> output</p></td>
           <td>
                 <code><span title="typing.Union">Union</span>[torch.<span title="torch.Tensor">Tensor</span>, <span title="typing.Tuple">Tuple</span>[torch.<span title="torch.Tensor">Tensor</span>, torch.<span title="torch.Tensor">Tensor</span>]]</code>
           </td>
-          <td><p>If <code>return_bridge = False</code>, then return just <code>model - bridge</code>.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Union">Union</span>[torch.<span title="torch.Tensor">Tensor</span>, <span title="typing.Tuple">Tuple</span>[torch.<span title="torch.Tensor">Tensor</span>, torch.<span title="torch.Tensor">Tensor</span>]]</code>
-          </td>
-          <td><p>If <code>return_bridge = True</code>, then return a tuple of <code>(model - bridge), bridge</code></p></td>
+          <td><p>If <code>return_bridge = False</code>, then return just <code>model - bridge</code>.
+If <code>return_bridge = True</code>, then return a tuple of <code>(model - bridge), bridge</code></p></td>
         </tr>
     </tbody>
   </table>
@@ -2746,7 +2741,7 @@ in addition to the <code>model - bridge</code> output</p></td>
 <span class="sd">            in addition to the ```model - bridge``` output</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        If ```return_bridge = False```, then return just ```model - bridge```.</span>
-<span class="sd">        If ```return_bridge = True```, then return a tuple of ```(model - bridge), bridge```</span>
+<span class="sd">            If ```return_bridge = True```, then return a tuple of ```(model - bridge), bridge```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>

@@ -3009,7 +3009,7 @@ the event handler system of PyTorch Ignite.</p>
 <span class="sd">                function.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A tuple of ```(best_score, best_epoch)``` or ```(None, None)```</span>
-<span class="sd">            if no validator is used.</span>
+<span class="sd">                if no validator is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">dataloaders</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dataloader_creator</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">dataloader_creator</span><span class="p">,</span> <span class="n">DataloaderCreator</span><span class="p">())</span>
@@ -3706,13 +3706,8 @@ function.</p></td>
           <td>
                 <code><span title="typing.Union">Union</span>[<span title="typing.Tuple">Tuple</span>[float, int], <span title="typing.Tuple">Tuple</span>[None, None]]</code>
           </td>
-          <td><p>A tuple of <code>(best_score, best_epoch)</code> or <code>(None, None)</code></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><span title="typing.Union">Union</span>[<span title="typing.Tuple">Tuple</span>[float, int], <span title="typing.Tuple">Tuple</span>[None, None]]</code>
-          </td>
-          <td><p>if no validator is used.</p></td>
+          <td><p>A tuple of <code>(best_score, best_epoch)</code> or <code>(None, None)</code>
+if no validator is used.</p></td>
         </tr>
     </tbody>
   </table>
@@ -3821,7 +3816,7 @@ function.</p></td>
 <span class="sd">            function.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A tuple of ```(best_score, best_epoch)``` or ```(None, None)```</span>
-<span class="sd">        if no validator is used.</span>
+<span class="sd">            if no validator is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">dataloaders</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dataloader_creator</span> <span class="o">=</span> <span class="n">c_f</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">dataloader_creator</span><span class="p">,</span> <span class="n">DataloaderCreator</span><span class="p">())</span>

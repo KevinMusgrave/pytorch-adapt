@@ -2538,8 +2538,7 @@
 <span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ADDA</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
+<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ADDA</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps [ADDAHook][pytorch_adapt.hooks.ADDAHook].</span>
 
@@ -2562,10 +2561,9 @@
     <span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            The default set of containers. This</span>
-<span class="sd">            will use the</span>
-<span class="sd">            [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
-<span class="sd">            for the T and D models.</span>
+<span class="sd">            The default set of containers. This will use the</span>
+<span class="sd">                [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">                for the T and D models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
@@ -2686,25 +2684,9 @@
           <td>
                 <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
           </td>
-          <td><p>The default set of containers. This</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
-          </td>
-          <td><p>will use the</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
-          </td>
-          <td><p><a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default optimizer</a></p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pytorch_adapt.containers.MultipleContainers" href="../../containers/multiple_containers/#pytorch_adapt.containers.multiple_containers.MultipleContainers">MultipleContainers</a></code>
-          </td>
-          <td><p>for the T and D models.</p></td>
+          <td><p>The default set of containers. This will use the
+<a class="autorefs autorefs-internal" href="../utils/#pytorch_adapt.adapters.utils.default_optimizer_tuple">default optimizer</a>
+for the T and D models.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2719,14 +2701,12 @@
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_default_containers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultipleContainers</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        The default set of containers. This</span>
-<span class="sd">        will use the</span>
-<span class="sd">        [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
-<span class="sd">        for the T and D models.</span>
+<span class="sd">        The default set of containers. This will use the</span>
+<span class="sd">            [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]</span>
+<span class="sd">            for the T and D models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">optimizers</span> <span class="o">=</span> <span class="n">Optimizers</span><span class="p">(</span><span class="n">default_optimizer_tuple</span><span class="p">(),</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">MultipleContainers</span><span class="p">(</span><span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">)</span>
