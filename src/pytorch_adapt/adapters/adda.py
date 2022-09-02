@@ -31,10 +31,9 @@ class ADDA(BaseAdapter):
     def get_default_containers(self) -> MultipleContainers:
         """
         Returns:
-            The default set of containers. This
-            will use the
-            [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]
-            for the T and D models.
+            The default set of containers. This will use the
+                [default optimizer][pytorch_adapt.adapters.utils.default_optimizer_tuple]
+                for the T and D models.
         """
         optimizers = Optimizers(default_optimizer_tuple(), keys=["T", "D"])
         return MultipleContainers(optimizers=optimizers)

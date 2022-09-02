@@ -94,11 +94,11 @@ class BaseAdapter(ABC):
             **kwargs: Any other data that will be passed into the hook.
         Returns:
             A two-level dictionary
+                
+                - the outer level is associated with a particular optimization step
+                    (relevant for GAN architectures)
 
-            - the outer level is associated with a particular optimization step
-                (relevant for GAN architectures),
-
-            - the inner level contains the loss components.
+                - the inner level contains the loss components.
         """
         combined = c_f.assert_dicts_are_disjoint(
             self.models, self.misc, with_opt(self.optimizers), batch, kwargs
@@ -128,9 +128,9 @@ class BaseAdapter(ABC):
         """
         Returns:
             The default set of containers. Consists of an
-            [Optimizers][pytorch_adapt.containers.Optimizers]
-            container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]
-            of Adam with lr 0.0001.
+                [Optimizers][pytorch_adapt.containers.Optimizers]
+                container using the [default][pytorch_adapt.adapters.utils.default_optimizer_tuple]
+                of Adam with lr 0.0001.
         """
         optimizers = Optimizers(default_optimizer_tuple())
         return MultipleContainers(optimizers=optimizers)

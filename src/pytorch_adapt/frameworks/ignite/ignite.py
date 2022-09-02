@@ -205,7 +205,7 @@ class Ignite:
                 function.
         Returns:
             A tuple of ```(best_score, best_epoch)``` or ```(None, None)```
-            if no validator is used.
+                if no validator is used.
         """
         if dataloaders is None:
             dataloader_creator = c_f.default(dataloader_creator, DataloaderCreator())

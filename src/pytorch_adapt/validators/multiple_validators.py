@@ -48,7 +48,7 @@ class MultipleValidators(BaseValidator):
         """
         Returns:
             The sum of the validator scores. If ```self.return_sub_scores``` then
-            it also returns a dictionary containing each validator's weighted score.
+                it also returns a dictionary containing each validator's weighted score.
         """
         kwargs = self.kwargs_check(kwargs)
         outputs = {}

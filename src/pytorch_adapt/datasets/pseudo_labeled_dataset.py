@@ -35,13 +35,13 @@ class PseudoLabeledDataset(DomainDataset):
         Returns:
             A dictionary with keys
 
-            - "src_imgs" (the data)
+                - "src_imgs" (the data)
 
-            - "src_domain" (the integer representing the domain)
+                - "src_domain" (the integer representing the domain)
 
-            - "src_labels" (the pseudo label)
+                - "src_labels" (the pseudo label)
 
-            - "src_sample_idx" (idx)
+                - "src_sample_idx" (idx)
         """
 
         img, _ = self.dataset[idx]

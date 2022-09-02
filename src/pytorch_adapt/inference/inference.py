@@ -45,12 +45,12 @@ def adda_fn(
     Returns:
         A dictionary of features and logits.
 
-        - If ```get_all``` is ```False```, then the keys are ```{"features", "logits"}```.
+            - If ```get_all``` is ```False```, then the keys are ```{"features", "logits"}```.
 
-        - If ```get_all``` is ```True```,
-        then the keys will be ```{"features", "logits", "other_features", "other_logits"}```,
-        where the ```other_``` prefix represents the features and logits obtained
-        using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.
+            - If ```get_all``` is ```True```,
+            then the keys will be ```{"features", "logits", "other_features", "other_logits"}```,
+            where the ```other_``` prefix represents the features and logits obtained
+            using ```G``` if ```domain == 1``` and ```T``` if ```domain == 0```.
     """
     domain = check_domain(domain)
     fe = "G" if domain == 0 else "T"
@@ -71,7 +71,7 @@ def adda_with_d(**kwargs) -> Dict[str, torch.Tensor]:
     [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.
     Returns:
         discriminator logits as ```"d_logits"```, in addition to
-        everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].
+            everything returned by [adda_fn][pytorch_adapt.inference.adda_fn].
     """
     return with_d(fn=adda_fn, **kwargs)
 
@@ -83,8 +83,8 @@ def adda_full_fn(x, **kwargs) -> Dict[str, torch.Tensor]:
     See [adda_fn][pytorch_adapt.inference.adda_fn] for the input arguments.
     Returns:
         discriminator logits (```"d_logits"```), "other" discriminator logits (```"other_d_logits"```)
-        in addition to everything returned by [adda_fn][pytorch_adapt.inference.adda_fn]
-        with ```get_all = True```.
+            in addition to everything returned by [adda_fn][pytorch_adapt.inference.adda_fn]
+            with ```get_all = True```.
     """
     layer = kwargs.get("layer", "features")
     output = with_d(x=x, fn=adda_fn, get_all=True, **kwargs)
@@ -109,10 +109,10 @@ def rtn_fn(x, domain, models, get_all=False, **kwargs) -> Dict[str, torch.Tensor
     Returns:
         A dictionary of features and logits.
 
-        - If ```get_all``` is ```False```, then the keys are ```{"features", "logits"}```.
+            - If ```get_all``` is ```False```, then the keys are ```{"features", "logits"}```.
 
-        - If ```get_all``` is ```True```,
-        then the keys will be ```{"features", "logits", "other_logits"}```.
+            - If ```get_all``` is ```True```,
+            then the keys will be ```{"features", "logits", "other_logits"}```.
     """
     domain = check_domain(domain)
     f_dict = default_fn(x=x, models=models)
