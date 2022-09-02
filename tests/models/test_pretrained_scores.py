@@ -26,6 +26,7 @@ from pytorch_adapt.models import (
     pretrained_src_accuracy,
     pretrained_target_accuracy,
 )
+from pytorch_adapt.utils.common_functions import batch_to_device
 from pytorch_adapt.validators import AccuracyValidator
 
 from .. import DATASET_FOLDER, RUN_PRETRAINED_SCORES_TESTS, TEST_DEVICE
@@ -71,7 +72,7 @@ class TestPretrainedScores(unittest.TestCase):
             )
             datasets.pop("train")
             self.assertTrue(len(datasets) == 2)  # should have src_train and src_val
-            dataloaders = DataloaderCreator(num_workers=0, batch_size=32, all_val=True)(
+            dataloaders = DataloaderCreator(num_workers=2, batch_size=32, all_val=True)(
                 **datasets
             )
             for k, v in dataloaders.items():
@@ -79,6 +80,7 @@ class TestPretrainedScores(unittest.TestCase):
                 print(f"collecting {domain} {k}")
                 preds, all_labels = [], []
                 for data in tqdm.tqdm(v):
+                    data = batch_to_device(data, TEST_DEVICE)
                     imgs, labels = data["src_imgs"], data["src_labels"]
                     preds.append(torch.softmax(C(G(imgs)), dim=1))
                     all_labels.append(labels)
