@@ -14,6 +14,7 @@ from .classification import (
     CLossHook,
     FinetunerHook,
     MultiLabelClassifierHook,
+    MultiLabelFinetunerHook,
     SoftmaxHook,
 )
 from .conditions import StrongDHook

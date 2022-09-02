@@ -53,7 +53,31 @@ def pretrained_src_accuracy(dataset, src_domains, split, average):
         },
     }
 
-    x = {"mnist": mnist, "office31": office31, "officehome": officehome}
+    domainnet126 = {
+        "clipart": {
+            "train": {"micro": 0.9741344451904297, "macro": 0.9643224477767944},
+            "val": {"micro": 0.8382785320281982, "macro": 0.815248966217041},
+        },
+        "painting": {
+            "train": {"micro": 0.9724614024162292, "macro": 0.9370613098144531},
+            "val": {"micro": 0.8157435059547424, "macro": 0.7473534345626831},
+        },
+        "real": {
+            "train": {"micro": 0.9799062013626099, "macro": 0.9784836769104004},
+            "val": {"micro": 0.8968163728713989, "macro": 0.8921362161636353},
+        },
+        "sketch": {
+            "train": {"micro": 0.9720315337181091, "macro": 0.9493532180786133},
+            "val": {"micro": 0.8155379295349121, "macro": 0.7761528491973877},
+        },
+    }
+
+    x = {
+        "mnist": mnist,
+        "office31": office31,
+        "officehome": officehome,
+        "domainnet126": domainnet126,
+    }
 
     return np.round(x[dataset][src_domain][split][average], 4)
 
@@ -163,5 +187,69 @@ def pretrained_target_accuracy(dataset, src_domains, target_domains, split, aver
         },
     }
 
-    x = {"mnist": mnist, "office31": office31, "officehome": officehome}
+    domainnet126 = {
+        "clipart": {
+            "painting": {
+                "train": {"micro": 0.36399349570274353, "macro": 0.3765648603439331},
+                "val": {"micro": 0.37343278527259827, "macro": 0.3998126983642578},
+            },
+            "real": {
+                "train": {"micro": 0.44124647974967957, "macro": 0.4500534236431122},
+                "val": {"micro": 0.4425809979438782, "macro": 0.4535055160522461},
+            },
+            "sketch": {
+                "train": {"micro": 0.46875157952308655, "macro": 0.4666426479816437},
+                "val": {"micro": 0.45596909523010254, "macro": 0.4594738483428955},
+            },
+        },
+        "painting": {
+            "clipart": {
+                "train": {"micro": 0.5088223218917847, "macro": 0.4968717098236084},
+                "val": {"micro": 0.5046778917312622, "macro": 0.4901778995990753},
+            },
+            "real": {
+                "train": {"micro": 0.631933331489563, "macro": 0.619450569152832},
+                "val": {"micro": 0.63978111743927, "macro": 0.6281707882881165},
+            },
+            "sketch": {
+                "train": {"micro": 0.4545639455318451, "macro": 0.4474347233772278},
+                "val": {"micro": 0.44803741574287415, "macro": 0.4399655759334564},
+            },
+        },
+        "real": {
+            "clipart": {
+                "train": {"micro": 0.5694425702095032, "macro": 0.5809699892997742},
+                "val": {"micro": 0.5680299401283264, "macro": 0.5786350965499878},
+            },
+            "painting": {
+                "train": {"micro": 0.6136661171913147, "macro": 0.5830718278884888},
+                "val": {"micro": 0.6183145642280579, "macro": 0.5833742618560791},
+            },
+            "sketch": {
+                "train": {"micro": 0.4794813096523285, "macro": 0.4843434691429138},
+                "val": {"micro": 0.47000202536582947, "macro": 0.47442907094955444},
+            },
+        },
+        "sketch": {
+            "clipart": {
+                "train": {"micro": 0.5638283491134644, "macro": 0.5414069890975952},
+                "val": {"micro": 0.5608125925064087, "macro": 0.5309245586395264},
+            },
+            "painting": {
+                "train": {"micro": 0.4681163430213928, "macro": 0.41524365544319153},
+                "val": {"micro": 0.4756387770175934, "macro": 0.43400508165359497},
+            },
+            "real": {
+                "train": {"micro": 0.46748748421669006, "macro": 0.4649970531463623},
+                "val": {"micro": 0.4728538990020752, "macro": 0.47053515911102295},
+            },
+        },
+    }
+
+    x = {
+        "mnist": mnist,
+        "office31": office31,
+        "officehome": officehome,
+        "domainnet126": domainnet126,
+    }
     return np.round(x[dataset][src_domain][target_domain][split][average], 4)

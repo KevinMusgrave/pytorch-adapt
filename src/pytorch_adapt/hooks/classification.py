@@ -141,3 +141,8 @@ class BCEWithLogitsConvertLabels(torch.nn.BCEWithLogitsLoss):
 class MultiLabelClassifierHook(ClassifierHook):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, loss_fn=BCEWithLogitsConvertLabels(), **kwargs)
+
+
+class MultiLabelFinetunerHook(FinetunerHook):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, loss_fn=BCEWithLogitsConvertLabels(), **kwargs)
