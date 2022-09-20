@@ -1,18 +1,14 @@
 from ..layers import EntropyLoss
-from .base_validator import BaseValidator
+from .simple_loss_validator import SimpleLossValidator
 
 
-class EntropyValidator(BaseValidator):
+class EntropyValidator(SimpleLossValidator):
     """
     Returns the negative of the
     [entropy][pytorch_adapt.layers.entropy_loss.EntropyLoss]
     of all logits.
     """
 
-    def __init__(self, layer="logits", **kwargs):
-        super().__init__(**kwargs)
-        self.layer = layer
-        self.loss_fn = EntropyLoss(after_softmax=self.layer == "preds")
-
-    def compute_score(self, target_train):
-        return -self.loss_fn(target_train[self.layer]).item()
+    @property
+    def loss_fn(self):
+        return EntropyLoss(after_softmax=self.layer == "preds")

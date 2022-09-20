@@ -25,5 +25,5 @@ class TorchmetricsValidator(BaseValidator):
 
     @property
     @abstractmethod
-    def accuracy_fn(self, *args, **kwargs):
+    def accuracy_fn(self):
         pass
