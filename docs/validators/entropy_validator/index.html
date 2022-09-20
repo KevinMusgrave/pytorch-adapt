@@ -2132,6 +2132,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../bnm_validator/" class="md-nav__link">
+        bnm_validator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../deep_embedded_validator/" class="md-nav__link">
         deep_embedded_validator
       </a>
@@ -2464,7 +2478,7 @@
 
   <div class="doc doc-contents ">
       <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pytorch_adapt.validators.base_validator.BaseValidator" href="../base_validator/#pytorch_adapt.validators.base_validator.BaseValidator">BaseValidator</a></code></p>
+        Bases: <code><span title="pytorch_adapt.validators.simple_loss_validator.SimpleLossValidator">SimpleLossValidator</span></code></p>
 
   
       <p>Returns the negative of the
@@ -2483,24 +2497,16 @@ of all logits.</p>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EntropyValidator</span><span class="p">(</span><span class="n">BaseValidator</span><span class="p">):</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EntropyValidator</span><span class="p">(</span><span class="n">SimpleLossValidator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the negative of the</span>
 <span class="sd">    [entropy][pytorch_adapt.layers.entropy_loss.EntropyLoss]</span>
 <span class="sd">    of all logits.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;logits&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">EntropyLoss</span><span class="p">(</span><span class="n">after_softmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">==</span> <span class="s2">&quot;preds&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">compute_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_train</span><span class="p">):</span>
-        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_fn</span><span class="p">(</span><span class="n">target_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">])</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">loss_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">EntropyLoss</span><span class="p">(</span><span class="n">after_softmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">==</span> <span class="s2">&quot;preds&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
