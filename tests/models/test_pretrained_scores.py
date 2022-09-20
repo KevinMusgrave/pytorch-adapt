@@ -1,10 +1,12 @@
+import argparse
 import pprint
+import sys
 import unittest
 from collections import defaultdict
 
 import numpy as np
 import torch
-import tqdm
+from tqdm import tqdm
 
 from pytorch_adapt.datasets import (
     DataloaderCreator,
@@ -60,6 +62,10 @@ def check_if_keys_exist(dataset_name, src_domain, domains):
 
 
 class TestPretrainedScores(unittest.TestCase):
+    dataset_folder = DATASET_FOLDER
+    download = True
+    print_output_instead_of_asserting = False
+
     def helper(
         self, dataset_name, src_domain, G, C, dataset_getter, domains, acc_getter
     ):
@@ -68,7 +74,7 @@ class TestPretrainedScores(unittest.TestCase):
         accuracies = defaultdict(dict)
         for domain in domains:
             datasets = dataset_getter(
-                [domain], [], folder=DATASET_FOLDER, download=True
+                [domain], [], folder=self.dataset_folder, download=self.download
             )
             datasets.pop("train")
             self.assertTrue(len(datasets) == 2)  # should have src_train and src_val
@@ -79,7 +85,7 @@ class TestPretrainedScores(unittest.TestCase):
                 k = k.split("_")[1]  # remove domain identifier
                 print(f"collecting {domain} {k}")
                 preds, all_labels = [], []
-                for data in tqdm.tqdm(v):
+                for data in tqdm(v):
                     data = batch_to_device(data, TEST_DEVICE)
                     imgs, labels = data["src_imgs"], data["src_labels"]
                     preds.append(torch.softmax(C(G(imgs)), dim=1))
@@ -93,7 +99,9 @@ class TestPretrainedScores(unittest.TestCase):
         for domain, x in accuracies.items():
             for split, y in x.items():
                 for average, acc in y.items():
-                    print(f"checking pretrained acc for {domain} {split} {average}")
+                    print(
+                        f"checking pretrained acc for {src_domain} {domain} {split} {average}"
+                    )
                     acc = np.round(acc, 4)
                     if domain == src_domain:
                         true_acc = pretrained_src_accuracy(
@@ -103,7 +111,10 @@ class TestPretrainedScores(unittest.TestCase):
                         true_acc = pretrained_target_accuracy(
                             dataset_name, [src_domain], [domain], split, average
                         )
-                    self.assertEqual(acc, true_acc)
+                    if self.print_output_instead_of_asserting:
+                        print(acc, true_acc)
+                    else:
+                        self.assertEqual(acc, true_acc)
 
     @torch.no_grad()
     @unittest.skipIf(not RUN_PRETRAINED_SCORES_TESTS, skip_reason)
@@ -168,3 +179,22 @@ class TestPretrainedScores(unittest.TestCase):
             self.helper(
                 dataset_name, src_domain, G, C, get_domainnet126, domains, get_acc_dict
             )
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(allow_abbrev=False)
+    parser.add_argument("--dataset_folder", type=str, default=DATASET_FOLDER)
+    parser.add_argument("--download", action="store_true")
+    parser.add_argument("--print_output_instead_of_asserting", action="store_true")
+    parser.add_argument("--hide_progress_bars", action="store_true")
+    args, unittest_args = parser.parse_known_args()
+    if args.hide_progress_bars:
+        from functools import partialmethod
+
+        tqdm.__init__ = partialmethod(tqdm.__init__, disable=True)
+
+    for k in vars(args):
+        setattr(TestPretrainedScores, k, getattr(args, k))
+
+    sys.argv[1:] = unittest_args
+    unittest.main()

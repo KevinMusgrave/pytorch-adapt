@@ -94,7 +94,7 @@ class BaseAdapter(ABC):
             **kwargs: Any other data that will be passed into the hook.
         Returns:
             A two-level dictionary
-                
+
                 - the outer level is associated with a particular optimization step
                     (relevant for GAN architectures)
 
