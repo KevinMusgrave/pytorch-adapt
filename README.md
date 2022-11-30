@@ -175,7 +175,7 @@ Thank you to [Ser-Nam Lim](https://research.fb.com/people/lim-ser-nam/), and my 
 Thanks to [Jeff Musgrave](https://www.designgenius.ca/) for designing the logo.
 
 ### Citing this library
-If you'd like to cite pytorch-adapt in your paper, you can use this:
+If you'd like to cite pytorch-adapt in your paper, you can refer to [this paper](https://arxiv.org/abs/2211.15673) by copy-pasting this bibtex reference: 
 ```latex
 @misc{musgravePytorchAdapt,
     title={PyTorch Adapt},
