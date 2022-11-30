@@ -326,7 +326,7 @@ class FeaturesAndLogitsHook(FeaturesChainHook):
 
     def __init__(
         self,
-        domains: List[str] = None,
+        domains: List[str] = ("src", "target"),
         detach_features: bool = False,
         detach_logits: bool = False,
         other_hooks: List[BaseHook] = None,
@@ -343,6 +343,7 @@ class FeaturesAndLogitsHook(FeaturesChainHook):
             other_hooks: A list of hooks that will be called after
                 the features and logits hooks.
         """
+        self.domains = domains
         features_hook = FeaturesHook(detach=detach_features, domains=domains)
         logits_hook = LogitsHook(detach=detach_logits, domains=domains)
         other_hooks = c_f.default(other_hooks, [])

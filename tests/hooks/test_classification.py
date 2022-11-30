@@ -30,19 +30,53 @@ class TestClassification(unittest.TestCase):
 
     def test_closs_hook(self):
         torch.manual_seed(24242)
+        src_imgs = torch.randn(100, 32)
+        target_imgs = torch.randn(100, 32)
+        src_labels = torch.randint(0, 10, size=(100,))
+        target_labels = torch.randint(0, 10, size=(100,))
+        G = Net(32, 16)
+        C = Net(16, 10)
+
         for detach_features in [True, False]:
-            h = CLossHook(detach_features=detach_features)
-            src_imgs = torch.randn(100, 32)
-            target_imgs = torch.randn(100, 32)
-            src_labels = torch.randint(0, 10, size=(100,))
-            G = Net(32, 16)
-            C = Net(16, 10)
-            outputs, losses = h(locals())
-            assertRequiresGrad(self, outputs)
-            base_key = "src_imgs_features"
-            if detach_features:
-                base_key += "_detached"
-            self.assertTrue(outputs.keys() == {base_key, f"{base_key}_logits"})
+            for domains in [None, ("src",), ("target",), ("src", "target")]:
+                if domains is None:
+                    h = CLossHook(detach_features=detach_features)
+                else:
+                    h = CLossHook(detach_features=detach_features, domains=domains)
+                outputs, losses = h(locals())
+                assertRequiresGrad(self, outputs)
+                base_keys = (
+                    [f"{d}_imgs_features" for d in domains]
+                    if domains
+                    else ["src_imgs_features"]
+                )
+                if detach_features:
+                    base_keys = [f"{x}_detached" for x in base_keys]
+                logit_keys = [f"{x}_logits" for x in base_keys]
+                self.assertTrue(outputs.keys() == {*base_keys, *logit_keys})
+
+                correct_loss_fn = torch.nn.functional.cross_entropy
+                for k, v in losses.items():
+                    if k.startswith("src"):
+                        self.assertTrue(
+                            torch.equal(
+                                v,
+                                correct_loss_fn(
+                                    C(G(src_imgs)), src_labels, reduction="none"
+                                ),
+                            )
+                        )
+                    elif k.startswith("target"):
+                        self.assertTrue(
+                            torch.equal(
+                                v,
+                                correct_loss_fn(
+                                    C(G(target_imgs)), target_labels, reduction="none"
+                                ),
+                            )
+                        )
+                    else:
+                        raise KeyError
 
     def test_classifier_hook(self):
         torch.manual_seed(53430)
