@@ -78,13 +78,15 @@ class TestMCD(unittest.TestCase):
             self.assertTrue(outputs[logits_key][i].requires_grad for i in range(3))
             self.assertTrue(all(x.count == 1 for x in [C0, C1, C2]))
             self.assertTrue(outputs.keys() == {*out_keys})
-            self.assertTrue(loss.keys() == {"c_loss0", "c_loss1", "c_loss2"})
+            self.assertTrue(
+                loss.keys() == {"src_c_loss0", "src_c_loss1", "src_c_loss2"}
+            )
 
             loss_fn = torch.nn.CrossEntropyLoss()
             losses = [loss_fn(x, src_labels) for x in outputs[logits_key]]
             self.assertTrue(
                 all(
-                    torch.isclose(losses[i], torch.mean(loss[f"c_loss{i}"]))
+                    torch.isclose(losses[i], torch.mean(loss[f"src_c_loss{i}"]))
                     for i in range(len(losses))
                 )
             )
@@ -192,11 +194,11 @@ class TestMCD(unittest.TestCase):
                 )
 
                 self.assertTrue(
-                    losses["x_loss"].keys() == {"c_loss0", "c_loss1", "total"}
+                    losses["x_loss"].keys() == {"src_c_loss0", "src_c_loss1", "total"}
                 )
                 self.assertTrue(
                     losses["y_loss"].keys()
-                    == {"c_loss0", "c_loss1", "discrepancy_loss", "total"}
+                    == {"src_c_loss0", "src_c_loss1", "discrepancy_loss", "total"}
                 )
                 self.assertTrue(
                     losses["z_loss"].keys() == {"discrepancy_loss", "total"}
@@ -221,7 +223,7 @@ class TestMCD(unittest.TestCase):
                 total_loss = (c_loss0 + c_loss1) / 2
                 correct_losses = [c_loss0, c_loss1, total_loss]
                 computed_losses = [
-                    losses["x_loss"][k] for k in ["c_loss0", "c_loss1", "total"]
+                    losses["x_loss"][k] for k in ["src_c_loss0", "src_c_loss1", "total"]
                 ]
                 self.assertTrue(
                     all(
@@ -246,7 +248,7 @@ class TestMCD(unittest.TestCase):
                 correct_losses = [c_loss0, c_loss1, disc_loss, total_loss]
                 computed_losses = [
                     losses["y_loss"][k]
-                    for k in ["c_loss0", "c_loss1", "discrepancy_loss", "total"]
+                    for k in ["src_c_loss0", "src_c_loss1", "discrepancy_loss", "total"]
                 ]
                 self.assertTrue(
                     all(

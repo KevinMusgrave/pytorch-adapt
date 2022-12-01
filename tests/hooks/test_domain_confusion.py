@@ -55,7 +55,7 @@ class TestDomainConfusion(unittest.TestCase):
             )
             self.assertTrue(
                 losses["g_loss"].keys()
-                == {"g_src_domain_loss", "g_target_domain_loss", "c_loss", "total"}
+                == {"g_src_domain_loss", "g_target_domain_loss", "src_c_loss", "total"}
             )
             self.assertTrue(
                 losses["d_loss"].keys()

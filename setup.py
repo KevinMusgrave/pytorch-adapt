@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 extras_require_detection = ["albumentations >= 1.2.1"]
 extras_require_ignite = ["pytorch-ignite == 0.4.9"]
 extras_require_lightning = ["pytorch-lightning"]
-extras_require_record_keeper = ["record-keeper >= 0.9.32"]
+extras_require_record_keeper = ["record-keeper >= 0.9.32", "tensorboard"]
 extras_require_timm = ["timm"]
 extras_require_docs = [
     "mkdocs-material",
@@ -44,8 +44,8 @@ setuptools.setup(
         "numpy",
         "torch",
         "torchvision",
-        "torchmetrics >= 0.9.3",
-        "pytorch-metric-learning >= 1.5.2",
+        "torchmetrics == 0.9.3",
+        "pytorch-metric-learning >= 1.6.3",
     ],
     extras_require={
         "detection": extras_require_detection,

@@ -75,7 +75,7 @@ class TestAligners(unittest.TestCase):
                 )
 
                 loss_keys = {
-                    "c_loss",
+                    "src_c_loss",
                     "total",
                 }
 
@@ -120,7 +120,7 @@ class TestAligners(unittest.TestCase):
                         [F.softmax(target_logits, dim=1), target_features],
                     )
                     total_loss = (f_loss + c_loss) / 2
-                    correct_losses = [c_loss, f_loss, total_loss]
+                    correct_losses = [f_loss, c_loss, total_loss]
                 else:
                     f_loss = loss_fn()(src_features, target_features)
                     l_loss = loss_fn()(
@@ -128,7 +128,7 @@ class TestAligners(unittest.TestCase):
                     )
 
                     total_loss = (f_loss + l_loss + c_loss) / 3
-                    correct_losses = [c_loss, f_loss, l_loss, total_loss]
+                    correct_losses = [f_loss, l_loss, c_loss, total_loss]
 
                 computed_losses = [
                     losses["total_loss"][k] for k in sorted(list(loss_keys))

@@ -106,7 +106,7 @@ class TestGVB(unittest.TestCase):
                         "g_src_bridge_loss",
                         "d_target_bridge_loss",
                         "g_target_bridge_loss",
-                        "c_loss",
+                        "src_c_loss",
                         "src_domain_loss",
                         "target_domain_loss",
                         "total",
@@ -175,7 +175,7 @@ class TestGVB(unittest.TestCase):
                 correct_loss = torch.nn.functional.cross_entropy(
                     logits[:bs], src_labels
                 )
-                self.assertTrue(np.isclose(losses["c_loss"], correct_loss.item()))
+                self.assertTrue(np.isclose(losses["src_c_loss"], correct_loss.item()))
                 total_loss += correct_loss
 
                 correct_loss = torch.mean(torch.abs(gbridge[:bs]))
@@ -281,7 +281,7 @@ class TestGVB(unittest.TestCase):
                 "g_target_bridge_loss",
                 "g_src_domain_loss",
                 "g_target_domain_loss",
-                "c_loss",
+                "src_c_loss",
                 "total",
             }
         )
@@ -376,7 +376,7 @@ class TestGVB(unittest.TestCase):
 
         total_loss = 0
         correct_loss = torch.nn.functional.cross_entropy(logits[:bs], src_labels)
-        self.assertTrue(np.isclose(losses["g_loss"]["c_loss"], correct_loss.item()))
+        self.assertTrue(np.isclose(losses["g_loss"]["src_c_loss"], correct_loss.item()))
         total_loss += correct_loss
 
         correct_loss = torch.mean(torch.abs(gbridge[:bs]))
@@ -384,7 +384,9 @@ class TestGVB(unittest.TestCase):
         total_loss += correct_loss
 
         correct_loss = torch.mean(torch.abs(gbridge[bs:]))
-        self.assertTrue(losses["g_loss"]["g_target_bridge_loss"] == correct_loss)
+        self.assertAlmostEqual(
+            losses["g_loss"]["g_target_bridge_loss"], correct_loss.item()
+        )
         total_loss += correct_loss
 
         correct_loss = torch.nn.functional.binary_cross_entropy_with_logits(

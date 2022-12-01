@@ -57,6 +57,7 @@ class CLossHook(BaseWrapperHook):
         loss_fn: Callable[[torch.Tensor, torch.Tensor], torch.Tensor] = None,
         detach_features: bool = False,
         f_hook: BaseHook = None,
+        domains=("src",),
         **kwargs,
     ):
         """
@@ -75,21 +76,28 @@ class CLossHook(BaseWrapperHook):
         self.hook = c_f.default(
             f_hook,
             FeaturesAndLogitsHook,
-            {"domains": ["src"], "detach_features": detach_features},
+            {"domains": domains, "detach_features": detach_features},
         )
 
     def call(self, inputs, losses):
         """"""
         outputs = self.hook(inputs, losses)[0]
-        [src_logits] = c_f.extract(
-            [outputs, inputs], c_f.filter(self.hook.out_keys, "_logits$")
+        output_losses = {}
+        logits = c_f.extract(
+            [outputs, inputs],
+            c_f.filter(
+                self.hook.out_keys, "_logits$", [f"^{d}" for d in self.hook.domains]
+            ),
         )
-        loss = self.loss_fn(src_logits, inputs["src_labels"])
-        return outputs, {self._loss_keys()[0]: loss}
+        for i, d in enumerate(self.hook.domains):
+            output_losses[self._loss_keys()[i]] = self.loss_fn(
+                logits[i], inputs[f"{d}_labels"]
+            )
+        return outputs, output_losses
 
     def _loss_keys(self):
         """"""
-        return ["c_loss"]
+        return [f"{d}_c_loss" for d in self.hook.domains]
 
 
 class ClassifierHook(BaseWrapperHook):
