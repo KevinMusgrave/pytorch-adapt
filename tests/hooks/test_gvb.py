@@ -384,7 +384,9 @@ class TestGVB(unittest.TestCase):
         total_loss += correct_loss
 
         correct_loss = torch.mean(torch.abs(gbridge[bs:]))
-        self.assertTrue(losses["g_loss"]["g_target_bridge_loss"] == correct_loss)
+        self.assertAlmostEqual(
+            losses["g_loss"]["g_target_bridge_loss"], correct_loss.item()
+        )
         total_loss += correct_loss
 
         correct_loss = torch.nn.functional.binary_cross_entropy_with_logits(
