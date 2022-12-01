@@ -315,6 +315,7 @@ class FeaturesChainHook(ChainHook):
     ):
         for i in range(len(hooks) - 1):
             hooks[i + 1].set_in_keys(hooks[i].out_keys)
+        self.domains = hooks[-1].domains
         super().__init__(*hooks, **kwargs)
 
 
