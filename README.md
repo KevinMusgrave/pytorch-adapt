@@ -174,6 +174,19 @@ Thank you to [Ser-Nam Lim](https://research.fb.com/people/lim-ser-nam/), and my 
 ### Logo
 Thanks to [Jeff Musgrave](https://www.designgenius.ca/) for designing the logo.
 
+### Citing this library
+If you'd like to cite pytorch-adapt in your paper, you can refer to [this paper](https://arxiv.org/abs/2211.15673) by copy-pasting this bibtex reference: 
+```latex
+@misc{musgravePytorchAdapt,
+    title={PyTorch Adapt},
+    author={Musgrave, Kevin and Belongie, Serge and Lim, Ser-Nam},
+    year={2022},
+    eprint={2211.15673},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
+```
+
 ### Code references (in no particular order)
 - https://github.com/wgchang/DSBN
 - https://github.com/jihanyang/AFN
