@@ -145,7 +145,7 @@ class TestDANN(unittest.TestCase):
                     loss_keys = {
                         "src_domain_loss",
                         "target_domain_loss",
-                        "c_loss",
+                        "src_c_loss",
                         "total",
                     }
 
@@ -254,7 +254,7 @@ class TestDANN(unittest.TestCase):
 
                     c_loss = F.cross_entropy(src_logits, src_labels)
                     self.assertTrue(
-                        np.isclose(c_loss.item(), losses["total_loss"]["c_loss"])
+                        np.isclose(c_loss.item(), losses["total_loss"]["src_c_loss"])
                     )
 
                     total_loss = [src_domain_loss, target_domain_loss, c_loss]

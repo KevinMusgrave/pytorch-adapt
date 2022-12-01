@@ -111,4 +111,4 @@ class TestClassification(unittest.TestCase):
             _, losses = h(
                 {"G": G, "C": C, "src_imgs": src_imgs, "src_labels": src_labels}
             )
-            self.assertTrue(np.isclose(losses["total_loss"]["c_loss"], correct))
+            self.assertTrue(np.isclose(losses["total_loss"]["src_c_loss"], correct))

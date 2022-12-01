@@ -184,8 +184,8 @@ class TestSymNets(unittest.TestCase):
         self.assertTrue(
             losses["c_loss"].keys()
             == {
-                "c_loss0",
-                "c_loss1",
+                "src_c_loss0",
+                "src_c_loss1",
                 "c_symnets_src_domain_loss_0",
                 "c_symnets_target_domain_loss_1",
                 "total",

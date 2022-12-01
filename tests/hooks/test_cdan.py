@@ -250,7 +250,7 @@ class TestCDAN(unittest.TestCase):
                 g_loss_keys = {
                     "g_src_domain_loss",
                     "g_target_domain_loss",
-                    "c_loss",
+                    "src_c_loss",
                     "total",
                 }
 
@@ -349,14 +349,18 @@ class TestCDAN(unittest.TestCase):
                     g_losses["g_target_domain_loss"] * target_entropy_weights
                 )
 
-                g_losses["c_loss"] = torch.nn.functional.cross_entropy(
+                g_losses["src_c_loss"] = torch.nn.functional.cross_entropy(
                     c_logits[:bs], src_labels
                 )
 
                 self.assertTrue(
                     all(
                         np.isclose(losses["g_loss"][k], g_losses[k].item())
-                        for k in ["g_src_domain_loss", "g_target_domain_loss", "c_loss"]
+                        for k in [
+                            "g_src_domain_loss",
+                            "g_target_domain_loss",
+                            "src_c_loss",
+                        ]
                     )
                 )
                 g_losses = list(g_losses.values())

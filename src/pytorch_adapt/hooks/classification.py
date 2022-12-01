@@ -90,7 +90,7 @@ class CLossHook(BaseWrapperHook):
             ),
         )
         for i, d in enumerate(self.hook.domains):
-            output_losses[f"{d}_c_loss"] = self.loss_fn(
+            output_losses[self._loss_keys()[i]] = self.loss_fn(
                 logits[i], inputs[f"{d}_labels"]
             )
         return outputs, output_losses

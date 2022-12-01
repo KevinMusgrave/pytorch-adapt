@@ -114,7 +114,7 @@ class TestRTN(unittest.TestCase):
                 "src_imgs_features_logits_plus_residual",
             }
         )
-        self.assertTrue(losses.keys() == {"entropy_loss", "c_loss"})
+        self.assertTrue(losses.keys() == {"entropy_loss", "src_c_loss"})
 
         correct_entropy_loss = EntropyLoss()(C(G(target_imgs)))
         self.assertTrue(correct_entropy_loss == losses["entropy_loss"])
@@ -124,7 +124,7 @@ class TestRTN(unittest.TestCase):
         correct_c_loss = torch.nn.functional.cross_entropy(
             C_out + residual_layers(C_out), src_labels
         )
-        self.assertTrue(torch.isclose(correct_c_loss, torch.mean(losses["c_loss"])))
+        self.assertTrue(torch.isclose(correct_c_loss, torch.mean(losses["src_c_loss"])))
 
     def test_rtn_aligner_hook(self):
         torch.manual_seed(2345)
@@ -219,7 +219,7 @@ class TestRTN(unittest.TestCase):
         loss_keys = {
             "features_confusion_loss",
             "entropy_loss",
-            "c_loss",
+            "src_c_loss",
             "total",
         }
 
@@ -245,7 +245,7 @@ class TestRTN(unittest.TestCase):
         f_loss = MMDLoss()(src_features, target_features)
         entropy_loss = EntropyLoss()(target_logits)
         total_loss = (c_loss + f_loss + entropy_loss) / 3
-        correct_losses = [c_loss, entropy_loss, f_loss, total_loss]
+        correct_losses = [entropy_loss, f_loss, c_loss, total_loss]
 
         computed_losses = [losses["total_loss"][k] for k in sorted(list(loss_keys))]
         self.assertTrue(
