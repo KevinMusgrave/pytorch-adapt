@@ -95,7 +95,7 @@ def gan_log_files():
                 "total",
                 "g_src_domain_loss",
                 "g_target_domain_loss",
-                "c_loss",
+                "src_c_loss",
             },
             "engine_output_d_loss": {
                 "total",
@@ -153,7 +153,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_C_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                     "features_confusion_loss",
                     "logits_confusion_loss",
                 },
@@ -172,7 +172,9 @@ class TestRunning(unittest.TestCase):
     def test_cdan(self):
         models = get_gcd()
         misc = Misc({"feature_combiner": RandomizedDotProduct([512, 10], 512)})
-        g_weighter = MeanWeighter(weights={"g_target_domain_loss": 0.5, "c_loss": 0.1})
+        g_weighter = MeanWeighter(
+            weights={"g_target_domain_loss": 0.5, "src_c_loss": 0.1}
+        )
         adapter = CDAN(models=models, misc=misc, hook_kwargs={"g_weighter": g_weighter})
         self.assertTrue(isinstance(adapter.hook, CDANHook))
         log_files = gan_log_files()
@@ -186,7 +188,7 @@ class TestRunning(unittest.TestCase):
                 },
                 "hook_8c2a74151317b9315573314fafc0d8ad6e12f72a84433739f6f0762a4ca11ab0_weights": {
                     "g_target_domain_loss",
-                    "c_loss",
+                    "src_c_loss",
                 },
             }
         )
@@ -204,7 +206,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_C_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                 },
                 "hook_ClassifierHook_hook_ChainHook_hooks0_OptimizerHook_weighter_MeanWeighter": {
                     "scale"
@@ -224,7 +226,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_D_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                     "src_domain_loss",
                     "target_domain_loss",
                 },
@@ -267,7 +269,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_C_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                 },
                 "hook_FinetunerHook_hook_ChainHook_hooks0_OptimizerHook_weighter_MeanWeighter": {
                     "scale"
@@ -305,7 +307,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_C_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                     "joint_confusion_loss",
                 },
                 "hook_AlignerPlusCHook_hook_ChainHook_hooks0_OptimizerHook_weighter_MeanWeighter": {
@@ -328,7 +330,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_D_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                     "src_domain_loss",
                     "target_domain_loss",
                     "g_src_bridge_loss",
@@ -361,13 +363,13 @@ class TestRunning(unittest.TestCase):
                 "optimizers_C_Adam": {"lr"},
                 "engine_output_x_loss": {
                     "total",
-                    "c_loss0",
-                    "c_loss1",
+                    "src_c_loss0",
+                    "src_c_loss1",
                 },
                 "engine_output_y_loss": {
                     "total",
-                    "c_loss0",
-                    "c_loss1",
+                    "src_c_loss0",
+                    "src_c_loss1",
                     "discrepancy_loss",
                 },
                 "engine_output_z_loss": {"total", "discrepancy_loss"},
@@ -399,7 +401,7 @@ class TestRunning(unittest.TestCase):
                 "optimizers_residual_model_Adam": {"lr"},
                 "engine_output_total_loss": {
                     "total",
-                    "c_loss",
+                    "src_c_loss",
                     "entropy_loss",
                     "features_confusion_loss",
                 },
@@ -424,8 +426,8 @@ class TestRunning(unittest.TestCase):
                 "optimizers_G_Adam": {"lr"},
                 "optimizers_C_Adam": {"lr"},
                 "engine_output_c_loss": {
-                    "c_loss0",
-                    "c_loss1",
+                    "src_c_loss0",
+                    "src_c_loss1",
                     "c_symnets_src_domain_loss_0",
                     "c_symnets_target_domain_loss_1",
                     "total",

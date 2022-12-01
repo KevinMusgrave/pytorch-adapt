@@ -27,7 +27,7 @@ from .utils import get_datasets
 
 # log files should be a mapping from csv file name, to number of columns in file
 def run_adapter(cls, test_folder, adapter, log_files=None, inference_fn=None):
-    checkpoint_fn = CheckpointFnCreator(dirname=test_folder)
+    checkpoint_fn = CheckpointFnCreator(dirname=test_folder, require_empty=False)
     logger = IgniteRecordKeeperLogger(folder=test_folder)
     datasets = get_datasets()
     validator = ScoreHistory(EntropyValidator())
