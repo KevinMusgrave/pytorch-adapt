@@ -166,7 +166,10 @@ See [setup.py](https://github.com/KevinMusgrave/pytorch-adapt/blob/main/setup.py
 ## Acknowledgements
 
 ### Contributors
-Pull requests are welcome!
+Thanks to the contributors who made pull requests!
+| Contributor | Highlights |
+| -- | -- |
+| [deepseek-eoghan](https://github.com/deepseek-eoghan) | Improved the TargetDataset class |
 
 ### Advisors
 Thank you to [Ser-Nam Lim](https://research.fb.com/people/lim-ser-nam/), and my research advisor, [Professor Serge Belongie](https://vision.cornell.edu/se3/people/serge-belongie/).
