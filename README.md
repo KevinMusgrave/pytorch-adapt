@@ -1,6 +1,9 @@
+<h1>
 <a href="https://github.com/KevinMusgrave/pytorch-adapt">
-<img alt="Logo" src="https://github.com/KevinMusgrave/pytorch-adapt/blob/main/docs/imgs/Logo.png">
+<img alt="PyTorch Adapt" src="https://github.com/KevinMusgrave/pytorch-adapt/blob/main/docs/imgs/Logo.png">
 </a>
+</h1>
+
 <p align="center">
  <a href="https://badge.fury.io/py/pytorch-adapt">
      <img alt="PyPi version" src="https://badge.fury.io/py/pytorch-adapt.svg">
