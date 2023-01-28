@@ -181,13 +181,12 @@ Thanks to [Jeff Musgrave](https://www.designgenius.ca/) for designing the logo.
 ### Citing this library
 If you'd like to cite pytorch-adapt in your paper, you can refer to [this paper](https://arxiv.org/abs/2211.15673) by copy-pasting this bibtex reference: 
 ```latex
-@misc{musgravePytorchAdapt,
-    title={PyTorch Adapt},
-    author={Musgrave, Kevin and Belongie, Serge and Lim, Ser-Nam},
-    year={2022},
-    eprint={2211.15673},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+@article{Musgrave2022PyTorchA,
+  title={PyTorch Adapt},
+  author={Kevin Musgrave and Serge J. Belongie and Ser Nam Lim},
+  journal={ArXiv},
+  year={2022},
+  volume={abs/2211.15673}
 }
 ```
 
