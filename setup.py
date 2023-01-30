@@ -45,7 +45,7 @@ setuptools.setup(
         "torch",
         "torchvision",
         "torchmetrics == 0.9.3",
-        "pytorch-metric-learning >= 1.6.3",
+        "pytorch-metric-learning == 1.6.3",
     ],
     extras_require={
         "detection": extras_require_detection,
